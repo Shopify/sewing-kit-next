@@ -15,6 +15,7 @@
     "type-check": "yarn sk type-check",
     "check": "yarn lint && yarn test --no-watch && yarn type-check",
     "prerelease": "yarn build",
+    "version-bump": "lerna version --no-push",
     "release": "lerna publish && git push --tags",
     "dev:example": "yarn sk dev --root './example'"
   },
