@@ -76,7 +76,7 @@ export function sass({
                         sourceMap: sourceMaps,
                         sassOptions: {
                           includePaths: sassIncludePaths,
-                        }
+                        },
                       },
                     },
                   ],
