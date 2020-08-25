@@ -25,7 +25,7 @@ Follow the prompts to choose a version for each package.
 4. Push your changes and open a PR titled "Publish release"
 
 ```
-git push origin new-release
+git push origin new-release --follow-tags
 dev open pr
 ```
 
