@@ -12,17 +12,17 @@ yarn add @sewing-kit/tasks --dev
 
 ## Tasks
 
-Tasks are what Sewing Kit runs against your codebase to perform a variety of things. At a high level, Sewing Kit distinguishes between `WorkspaceTasks` (which apply to the entire workspace) and `ProjectTasks` (which apply to the individual projects within a workspace).
+Tasks are what Sewing Kit runs against your codebase to perform a variety of things, such as linting, building, and testing. At a high level, Sewing Kit distinguishes between `WorkspaceTasks` (which apply to the entire workspace) and `ProjectTasks` (which apply to the individual projects within a workspace).
 
 - `WorkspaceTasks`
-  - `build` (`BuildWorkspaceTask`)
-  - `dev` (`DevWorkspaceTask`)
-  - `test` (`TestWorkspaceTask`)
-  - `lint` (`LintWorkspaceTask`)
-  - `typeCheck` (`TypeCheckWorkspaceTask`)
+  - Building (`BuildWorkspaceTask`)
+  - Running a development server (`DevWorkspaceTask`)
+  - Testing (`TestWorkspaceTask`)
+  - Linting (`LintWorkspaceTask`)
+  - Type-checking (`TypeCheckWorkspaceTask`)
 - `ProjectTasks`
-  - `build` (`BuildProjectTask`)
-  - `dev` (`DevProjectTask`)
-  - `test` (`TestProjectTask`)
+  - Building (`BuildProjectTask`)
+  - Running a develoment server (`DevProjectTask`)
+  - Testing (`TestProjectTask`)
 
-A task (e.g. `build`, `dev`, `test`) is made up of options and [hooks](../hooks/README.md). Options exist to configure the task, and can be passed in through [Sewing Kit's CLI](../cli/README.md). Task hooks expose a way for plugins (either `@sewing-kit`'s or your own) to tap into and customize and define a task's behaviour.
+A task (e.g. `build`, `dev`, `test`) is made up of options and [hooks](../hooks/README.md). Options exist to configure the task, and can be passed in through [Sewing Kit's CLI](../cli/README.md) and propagated through the hooks to relevant plugins. Tasks' hooks expose a way for plugins (either `@sewing-kit`'s or your own) to tap into and customize and define Sewing Kit's behaviour.
