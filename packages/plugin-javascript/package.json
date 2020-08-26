@@ -18,10 +18,12 @@
     "@babel/plugin-transform-runtime": "^7.10.3",
     "@babel/preset-env": "^7.9.5",
     "@sewing-kit/hooks": "^0.1.4",
+    "@sewing-kit/model": "^0.1.1",
     "@sewing-kit/plugins": "^0.1.4",
     "@types/babel__core": "^7.1.7",
     "babel-loader": "^8.1.0",
     "core-js": "^3.6.5",
+    "glob": "^7.1.6",
     "node-object-hash": "^2.0.0"
   },
   "optionalDependencies": {

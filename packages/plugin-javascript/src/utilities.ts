@@ -1,7 +1,7 @@
 import {resolve, relative} from 'path';
-import {sync as glob} from 'glob';
 import {statSync as stat} from 'fs';
 import {createHash} from 'crypto';
+import {sync as glob} from 'glob';
 
 import nodeObjectHash from 'node-object-hash';
 

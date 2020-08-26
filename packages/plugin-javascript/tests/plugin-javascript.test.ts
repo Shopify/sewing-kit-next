@@ -104,7 +104,7 @@ describe('@sewing-kit/plugin-javascript', () => {
             builtIndexFilePath,
           );
 
-          expect(builtOutputModifiedTime).toEqual(
+          expect(builtOutputModifiedTime).toStrictEqual(
             updatedBuiltOutputModifiedTime,
           );
         });
@@ -134,7 +134,7 @@ describe('@sewing-kit/plugin-javascript', () => {
             builtIndexFilePath,
           );
 
-          expect(builtOutputModifiedTime).not.toEqual(
+          expect(builtOutputModifiedTime).not.toStrictEqual(
             updatedBuiltOutputModifiedTime,
           );
         });

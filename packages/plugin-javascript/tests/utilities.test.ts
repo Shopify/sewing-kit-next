@@ -58,7 +58,7 @@ describe('utilities', () => {
 
         expect(latestModifiedTime).toBeGreaterThan(indexModifiedTime);
         expect(latestModifiedTime).toBeGreaterThan(fileAModifiedTime);
-        expect(latestModifiedTime).toEqual(fileBModifiedTime);
+        expect(latestModifiedTime).toStrictEqual(fileBModifiedTime);
       });
     });
 
@@ -81,7 +81,7 @@ describe('utilities', () => {
           fileExtensions,
         );
 
-        expect(updatedLatestModifiedTime).toEqual(latestModifiedTime);
+        expect(updatedLatestModifiedTime).toStrictEqual(latestModifiedTime);
       });
     });
   });
@@ -107,9 +107,9 @@ describe('utilities', () => {
       await withWorkspace('simple-package', async (workspace) => {
         const testPackage = createTestPackage(workspace);
 
-        expect(generateBabelPackageCacheValue(testPackage, options)).toEqual(
+        expect(
           generateBabelPackageCacheValue(testPackage, options),
-        );
+        ).toStrictEqual(generateBabelPackageCacheValue(testPackage, options));
       });
     });
 
@@ -126,7 +126,9 @@ describe('utilities', () => {
 
         expect(
           generateBabelPackageCacheValue(testPackage, options),
-        ).not.toEqual(generateBabelPackageCacheValue(testPackage, newOptions));
+        ).not.toStrictEqual(
+          generateBabelPackageCacheValue(testPackage, newOptions),
+        );
       });
     });
 
@@ -140,7 +142,9 @@ describe('utilities', () => {
 
         expect(
           generateBabelPackageCacheValue(testPackage, options),
-        ).not.toEqual(generateBabelPackageCacheValue(testPackage, newOptions));
+        ).not.toStrictEqual(
+          generateBabelPackageCacheValue(testPackage, newOptions),
+        );
       });
     });
 
@@ -154,7 +158,9 @@ describe('utilities', () => {
 
         expect(
           generateBabelPackageCacheValue(testPackage, options),
-        ).not.toEqual(generateBabelPackageCacheValue(testPackage, newOptions));
+        ).not.toStrictEqual(
+          generateBabelPackageCacheValue(testPackage, newOptions),
+        );
       });
     });
 
@@ -168,7 +174,9 @@ describe('utilities', () => {
 
         expect(
           generateBabelPackageCacheValue(testPackage, options),
-        ).not.toEqual(generateBabelPackageCacheValue(testPackage, newOptions));
+        ).not.toStrictEqual(
+          generateBabelPackageCacheValue(testPackage, newOptions),
+        );
       });
     });
 
@@ -185,7 +193,9 @@ describe('utilities', () => {
 
         expect(
           generateBabelPackageCacheValue(testPackage, options),
-        ).not.toEqual(generateBabelPackageCacheValue(testPackage, newOptions));
+        ).not.toStrictEqual(
+          generateBabelPackageCacheValue(testPackage, newOptions),
+        );
       });
     });
 
@@ -199,7 +209,9 @@ describe('utilities', () => {
 
         expect(
           generateBabelPackageCacheValue(testPackage, options),
-        ).not.toEqual(generateBabelPackageCacheValue(testPackage, newOptions));
+        ).not.toStrictEqual(
+          generateBabelPackageCacheValue(testPackage, newOptions),
+        );
       });
     });
 
@@ -213,7 +225,9 @@ describe('utilities', () => {
 
         expect(
           generateBabelPackageCacheValue(testPackage, options),
-        ).not.toEqual(generateBabelPackageCacheValue(testPackage, newOptions));
+        ).not.toStrictEqual(
+          generateBabelPackageCacheValue(testPackage, newOptions),
+        );
       });
     });
 
@@ -229,7 +243,7 @@ describe('utilities', () => {
 
         const newHash = generateBabelPackageCacheValue(testPackage, options);
 
-        expect(oldHash).not.toEqual(newHash);
+        expect(oldHash).not.toStrictEqual(newHash);
       });
     });
 
@@ -245,7 +259,7 @@ describe('utilities', () => {
 
         const newHash = generateBabelPackageCacheValue(testPackage, options);
 
-        expect(oldHash).toEqual(newHash);
+        expect(oldHash).toStrictEqual(newHash);
       });
     });
   });
