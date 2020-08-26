@@ -74,6 +74,10 @@ export class Workspace {
   }
 }
 
+export function generateUniqueWorkspaceID() {
+  return `test-workspace-${Math.random()}`;
+}
+
 export async function withWorkspace(
   name: string,
   useWorkspace: (workspace: Workspace) => void | Promise<void>,

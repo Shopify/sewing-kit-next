@@ -1,4 +1,7 @@
-import {withWorkspace} from '../../../tests/utilities';
+import {
+  withWorkspace,
+  generateUniqueWorkspaceID,
+} from '../../../tests/utilities';
 import {
   ExportStyle,
   getLatestModifiedTime,
@@ -9,7 +12,7 @@ import {getModifiedTime, writeToSrc, createTestPackage} from './utilities';
 describe('utilities', () => {
   describe('getLatestModifiedTime()', () => {
     it('gets the latest modified time', async () => {
-      await withWorkspace('simple-package', async (workspace) => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
         const fileExtensions = ['.js'];
 
@@ -32,7 +35,7 @@ describe('utilities', () => {
     });
 
     it('gets the latest modified time of a group of files', async () => {
-      await withWorkspace('simple-package', async (workspace) => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
         const fileExtensions = ['.js', '.ts', '.mjs'];
 
@@ -63,7 +66,7 @@ describe('utilities', () => {
     });
 
     it('excludes .ts file extensions when it is not included in fileExtensions', async () => {
-      await withWorkspace('simple-package', async (workspace) => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
         const fileExtensions = ['.js'];
 
@@ -104,7 +107,7 @@ describe('utilities', () => {
     };
 
     it('generates the same hash for unchanged options/dependencies/modified time', async () => {
-      await withWorkspace('simple-package', async (workspace) => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
 
         expect(
@@ -114,7 +117,7 @@ describe('utilities', () => {
     });
 
     it('generates a different hash if the Babel config changes', async () => {
-      await withWorkspace('simple-package', async (workspace) => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
         const newOptions = {
           ...options,
@@ -133,7 +136,7 @@ describe('utilities', () => {
     });
 
     it('generates a different hash if the output path changes', async () => {
-      await withWorkspace('simple-package', async (workspace) => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
         const newOptions = {
           ...options,
@@ -149,7 +152,7 @@ describe('utilities', () => {
     });
 
     it('generates a different hash if the extension changes', async () => {
-      await withWorkspace('simple-package', async (workspace) => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
         const newOptions = {
           ...options,
@@ -165,7 +168,7 @@ describe('utilities', () => {
     });
 
     it('generates a different hash if the export style changes', async () => {
-      await withWorkspace('simple-package', async (workspace) => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
         const newOptions = {
           ...options,
@@ -181,7 +184,7 @@ describe('utilities', () => {
     });
 
     it('generates a different hash if the cache dependencies change', async () => {
-      await withWorkspace('simple-package', async (workspace) => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
         const newOptions = {
           ...options,
@@ -200,7 +203,7 @@ describe('utilities', () => {
     });
 
     it('generates a different hash if the ignore patterns change', async () => {
-      await withWorkspace('simple-package', async (workspace) => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
         const newOptions = {
           ...options,
@@ -216,7 +219,7 @@ describe('utilities', () => {
     });
 
     it('generates a different hash if the extensions change', async () => {
-      await withWorkspace('simple-package', async (workspace) => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
         const newOptions = {
           ...options,
@@ -232,7 +235,7 @@ describe('utilities', () => {
     });
 
     it('generates a different hash if the last modified time changes', async () => {
-      await withWorkspace('simple-package', async (workspace) => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
 
         await writeToSrc(workspace, 'file.js');
@@ -248,7 +251,7 @@ describe('utilities', () => {
     });
 
     it('generates the same hash if only a excluded file changes', async () => {
-      await withWorkspace('simple-package', async (workspace) => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
 
         await writeToSrc(workspace, 'file.esnext');
