@@ -1,6 +1,9 @@
 import {resolve} from 'path';
 
-import {withWorkspace} from '../../../tests/utilities';
+import {
+  withWorkspace,
+  generateUniqueWorkspaceID,
+} from '../../../tests/utilities';
 import {getModifiedTime, writeToSrc} from './utilities';
 
 const babelCompilationConfig = `
@@ -68,7 +71,7 @@ describe('@sewing-kit/plugin-javascript', () => {
   describe('createCompileBabelStep()', () => {
     describe('caching', () => {
       it('creates a cache', async () => {
-        await withWorkspace('simple-package', async (workspace) => {
+        await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
           await workspace.writeConfig(babelCompilationConfig);
           await writeToSrc(workspace, 'index.js');
 
@@ -83,7 +86,7 @@ describe('@sewing-kit/plugin-javascript', () => {
       });
 
       it('reads from the cache and skips compilation if hash is same', async () => {
-        await withWorkspace('simple-package', async (workspace) => {
+        await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
           const builtIndexFilePath = resolve(
             workspace.root,
             'build',
@@ -111,7 +114,7 @@ describe('@sewing-kit/plugin-javascript', () => {
       });
 
       it('invalidates cache if something changes', async () => {
-        await withWorkspace('simple-package', async (workspace) => {
+        await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
           const builtIndexFilePath = resolve(
             workspace.root,
             'build',
