@@ -335,11 +335,8 @@ export function getLatestModifiedTime(pkg: Package, babelExtensions: string[]) {
               : `{${babelExtensions.join(',')}}`
           }`,
         );
-  return compiledFiles.reduce((latestTime, file) => {
-    const {mtimeMs} = stat(file);
 
-    return mtimeMs > latestTime ? mtimeMs : latestTime;
-  }, 0);
+  return Math.max(...compiledFiles.map((file) => stat(file).mtimeMs));
 }
 
 async function writeEntries({
