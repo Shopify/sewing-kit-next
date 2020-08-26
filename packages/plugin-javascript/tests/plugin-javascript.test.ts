@@ -71,7 +71,9 @@ describe('@sewing-kit/plugin-javascript', () => {
   describe('createCompileBabelStep()', () => {
     describe('caching', () => {
       it('creates a cache', async () => {
-        await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+        const workspaceID = generateUniqueWorkspaceID();
+
+        await withWorkspace(workspaceID, async (workspace) => {
           await workspace.writeConfig(babelCompilationConfig);
           await writeToSrc(workspace, 'index.js');
 
@@ -79,7 +81,7 @@ describe('@sewing-kit/plugin-javascript', () => {
 
           expect(
             await workspace.contains(
-              '.sewing-kit/cache/babel/packages/simple-package/babel-esm-js',
+              `.sewing-kit/cache/babel/packages/${workspaceID}/babel-esm-js`,
             ),
           ).toBe(true);
         });
