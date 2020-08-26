@@ -1,4 +1,6 @@
 import {resolve, relative} from 'path';
+import {sync as glob} from 'glob';
+import {statSync as stat} from 'fs';
 import {createHash} from 'crypto';
 
 import nodeObjectHash from 'node-object-hash';
@@ -15,6 +17,7 @@ import {
   ValueOrGetter,
   MissingPluginError,
 } from '@sewing-kit/plugins';
+import {FileSystem} from '@sewing-kit/model';
 
 import type {BabelHooks, BabelConfig} from './types';
 import type {Options as BabelPresetOptions} from './babel-preset';
@@ -100,14 +103,10 @@ function babelCacheIdentifier(
 ) {
   const optionsHash = nodeObjectHash().hash(babelOptions);
   const prefix = `sk:${env}:`;
-  const dependencyString = ['webpack', ...dependencies]
-    .map(
-      (dependency) =>
-        `${dependency}:${
-          project.dependency(dependency)?.version || 'notinstalled'
-        }`,
-    )
-    .join('&');
+  const dependencyString = createDependencyString(
+    ['webpack', ...dependencies],
+    project,
+  );
 
   return `${prefix}${createHash('md5')
     .update(dependencyString)
@@ -122,6 +121,8 @@ interface CompileBabelOptions {
   readonly outputPath: string;
   readonly extension?: string;
   readonly exportStyle?: ExportStyle;
+  readonly cache?: boolean;
+  readonly cacheDependencies?: string[];
 }
 
 export function createCompileBabelStep({
@@ -130,8 +131,10 @@ export function createCompileBabelStep({
   configuration,
   configFile,
   outputPath,
-  extension,
-  exportStyle,
+  extension = '.js',
+  exportStyle = ExportStyle.CommonJs,
+  cache,
+  cacheDependencies: initialCacheDependencies = [],
 }: CompileBabelOptions) {
   return api.createStep(
     {id: 'Babel.Compile', label: 'compile with babel'},
@@ -146,6 +149,7 @@ export function createCompileBabelStep({
         babelConfig,
         babelIgnorePatterns,
         babelExtensions,
+        babelCacheDependencies = [],
       ] = await Promise.all([
         configuration.babelConfig.run({
           presets: [CORE_PRESET],
@@ -166,7 +170,37 @@ export function createCompileBabelStep({
         }),
         configuration.babelIgnorePatterns!.run(['**/*.test.js']),
         configuration.babelExtensions!.run(['.mjs', '.js']),
+        configuration.babelCacheDependencies?.run([
+          '@babel/core',
+          ...initialCacheDependencies,
+        ]),
       ]);
+
+      // Check Babel package build cache
+      if (cache) {
+        const cacheFS = new FileSystem(
+          api.cachePath('babel', 'packages', pkg.name),
+        );
+        const cacheValue = generateBabelPackageCacheValue(pkg, {
+          babelConfig,
+          outputPath,
+          extension,
+          exportStyle,
+          babelCacheDependencies: [...babelCacheDependencies],
+          babelIgnorePatterns: [...babelIgnorePatterns],
+          babelExtensions: [...babelExtensions],
+        });
+        const cachePath = cacheFS.resolvePath(configFile.replace(/\./g, '-'));
+
+        if (await readBabelPackageCache(cacheFS, cacheValue, cachePath)) {
+          step.log(
+            `Successfully read from Babel cache for package ${pkg.name} (config: ${configFile}), skipping compilation`,
+          );
+          return;
+        } else {
+          await writeBabelPackageCache(cacheFS, cacheValue, cachePath);
+        }
+      }
 
       // We write a private config file for the build so that we can point
       // the webpack CLI at an actual configuration file.
@@ -182,10 +216,9 @@ export function createCompileBabelStep({
       );
 
       const sourceRoot = resolve(pkg.root, 'src');
-      const replaceExtension =
-        extension == null || extension.startsWith('.')
-          ? extension
-          : `.${extension}`;
+      const replaceExtension = extension.startsWith('.')
+        ? extension
+        : `.${extension}`;
 
       // TODO: use `cacheDependencies` and cache directories to get good caching going here
       await step.exec('node_modules/.bin/babel', [
@@ -221,11 +254,99 @@ export function createCompileBabelStep({
   );
 }
 
+async function readBabelPackageCache(
+  cacheFS: FileSystem,
+  newCacheValue: string,
+  cachePath: string,
+) {
+  try {
+    return (await cacheFS.read(cachePath)) === newCacheValue;
+  } catch (err) {
+    return false;
+  }
+}
+
+async function writeBabelPackageCache(
+  cacheFS: FileSystem,
+  cacheValue: string,
+  cachePath: string,
+) {
+  await cacheFS.write(cachePath, cacheValue);
+}
+
+interface BabelPackageCacheOptions {
+  babelConfig: BabelConfig;
+  outputPath: string;
+  extension: string;
+  exportStyle: ExportStyle;
+  babelCacheDependencies: string[];
+  babelIgnorePatterns: string[];
+  babelExtensions: string[];
+}
+
+export function generateBabelPackageCacheValue(
+  pkg: Package,
+  {
+    babelConfig,
+    outputPath,
+    extension,
+    exportStyle,
+    babelCacheDependencies,
+    babelIgnorePatterns,
+    babelExtensions,
+  }: BabelPackageCacheOptions,
+) {
+  const optionsString = [
+    outputPath,
+    extension,
+    exportStyle,
+    ...babelIgnorePatterns,
+    ...babelExtensions,
+  ].join('&');
+  const dependencyModifiedTimeHash = createHash('md5')
+    .update(createDependencyString([...babelCacheDependencies], pkg))
+    .update(String(getLatestModifiedTime(pkg, babelExtensions)))
+    .digest('hex');
+  const configHash = nodeObjectHash().hash(babelConfig);
+
+  return `${optionsString}+${dependencyModifiedTimeHash}+${configHash}`;
+}
+
+function createDependencyString(dependencies: string[], project: Project) {
+  return dependencies
+    .map(
+      (dependency) =>
+        `${dependency}:${
+          project.dependency(dependency)?.version || 'notinstalled'
+        }`,
+    )
+    .join('&');
+}
+
+export function getLatestModifiedTime(pkg: Package, babelExtensions: string[]) {
+  const sourceRoot = resolve(pkg.root, 'src');
+  const compiledFiles =
+    babelExtensions.length === 0
+      ? []
+      : glob(
+          `${sourceRoot}/**/*${
+            babelExtensions.length === 1
+              ? babelExtensions[0]
+              : `{${babelExtensions.join(',')}}`
+          }`,
+        );
+  return compiledFiles.reduce((latestTime, file) => {
+    const {mtimeMs} = stat(file);
+
+    return mtimeMs > latestTime ? mtimeMs : latestTime;
+  }, 0);
+}
+
 async function writeEntries({
   project,
-  extension = '.js',
+  extension,
   outputPath,
-  exportStyle = ExportStyle.CommonJs,
+  exportStyle,
 }: Pick<
   CompileBabelOptions,
   'project' | 'extension' | 'outputPath' | 'exportStyle'
