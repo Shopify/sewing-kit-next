@@ -36,14 +36,17 @@ export default createWorkspace((workspace) => {
     eslint(),
     jest(),
     workspaceTypeScript(),
-    createWorkspaceTestPlugin('JestCoveragePlugin', ({testTaskHooks}) => {
-      testTaskHooks.configure.hook((configHooks) => {
-        configHooks.jestConfig?.hook((jestConfig) => ({
-          ...jestConfig,
-          coverageDirectory: './coverage',
-        }));
-      });
-    }),
+    createWorkspaceTestPlugin(
+      'JestCoveragePlugin',
+      ({hooks: testTaskHooks}) => {
+        testTaskHooks.configure.hook((configHooks) => {
+          configHooks.jestConfig?.hook((jestConfig) => ({
+            ...jestConfig,
+            coverageDirectory: './coverage',
+          }));
+        });
+      },
+    ),
   );
 });
 ```
