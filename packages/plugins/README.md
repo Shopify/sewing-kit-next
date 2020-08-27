@@ -51,6 +51,31 @@ export default createWorkspace((workspace) => {
 });
 ```
 
-Plugins can do anything from configuring hooks, adding steps to tasks, or introducing hooks for other plugins to hook into. Note that `JestCoveragePlugin` makes use of the `jestConfig` hook, which isn't provided by core Sewing Kit but is introduced to the setup by `jest`.
+Plugins can do anything from configuring hooks, adding steps to tasks, or introducing hooks for other plugins to hook into. Note that `JestCoveragePlugin` makes use of the `jestConfig` hook, which isn't provided by core Sewing Kit but is introduced to the workspace by `jest`.
 
 ## Usage
+
+### Plugin creation
+
+The following functions are provided by `@sewing-kit/plugins` to help make writing your own plugins easier:
+
+**For composing several plugins into one:**
+
+- `createComposedProjectPlugin()`
+- `createComposedWorkspacePlugin()`
+
+**For project plugins:**
+
+- `createProjectBuildPlugin()`
+- `createProjectDevPlugin()`
+- `createProjectPlugin()`
+- `createProjectTestPlugin()`
+
+**For workspace plugins:**
+
+- `createWorkspaceBuildPlugin()`
+- `createWorkspaceDevPlugin()`
+- `createWorkspaceLintPlugin()`
+- `createWorkspacePlugin()`
+- `createWorkspaceTestPlugin()`
+- `createWorkspaceTypeCheckPlugin()`
