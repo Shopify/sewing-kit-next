@@ -1,23 +1,21 @@
 # `@sewing-kit/model`
 
-The sewing-kit model is based on the concepts of a Project and Workspace. A Project can be a Package, WebApp, or Service. Each type of Project has configurable options. A Workspace can then be made up any combination of Packages, WebApps or Services.
+Sewing-kit parses the shape of a codebase by modeling it into concepts it understands. At a high-level these these concepts are a `Workspace` and `Project`.
+
+### Project
+
+A `Project` can be a either a `Package` (NPM library), `WebApp` (a react app) or `Service` (a Node.js server).
+
+### Workspace
+
+A `Workspace` is a composition of `Project`s. It includes all the `WebApp`, `Package`, and `Services` for a given codebase.
+
+### Base
+
+`Workspace`, `WebApp`, `Package`, and `Service` all extend a `Base` class. The `Base` class provides a number of useful properties for the classes extending it. These include the a root directory, the NPM dependencies used, and an `fs` property which should be used for all `FileSystem` related operations.
 
 ## Installation
 
 ```
 yarn add @sewing-kit/model --dev
 ```
-
-## Usage
-
-### Workspace
-
-`projects()` gets all of the projects defined in the workspace
-
-`private()` A workspace is defined as private if it contains a WebApp or Service project. Package workspaces, with package projects only, that may be published, would not be considered private.
-
-### Project
-
-A project consists of a name, and a root folder containing a `package.json` defining its dependencies.
-
-`id()` returns the id for the project. A project id is derived from the name and prefixed with the type of project (Package, WebApp or Service). For example, `'WebApp.myProject'`.

@@ -34,38 +34,38 @@ yarn sk <command> <options>
 
 | Option          | Description                                                    | Type and Default                   |
 | --------------- | -------------------------------------------------------------- | ---------------------------------- |
-| `--source-maps` | Generate sourcemaps for the build                              | `bool`, defaults to `false`        |
+| `--source-maps` | Generate sourcemaps for the build                              | `boolean`, defaults to `false`     |
 | `--env`         | Whether to build for `production` (or `prod`) or `development` | `string`, defaults to `production` |
 
 ### `dev`
 
-| Option          | Description                       | Type and Default             |
-| --------------- | --------------------------------- | ---------------------------- |
-| `--source-maps` | Generate sourcemaps for the build | `bool`, defaults to `false`  |
-| `--reload`      | Use fast reloading (`fast`)       | `string`, defaults to `none` |
+| Option          | Description                       | Type and Default               |
+| --------------- | --------------------------------- | ------------------------------ |
+| `--source-maps` | Generate sourcemaps for the build | `boolean`, defaults to `false` |
+| `--reload`      | Use fast reloading (`fast`)       | `string`, defaults to `none`   |
 
 ### `test`
 
 | Option                | Description                                                                                    | Type and Default                      |
 | --------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------- |
 | `--help`              | Display options and their descriptions (WIP)                                                   |                                       |
-| `--no-watch`          | Turn off watch mode                                                                            | `bool`, defaults to `false`           |
-| `--coverage`          | Generate coverage data                                                                         | `bool` defaults to `false`            |
-| `--debug`             | Run tests in debug mode (for instance, with `plugin-jest` this enables the `runInBand` option) | `bool`, defaults to `false`           |
-| `--update-snapshots`  | Enable [snapshots](https://jestjs.io/docs/en/cli#--updatesnapshot) for failed tests            | `bool`, defaults to `false`           |
+| `--no-watch`          | Turn off watch mode                                                                            | `boolean`, defaults to `false`        |
+| `--coverage`          | Generate coverage data                                                                         | `boolean` defaults to `false`         |
+| `--debug`             | Run tests in debug mode (for instance, with `plugin-jest` this enables the `runInBand` option) | `boolean`, defaults to `false`        |
+| `--update-snapshots`  | Enable [snapshots](https://jestjs.io/docs/en/cli#--updatesnapshot) for failed tests            | `boolean`, defaults to `false`        |
 | `--test-name-pattern` | Matching string or globbing pattern to run specific tests                                      | `string`, defaults to running nothing |
 
 ### `lint`
 
-| Option          | Description                                                                                                       | Type and Default            |
-| --------------- | ----------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| `--fix`         | Fix lint errors                                                                                                   | `bool`, defaults to `false` |
-| `--cache`       | Cache linting results for performance                                                                             | `bool`, defaults to `true`  |
-| `--allow-empty` | [Allow matchless globs](https://eslint.org/docs/user-guide/command-line-interface#-no-error-on-unmatched-pattern) | `bool`, defaults to `false` |
+| Option          | Description                                                                                                       | Type and Default               |
+| --------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `--fix`         | Fix lint errors                                                                                                   | `boolean`, defaults to `false` |
+| `--cache`       | Cache linting results for performance                                                                             | `boolean`, defaults to `true`  |
+| `--allow-empty` | [Allow matchless globs](https://eslint.org/docs/user-guide/command-line-interface#-no-error-on-unmatched-pattern) | `boolean`, defaults to `false` |
 
 ### `type-check`
 
-| Option    | Description              | Type and Default            |
-| --------- | ------------------------ | --------------------------- |
-| `--watch` | Type-check in watch mode | `bool`, defaults to `false` |
-| `--cache` | Cache type-check results | `bool`, defaults to `true`  |
+| Option    | Description              | Type and Default               |
+| --------- | ------------------------ | ------------------------------ |
+| `--watch` | Type-check in watch mode | `boolean`, defaults to `false` |
+| `--cache` | Cache type-check results | `boolean`, defaults to `true`  |
