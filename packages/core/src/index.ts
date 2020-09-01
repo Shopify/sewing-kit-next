@@ -12,3 +12,5 @@ export {LogLevel} from './types';
 export {DiagnosticError, isDiagnosticError} from './errors';
 export {TargetBuilder, TargetRuntime} from './target';
 export type {Target} from './target';
+
+export * from '@sewing-kit/model';

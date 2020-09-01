@@ -2,9 +2,15 @@ import {dirname, basename} from 'path';
 import {sync as glob} from 'glob';
 import {pathExists} from 'fs-extra';
 
-import {Package, WebApp, Service, Workspace, Project} from '@sewing-kit/model';
 import {ProjectPlugin, AnyPlugin} from '@sewing-kit/plugins';
-import {DiagnosticError} from '@sewing-kit/core';
+import {
+  Package,
+  WebApp,
+  Service,
+  Workspace,
+  Project,
+  DiagnosticError,
+} from '@sewing-kit/core';
 
 import {
   ConfigurationBuilderResult,
