@@ -59,7 +59,7 @@ export default createPackage((pkg) => {
 // app/ui/sewing-kit.config.ts
 
 import {createWebApp} from '@sewing-kit/config';
-import {myPlugins} from '../../config/myPlugins';
+import {myPlugins} from '../../config/my-plugins';
 
 export default createWebApp((app) => {
   // tell sewing-kit the entry into the app

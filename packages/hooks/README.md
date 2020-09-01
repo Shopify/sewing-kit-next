@@ -10,7 +10,7 @@ yarn add @sewing-kit/hooks --dev
 
 ## Overview
 
-Hooks, along with [plugins](../packages/plugins), form the functional heart of `sewing-kit`. Inspired by webpack's [tapable](https://codeburst.io/what-the-hook-learn-the-basics-of-tapable-d95eb0401e2c) [library](https://github.com/webpack/tapable), hooks provide a way for plugins to tap into `sewing-kit` tasks in order to impart functionality to your workspace's dev setup.
+Hooks, along with [plugins](../packages/plugins), form the functional heart of `sewing-kit`. Inspired by webpack's [tapable library](https://github.com/webpack/tapable) ([guide](https://codeburst.io/what-the-hook-learn-the-basics-of-tapable-d95eb0401e2c)), hooks provide a way for plugins to tap into `sewing-kit` tasks in order to impart functionality to your workspace's dev setup.
 
 ## SeriesHook
 
