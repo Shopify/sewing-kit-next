@@ -12,13 +12,28 @@ yarn add @sewing-kit/hooks --dev
 
 Hooks, along with [plugins](../packages/plugins), form the functional heart of `sewing-kit`. Inspired by webpack's [tapable library](https://github.com/webpack/tapable) ([guide](https://codeburst.io/what-the-hook-learn-the-basics-of-tapable-d95eb0401e2c)), hooks provide a way for plugins to tap into `sewing-kit` tasks in order to impart functionality to your workspace's dev setup.
 
-## SeriesHook
+## Calling hooks
 
-- TODO
+The two types of hooks provided are a `SeriesHook` and a `WaterfallHook`. Both of these clases provide a `hook` and `run` method
 
-## WaterfallHook
+```tsx
+import {SeriesHook} from '@sewing-kit/hooks';
 
-- TODO
+const dog = {
+  breed: new SeriesHook<string>(),
+};
+
+dog.breed.hook((breed) => {
+  console.log('Received changes on the breed: ', breed);
+});
+
+dog.breed.run('American Bully');
+// Received changes on the breed: American Bully
+```
+
+### SeriesHook vs WaterfallHooks
+
+When `run` is called on a `SeriesHook` all the conainted hooks are resolved in sequential order. With a `Waterfall` hook, the result of a hook is passed in as the argument for the next hook.
 
 ## Usage
 

@@ -25,7 +25,7 @@ export type SeriesHookFunction<First, Second, Third> = (
 ) => void | Promise<void>;
 
 export class SeriesHook<First = Unset, Second = Unset, Third = Unset> {
-  private hooks = new Set<SeriesHookFunction<First, Second, Third>>();
+  public hooks = new Set<SeriesHookFunction<First, Second, Third>>();
 
   get hasHooks() {
     return this.hooks.size > 0;
