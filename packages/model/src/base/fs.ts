@@ -12,7 +12,7 @@ import glob, {IOptions as GlobOptions} from 'glob';
 export class FileSystem {
   constructor(public readonly root: string) {}
 
-  read(file: string) {
+  async read(file: string) {
     return readFile(this.resolvePath(file), 'utf8');
   }
 
