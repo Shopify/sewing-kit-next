@@ -25,7 +25,7 @@ export class Base {
     this.packageJson = PackageJson.load(this.root);
   }
 
-  dependencies({prod = true, dev, all}: DependencyOptions = {}) {
+  dependencies({prod, dev, all}: DependencyOptions = {prod: true}) {
     const dependencies: string[] = [];
 
     if (this.packageJson == null) {
