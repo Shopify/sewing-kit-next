@@ -23,63 +23,55 @@ describe('FileSystem', () => {
   });
 
   describe('write', () => {
+    const fileName = 'something.txt';
+    const nestedFileName = 'some/thing.txt';
+
+    afterEach(async () => {
+      await rm(fileName);
+      await rm('some');
+    });
+
     it('writes file', async () => {
-      const fileName = 'something.txt';
       const contents = 'hi, world';
+      await fileSystem.write(fileName, contents);
+      const fileContents = await fileSystem.read(fileName);
 
-      try {
-        await fileSystem.write(fileName, contents);
-        const fileContents = await fileSystem.read(fileName);
-
-        expect(fileContents).toBe(contents);
-      } finally {
-        await rm(fileName);
-      }
+      expect(fileContents).toBe(contents);
     });
 
     it('writes nested file', async () => {
-      const fileName = 'some/thing.txt';
       const contents = 'hi, world';
+      await fileSystem.write(nestedFileName, contents);
+      const fileContents = await fileSystem.read(nestedFileName);
 
-      try {
-        await fileSystem.write(fileName, contents);
-        const fileContents = await fileSystem.read(fileName);
-
-        expect(fileContents).toBe(contents);
-      } finally {
-        await rm('some');
-      }
+      expect(fileContents).toBe(contents);
     });
   });
 
   describe('copy', () => {
+    const toFile = 'copy.json';
+    const toDir = 'copied-folder';
+
+    afterEach(async () => {
+      await rm(toFile);
+      await rm(toDir);
+    });
+
     it('copies file', async () => {
       const fromFile = 'file.json';
-      const toFile = 'copy.json';
+      await fileSystem.copy(fromFile, toFile);
+      const fileContents = await fileSystem.read(toFile);
 
-      try {
-        await fileSystem.copy(fromFile, toFile);
-        const fileContents = await fileSystem.read(toFile);
-
-        expect(fileContents).toBe(`{ "foo": "bar" }\n`);
-      } finally {
-        await rm(toFile);
-      }
+      expect(fileContents).toBe(`{ "foo": "bar" }\n`);
     });
 
     it('copies directory', async () => {
       const fromDir = 'folder';
-      const toDir = 'copied-folder';
+      await fileSystem.copy(fromDir, toDir);
+      const dirGlob = await fileSystem.glob(`${toDir}/*`);
+      const [file] = dirGlob;
 
-      try {
-        await fileSystem.copy(fromDir, toDir);
-        const dirGlob = await fileSystem.glob(`${toDir}/*`);
-        const [file] = dirGlob;
-
-        expect(file).toMatch('copied-folder/file.json');
-      } finally {
-        await rm(toDir);
-      }
+      expect(file).toMatch('copied-folder/file.json');
     });
   });
 
