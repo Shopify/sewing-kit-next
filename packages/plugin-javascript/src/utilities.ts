@@ -17,7 +17,6 @@ import {
   ValueOrGetter,
   MissingPluginError,
 } from '@sewing-kit/plugins';
-import {FileSystem} from '@sewing-kit/model';
 
 import type {BabelHooks, BabelConfig} from './types';
 import type {Options as BabelPresetOptions} from './babel-preset';
@@ -178,9 +177,6 @@ export function createCompileBabelStep({
 
       // Check Babel package build cache
       if (cache) {
-        const cacheFS = new FileSystem(
-          api.cachePath('babel', 'packages', pkg.name),
-        );
         const cacheValue = generateBabelPackageCacheValue(pkg, {
           babelConfig,
           outputPath,
@@ -190,15 +186,19 @@ export function createCompileBabelStep({
           babelIgnorePatterns: [...babelIgnorePatterns],
           babelExtensions: [...babelExtensions],
         });
-        const cachePath = cacheFS.resolvePath(configFile.replace(/\./g, '-'));
+        const cacheRoot = api.cachePath('babel', 'packages', pkg.name);
+        const cachePath = api.resolvePath(
+          cacheRoot,
+          configFile.replace(/\./g, '-'),
+        );
 
-        if (await readBabelPackageCache(cacheFS, cacheValue, cachePath)) {
+        if (await validCache(api.read, cachePath, cacheValue)) {
           step.log(
             `Successfully read from Babel cache for package ${pkg.name} (config: ${configFile}), skipping compilation`,
           );
           return;
         } else {
-          await writeBabelPackageCache(cacheFS, cacheValue, cachePath);
+          await api.write(cachePath, cacheValue);
         }
       }
 
@@ -254,24 +254,16 @@ export function createCompileBabelStep({
   );
 }
 
-async function readBabelPackageCache(
-  cacheFS: FileSystem,
-  newCacheValue: string,
+async function validCache(
+  read: (path: string) => Promise<string>,
   cachePath: string,
+  newCacheValue: string,
 ) {
   try {
-    return (await cacheFS.read(cachePath)) === newCacheValue;
+    return (await read(cachePath)) === newCacheValue;
   } catch (err) {
     return false;
   }
-}
-
-async function writeBabelPackageCache(
-  cacheFS: FileSystem,
-  cacheValue: string,
-  cachePath: string,
-) {
-  await cacheFS.write(cachePath, cacheValue);
 }
 
 interface BabelPackageCacheOptions {
@@ -296,20 +288,22 @@ export function generateBabelPackageCacheValue(
     babelExtensions,
   }: BabelPackageCacheOptions,
 ) {
-  const optionsString = [
+  const optionsHash = nodeObjectHash().hash({
     outputPath,
     extension,
     exportStyle,
-    ...babelIgnorePatterns,
-    ...babelExtensions,
-  ].join('&');
+    babelIgnorePatterns,
+    babelExtensions,
+  });
+
   const dependencyModifiedTimeHash = createHash('md5')
     .update(createDependencyString([...babelCacheDependencies], pkg))
     .update(String(getLatestModifiedTime(pkg, babelExtensions)))
     .digest('hex');
+
   const configHash = nodeObjectHash().hash(babelConfig);
 
-  return `${optionsString}+${dependencyModifiedTimeHash}+${configHash}`;
+  return `${optionsHash}+${dependencyModifiedTimeHash}+${configHash}`;
 }
 
 function createDependencyString(dependencies: string[], project: Project) {
