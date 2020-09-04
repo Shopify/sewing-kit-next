@@ -152,6 +152,7 @@ async function loadConfig<
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require('@babel/register')({
       extensions: ['.mjs', '.js', '.ts', '.tsx'],
+      ignore: [ignoreFromCompilation],
       presets: [
         require.resolve('@babel/preset-typescript'),
         [require.resolve('@babel/preset-env'), {targets: {node: true}}],
@@ -165,6 +166,7 @@ async function loadConfig<
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require('@babel/register')({
       extensions: ['.mjs', '.js'],
+      ignore: [ignoreFromCompilation],
       presets: [
         [require.resolve('@babel/preset-env'), {targets: {node: true}}],
       ],
@@ -174,6 +176,12 @@ async function loadConfig<
   }
 
   return loadConfigFile<T>(file, context);
+
+  function ignoreFromCompilation(filePath: string) {
+    // sewing-kit-next CI chokes on .sewing-kit files
+    const ignoreFolders = ['node_modules', '.sewing-kit'];
+    return ignoreFolders.some((folder) => filePath.includes(folder));
+  }
 }
 
 async function loadConfigFile<T extends {name: string; root: string}>(
