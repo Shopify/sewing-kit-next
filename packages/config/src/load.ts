@@ -149,8 +149,9 @@ async function loadConfig<
   }
 
   if (IS_TSX.test(file)) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require('@babel/register')({
+    const babelRegister = await import('@babel/register');
+
+    babelRegister({
       extensions: ['.mjs', '.js', '.ts', '.tsx'],
       presets: [
         require.resolve('@babel/preset-typescript'),
@@ -162,8 +163,9 @@ async function loadConfig<
   }
 
   if (IS_MJS.test(file)) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require('@babel/register')({
+    const babelRegister = await import('@babel/register');
+
+    babelRegister({
       extensions: ['.mjs', '.js'],
       presets: [
         [require.resolve('@babel/preset-env'), {targets: {node: true}}],
