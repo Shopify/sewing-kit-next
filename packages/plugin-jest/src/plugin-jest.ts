@@ -289,10 +289,14 @@ export function jest() {
               watchPlugins,
             });
 
-            await api.write(
-              rootConfigPath,
-              `module.exports = ${JSON.stringify(rootConfig)};`,
-            );
+            const config = `module.exports = ${JSON.stringify(rootConfig)};`;
+
+            // console.log(
+            //   'writing config: ',
+            //   JSON.stringify(rootConfig, null, ' '),
+            // );
+
+            await api.write(rootConfigPath, config);
           },
         ),
       ]);
