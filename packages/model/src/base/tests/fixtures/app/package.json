@@ -1,0 +1,11 @@
+{
+  "name": "fixture",
+  "private": true,
+  "devDependencies": {
+    "dev-dep": "0.0.5"
+  },
+  "dependencies": {
+    "dep": "0.0.2",
+    "other-dep": "0.0.3"
+  }
+}

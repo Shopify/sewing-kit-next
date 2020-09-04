@@ -13,10 +13,10 @@ export class PackageEntry {
   readonly name: string | undefined;
   readonly runtimes: Runtime[] | undefined;
 
-  constructor({root, name, runtimes}: PackageEntryOptions) {
+  constructor({root, name, runtime, runtimes}: PackageEntryOptions) {
     this.root = root;
     this.name = name;
-    this.runtimes = runtimes;
+    this.runtimes = runtime ? [runtime] : runtimes;
   }
 }
 
