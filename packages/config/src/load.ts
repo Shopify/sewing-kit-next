@@ -1,4 +1,4 @@
-import {dirname, basename} from 'path';
+import {dirname, basename, resolve} from 'path';
 import {sync as glob} from 'glob';
 import {pathExists} from 'fs-extra';
 
@@ -26,6 +26,8 @@ const DIRECTORIES_NOT_TO_USE_FOR_NAME = new Set([
 
 const IS_TSX = /.tsx?$/;
 const IS_MJS = /.mjs$/;
+
+const IGNORE_FOLDERS = ['node_modules', '.sewing-kit'];
 
 export interface LoadedWorkspace {
   readonly workspace: Workspace;
@@ -152,6 +154,7 @@ async function loadConfig<
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require('@babel/register')({
       extensions: ['.mjs', '.js', '.ts', '.tsx'],
+      ignore: [ignoreFromCompilation],
       presets: [
         require.resolve('@babel/preset-typescript'),
         [require.resolve('@babel/preset-env'), {targets: {node: true}}],
@@ -165,6 +168,7 @@ async function loadConfig<
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require('@babel/register')({
       extensions: ['.mjs', '.js'],
+      ignore: [ignoreFromCompilation],
       presets: [
         [require.resolve('@babel/preset-env'), {targets: {node: true}}],
       ],
@@ -174,6 +178,10 @@ async function loadConfig<
   }
 
   return loadConfigFile<T>(file, context);
+
+  function ignoreFromCompilation(filePath: string) {
+    return IGNORE_FOLDERS.some((folder) => filePath.includes(resolve(folder)));
+  }
 }
 
 async function loadConfigFile<T extends {name: string; root: string}>(
