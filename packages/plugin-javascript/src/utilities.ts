@@ -164,7 +164,7 @@ export function createCompileBabelStep({
             ],
           ],
         }),
-        configuration.babelIgnorePatterns!.run([]),
+        configuration.babelIgnorePatterns!.run(['**/*.test.js']),
         configuration.babelExtensions!.run(['.mjs', '.js']),
       ]);
 
@@ -203,10 +203,7 @@ export function createCompileBabelStep({
             noCopyIgnored: true,
             extensions: babelExtensions.join(','),
             // @see https://babeljs.io/docs/en/babel-cli#ignore-files
-            ignore:
-              babelIgnorePatterns.length > 0
-                ? babelIgnorePatterns.join(',')
-                : undefined,
+            ignore: babelIgnorePatterns.join(','),
             // @see https://babeljs.io/docs/en/babel-cli#set-file-extensions
             outFileExtension: replaceExtension,
           },

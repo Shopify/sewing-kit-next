@@ -12,6 +12,7 @@
     "types": ["supports-hyperlinks"]
   },
   "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts"],
   "references": [
     {"path": "../hooks"},
     {"path": "../tasks"},
