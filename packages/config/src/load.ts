@@ -1,4 +1,4 @@
-import {dirname, basename} from 'path';
+import {dirname, basename, resolve} from 'path';
 import {sync as glob} from 'glob';
 import {pathExists} from 'fs-extra';
 
@@ -26,6 +26,8 @@ const DIRECTORIES_NOT_TO_USE_FOR_NAME = new Set([
 
 const IS_TSX = /.tsx?$/;
 const IS_MJS = /.mjs$/;
+
+const IGNORE_FOLDERS = ['node_modules', '.sewing-kit'];
 
 export interface LoadedWorkspace {
   readonly workspace: Workspace;
@@ -178,9 +180,7 @@ async function loadConfig<
   return loadConfigFile<T>(file, context);
 
   function ignoreFromCompilation(filePath: string) {
-    // sewing-kit-next CI chokes on .sewing-kit files
-    const ignoreFolders = ['node_modules', '.sewing-kit'];
-    return ignoreFolders.some((folder) => filePath.includes(folder));
+    return IGNORE_FOLDERS.some((folder) => filePath.includes(resolve(folder)));
   }
 }
 
