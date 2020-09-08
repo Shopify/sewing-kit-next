@@ -158,42 +158,40 @@ describe('@sewing-kit/plugin-javascript', () => {
         });
 
         it('when a file is removed', async () => {
-          {
-            const fileToRemove = `some-dir/foo.js`;
+          const fileToRemove = `some-dir/foo.js`;
 
-            await withWorkspace(
-              generateUniqueWorkspaceID(),
-              async (workspace) => {
-                const builtIndexFilePath = resolve(
-                  workspace.root,
-                  'build',
-                  'esm',
-                  'index.mjs',
-                );
+          await withWorkspace(
+            generateUniqueWorkspaceID(),
+            async (workspace) => {
+              const builtIndexFilePath = resolve(
+                workspace.root,
+                'build',
+                'esm',
+                'index.mjs',
+              );
 
-                await workspace.writeConfig(babelCompilationConfig);
-                await writeToSrc(workspace, 'index.js');
-                await writeToSrc(workspace, fileToRemove);
+              await workspace.writeConfig(babelCompilationConfig);
+              await writeToSrc(workspace, 'index.js');
+              await writeToSrc(workspace, fileToRemove);
 
-                await workspace.run('build', ['--cache']);
+              await workspace.run('build', ['--cache']);
 
-                const initialBuildTime = getModifiedTime(builtIndexFilePath);
+              const initialBuildTime = getModifiedTime(builtIndexFilePath);
 
-                await workspace.removeFile(`src/${fileToRemove}`);
-                await workspace.run('build', ['--cache']);
+              await workspace.removeFile(`src/${fileToRemove}`);
+              await workspace.run('build', ['--cache']);
 
-                expect(initialBuildTime).not.toStrictEqual(
-                  getModifiedTime(builtIndexFilePath),
-                );
-              },
-            );
-          }
+              expect(initialBuildTime).not.toStrictEqual(
+                getModifiedTime(builtIndexFilePath),
+              );
+            },
+          );
         });
       });
     });
 
     describe('without --cache', () => {
-      it.only('does not ready from the cache', async () => {
+      it('does not ready from the cache', async () => {
         await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
           const builtIndexFilePath = resolve(
             workspace.root,
