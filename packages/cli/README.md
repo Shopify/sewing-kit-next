@@ -36,6 +36,7 @@ yarn sk <command> <options>
 | --------------- | -------------------------------------------------------------- | ---------------------------------- |
 | `--source-maps` | Generate sourcemaps for the build                              | `boolean`, defaults to `false`     |
 | `--env`         | Whether to build for `production` (or `prod`) or `development` | `string`, defaults to `production` |
+| `--no-cache`    | Runs a build without cache                                     | `boolean`, defaults to `false`     |
 
 ### `dev`
 

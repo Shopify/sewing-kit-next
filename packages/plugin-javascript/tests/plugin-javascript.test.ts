@@ -69,7 +69,7 @@ export default createPackage((pkg) => {
 
 describe('@sewing-kit/plugin-javascript', () => {
   describe('createCompileBabelStep()', () => {
-    describe('--cache', () => {
+    describe('cache', () => {
       it('reads from the cache and skips compilation if hash is same', async () => {
         await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
           const builtIndexFilePath = resolve(
@@ -82,11 +82,11 @@ describe('@sewing-kit/plugin-javascript', () => {
           await workspace.writeConfig(babelCompilationConfig);
           await writeToSrc(workspace, 'index.js');
 
-          await workspace.run('build', ['--cache']);
+          await workspace.run('build');
 
           const initialBuildTime = getModifiedTime(builtIndexFilePath);
 
-          await workspace.run('build', ['--cache']);
+          await workspace.run('build');
 
           expect(initialBuildTime).toStrictEqual(
             getModifiedTime(builtIndexFilePath),
@@ -109,7 +109,7 @@ describe('@sewing-kit/plugin-javascript', () => {
               await workspace.writeConfig(babelCompilationConfig);
               await writeToSrc(workspace, 'index.js');
 
-              await workspace.run('build', ['--cache']);
+              await workspace.run('build');
 
               const initialBuildTime = getModifiedTime(builtIndexFilePath);
 
@@ -119,7 +119,7 @@ describe('@sewing-kit/plugin-javascript', () => {
                 'console.log("changed");',
               );
 
-              await workspace.run('build', ['--cache']);
+              await workspace.run('build');
 
               expect(initialBuildTime).not.toStrictEqual(
                 getModifiedTime(builtIndexFilePath),
@@ -142,13 +142,13 @@ describe('@sewing-kit/plugin-javascript', () => {
               await workspace.writeConfig(babelCompilationConfig);
               await writeToSrc(workspace, 'index.js');
 
-              await workspace.run('build', ['--cache']);
+              await workspace.run('build');
 
               const initialBuildTime = getModifiedTime(builtIndexFilePath);
 
               await writeToSrc(workspace, 'new-index.js');
 
-              await workspace.run('build', ['--cache']);
+              await workspace.run('build');
 
               expect(initialBuildTime).not.toStrictEqual(
                 getModifiedTime(builtIndexFilePath),
@@ -174,12 +174,12 @@ describe('@sewing-kit/plugin-javascript', () => {
               await writeToSrc(workspace, 'index.js');
               await writeToSrc(workspace, fileToRemove);
 
-              await workspace.run('build', ['--cache']);
+              await workspace.run('build');
 
               const initialBuildTime = getModifiedTime(builtIndexFilePath);
 
               await workspace.removeFile(`src/${fileToRemove}`);
-              await workspace.run('build', ['--cache']);
+              await workspace.run('build');
 
               expect(initialBuildTime).not.toStrictEqual(
                 getModifiedTime(builtIndexFilePath),
@@ -190,7 +190,7 @@ describe('@sewing-kit/plugin-javascript', () => {
       });
     });
 
-    describe('without --cache', () => {
+    describe('--no-cache', () => {
       it('does not ready from the cache', async () => {
         await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
           const builtIndexFilePath = resolve(
@@ -203,11 +203,11 @@ describe('@sewing-kit/plugin-javascript', () => {
           await workspace.writeConfig(babelCompilationConfig);
           await writeToSrc(workspace, 'index.js');
 
-          await workspace.run('build', ['--cache']);
+          await workspace.run('build');
 
           const initialBuildTime = getModifiedTime(builtIndexFilePath);
 
-          await workspace.run('build');
+          await workspace.run('build', ['--no-cache']);
 
           expect(initialBuildTime).not.toStrictEqual(
             getModifiedTime(builtIndexFilePath),

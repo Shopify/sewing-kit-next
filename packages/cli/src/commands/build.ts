@@ -39,10 +39,14 @@ export const build = createCommand(
   {
     '--source-maps': Boolean,
     '--env': String,
-    '--cache': Boolean,
+    '--no-cache': Boolean,
   },
   async (
-    {'--env': rawEnv, '--source-maps': sourceMaps, '--cache': cache = false},
+    {
+      '--env': rawEnv,
+      '--source-maps': sourceMaps,
+      '--no-cache': noCache = false,
+    },
     context,
   ) => {
     const env = normalizeEnv(rawEnv);
@@ -51,7 +55,7 @@ export const build = createCommand(
       env,
       simulateEnv: env,
       sourceMaps,
-      cache,
+      cache: !noCache,
     });
   },
 );
