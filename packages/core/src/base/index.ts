@@ -12,8 +12,6 @@ export interface DependencyOptions {
   prod?: boolean;
 }
 
-export {FileSystem};
-
 export class Base {
   readonly name: string;
   readonly root: string;

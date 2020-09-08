@@ -11,7 +11,6 @@ export {Service} from './service';
 export type {ServiceOptions} from './service';
 export {Workspace} from './workspace';
 export type {WorkspaceOptions} from './workspace';
-export {FileSystem} from './base';
 
 export type Project =
   | import('./package').Package

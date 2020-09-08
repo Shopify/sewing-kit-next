@@ -69,24 +69,7 @@ export default createPackage((pkg) => {
 
 describe('@sewing-kit/plugin-javascript', () => {
   describe('createCompileBabelStep()', () => {
-    describe('caching', () => {
-      it('creates a cache', async () => {
-        const workspaceID = generateUniqueWorkspaceID();
-
-        await withWorkspace(workspaceID, async (workspace) => {
-          await workspace.writeConfig(babelCompilationConfig);
-          await writeToSrc(workspace, 'index.js');
-
-          await workspace.run('build');
-
-          expect(
-            await workspace.contains(
-              `.sewing-kit/cache/babel/packages/${workspaceID}/babel-esm-js`,
-            ),
-          ).toBe(true);
-        });
-      });
-
+    describe('--cache', () => {
       it('reads from the cache and skips compilation if hash is same', async () => {
         await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
           const builtIndexFilePath = resolve(
@@ -99,23 +82,118 @@ describe('@sewing-kit/plugin-javascript', () => {
           await workspace.writeConfig(babelCompilationConfig);
           await writeToSrc(workspace, 'index.js');
 
-          await workspace.run('build');
+          await workspace.run('build', ['--cache']);
 
-          const builtOutputModifiedTime = getModifiedTime(builtIndexFilePath);
+          const initialBuildTime = getModifiedTime(builtIndexFilePath);
 
-          await workspace.run('build');
+          await workspace.run('build', ['--cache']);
 
-          const updatedBuiltOutputModifiedTime = getModifiedTime(
-            builtIndexFilePath,
-          );
-
-          expect(builtOutputModifiedTime).toStrictEqual(
-            updatedBuiltOutputModifiedTime,
+          expect(initialBuildTime).toStrictEqual(
+            getModifiedTime(builtIndexFilePath),
           );
         });
       });
 
-      it('invalidates cache if something changes', async () => {
+      describe('updates the cache', () => {
+        it('when a file is changed', async () => {
+          await withWorkspace(
+            generateUniqueWorkspaceID(),
+            async (workspace) => {
+              const builtIndexFilePath = resolve(
+                workspace.root,
+                'build',
+                'esm',
+                'index.mjs',
+              );
+
+              await workspace.writeConfig(babelCompilationConfig);
+              await writeToSrc(workspace, 'index.js');
+
+              await workspace.run('build', ['--cache']);
+
+              const initialBuildTime = getModifiedTime(builtIndexFilePath);
+
+              await writeToSrc(
+                workspace,
+                'index.js',
+                'console.log("changed");',
+              );
+
+              await workspace.run('build', ['--cache']);
+
+              expect(initialBuildTime).not.toStrictEqual(
+                getModifiedTime(builtIndexFilePath),
+              );
+            },
+          );
+        });
+
+        it('when a file is added', async () => {
+          await withWorkspace(
+            generateUniqueWorkspaceID(),
+            async (workspace) => {
+              const builtIndexFilePath = resolve(
+                workspace.root,
+                'build',
+                'esm',
+                'index.mjs',
+              );
+
+              await workspace.writeConfig(babelCompilationConfig);
+              await writeToSrc(workspace, 'index.js');
+
+              await workspace.run('build', ['--cache']);
+
+              const initialBuildTime = getModifiedTime(builtIndexFilePath);
+
+              await writeToSrc(workspace, 'new-index.js');
+
+              await workspace.run('build', ['--cache']);
+
+              expect(initialBuildTime).not.toStrictEqual(
+                getModifiedTime(builtIndexFilePath),
+              );
+            },
+          );
+        });
+
+        it('when a file is removed', async () => {
+          {
+            const fileToRemove = `some-dir/foo.js`;
+
+            await withWorkspace(
+              generateUniqueWorkspaceID(),
+              async (workspace) => {
+                const builtIndexFilePath = resolve(
+                  workspace.root,
+                  'build',
+                  'esm',
+                  'index.mjs',
+                );
+
+                await workspace.writeConfig(babelCompilationConfig);
+                await writeToSrc(workspace, 'index.js');
+                await writeToSrc(workspace, fileToRemove);
+
+                await workspace.run('build', ['--cache']);
+
+                const initialBuildTime = getModifiedTime(builtIndexFilePath);
+
+                await workspace.removeFile(`src/${fileToRemove}`);
+                await workspace.run('build', ['--cache']);
+
+                expect(initialBuildTime).not.toStrictEqual(
+                  getModifiedTime(builtIndexFilePath),
+                );
+              },
+            );
+          }
+        });
+      });
+    });
+
+    describe('without --cache', () => {
+      it.only('does not ready from the cache', async () => {
         await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
           const builtIndexFilePath = resolve(
             workspace.root,
@@ -127,20 +205,14 @@ describe('@sewing-kit/plugin-javascript', () => {
           await workspace.writeConfig(babelCompilationConfig);
           await writeToSrc(workspace, 'index.js');
 
-          await workspace.run('build');
+          await workspace.run('build', ['--cache']);
 
-          const builtOutputModifiedTime = getModifiedTime(builtIndexFilePath);
-
-          await writeToSrc(workspace, 'index.js');
+          const initialBuildTime = getModifiedTime(builtIndexFilePath);
 
           await workspace.run('build');
 
-          const updatedBuiltOutputModifiedTime = getModifiedTime(
-            builtIndexFilePath,
-          );
-
-          expect(builtOutputModifiedTime).not.toStrictEqual(
-            updatedBuiltOutputModifiedTime,
+          expect(initialBuildTime).not.toStrictEqual(
+            getModifiedTime(builtIndexFilePath),
           );
         });
       });

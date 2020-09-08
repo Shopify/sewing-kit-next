@@ -11,6 +11,7 @@ import {
   readFile,
   pathExists,
   emptyDir,
+  remove,
 } from 'fs-extra';
 import toTree from 'tree-node-cli';
 
@@ -41,7 +42,8 @@ export class Workspace {
     const stderr = new TestOutputStream();
     const stdin = new Readable();
 
-    await (await commandMap[command]())([...args, '--root', this.root], {
+    const commandTask = await commandMap[command]();
+    await commandTask([...args, '--root', this.root], {
       __internal: {stdin, stdout, stderr},
     });
   }
@@ -54,6 +56,10 @@ export class Workspace {
     const path = this.resolvePath(file);
     await mkdirp(dirname(path));
     await writeFile(path, contents);
+  }
+
+  async removeFile(file) {
+    await remove(this.resolvePath(file));
   }
 
   contents(file: string) {
