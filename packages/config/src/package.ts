@@ -4,7 +4,7 @@ import {
   PackageOptions,
   PackageEntryOptions,
   PackageBinaryOptions,
-} from '@sewing-kit/model';
+} from '@sewing-kit/core';
 import {ProjectPlugin} from '@sewing-kit/plugins';
 
 import {BaseBuilder, ConfigurationKind} from './base';

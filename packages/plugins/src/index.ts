@@ -23,7 +23,7 @@ export {
   WebApp,
   Workspace,
   Runtime,
-} from '@sewing-kit/model';
+} from '@sewing-kit/core';
 
 export type {PluginApi} from './api';
 export {

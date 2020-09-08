@@ -1,8 +1,8 @@
-import {DiagnosticError, isDiagnosticError, Loggable} from '..';
+import {DiagnosticError, isDiagnosticError} from '..';
 
 const title = 'An error happened';
-const content: Loggable = ['This is what happened', 'and this'];
-const suggestion: Loggable = 'This is what you can do about it';
+const content = 'This is what happened';
+const suggestion = 'This is what you can do about it';
 
 describe('DiagnosticError', () => {
   it('defines a DiagnosticError', () => {

@@ -16,8 +16,14 @@ import {
   BuildTaskOptions,
   BuildWorkspaceTaskHooks,
 } from '@sewing-kit/tasks';
-import {TargetBuilder, Target, Step} from '@sewing-kit/core';
-import {WebApp, Service, Package} from '@sewing-kit/model';
+import {
+  TargetBuilder,
+  Target,
+  Step,
+  WebApp,
+  Service,
+  Package,
+} from '@sewing-kit/core';
 
 import {LogLevel} from './ui';
 import {run, StepDetails} from './runner';

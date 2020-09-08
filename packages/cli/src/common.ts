@@ -5,8 +5,15 @@ import {loadWorkspace, LoadedWorkspace} from '@sewing-kit/config/load';
 import {AnyPlugin, PluginApi} from '@sewing-kit/plugins';
 import {WaterfallHook, SeriesHook} from '@sewing-kit/hooks';
 import {WorkspaceTasks, ProjectTasks} from '@sewing-kit/tasks';
-import {Step, isDiagnosticError, Log, LogLevel} from '@sewing-kit/core';
-import {Package, Service, WebApp} from '@sewing-kit/model';
+import {
+  Step,
+  isDiagnosticError,
+  Log,
+  LogLevel,
+  Package,
+  Service,
+  WebApp,
+} from '@sewing-kit/core';
 
 import {Ui} from './ui';
 

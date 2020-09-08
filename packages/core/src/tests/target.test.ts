@@ -1,20 +1,10 @@
-import {Target, TargetBuilder, TargetRuntime} from '..';
-import {
-  WebApp,
-  Package,
-  Service,
-  Project,
-  ProjectKind,
-  Runtime,
-  WorkspaceOptions,
-  Workspace,
-} from '../../model';
+import {TargetRuntime} from '..';
+import {Runtime} from '../types';
 import {
   createTestWebAppWorkspace,
   createTestServiceWorkspace,
   createTestPackageWorkspace,
-  createTestComboWorkspace,
-} from '../../model/tests/utilities';
+} from './utilities';
 
 const name = 'test';
 const root = '../../';

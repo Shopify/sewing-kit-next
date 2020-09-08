@@ -15,9 +15,8 @@
   "references": [
     {"path": "../hooks"},
     {"path": "../tasks"},
-    {"path": "../core"},
     {"path": "../plugins"},
     {"path": "../config"},
-    {"path": "../model"}
+    {"path": "../core"}
   ]
 }

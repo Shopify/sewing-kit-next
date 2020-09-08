@@ -5,9 +5,8 @@ import {cursorTo, clearScreenDown, emitKeypressEvents} from 'readline';
 
 import exec from 'execa';
 import signalExit from 'signal-exit';
-import {Workspace} from '@sewing-kit/model';
-
 import {
+  Workspace,
   Step,
   LogLevel,
   Loggable,
@@ -82,8 +81,8 @@ class PersistentSection {
 }
 
 export type StepTarget =
-  | import('@sewing-kit/model').Project
-  | import('@sewing-kit/model').Workspace;
+  | import('@sewing-kit/core').Project
+  | import('@sewing-kit/core').Workspace;
 
 export interface StepDetails {
   readonly step: Step;

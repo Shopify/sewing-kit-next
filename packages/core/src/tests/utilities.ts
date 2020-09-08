@@ -1,4 +1,4 @@
-import {Options} from '../src/base';
+import {Options} from '../base';
 import {Workspace, WorkspaceOptions, Service, WebApp, Package} from '..';
 
 const name = 'test';

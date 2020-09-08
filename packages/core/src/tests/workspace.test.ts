@@ -1,11 +1,4 @@
-import {
-  Workspace,
-  WorkspaceOptions,
-  ProjectKind,
-  Service,
-  WebApp,
-  Package,
-} from '..';
+import {ProjectKind} from '..';
 import {
   createTestWebAppWorkspace,
   createTestPackageWorkspace,

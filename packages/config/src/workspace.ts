@@ -1,5 +1,5 @@
 import {WorkspacePlugin} from '@sewing-kit/plugins';
-import {WorkspaceOptions} from '@sewing-kit/model';
+import {WorkspaceOptions} from '@sewing-kit/core';
 import {BaseBuilder, ConfigurationKind} from './base';
 
 class WorkspaceBuilder extends BaseBuilder<WorkspacePlugin, WorkspaceOptions> {

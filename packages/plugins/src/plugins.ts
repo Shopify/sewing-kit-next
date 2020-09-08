@@ -1,4 +1,4 @@
-import {Project, WebApp, Package, Service, Workspace} from '@sewing-kit/model';
+import {Project, WebApp, Package, Service, Workspace} from '@sewing-kit/core';
 import {
   ProjectTasks,
   WorkspaceTasks,
