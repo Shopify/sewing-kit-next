@@ -1,4 +1,3 @@
-import {SeriesHook} from '@sewing-kit/hooks';
 import {
   createProjectPlugin,
   createProjectBuildPlugin,
@@ -16,6 +15,11 @@ import {
   PLUGIN_MARKER,
 } from '..';
 
+import {
+  createProjectPluginContext,
+  createWorkspacePluginContext,
+} from './utilities';
+
 describe('createProjectPlugin', () => {
   it('creates project plugin object', () => {
     const id = 'project-plugin';
@@ -30,55 +34,49 @@ describe('createProjectPlugin', () => {
 describe('createProjectBuildPlugin', () => {
   it('creates project plugin object scoped to build', () => {
     const id = 'project-build-plugin';
-    const run = jest.fn();
     const target = PluginTarget.Project;
-    const plugin = createProjectBuildPlugin(id, run);
+    const pluginRunSpy = jest.fn();
+    const plugin = createProjectBuildPlugin(id, pluginRunSpy);
+    const {run, ...pluginExceptRun} = plugin;
 
-    const {run: pluginRun, ...pluginExceptRun} = plugin;
-    const pluginContext = {
-      tasks: {build: new SeriesHook()},
-      contextArg: 1,
-    } as any;
+    const pluginContext = createProjectPluginContext();
+    const {tasks, ...pluginContextWithoutTasks} = pluginContext;
 
-    pluginRun!(pluginContext);
+    run!(pluginContext);
+    pluginContext.tasks.build.run(tasks.build as any);
 
-    const [hook] = Array.from(pluginContext.tasks.build.hooks);
-    const task = {options: {taskArg: 1}} as any;
-
-    if (typeof hook === 'function') {
-      hook(task);
-    }
-
-    expect(run).toHaveBeenCalledTimes(1);
-    expect(run).toHaveBeenCalledWith({...task, contextArg: 1});
-    expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
+    expect(pluginRunSpy).toHaveBeenCalledTimes(1);
+    expect(pluginRunSpy).toHaveBeenCalledWith({
+      ...pluginContextWithoutTasks,
+      ...tasks.build,
+    });
+    expect(pluginExceptRun).toStrictEqual({
+      id,
+      target,
+      [PLUGIN_MARKER]: true,
+    });
   });
 });
 
 describe('createProjectDevPlugin', () => {
   it('creates project plugin object scoped to dev', () => {
     const id = 'project-dev-plugin';
-    const run = jest.fn();
     const target = PluginTarget.Project;
-    const plugin = createProjectDevPlugin(id, run);
+    const pluginRunSpy = jest.fn();
+    const plugin = createProjectDevPlugin(id, pluginRunSpy);
+    const {run, ...pluginExceptRun} = plugin;
 
-    const {run: pluginRun, ...pluginExceptRun} = plugin;
-    const pluginContext = {
-      tasks: {dev: new SeriesHook()},
-      contextArg: 1,
-    } as any;
+    const pluginContext = createProjectPluginContext();
+    const {tasks, ...pluginContextWithoutTasks} = pluginContext;
 
-    pluginRun!(pluginContext);
+    run!(pluginContext);
+    pluginContext.tasks.dev.run(tasks.dev as any);
 
-    const [hook] = Array.from(pluginContext.tasks.dev.hooks);
-    const task = {options: {taskArg: 1}} as any;
-
-    if (typeof hook === 'function') {
-      hook(task);
-    }
-
-    expect(run).toHaveBeenCalledTimes(1);
-    expect(run).toHaveBeenCalledWith({...task, contextArg: 1});
+    expect(pluginRunSpy).toHaveBeenCalledTimes(1);
+    expect(pluginRunSpy).toHaveBeenCalledWith({
+      ...pluginContextWithoutTasks,
+      ...tasks.dev,
+    });
     expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
@@ -86,27 +84,22 @@ describe('createProjectDevPlugin', () => {
 describe('createProjectTestPlugin', () => {
   it('creates project plugin object scoped to test', () => {
     const id = 'project-test-plugin';
-    const run = jest.fn();
     const target = PluginTarget.Project;
-    const plugin = createProjectTestPlugin(id, run);
+    const pluginRunSpy = jest.fn();
+    const plugin = createProjectTestPlugin(id, pluginRunSpy);
+    const {run, ...pluginExceptRun} = plugin;
 
-    const {run: pluginRun, ...pluginExceptRun} = plugin;
-    const pluginContext = {
-      tasks: {test: new SeriesHook()},
-      contextArg: 1,
-    } as any;
+    const pluginContext = createProjectPluginContext();
+    const {tasks, ...pluginContextWithoutTasks} = pluginContext;
 
-    pluginRun!(pluginContext);
+    run!(pluginContext);
+    pluginContext.tasks.test.run(tasks.test as any);
 
-    const [hook] = Array.from(pluginContext.tasks.test.hooks);
-    const task = {options: {taskArg: 1}} as any;
-
-    if (typeof hook === 'function') {
-      hook(task);
-    }
-
-    expect(run).toHaveBeenCalledTimes(1);
-    expect(run).toHaveBeenCalledWith({...task, contextArg: 1});
+    expect(pluginRunSpy).toHaveBeenCalledTimes(1);
+    expect(pluginRunSpy).toHaveBeenCalledWith({
+      ...pluginContextWithoutTasks,
+      ...tasks.test,
+    });
     expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
@@ -123,7 +116,7 @@ describe('createComposedProjectPlugin', () => {
 
   it('creates composed project plugin object', () => {
     const id = 'composed-project-plugin';
-    const compose = ['plugin'] as any;
+    const compose = [createProjectPlugin('project-plugin', jest.fn())];
     const target = PluginTarget.Project;
     const plugin = createComposedProjectPlugin(id, compose);
 
@@ -133,7 +126,7 @@ describe('createComposedProjectPlugin', () => {
     pluginCompose!(composer);
 
     expect(composer.use).toHaveBeenCalledTimes(1);
-    expect(composer.use).toHaveBeenCalledWith('plugin');
+    expect(composer.use).toHaveBeenCalledWith(...compose);
     expect(pluginExceptCompose).toStrictEqual({
       id,
       target,
@@ -156,27 +149,22 @@ describe('createWorkspacePlugin', () => {
 describe('createWorkspaceBuildPlugin', () => {
   it('creates workspace plugin object scoped to build', () => {
     const id = 'workspace-build-plugin';
-    const run = jest.fn();
     const target = PluginTarget.Workspace;
-    const plugin = createWorkspaceBuildPlugin(id, run);
+    const pluginRunSpy = jest.fn();
+    const plugin = createWorkspaceBuildPlugin(id, pluginRunSpy);
+    const {run, ...pluginExceptRun} = plugin;
 
-    const {run: pluginRun, ...pluginExceptRun} = plugin;
-    const pluginContext = {
-      tasks: {build: new SeriesHook()},
-      contextArg: 1,
-    } as any;
+    const pluginContext = createWorkspacePluginContext();
+    const {tasks, ...pluginContextWithoutTasks} = pluginContext;
 
-    pluginRun!(pluginContext);
+    run!(pluginContext);
+    pluginContext.tasks.build.run(tasks.build as any);
 
-    const [hook] = Array.from(pluginContext.tasks.build.hooks);
-    const task = {options: {taskArg: 1}} as any;
-
-    if (typeof hook === 'function') {
-      hook(task);
-    }
-
-    expect(run).toHaveBeenCalledTimes(1);
-    expect(run).toHaveBeenCalledWith({...task, contextArg: 1});
+    expect(pluginRunSpy).toHaveBeenCalledTimes(1);
+    expect(pluginRunSpy).toHaveBeenCalledWith({
+      ...pluginContextWithoutTasks,
+      ...tasks.build,
+    });
     expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
@@ -184,27 +172,22 @@ describe('createWorkspaceBuildPlugin', () => {
 describe('createWorkspaceDevPlugin', () => {
   it('creates workspace plugin object scoped to dev', () => {
     const id = 'workspace-dev-plugin';
-    const run = jest.fn();
     const target = PluginTarget.Workspace;
-    const plugin = createWorkspaceDevPlugin(id, run);
+    const pluginRunSpy = jest.fn();
+    const plugin = createWorkspaceDevPlugin(id, pluginRunSpy);
+    const {run, ...pluginExceptRun} = plugin;
 
-    const {run: pluginRun, ...pluginExceptRun} = plugin;
-    const pluginContext = {
-      tasks: {dev: new SeriesHook()},
-      contextArg: 1,
-    } as any;
+    const pluginContext = createWorkspacePluginContext();
+    const {tasks, ...pluginContextWithoutTasks} = pluginContext;
 
-    pluginRun!(pluginContext);
+    run!(pluginContext);
+    pluginContext.tasks.dev.run(tasks.dev as any);
 
-    const [hook] = Array.from(pluginContext.tasks.dev.hooks);
-    const task = {options: {taskArg: 1}} as any;
-
-    if (typeof hook === 'function') {
-      hook(task);
-    }
-
-    expect(run).toHaveBeenCalledTimes(1);
-    expect(run).toHaveBeenCalledWith({...task, contextArg: 1});
+    expect(pluginRunSpy).toHaveBeenCalledTimes(1);
+    expect(pluginRunSpy).toHaveBeenCalledWith({
+      ...pluginContextWithoutTasks,
+      ...tasks.dev,
+    });
     expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
@@ -212,27 +195,22 @@ describe('createWorkspaceDevPlugin', () => {
 describe('createWorkspaceTestPlugin', () => {
   it('creates workspace plugin object scoped to test', () => {
     const id = 'workspace-test-plugin';
-    const run = jest.fn();
     const target = PluginTarget.Workspace;
-    const plugin = createWorkspaceTestPlugin(id, run);
+    const pluginRunSpy = jest.fn();
+    const plugin = createWorkspaceTestPlugin(id, pluginRunSpy);
+    const {run, ...pluginExceptRun} = plugin;
 
-    const {run: pluginRun, ...pluginExceptRun} = plugin;
-    const pluginContext = {
-      tasks: {test: new SeriesHook()},
-      contextArg: 1,
-    } as any;
+    const pluginContext = createWorkspacePluginContext();
+    const {tasks, ...pluginContextWithoutTasks} = pluginContext;
 
-    pluginRun!(pluginContext);
+    run!(pluginContext);
+    pluginContext.tasks.test.run(tasks.test as any);
 
-    const [hook] = Array.from(pluginContext.tasks.test.hooks);
-    const task = {options: {taskArg: 1}} as any;
-
-    if (typeof hook === 'function') {
-      hook(task);
-    }
-
-    expect(run).toHaveBeenCalledTimes(1);
-    expect(run).toHaveBeenCalledWith({...task, contextArg: 1});
+    expect(pluginRunSpy).toHaveBeenCalledTimes(1);
+    expect(pluginRunSpy).toHaveBeenCalledWith({
+      ...pluginContextWithoutTasks,
+      ...tasks.test,
+    });
     expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
@@ -240,27 +218,22 @@ describe('createWorkspaceTestPlugin', () => {
 describe('createWorkspaceTypeCheckPlugin', () => {
   it('creates workspace plugin object scoped to type checking', () => {
     const id = 'workspace-type-check-plugin';
-    const run = jest.fn();
     const target = PluginTarget.Workspace;
-    const plugin = createWorkspaceTypeCheckPlugin(id, run);
+    const pluginRunSpy = jest.fn();
+    const plugin = createWorkspaceTypeCheckPlugin(id, pluginRunSpy);
+    const {run, ...pluginExceptRun} = plugin;
 
-    const {run: pluginRun, ...pluginExceptRun} = plugin;
-    const pluginContext = {
-      tasks: {typeCheck: new SeriesHook()},
-      contextArg: 1,
-    } as any;
+    const pluginContext = createWorkspacePluginContext();
+    const {tasks, ...pluginContextWithoutTasks} = pluginContext;
 
-    pluginRun!(pluginContext);
+    run!(pluginContext);
+    pluginContext.tasks.typeCheck.run(tasks.typeCheck as any);
 
-    const [hook] = Array.from(pluginContext.tasks.typeCheck.hooks);
-    const task = {options: {taskArg: 1}} as any;
-
-    if (typeof hook === 'function') {
-      hook(task);
-    }
-
-    expect(run).toHaveBeenCalledTimes(1);
-    expect(run).toHaveBeenCalledWith({...task, contextArg: 1});
+    expect(pluginRunSpy).toHaveBeenCalledTimes(1);
+    expect(pluginRunSpy).toHaveBeenCalledWith({
+      ...pluginContextWithoutTasks,
+      ...tasks.typeCheck,
+    });
     expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
@@ -268,27 +241,22 @@ describe('createWorkspaceTypeCheckPlugin', () => {
 describe('createWorkspaceLintPlugin', () => {
   it('creates workspace plugin object scoped to linting', () => {
     const id = 'workspace-lint-plugin';
-    const run = jest.fn();
     const target = PluginTarget.Workspace;
-    const plugin = createWorkspaceLintPlugin(id, run);
+    const pluginRunSpy = jest.fn();
+    const plugin = createWorkspaceLintPlugin(id, pluginRunSpy);
+    const {run, ...pluginExceptRun} = plugin;
 
-    const {run: pluginRun, ...pluginExceptRun} = plugin;
-    const pluginContext = {
-      tasks: {lint: new SeriesHook()},
-      contextArg: 1,
-    } as any;
+    const pluginContext = createWorkspacePluginContext();
+    const {tasks, ...pluginContextWithoutTasks} = pluginContext;
 
-    pluginRun!(pluginContext);
+    run!(pluginContext);
+    pluginContext.tasks.lint.run(tasks.lint as any);
 
-    const [hook] = Array.from(pluginContext.tasks.lint.hooks);
-    const task = {options: {taskArg: 1}} as any;
-
-    if (typeof hook === 'function') {
-      hook(task);
-    }
-
-    expect(run).toHaveBeenCalledTimes(1);
-    expect(run).toHaveBeenCalledWith({...task, contextArg: 1});
+    expect(pluginRunSpy).toHaveBeenCalledTimes(1);
+    expect(pluginRunSpy).toHaveBeenCalledWith({
+      ...pluginContextWithoutTasks,
+      ...tasks.lint,
+    });
     expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
@@ -305,7 +273,7 @@ describe('createComposedWorkspacePlugin', () => {
 
   it('creates composed project plugin object', () => {
     const id = 'composed-workspace-plugin';
-    const compose = ['plugin'] as any;
+    const compose = [createWorkspacePlugin('workspace-plugin', jest.fn())];
     const target = PluginTarget.Workspace;
     const plugin = createComposedWorkspacePlugin(id, compose);
 
@@ -315,7 +283,7 @@ describe('createComposedWorkspacePlugin', () => {
     pluginCompose!(composer);
 
     expect(composer.use).toHaveBeenCalledTimes(1);
-    expect(composer.use).toHaveBeenCalledWith('plugin');
+    expect(composer.use).toHaveBeenCalledWith(...compose);
     expect(pluginExceptCompose).toStrictEqual({
       id,
       target,
