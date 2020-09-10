@@ -1,4 +1,3 @@
-import {SeriesHook} from '@sewing-kit/hooks';
 import {
   createProjectPlugin,
   createProjectBuildPlugin,
@@ -14,7 +13,11 @@ import {
   createComposedWorkspacePlugin,
   PluginTarget,
   PLUGIN_MARKER,
+  SeriesHook,
+  ProjectKind,
 } from '..';
+
+import {createProjectPluginContext, createProjectTasks} from './utilities';
 
 describe('createProjectPlugin', () => {
   it('creates project plugin object', () => {
@@ -28,30 +31,35 @@ describe('createProjectPlugin', () => {
 });
 
 describe('createProjectBuildPlugin', () => {
-  it('creates project plugin object scoped to build', () => {
+  it.only('creates project plugin object scoped to build', () => {
     const id = 'project-build-plugin';
-    const run = jest.fn();
-    const target = PluginTarget.Project;
-    const plugin = createProjectBuildPlugin(id, run);
+    const pluginRunSpy = jest.fn();
+    const {run, ...pluginExceptRun} = createProjectBuildPlugin(
+      id,
+      pluginRunSpy,
+    );
 
-    const {run: pluginRun, ...pluginExceptRun} = plugin;
-    const pluginContext = {
-      tasks: {build: new SeriesHook()},
-      contextArg: 1,
-    } as any;
+    const pluginContext = createProjectPluginContext({
+      kind: ProjectKind.Service,
+    });
 
-    pluginRun!(pluginContext);
+    run!(pluginContext);
 
-    const [hook] = Array.from(pluginContext.tasks.build.hooks);
-    const task = {options: {taskArg: 1}} as any;
+    const {build: buildTask} = createProjectTasks();
+    pluginContext.tasks.build.run(buildTask as any);
 
-    if (typeof hook === 'function') {
-      hook(task);
-    }
+    const {tasks, ...pluginContextWithoutTask} = pluginContext;
 
-    expect(run).toHaveBeenCalledTimes(1);
-    expect(run).toHaveBeenCalledWith({...task, contextArg: 1});
-    expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
+    expect(pluginRunSpy).toHaveBeenCalledTimes(1);
+    expect(pluginRunSpy).toHaveBeenCalledWith({
+      ...pluginContextWithoutTask,
+      ...buildTask,
+    });
+    expect(pluginExceptRun).toStrictEqual({
+      id,
+      target: PluginTarget.Project,
+      [PLUGIN_MARKER]: true,
+    });
   });
 });
 

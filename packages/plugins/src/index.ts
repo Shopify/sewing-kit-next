@@ -15,6 +15,7 @@ export {Task, Env} from '@sewing-kit/tasks';
 export type {WorkspaceTasks, ProjectTasks} from '@sewing-kit/tasks';
 export {SeriesHook, WaterfallHook} from '@sewing-kit/hooks';
 export {
+  ProjectKind,
   Project,
   Package,
   PackageBinary,
