@@ -6,9 +6,5 @@
     "rootDir": "src"
   },
   "include": ["src/**/*.ts"],
-  "references": [
-    {"path": "../core"},
-    {"path": "../model"},
-    {"path": "../plugins"}
-  ]
+  "references": [{"path": "../core"}, {"path": "../plugins"}]
 }

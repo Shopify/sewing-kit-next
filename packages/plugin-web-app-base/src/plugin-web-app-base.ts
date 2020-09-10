@@ -151,21 +151,21 @@ export function webpackDevWebApp({
                       ctx.URL.href,
                     )}});
                     document.dispatchEvent(event);
-                    
+
                     if (!event.defaultPrevented) {
                       document.addEventListener('SewingKit.BrowserAssetCompiling', () => {
                         // TODO: add list of assets being compiled
                       });
-    
+
                       const root = document.createElement('div');
                       root.setAttribute('style', 'background-color: white; padding: 1rem; box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px 0 rgba(63, 63, 68, 0.15); position: fixed; bottom: 1rem; right: 1rem; max-width: calc(100% - 2rem); box-sizing: border-box; z-index: 1000000;');
                       root.textContent = 'Requested asset ${JSON.stringify(
                         ctx.URL.href,
                       )} is still compiling';
-    
+
                       // TODO: add link to see all assets
                       // TODO: clear and reload when asset is available (open a websocket)
-    
+
                       document.body.appendChild(root);
                     }
                   `;

@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "@sewing-kit/hooks": "^0.1.4",
-    "@sewing-kit/model": "^0.1.1"
+    "@sewing-kit/core": "^0.1.2"
   }
 }

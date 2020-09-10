@@ -2,12 +2,11 @@
   "files": [],
   "include": [],
   "references": [
-    {"path": "./packages/model"},
+    {"path": "./packages/core"},
     {"path": "./packages/hooks"},
     {"path": "./packages/tasks"},
     {"path": "./packages/plugins"},
     {"path": "./packages/config"},
-    {"path": "./packages/core"},
     {"path": "./packages/cli"},
 
     {"path": "./packages/plugin-eslint"},

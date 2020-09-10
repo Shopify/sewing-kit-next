@@ -1,7 +1,4 @@
-import {resolve} from 'path';
-import {PackageJson} from '../src/base/dependencies';
-
-const fakeProject = resolve(__dirname, 'project');
+import {PackageJson} from '../dependencies';
 
 jest.mock(
   `/tmp/package.json`,

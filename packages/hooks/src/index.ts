@@ -1,5 +1,12 @@
-import type {Step, Target, TargetBuilder} from '@sewing-kit/core';
-import type {WebApp, Service, Package, Project} from '@sewing-kit/model';
+import type {
+  Step,
+  Target,
+  TargetBuilder,
+  WebApp,
+  Service,
+  Package,
+  Project,
+} from '@sewing-kit/core';
 
 // ==================================================================
 // PRIMITIVES

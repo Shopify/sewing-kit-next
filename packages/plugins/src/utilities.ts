@@ -1,5 +1,5 @@
 import {paramCase} from 'change-case';
-import {Project, Package, WebApp, Service} from '@sewing-kit/model';
+import {Project, Package, WebApp, Service} from '@sewing-kit/core';
 
 type TypeOrCreator<Type, ProjectType> = Type | ((project: ProjectType) => Type);
 

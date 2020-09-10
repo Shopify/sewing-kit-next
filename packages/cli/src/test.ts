@@ -5,7 +5,7 @@ import {
   TestWebAppHooks,
 } from '@sewing-kit/hooks';
 import {TestTaskOptions, TestWorkspaceTaskHooks} from '@sewing-kit/tasks';
-import {Package, WebApp, Service} from '@sewing-kit/model';
+import {Package, WebApp, Service} from '@sewing-kit/core';
 
 import {run} from './runner';
 import {

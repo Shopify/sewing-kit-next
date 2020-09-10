@@ -1,4 +1,4 @@
-export {Runtime} from '@sewing-kit/model';
+export {Runtime} from '@sewing-kit/core';
 export {createPackage} from './package';
 export {createService} from './service';
 export {createWebApp} from './web-app';

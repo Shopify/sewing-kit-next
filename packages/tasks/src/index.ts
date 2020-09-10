@@ -21,9 +21,7 @@ import {
   DevPackageHooks,
   DevServiceHooks,
 } from '@sewing-kit/hooks';
-import {Package, WebApp, Service, Project} from '@sewing-kit/model';
-
-type Step = import('@sewing-kit/core').Step;
+import {Package, WebApp, Service, Project, Step} from '@sewing-kit/core';
 
 export enum Env {
   Development = 'development',

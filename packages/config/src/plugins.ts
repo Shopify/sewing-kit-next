@@ -1,4 +1,4 @@
-import {Workspace, Project} from '@sewing-kit/model';
+import {Workspace, Project} from '@sewing-kit/core';
 import {WorkspacePlugin, ProjectPlugin} from '@sewing-kit/plugins';
 
 export interface PluginSource {

@@ -1,5 +1,5 @@
 import {ProjectPlugin} from '@sewing-kit/plugins';
-import {Service, ServiceOptions} from '@sewing-kit/model';
+import {Service, ServiceOptions} from '@sewing-kit/core';
 
 import {BaseBuilder, ConfigurationKind} from './base';
 
