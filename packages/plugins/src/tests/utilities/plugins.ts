@@ -15,7 +15,7 @@ import {
   SeriesHook,
   ProjectTasks,
   WorkspaceTasks,
-} from '..';
+} from '../..';
 
 function createProjectTasks(): ProjectTasks<Project> {
   return {

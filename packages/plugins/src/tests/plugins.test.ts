@@ -18,11 +18,12 @@ import {
 import {
   createProjectPluginContext,
   createWorkspacePluginContext,
-} from './utilities';
+} from './utilities/plugins';
 
 describe('createProjectPlugin', () => {
+  const id = 'project-plugin';
+
   it('creates project plugin object', () => {
-    const id = 'project-plugin';
     const run = jest.fn();
     const target = PluginTarget.Project;
     const plugin = createProjectPlugin(id, run);
@@ -32,12 +33,24 @@ describe('createProjectPlugin', () => {
 });
 
 describe('createProjectBuildPlugin', () => {
-  it('creates project plugin object scoped to build', () => {
-    const id = 'project-build-plugin';
+  const id = 'project-build-plugin';
+
+  it('creates project plugin object', () => {
     const target = PluginTarget.Project;
+    const plugin = createProjectBuildPlugin(id, jest.fn());
+    const {run, ...pluginExceptRun} = plugin;
+
+    expect(pluginExceptRun).toStrictEqual({
+      id,
+      target,
+      [PLUGIN_MARKER]: true,
+    });
+  });
+
+  it('scopes project plugin run to build', () => {
     const pluginRunSpy = jest.fn();
     const plugin = createProjectBuildPlugin(id, pluginRunSpy);
-    const {run, ...pluginExceptRun} = plugin;
+    const {run} = plugin;
 
     const pluginContext = createProjectPluginContext();
     const {tasks, ...pluginContextWithoutTasks} = pluginContext;
@@ -50,21 +63,28 @@ describe('createProjectBuildPlugin', () => {
       ...pluginContextWithoutTasks,
       ...tasks.build,
     });
+  });
+});
+
+describe('createProjectDevPlugin', () => {
+  const id = 'project-dev-plugin';
+
+  it('creates project plugin object', () => {
+    const target = PluginTarget.Project;
+    const plugin = createProjectDevPlugin(id, jest.fn());
+    const {run, ...pluginExceptRun} = plugin;
+
     expect(pluginExceptRun).toStrictEqual({
       id,
       target,
       [PLUGIN_MARKER]: true,
     });
   });
-});
 
-describe('createProjectDevPlugin', () => {
-  it('creates project plugin object scoped to dev', () => {
-    const id = 'project-dev-plugin';
-    const target = PluginTarget.Project;
+  it('scopes project plugin run to dev', () => {
     const pluginRunSpy = jest.fn();
     const plugin = createProjectDevPlugin(id, pluginRunSpy);
-    const {run, ...pluginExceptRun} = plugin;
+    const {run} = plugin;
 
     const pluginContext = createProjectPluginContext();
     const {tasks, ...pluginContextWithoutTasks} = pluginContext;
@@ -77,17 +97,28 @@ describe('createProjectDevPlugin', () => {
       ...pluginContextWithoutTasks,
       ...tasks.dev,
     });
-    expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
 
 describe('createProjectTestPlugin', () => {
-  it('creates project plugin object scoped to test', () => {
-    const id = 'project-test-plugin';
+  const id = 'project-test-plugin';
+
+  it('creates project plugin object', () => {
     const target = PluginTarget.Project;
+    const plugin = createProjectTestPlugin(id, jest.fn());
+    const {run, ...pluginExceptRun} = plugin;
+
+    expect(pluginExceptRun).toStrictEqual({
+      id,
+      target,
+      [PLUGIN_MARKER]: true,
+    });
+  });
+
+  it('scopes project plugin run to test', () => {
     const pluginRunSpy = jest.fn();
     const plugin = createProjectTestPlugin(id, pluginRunSpy);
-    const {run, ...pluginExceptRun} = plugin;
+    const {run} = plugin;
 
     const pluginContext = createProjectPluginContext();
     const {tasks, ...pluginContextWithoutTasks} = pluginContext;
@@ -100,13 +131,13 @@ describe('createProjectTestPlugin', () => {
       ...pluginContextWithoutTasks,
       ...tasks.test,
     });
-    expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
 
 describe('createComposedProjectPlugin', () => {
+  const id = 'composed-project-plugin';
+
   it('creates project plugin object', () => {
-    const id = 'composed-project-plugin';
     const compose = jest.fn();
     const target = PluginTarget.Project;
     const plugin = createComposedProjectPlugin(id, compose);
@@ -114,30 +145,43 @@ describe('createComposedProjectPlugin', () => {
     expect(plugin).toStrictEqual({id, compose, target, [PLUGIN_MARKER]: true});
   });
 
-  it('creates composed project plugin object', () => {
-    const id = 'composed-project-plugin';
-    const compose = [createProjectPlugin('project-plugin', jest.fn())];
-    const target = PluginTarget.Project;
-    const plugin = createComposedProjectPlugin(id, compose);
+  describe('with compose array', () => {
+    it('creates project plugin object', () => {
+      const compose = [createProjectPlugin('project-plugin', jest.fn())];
+      const target = PluginTarget.Project;
+      const plugin = createComposedProjectPlugin(id, compose);
 
-    const {compose: pluginCompose, ...pluginExceptCompose} = plugin;
-    const composer = {use: jest.fn()};
+      const {compose: pluginCompose, ...pluginExceptCompose} = plugin;
+      const composer = {use: jest.fn()};
 
-    pluginCompose!(composer);
+      pluginCompose!(composer);
 
-    expect(composer.use).toHaveBeenCalledTimes(1);
-    expect(composer.use).toHaveBeenCalledWith(...compose);
-    expect(pluginExceptCompose).toStrictEqual({
-      id,
-      target,
-      [PLUGIN_MARKER]: true,
+      expect(pluginExceptCompose).toStrictEqual({
+        id,
+        target,
+        [PLUGIN_MARKER]: true,
+      });
+    });
+
+    it('composes project plugin', () => {
+      const compose = [createProjectPlugin('project-plugin', jest.fn())];
+      const plugin = createComposedProjectPlugin(id, compose);
+
+      const {compose: pluginCompose} = plugin;
+      const composer = {use: jest.fn()};
+
+      pluginCompose!(composer);
+
+      expect(composer.use).toHaveBeenCalledTimes(1);
+      expect(composer.use).toHaveBeenCalledWith(...compose);
     });
   });
 });
 
 describe('createWorkspacePlugin', () => {
+  const id = 'workspace-plugin';
+
   it('creates workspace plugin object', () => {
-    const id = 'workspace-plugin';
     const run = jest.fn();
     const target = PluginTarget.Workspace;
     const plugin = createWorkspacePlugin(id, run);
@@ -147,12 +191,24 @@ describe('createWorkspacePlugin', () => {
 });
 
 describe('createWorkspaceBuildPlugin', () => {
-  it('creates workspace plugin object scoped to build', () => {
-    const id = 'workspace-build-plugin';
+  const id = 'workspace-build-plugin';
+
+  it('creates workspace plugin object', () => {
     const target = PluginTarget.Workspace;
+    const plugin = createWorkspaceBuildPlugin(id, jest.fn());
+    const {run, ...pluginExceptRun} = plugin;
+
+    expect(pluginExceptRun).toStrictEqual({
+      id,
+      target,
+      [PLUGIN_MARKER]: true,
+    });
+  });
+
+  it('scopes workspace plugin run to build', () => {
     const pluginRunSpy = jest.fn();
     const plugin = createWorkspaceBuildPlugin(id, pluginRunSpy);
-    const {run, ...pluginExceptRun} = plugin;
+    const {run} = plugin;
 
     const pluginContext = createWorkspacePluginContext();
     const {tasks, ...pluginContextWithoutTasks} = pluginContext;
@@ -165,17 +221,28 @@ describe('createWorkspaceBuildPlugin', () => {
       ...pluginContextWithoutTasks,
       ...tasks.build,
     });
-    expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
 
 describe('createWorkspaceDevPlugin', () => {
-  it('creates workspace plugin object scoped to dev', () => {
-    const id = 'workspace-dev-plugin';
+  const id = 'workspace-dev-plugin';
+
+  it('creates workspace plugin object', () => {
     const target = PluginTarget.Workspace;
+    const plugin = createWorkspaceDevPlugin(id, jest.fn());
+    const {run, ...pluginExceptRun} = plugin;
+
+    expect(pluginExceptRun).toStrictEqual({
+      id,
+      target,
+      [PLUGIN_MARKER]: true,
+    });
+  });
+
+  it('scopes workspace plugin run to dev', () => {
     const pluginRunSpy = jest.fn();
     const plugin = createWorkspaceDevPlugin(id, pluginRunSpy);
-    const {run, ...pluginExceptRun} = plugin;
+    const {run} = plugin;
 
     const pluginContext = createWorkspacePluginContext();
     const {tasks, ...pluginContextWithoutTasks} = pluginContext;
@@ -188,17 +255,28 @@ describe('createWorkspaceDevPlugin', () => {
       ...pluginContextWithoutTasks,
       ...tasks.dev,
     });
-    expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
 
 describe('createWorkspaceTestPlugin', () => {
-  it('creates workspace plugin object scoped to test', () => {
-    const id = 'workspace-test-plugin';
+  const id = 'workspace-test-plugin';
+
+  it('creates workspace plugin object', () => {
     const target = PluginTarget.Workspace;
+    const plugin = createWorkspaceTestPlugin(id, jest.fn());
+    const {run, ...pluginExceptRun} = plugin;
+
+    expect(pluginExceptRun).toStrictEqual({
+      id,
+      target,
+      [PLUGIN_MARKER]: true,
+    });
+  });
+
+  it('scopes workspace plugin run to test', () => {
     const pluginRunSpy = jest.fn();
     const plugin = createWorkspaceTestPlugin(id, pluginRunSpy);
-    const {run, ...pluginExceptRun} = plugin;
+    const {run} = plugin;
 
     const pluginContext = createWorkspacePluginContext();
     const {tasks, ...pluginContextWithoutTasks} = pluginContext;
@@ -211,17 +289,28 @@ describe('createWorkspaceTestPlugin', () => {
       ...pluginContextWithoutTasks,
       ...tasks.test,
     });
-    expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
 
 describe('createWorkspaceTypeCheckPlugin', () => {
-  it('creates workspace plugin object scoped to type checking', () => {
-    const id = 'workspace-type-check-plugin';
+  const id = 'workspace-type-check-plugin';
+
+  it('creates workspace plugin object', () => {
     const target = PluginTarget.Workspace;
+    const plugin = createWorkspaceTypeCheckPlugin(id, jest.fn());
+    const {run, ...pluginExceptRun} = plugin;
+
+    expect(pluginExceptRun).toStrictEqual({
+      id,
+      target,
+      [PLUGIN_MARKER]: true,
+    });
+  });
+
+  it('scopes workspace plugin run to type checking', () => {
     const pluginRunSpy = jest.fn();
     const plugin = createWorkspaceTypeCheckPlugin(id, pluginRunSpy);
-    const {run, ...pluginExceptRun} = plugin;
+    const {run} = plugin;
 
     const pluginContext = createWorkspacePluginContext();
     const {tasks, ...pluginContextWithoutTasks} = pluginContext;
@@ -234,17 +323,28 @@ describe('createWorkspaceTypeCheckPlugin', () => {
       ...pluginContextWithoutTasks,
       ...tasks.typeCheck,
     });
-    expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
 
 describe('createWorkspaceLintPlugin', () => {
-  it('creates workspace plugin object scoped to linting', () => {
-    const id = 'workspace-lint-plugin';
+  const id = 'workspace-lint-plugin';
+
+  it('creates workspace plugin object', () => {
     const target = PluginTarget.Workspace;
+    const plugin = createWorkspaceLintPlugin(id, jest.fn());
+    const {run, ...pluginExceptRun} = plugin;
+
+    expect(pluginExceptRun).toStrictEqual({
+      id,
+      target,
+      [PLUGIN_MARKER]: true,
+    });
+  });
+
+  it('scopes workspace plugin run to linting', () => {
     const pluginRunSpy = jest.fn();
     const plugin = createWorkspaceLintPlugin(id, pluginRunSpy);
-    const {run, ...pluginExceptRun} = plugin;
+    const {run} = plugin;
 
     const pluginContext = createWorkspacePluginContext();
     const {tasks, ...pluginContextWithoutTasks} = pluginContext;
@@ -257,13 +357,13 @@ describe('createWorkspaceLintPlugin', () => {
       ...pluginContextWithoutTasks,
       ...tasks.lint,
     });
-    expect(pluginExceptRun).toStrictEqual({id, target, [PLUGIN_MARKER]: true});
   });
 });
 
 describe('createComposedWorkspacePlugin', () => {
-  it('creates project plugin object', () => {
-    const id = 'composed-workspace-plugin';
+  const id = 'composed-workspace-plugin';
+
+  it('creates workspace plugin object', () => {
     const compose = jest.fn();
     const target = PluginTarget.Workspace;
     const plugin = createComposedWorkspacePlugin(id, compose);
@@ -271,23 +371,35 @@ describe('createComposedWorkspacePlugin', () => {
     expect(plugin).toStrictEqual({id, compose, target, [PLUGIN_MARKER]: true});
   });
 
-  it('creates composed project plugin object', () => {
-    const id = 'composed-workspace-plugin';
-    const compose = [createWorkspacePlugin('workspace-plugin', jest.fn())];
-    const target = PluginTarget.Workspace;
-    const plugin = createComposedWorkspacePlugin(id, compose);
+  describe('with compose array', () => {
+    it('creates workspace plugin object', () => {
+      const compose = [createWorkspacePlugin('workspace-plugin', jest.fn())];
+      const target = PluginTarget.Workspace;
+      const plugin = createComposedWorkspacePlugin(id, compose);
 
-    const {compose: pluginCompose, ...pluginExceptCompose} = plugin;
-    const composer = {use: jest.fn()};
+      const {compose: pluginCompose, ...pluginExceptCompose} = plugin;
+      const composer = {use: jest.fn()};
 
-    pluginCompose!(composer);
+      pluginCompose!(composer);
 
-    expect(composer.use).toHaveBeenCalledTimes(1);
-    expect(composer.use).toHaveBeenCalledWith(...compose);
-    expect(pluginExceptCompose).toStrictEqual({
-      id,
-      target,
-      [PLUGIN_MARKER]: true,
+      expect(pluginExceptCompose).toStrictEqual({
+        id,
+        target,
+        [PLUGIN_MARKER]: true,
+      });
+    });
+
+    it('composes workspace plugin', () => {
+      const compose = [createWorkspacePlugin('workspace-plugin', jest.fn())];
+      const plugin = createComposedWorkspacePlugin(id, compose);
+
+      const {compose: pluginCompose} = plugin;
+      const composer = {use: jest.fn()};
+
+      pluginCompose!(composer);
+
+      expect(composer.use).toHaveBeenCalledTimes(1);
+      expect(composer.use).toHaveBeenCalledWith(...compose);
     });
   });
 });
