@@ -54,6 +54,7 @@ export function typescript() {
           hooks.configure.hook((configure) => {
             configure.babelConfig?.hook(addTypeScriptBabelConfig);
             configure.babelExtensions?.hook(addTypeScriptExtensions);
+            configure.babelIgnorePatterns?.hook(addTypeScriptTestIgnorePattern);
             configure.webpackExtensions?.hook(addTypeScriptExtensions);
             configure.webpackPlugins?.hook(addWebpackPlugins);
             configure.webpackRules?.hook(async (rules) => [
@@ -435,6 +436,16 @@ function normalizedRelative(from: string, to: string) {
 
 function addTypeScriptExtensions(extensions: readonly string[]) {
   return ['.ts', '.tsx', ...extensions];
+}
+
+function addTypeScriptTestIgnorePattern(patterns: readonly string[]) {
+  return [
+    '**/*.test.ts',
+    '**/*.test.tsx',
+    '**/tests/**/*.ts',
+    '**/tests/**/*.tsx',
+    ...patterns,
+  ];
 }
 
 async function addWebpackPlugins(plugins: readonly import('webpack').Plugin[]) {
