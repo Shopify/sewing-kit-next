@@ -1,15 +1,24 @@
-import {join} from 'path';
 import {Base, toId} from '..';
 import {FileSystem} from '../fs';
 
 const name = 'app';
-const root = join(__dirname, 'fixtures', 'app');
+const root = 'base';
+
+jest.mock('dep/package.json', () => ({version: '0.0.1'}), {virtual: true});
 
 jest.mock(
-  'dep/package.json',
-  () => {
-    return {version: '0.0.1'};
-  },
+  'base/package.json',
+  () => ({
+    name: 'fixture',
+    private: true,
+    devDependencies: {
+      'dev-dep': '0.0.5',
+    },
+    dependencies: {
+      dep: '0.0.2',
+      'other-dep': '0.0.3',
+    },
+  }),
   {virtual: true},
 );
 
