@@ -18,6 +18,14 @@ export async function writeToSrc(
       ? contents
       : `export function pkg(greet) { console.log(\`Hello, \${greet}!\`); }`,
   );
+
+  // File creation in CI is so fast that stat.mtimeMs results
+  // are the same when multiple writeToSrc are called back-to-back
+  await sleep(10);
+}
+
+async function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export function createTestPackage(workspace: Workspace) {
