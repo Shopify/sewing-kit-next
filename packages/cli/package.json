@@ -7,10 +7,7 @@
     "access": "public",
     "@sewing-kit:registry": "https://registry.npmjs.org"
   },
-  "bin": {
-    "sewing-kit": "./bin/sewing-kit",
-    "sk": "./bin/sk"
-  },
+  "main": "./build/cjs/cli.js",
   "dependencies": {
     "@sewing-kit/config": "^0.1.5",
     "@sewing-kit/hooks": "^0.1.4",

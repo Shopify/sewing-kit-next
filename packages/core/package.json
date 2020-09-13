@@ -7,7 +7,12 @@
     "access": "public",
     "@sewing-kit:registry": "https://registry.npmjs.org"
   },
+  "bin": {
+    "sewing-kit": "./bin/sewing-kit",
+    "sk": "./bin/sk"
+  },
   "dependencies": {
+    "@sewing-kit/cli": "^0.1.6",
     "@types/fs-extra": "^9.0.0",
     "@types/glob": "^7.1.1",
     "fs-extra": "^9.0.0",
