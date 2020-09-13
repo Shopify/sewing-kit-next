@@ -1,12 +1,12 @@
 import {SeriesHook, WaterfallHook} from '@sewing-kit/hooks';
 import {LintTaskOptions, LintWorkspaceTaskHooks} from '@sewing-kit/tasks';
 
-import {run} from './runner';
+import {run} from '../runner';
 import {
   createCommand,
   TaskContext,
   createWorkspaceTasksAndApplyPlugins,
-} from './common';
+} from '../common';
 
 export const lint = createCommand(
   {

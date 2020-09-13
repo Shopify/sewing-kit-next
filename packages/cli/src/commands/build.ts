@@ -25,15 +25,15 @@ import {
   Package,
 } from '@sewing-kit/core';
 
-import {LogLevel} from './ui';
-import {run, StepDetails} from './runner';
+import {LogLevel} from '../ui';
+import {run, StepDetails} from '../runner';
 import {
   createStep,
   createCommand,
   TaskContext,
   createWorkspaceTasksAndApplyPlugins,
   createProjectTasksAndApplyPlugins,
-} from './common';
+} from '../common';
 
 export const build = createCommand(
   {

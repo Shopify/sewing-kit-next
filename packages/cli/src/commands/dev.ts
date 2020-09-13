@@ -7,15 +7,15 @@ import {
 } from '@sewing-kit/hooks';
 import {DevTaskOptions, DevWorkspaceTaskHooks} from '@sewing-kit/tasks';
 
-import {LogLevel} from './ui';
-import {run} from './runner';
+import {LogLevel} from '../ui';
+import {run} from '../runner';
 import {
   createStep,
   createCommand,
   TaskContext,
   createWorkspaceTasksAndApplyPlugins,
   createProjectTasksAndApplyPlugins,
-} from './common';
+} from '../common';
 
 export const dev = createCommand(
   {
