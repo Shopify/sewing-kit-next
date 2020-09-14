@@ -63,7 +63,7 @@ export function javascript({babelConfig}: Options = {}) {
             configure.webpackRules?.hook(async (rules) => [
               ...rules,
               {
-                test: /\.m?js/,
+                test: /\.m?js$/,
                 exclude: /node_modules/,
                 use: await createJavaScriptWebpackRuleSet({
                   api,
@@ -90,7 +90,7 @@ export function javascript({babelConfig}: Options = {}) {
           configure.webpackRules?.hook(async (rules) => [
             ...rules,
             {
-              test: /\.m?js/,
+              test: /\.m?js$/,
               exclude: /node_modules/,
               use: await createJavaScriptWebpackRuleSet({
                 api,
