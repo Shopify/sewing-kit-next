@@ -1,12 +1,12 @@
 import {WaterfallHook, SeriesHook} from '@sewing-kit/hooks';
 import {TypeCheckOptions, TypeCheckWorkspaceTaskHooks} from '@sewing-kit/tasks';
 
-import {run} from './runner';
+import {run} from '../runner';
 import {
   createCommand,
   TaskContext,
   createWorkspaceTasksAndApplyPlugins,
-} from './common';
+} from '../common';
 
 export const typeCheck = createCommand(
   {

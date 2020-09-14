@@ -7,13 +7,13 @@ import {
 import {TestTaskOptions, TestWorkspaceTaskHooks} from '@sewing-kit/tasks';
 import {Package, WebApp, Service} from '@sewing-kit/core';
 
-import {run} from './runner';
+import {run} from '../runner';
 import {
   createCommand,
   TaskContext,
   createWorkspaceTasksAndApplyPlugins,
   createProjectTasksAndApplyPlugins,
-} from './common';
+} from '../common';
 
 export const test = createCommand(
   {
