@@ -112,13 +112,13 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - uses: actions/cache@v1
-        id: babel-cache
-        name: Restore babel cache
+        id: build-cache
+        name: Restore build cache
         with:
-          path: .sewing-kit/cache/babel
-          key: ${{ runner.os }}-babel-${{ github.sha }}
+          path: .sewing-kit/
+          key: ${{ runner.os }}-build-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-babel-
+            ${{ runner.os }}-build-
 
       - name: Build
         run: yarn build
