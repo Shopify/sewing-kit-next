@@ -10,6 +10,20 @@ Understanding the architecture about this project is mostly about understanding 
 
 > ^ This is a decent way of structuring an intro to SK (obviously, much cleaned up)
 
+## Installation
+
+To get started, add the Sewing Kit CLI package to your app's `devDepenencies`:
+
+```sh
+yarn add @sewing-kit/cli --dev
+```
+
+Depending on your project's needs, you'll want to install additional plugins as needed. For example, to compile [`sass`](https://sass-lang.com/):
+
+```sh
+yarn add @sewing-kit/plugin-sass --dev
+```
+
 ## TODO
 
 - [x] Get rid of discovery. Discovery should just be looking for every `sewing-kit.config.*`, running it, and collecting the results to form the project.
