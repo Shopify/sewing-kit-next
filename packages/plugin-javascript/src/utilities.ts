@@ -28,6 +28,8 @@ export enum ExportStyle {
   CommonJs,
 }
 
+console.log('break cache');
+
 export async function createJavaScriptWebpackRuleSet({
   api,
   env,
