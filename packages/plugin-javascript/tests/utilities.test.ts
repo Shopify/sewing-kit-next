@@ -4,64 +4,87 @@ import {
 } from '../../../tests/utilities';
 import {
   ExportStyle,
-  getLatestModifiedTime,
+  fileContentsHash,
   generateBabelPackageCacheValue,
 } from '../src/utilities';
 import {getModifiedTime, writeToSrc, createTestPackage} from './utilities';
 
 describe('utilities', () => {
-  describe('getLatestModifiedTime()', () => {
-    it('gets the latest modified time', async () => {
+  describe('fileContentsHash()', () => {
+    it('uses the same hash for the same file name', async () => {
       await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
         const fileExtensions = ['.js'];
-
         await writeToSrc(workspace, 'index.js');
+        const beforeHash = await fileContentsHash(testPackage, fileExtensions);
 
-        const latestModifiedTime = getLatestModifiedTime(
-          testPackage,
-          fileExtensions,
-        );
-
+        await workspace.removeFile('src/index.js');
         await writeToSrc(workspace, 'index.js');
+        const afterHash = await fileContentsHash(testPackage, fileExtensions);
 
-        const updatedLatestModifiedTime = getLatestModifiedTime(
-          testPackage,
-          fileExtensions,
-        );
-
-        expect(updatedLatestModifiedTime).toBeGreaterThan(latestModifiedTime);
+        expect(beforeHash).toBe(afterHash);
       });
     });
 
-    it('gets the latest modified time of a group of files', async () => {
+    it('uses the different hash if the file name changes', async () => {
       await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
-        const fileExtensions = ['.js', '.ts', '.mjs'];
-
+        const fileExtensions = ['.js'];
         await writeToSrc(workspace, 'index.js');
-        const indexModifiedTime = getModifiedTime(
-          testPackage.fs.resolvePath('src', 'index.js'),
-        );
+        const beforeHash = await fileContentsHash(testPackage, fileExtensions);
 
-        await writeToSrc(workspace, 'file-a.ts');
-        const fileAModifiedTime = getModifiedTime(
-          testPackage.fs.resolvePath('src', 'file-a.ts'),
-        );
+        await workspace.removeFile('src/index.js');
+        await writeToSrc(workspace, 'index-two.js');
 
-        await writeToSrc(workspace, 'file-b.mjs');
-        const fileBModifiedTime = getModifiedTime(
-          testPackage.fs.resolvePath('src', 'file-b.mjs'),
-        );
+        const afterHash = await fileContentsHash(testPackage, fileExtensions);
 
-        const latestModifiedTime = getLatestModifiedTime(
-          testPackage,
-          fileExtensions,
-        );
+        expect(beforeHash).not.toBe(afterHash);
+      });
+    });
 
-        expect(latestModifiedTime).toBeGreaterThan(indexModifiedTime);
-        expect(latestModifiedTime).toBeGreaterThan(fileAModifiedTime);
-        expect(latestModifiedTime).toStrictEqual(fileBModifiedTime);
+    it('uses a different hash if the file contents change', async () => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+        const testPackage = createTestPackage(workspace);
+        const fileExtensions = ['.js'];
+        await writeToSrc(workspace, 'index.js');
+        const beforeHash = await fileContentsHash(testPackage, fileExtensions);
+
+        await writeToSrc(workspace, 'index.js', 'console.log("changed")');
+
+        const afterHash = await fileContentsHash(testPackage, fileExtensions);
+
+        expect(beforeHash).not.toBe(afterHash);
+      });
+    });
+
+    it('uses a different hash if a new file is added', async () => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+        const testPackage = createTestPackage(workspace);
+        const fileExtensions = ['.js'];
+        await writeToSrc(workspace, 'index.js');
+        const beforeHash = await fileContentsHash(testPackage, fileExtensions);
+
+        await writeToSrc(workspace, 'index-new.js');
+
+        const afterHash = await fileContentsHash(testPackage, fileExtensions);
+
+        expect(beforeHash).not.toBe(afterHash);
+      });
+    });
+
+    it('uses a different hash if a file is removed', async () => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+        const testPackage = createTestPackage(workspace);
+        const fileExtensions = ['.js'];
+        await writeToSrc(workspace, 'index.js');
+        await writeToSrc(workspace, 'file-to-remove.js');
+        const beforeHash = await fileContentsHash(testPackage, fileExtensions);
+
+        await workspace.removeFile('src/file-to-remove.js');
+
+        const afterHash = await fileContentsHash(testPackage, fileExtensions);
+
+        expect(beforeHash).not.toBe(afterHash);
       });
     });
 
@@ -71,20 +94,12 @@ describe('utilities', () => {
         const fileExtensions = ['.js'];
 
         await writeToSrc(workspace, 'index.js');
-
-        const latestModifiedTime = getLatestModifiedTime(
-          testPackage,
-          fileExtensions,
-        );
+        const beforeHash = await fileContentsHash(testPackage, fileExtensions);
 
         await writeToSrc(workspace, 'typescript-file.ts');
+        const afterHash = await fileContentsHash(testPackage, fileExtensions);
 
-        const updatedLatestModifiedTime = getLatestModifiedTime(
-          testPackage,
-          fileExtensions,
-        );
-
-        expect(updatedLatestModifiedTime).toStrictEqual(latestModifiedTime);
+        expect(beforeHash).toStrictEqual(afterHash);
       });
     });
   });
@@ -128,9 +143,9 @@ describe('utilities', () => {
         };
 
         expect(
-          generateBabelPackageCacheValue(testPackage, options),
+          await generateBabelPackageCacheValue(testPackage, options),
         ).not.toStrictEqual(
-          generateBabelPackageCacheValue(testPackage, newOptions),
+          await generateBabelPackageCacheValue(testPackage, newOptions),
         );
       });
     });
@@ -144,9 +159,9 @@ describe('utilities', () => {
         };
 
         expect(
-          generateBabelPackageCacheValue(testPackage, options),
+          await generateBabelPackageCacheValue(testPackage, options),
         ).not.toStrictEqual(
-          generateBabelPackageCacheValue(testPackage, newOptions),
+          await generateBabelPackageCacheValue(testPackage, newOptions),
         );
       });
     });
@@ -160,9 +175,9 @@ describe('utilities', () => {
         };
 
         expect(
-          generateBabelPackageCacheValue(testPackage, options),
+          await generateBabelPackageCacheValue(testPackage, options),
         ).not.toStrictEqual(
-          generateBabelPackageCacheValue(testPackage, newOptions),
+          await generateBabelPackageCacheValue(testPackage, newOptions),
         );
       });
     });
@@ -176,9 +191,9 @@ describe('utilities', () => {
         };
 
         expect(
-          generateBabelPackageCacheValue(testPackage, options),
+          await generateBabelPackageCacheValue(testPackage, options),
         ).not.toStrictEqual(
-          generateBabelPackageCacheValue(testPackage, newOptions),
+          await generateBabelPackageCacheValue(testPackage, newOptions),
         );
       });
     });
@@ -195,9 +210,9 @@ describe('utilities', () => {
         };
 
         expect(
-          generateBabelPackageCacheValue(testPackage, options),
+          await generateBabelPackageCacheValue(testPackage, options),
         ).not.toStrictEqual(
-          generateBabelPackageCacheValue(testPackage, newOptions),
+          await generateBabelPackageCacheValue(testPackage, newOptions),
         );
       });
     });
@@ -211,9 +226,9 @@ describe('utilities', () => {
         };
 
         expect(
-          generateBabelPackageCacheValue(testPackage, options),
+          await generateBabelPackageCacheValue(testPackage, options),
         ).not.toStrictEqual(
-          generateBabelPackageCacheValue(testPackage, newOptions),
+          await generateBabelPackageCacheValue(testPackage, newOptions),
         );
       });
     });
@@ -227,24 +242,30 @@ describe('utilities', () => {
         };
 
         expect(
-          generateBabelPackageCacheValue(testPackage, options),
+          await generateBabelPackageCacheValue(testPackage, options),
         ).not.toStrictEqual(
-          generateBabelPackageCacheValue(testPackage, newOptions),
+          await generateBabelPackageCacheValue(testPackage, newOptions),
         );
       });
     });
 
-    it('generates a different hash if the last modified time changes', async () => {
+    it('generates a different hash if a new files are added', async () => {
       await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         const testPackage = createTestPackage(workspace);
 
         await writeToSrc(workspace, 'file.js');
 
-        const oldHash = generateBabelPackageCacheValue(testPackage, options);
+        const oldHash = await generateBabelPackageCacheValue(
+          testPackage,
+          options,
+        );
 
-        await writeToSrc(workspace, 'file.js');
+        await writeToSrc(workspace, 'file2.js');
 
-        const newHash = generateBabelPackageCacheValue(testPackage, options);
+        const newHash = await generateBabelPackageCacheValue(
+          testPackage,
+          options,
+        );
 
         expect(oldHash).not.toStrictEqual(newHash);
       });
@@ -256,11 +277,17 @@ describe('utilities', () => {
 
         await writeToSrc(workspace, 'file.esnext');
 
-        const oldHash = generateBabelPackageCacheValue(testPackage, options);
+        const oldHash = await generateBabelPackageCacheValue(
+          testPackage,
+          options,
+        );
 
         await writeToSrc(workspace, 'file.esnext');
 
-        const newHash = generateBabelPackageCacheValue(testPackage, options);
+        const newHash = await generateBabelPackageCacheValue(
+          testPackage,
+          options,
+        );
 
         expect(oldHash).toStrictEqual(newHash);
       });

@@ -339,7 +339,11 @@ export async function fileContentsHash(
     compiledFiles.map((file) => fromFile(file, {algorithm: 'md5'})),
   );
 
-  return fileHashes.join('~');
+  const fileNamesWithHashes = compiledFiles.map(
+    (file, index) => `${file}:${fileHashes[index]}`,
+  );
+
+  return fileNamesWithHashes.join('~');
 }
 
 async function writeEntries({
