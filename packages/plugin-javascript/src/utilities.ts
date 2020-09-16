@@ -1,8 +1,8 @@
 import {resolve, relative} from 'path';
-import {statSync as stat} from 'fs';
 import {createHash} from 'crypto';
 import {sync as glob} from 'glob';
 
+import {fromFile} from 'hasha';
 import nodeObjectHash from 'node-object-hash';
 
 import {
@@ -177,7 +177,7 @@ export function createCompileBabelStep({
 
       // Check Babel package build cache
       if (cache) {
-        const cacheValue = generateBabelPackageCacheValue(pkg, {
+        const cacheValue = await generateBabelPackageCacheValue(pkg, {
           babelConfig,
           outputPath,
           extension,
@@ -276,7 +276,7 @@ interface BabelPackageCacheOptions {
   babelExtensions: string[];
 }
 
-export function generateBabelPackageCacheValue(
+export async function generateBabelPackageCacheValue(
   pkg: Package,
   {
     babelConfig,
@@ -296,9 +296,11 @@ export function generateBabelPackageCacheValue(
     babelExtensions,
   });
 
+  const contentHash = await fileContentsHash(pkg, babelExtensions);
+
   const dependencyModifiedTimeHash = createHash('md5')
     .update(createDependencyString([...babelCacheDependencies], pkg))
-    .update(String(getLatestModifiedTime(pkg, babelExtensions)))
+    .update(contentHash)
     .digest('hex');
 
   const configHash = nodeObjectHash().hash(babelConfig);
@@ -317,7 +319,10 @@ function createDependencyString(dependencies: string[], project: Project) {
     .join('&');
 }
 
-export function getLatestModifiedTime(pkg: Package, babelExtensions: string[]) {
+export async function fileContentsHash(
+  pkg: Package,
+  babelExtensions: string[],
+) {
   const sourceRoot = resolve(pkg.root, 'src');
   const compiledFiles =
     babelExtensions.length === 0
@@ -330,7 +335,11 @@ export function getLatestModifiedTime(pkg: Package, babelExtensions: string[]) {
           }`,
         );
 
-  return Math.max(...compiledFiles.map((file) => stat(file).mtimeMs));
+  const fileHashes = await Promise.all(
+    compiledFiles.map((file) => fromFile(file, {algorithm: 'md5'})),
+  );
+
+  return fileHashes.join('~');
 }
 
 async function writeEntries({
