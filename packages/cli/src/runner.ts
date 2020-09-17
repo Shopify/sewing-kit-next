@@ -120,7 +120,7 @@ export async function run(
 ) {
   const {ui, workspace, steps: stepTracker} = context;
 
-  const isInteractive = ui.stdout.stream.isTTY;
+  const {isInteractive} = ui;
   const logQueue: Arguments<Ui['log']>[] = [];
   const pastAlerts = new PersistentSection();
   const activeStepGroup = new PersistentSection();
@@ -592,14 +592,20 @@ export async function run(
   }[] = [];
 
   const print = () => {
-    showCursor(ui.stdout.stream);
-    cursorTo(ui.stdout.stream, 0, 0);
-    clearScreenDown(ui.stdout.stream);
-    hideCursor(ui.stdout.stream);
+    if (isInteractive) {
+      showCursor(ui.stdout.stream);
+      cursorTo(ui.stdout.stream, 0, 0);
+      clearScreenDown(ui.stdout.stream);
+      hideCursor(ui.stdout.stream);
+    }
 
     ui.stdout.write(
       (fmt) =>
-        fmt`🧵 {title sewing-kit interactive mode}\n{subdued (press a number to see that step’s output)}\n\n`,
+        fmt`🧵 {title sewing-kit ${
+          isInteractive ? 'interactive mode\n' : ''
+        }}{subdued ${
+          isInteractive ? '(press a number to see that step’s output)\n' : ''
+        }}\n`,
     );
 
     for (const [index, {step}] of indefiniteTasks.entries()) {
@@ -612,44 +618,46 @@ export async function run(
     }
   };
 
-  process.stdin.setRawMode(true);
-  emitKeypressEvents(process.stdin);
-  process.stdin.on(
-    'keypress',
-    (_: Buffer, {name: key, ctrl}: {name: string; ctrl: boolean}) => {
-      if (key === 'c' && ctrl) {
-        process.emit('SIGINT' as any);
-      } else if (key === 'escape') {
-        activeController?.background();
-        activeController = null;
-        print();
-      } else {
-        const parsed = Number.parseInt(key, 10);
-        if (Number.isNaN(parsed)) {
-          return;
+  if (isInteractive) {
+    process.stdin.setRawMode(true);
+    emitKeypressEvents(process.stdin);
+    process.stdin.on(
+      'keypress',
+      (_: Buffer, {name: key, ctrl}: {name: string; ctrl: boolean}) => {
+        if (key === 'c' && ctrl) {
+          process.emit('SIGINT' as any);
+        } else if (key === 'escape') {
+          activeController?.background();
+          activeController = null;
+          print();
+        } else {
+          const parsed = Number.parseInt(key, 10);
+          if (Number.isNaN(parsed)) {
+            return;
+          }
+
+          const task = indefiniteTasks[parsed - 1];
+
+          if (task == null) {
+            return;
+          }
+
+          activeController = task.controller;
+
+          showCursor(ui.stdout.stream);
+          cursorTo(ui.stdout.stream, 0, 0);
+          clearScreenDown(ui.stdout.stream);
+          hideCursor(ui.stdout.stream);
+
+          activeController.foreground();
+          ui.stdout.write(
+            (fmt) =>
+              fmt`\n\n🧵 {emphasis note:} sewing-kit has restored the output for {info ${task.step.label}}.\n{subdued press <escape> to return to the list of all active steps}\n\n`,
+          );
         }
-
-        const task = indefiniteTasks[parsed - 1];
-
-        if (task == null) {
-          return;
-        }
-
-        activeController = task.controller;
-
-        showCursor(ui.stdout.stream);
-        cursorTo(ui.stdout.stream, 0, 0);
-        clearScreenDown(ui.stdout.stream);
-        hideCursor(ui.stdout.stream);
-
-        activeController.foreground();
-        ui.stdout.write(
-          (fmt) =>
-            fmt`\n\n🧵 {emphasis note:} sewing-kit has restored the output for {info ${task.step.label}}.\n{subdued press <escape> to return to the list of all active steps}\n\n`,
-        );
-      }
-    },
-  );
+      },
+    );
+  }
 
   for (const {step, run, group} of indefiniteSteps) {
     const controller = new StreamController(ui.stdout.stream, ui.stderr.stream);
