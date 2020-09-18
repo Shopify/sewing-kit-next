@@ -1,6 +1,7 @@
 import {resolve, relative} from 'path';
 import {createHash} from 'crypto';
 
+import {fromFile} from 'hasha';
 import nodeObjectHash from 'node-object-hash';
 
 import {
@@ -100,16 +101,12 @@ function babelCacheIdentifier(
 ) {
   const optionsHash = nodeObjectHash().hash(babelOptions);
   const prefix = `sk:${env}:`;
-  const dependencyString = ['webpack', ...dependencies]
-    .map(
-      (dependency) =>
-        `${dependency}:${
-          project.dependency(dependency)?.version || 'notinstalled'
-        }`,
-    )
-    .join('&');
+  const dependencyString = createDependencyString(
+    ['webpack', ...dependencies],
+    project,
+  );
 
-  return `${prefix}${createHash('md5')
+  return `${prefix}${createHash('sha1')
     .update(dependencyString)
     .digest('hex')}@${optionsHash}`;
 }
@@ -122,6 +119,8 @@ interface CompileBabelOptions {
   readonly outputPath: string;
   readonly extension?: string;
   readonly exportStyle?: ExportStyle;
+  readonly cache?: boolean;
+  readonly cacheDependencies?: string[];
 }
 
 export function createCompileBabelStep({
@@ -130,8 +129,10 @@ export function createCompileBabelStep({
   configuration,
   configFile,
   outputPath,
-  extension,
-  exportStyle,
+  extension = '.js',
+  exportStyle = ExportStyle.CommonJs,
+  cache,
+  cacheDependencies: initialCacheDependencies = [],
 }: CompileBabelOptions) {
   return api.createStep(
     {id: 'Babel.Compile', label: 'compile with babel'},
@@ -146,6 +147,7 @@ export function createCompileBabelStep({
         babelConfig,
         babelIgnorePatterns,
         babelExtensions,
+        babelCacheDependencies = [],
       ] = await Promise.all([
         configuration.babelConfig.run({
           presets: [CORE_PRESET],
@@ -166,7 +168,38 @@ export function createCompileBabelStep({
         }),
         configuration.babelIgnorePatterns!.run(['**/*.test.js']),
         configuration.babelExtensions!.run(['.mjs', '.js']),
+        configuration.babelCacheDependencies?.run([
+          '@babel/core',
+          ...initialCacheDependencies,
+        ]),
       ]);
+
+      // Check Babel package build cache
+      if (cache) {
+        const cacheValue = await generateBabelPackageCacheValue(pkg, {
+          babelConfig,
+          outputPath,
+          extension,
+          exportStyle,
+          babelCacheDependencies: [...babelCacheDependencies],
+          babelIgnorePatterns: [...babelIgnorePatterns],
+          babelExtensions: [...babelExtensions],
+        });
+        const cacheRoot = api.cachePath('babel', 'packages', pkg.name);
+        const cachePath = api.resolvePath(
+          cacheRoot,
+          configFile.replace(/\./g, '-'),
+        );
+
+        if (await validCache(api.read, cachePath, cacheValue)) {
+          step.log(
+            `Successfully read from Babel cache for package ${pkg.name} (config: ${configFile}), skipping compilation`,
+          );
+          return;
+        } else {
+          await api.write(cachePath, cacheValue);
+        }
+      }
 
       // We write a private config file for the build so that we can point
       // the webpack CLI at an actual configuration file.
@@ -182,10 +215,9 @@ export function createCompileBabelStep({
       );
 
       const sourceRoot = resolve(pkg.root, 'src');
-      const replaceExtension =
-        extension == null || extension.startsWith('.')
-          ? extension
-          : `.${extension}`;
+      const replaceExtension = extension.startsWith('.')
+        ? extension
+        : `.${extension}`;
 
       // TODO: use `cacheDependencies` and cache directories to get good caching going here
       await step.exec('node_modules/.bin/babel', [
@@ -221,11 +253,106 @@ export function createCompileBabelStep({
   );
 }
 
+async function validCache(
+  read: (path: string) => Promise<string>,
+  cachePath: string,
+  newCacheValue: string,
+) {
+  try {
+    return (await read(cachePath)) === newCacheValue;
+  } catch (err) {
+    return false;
+  }
+}
+
+interface BabelPackageCacheOptions {
+  babelConfig: BabelConfig;
+  outputPath: string;
+  extension: string;
+  exportStyle: ExportStyle;
+  babelCacheDependencies: string[];
+  babelIgnorePatterns: string[];
+  babelExtensions: string[];
+}
+
+export async function generateBabelPackageCacheValue(
+  pkg: Package,
+  {
+    babelConfig,
+    outputPath,
+    extension,
+    exportStyle,
+    babelCacheDependencies,
+    babelIgnorePatterns,
+    babelExtensions,
+  }: BabelPackageCacheOptions,
+) {
+  const optionsHash = nodeObjectHash().hash({
+    outputPath,
+    extension,
+    exportStyle,
+    babelIgnorePatterns,
+    babelExtensions,
+  });
+
+  const contentHash = await fileContentsHash(pkg, babelExtensions);
+
+  const dependencyModifiedTimeHash = createHash('sha1')
+    .update(createDependencyString([...babelCacheDependencies], pkg))
+    .update(contentHash)
+    .digest('hex');
+
+  const configHash = nodeObjectHash().hash(babelConfig);
+
+  return `${optionsHash}+${dependencyModifiedTimeHash}+${configHash}`;
+}
+
+function createDependencyString(dependencies: string[], project: Project) {
+  return dependencies
+    .map(
+      (dependency) =>
+        `${dependency}:${
+          project.dependency(dependency)?.version || 'notinstalled'
+        }`,
+    )
+    .join('&');
+}
+
+export async function fileContentsHash(
+  pkg: Package,
+  babelExtensions: string[],
+) {
+  const sourceRoot = resolve(pkg.root, 'src');
+  const compiledFiles =
+    babelExtensions.length === 0
+      ? []
+      : await pkg.fs.glob(
+          `${sourceRoot}/**/*${
+            babelExtensions.length === 1
+              ? babelExtensions[0]
+              : `{${babelExtensions.join(',')}}`
+          }`,
+        );
+
+  const hashes = await hashFiles(compiledFiles);
+  return hashes.join('~');
+}
+
+async function hashFiles(fileNames: string[]) {
+  const fileHashes = [];
+  for (const file of fileNames) {
+    const hash = await fromFile(file, {algorithm: 'sha1'});
+    fileHashes.push(`${file}:${hash}`);
+  }
+
+  return fileHashes;
+}
+
 async function writeEntries({
   project,
-  extension = '.js',
+  extension,
   outputPath,
-  exportStyle = ExportStyle.CommonJs,
+  exportStyle,
 }: Pick<
   CompileBabelOptions,
   'project' | 'extension' | 'outputPath' | 'exportStyle'
