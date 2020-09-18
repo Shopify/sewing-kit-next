@@ -1,6 +1,5 @@
 import {resolve, relative} from 'path';
 import {createHash} from 'crypto';
-import {sync as glob} from 'glob';
 
 import {fromFile} from 'hasha';
 import nodeObjectHash from 'node-object-hash';
@@ -327,7 +326,7 @@ export async function fileContentsHash(
   const compiledFiles =
     babelExtensions.length === 0
       ? []
-      : glob(
+      : await pkg.fs.glob(
           `${sourceRoot}/**/*${
             babelExtensions.length === 1
               ? babelExtensions[0]
