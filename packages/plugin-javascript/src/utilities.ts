@@ -107,7 +107,7 @@ function babelCacheIdentifier(
     project,
   );
 
-  return `${prefix}${createHash('md5')
+  return `${prefix}${createHash('sha1')
     .update(dependencyString)
     .digest('hex')}@${optionsHash}`;
 }
@@ -298,7 +298,7 @@ export async function generateBabelPackageCacheValue(
 
   const contentHash = await fileContentsHash(pkg, babelExtensions);
 
-  const dependencyModifiedTimeHash = createHash('md5')
+  const dependencyModifiedTimeHash = createHash('sha1')
     .update(createDependencyString([...babelCacheDependencies], pkg))
     .update(contentHash)
     .digest('hex');
@@ -335,15 +335,18 @@ export async function fileContentsHash(
           }`,
         );
 
-  const fileHashes = await Promise.all(
-    compiledFiles.map((file) => fromFile(file, {algorithm: 'md5'})),
-  );
+  const hashes = await hashFiles(compiledFiles);
+  return hashes.join('~');
+}
 
-  const fileNamesWithHashes = compiledFiles.map(
-    (file, index) => `${file}:${fileHashes[index]}`,
-  );
+async function hashFiles(fileNames: string[]) {
+  const fileHashes = [];
+  for (const file of fileNames) {
+    const hash = await fromFile(file, {algorithm: 'sha1'});
+    fileHashes.push(`${file}:${hash}`);
+  }
 
-  return fileNamesWithHashes.join('~');
+  return fileHashes;
 }
 
 async function writeEntries({
