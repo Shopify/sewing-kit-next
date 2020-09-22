@@ -3,6 +3,7 @@ import {
   Package,
   Service,
   createComposedProjectPlugin,
+  createProjectBuildPlugin,
 } from '@sewing-kit/plugins';
 
 const PLUGIN = 'SewingKit.PackageFlexibleOutputs';
@@ -69,6 +70,21 @@ export function buildFlexibleOutputs({
     ]);
 
     composer.use(...composed);
+
+    composer.use(
+      createProjectBuildPlugin('Entry.Exists', async ({project}) => {
+        const pkgEntries = project.entries;
+
+        for (const pkg of pkgEntries) {
+          const entryExist = await project.fs.hasFile(`${pkg.root}.*`);
+          if (entryExist) {
+            console.log('~~~FOUND your file: ', pkg.root);
+          } else {
+            console.log('~~~NOT FOUND: ', pkg.root);
+          }
+        }
+      }),
+    );
   });
 }
 
