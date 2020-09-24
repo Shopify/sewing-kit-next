@@ -17,14 +17,20 @@
     "prerelease": "yarn build",
     "version-bump": "lerna version --no-push",
     "release": "lerna publish && git push --tags",
-    "dev:example": "yarn sk dev --root './example'"
+    "dev:example": "yarn sk dev --root './example'",
+    "tophat": "tophat"
   },
   "workspaces": [
     "packages/*"
   ],
+  "tophat": {
+    "namespace": "@sewing-kit",
+    "buildDirectory": "build"
+  },
   "devDependencies": {
     "@babel/core": "^7.8.0",
     "@babel/node": "^7.8.7",
+    "@shopify/tophat": "^0.0.5",
     "@types/fs-extra": "^9.0.0",
     "core-js": "^3.6.5",
     "eslint-find-rules": "^3.5.0",

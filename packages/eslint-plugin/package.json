@@ -7,6 +7,9 @@
     "access": "public",
     "@sewing-kit:registry": "https://registry.npmjs.org"
   },
+  "scripts": {
+    "build": "tsc --p tsconfig.json"
+  },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.28.0",

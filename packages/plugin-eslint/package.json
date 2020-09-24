@@ -7,6 +7,9 @@
     "access": "public",
     "@sewing-kit:registry": "https://registry.npmjs.org"
   },
+  "scripts": {
+    "build": "tsc --p tsconfig.json"
+  },
   "dependencies": {
     "@sewing-kit/config": "^0.1.6",
     "@sewing-kit/hooks": "^0.1.5",
