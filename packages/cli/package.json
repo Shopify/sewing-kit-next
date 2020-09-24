@@ -11,6 +11,9 @@
     "sewing-kit": "./bin/sewing-kit",
     "sk": "./bin/sk"
   },
+  "scripts": {
+    "build": "tsc --p tsconfig.json"
+  },
   "dependencies": {
     "@sewing-kit/config": "^0.1.6",
     "@sewing-kit/core": "^0.1.3",

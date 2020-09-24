@@ -2177,6 +2177,18 @@
     native-url "^0.2.6"
     schema-utils "^2.6.5"
 
+"@shopify/tophat@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@shopify/tophat/-/tophat-0.0.5.tgz#d78f1de1dee22516ccdf7a79e206f8aec492ae99"
+  integrity sha512-lAlavin5tl45HVv44kLNPos9gT0LZI/LjV6HzgpEcfydmw68o5/ldrWpTp6MPEmUssEeR3ZTrpCmLAvDG29Aqg==
+  dependencies:
+    chalk "^2.4.2"
+    common-tags "^1.8.0"
+    cosmiconfig "^5.2.1"
+    fs-extra "^8.1.0"
+    inquirer "^6.2.1"
+    minimist "^1.2.0"
+
 "@sinonjs/commons@^1.7.0":
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.7.2.tgz#505f55c74e0272b43f6c52d81946bed7058fc0e2"
@@ -4325,7 +4337,7 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
 
-cosmiconfig@^5.0.0, cosmiconfig@^5.1.0:
+cosmiconfig@^5.0.0, cosmiconfig@^5.1.0, cosmiconfig@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-5.2.1.tgz#040f726809c591e77a17c0a3626ca45b4f168b1a"
   integrity sha512-H65gsXo1SKjf8zmrJ67eJk8aIRKV5ff2D4uKZIBZShbhGSpEmsQOPW/SKMKYhSTrqR7ufy6RP69rPogdaPh/kA==
@@ -6646,7 +6658,7 @@ init-package-json@^1.10.3:
     validate-npm-package-license "^3.0.1"
     validate-npm-package-name "^3.0.0"
 
-inquirer@^6.2.0:
+inquirer@^6.2.0, inquirer@^6.2.1:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.5.2.tgz#ad50942375d036d327ff528c08bd5fab089928ca"
   integrity sha512-cntlB5ghuB0iuO65Ovoi8ogLHiWGs/5yNrtUcKjFhSSiVeAIVpD7koaSU9RM8mpXw5YDi9RdYXGQMaOURB7ycQ==

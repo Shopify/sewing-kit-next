@@ -7,6 +7,9 @@
     "access": "public",
     "@sewing-kit:registry": "https://registry.npmjs.org"
   },
+  "scripts": {
+    "build": "tsc --p tsconfig.json"
+  },
   "dependencies": {
     "@babel/preset-react": "^7.9.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.3.1",
