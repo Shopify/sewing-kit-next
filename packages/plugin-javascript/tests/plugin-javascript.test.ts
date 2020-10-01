@@ -1,10 +1,14 @@
 import {resolve} from 'path';
-
 import {
   withWorkspace,
   generateUniqueWorkspaceID,
 } from '../../../tests/utilities';
-import {getModifiedTime, writeToSrc} from './utilities';
+import {
+  getModifiedTime,
+  writeToSrc,
+  readFromWorkspace,
+  sleep,
+} from './utilities';
 
 const babelCompilationConfig = `
 import {createPackage} from '@sewing-kit/config';
@@ -69,7 +73,7 @@ export default createPackage((pkg) => {
 
 describe('@sewing-kit/plugin-javascript', () => {
   describe('createCompileBabelStep()', () => {
-    describe('cache', () => {
+    describe('--cache', () => {
       it('reads from the cache and skips compilation if hash is same', async () => {
         await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
           const builtIndexFilePath = resolve(
@@ -211,6 +215,33 @@ describe('@sewing-kit/plugin-javascript', () => {
 
           expect(initialBuildTime).not.toStrictEqual(
             getModifiedTime(builtIndexFilePath),
+          );
+        });
+      });
+    });
+
+    describe('--watch', () => {
+      it('watches builds', async () => {
+        await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+          await workspace.writeConfig(babelCompilationConfig);
+          await writeToSrc(workspace, 'index.js');
+
+          await workspace.run('build', ['--watch']);
+          await writeToSrc(
+            workspace,
+            'index.js',
+            `export default const app = 'updated';`,
+          );
+
+          const builtIndex = readFromWorkspace(
+            workspace,
+            'build/esm/index.mjs',
+          );
+
+          await sleep(3);
+
+          expect(await builtIndex).toStrictEqual(
+            `export default const app = 'updated';`,
           );
         });
       });

@@ -109,7 +109,7 @@ export function buildEsNextOutput() {
       api,
       hooks,
       project,
-      options: {cache},
+      options: {cache, watch},
     } = context;
 
     hooks.targets.hook((targets) =>
@@ -145,6 +145,7 @@ export function buildEsNextOutput() {
             configFile: 'babel.esnext.js',
             exportStyle: ExportStyle.EsModules,
             cache,
+            watch,
           }),
         ];
       });

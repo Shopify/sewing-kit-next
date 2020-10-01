@@ -36,7 +36,7 @@ export function buildNodeOutput() {
       api,
       hooks,
       project,
-      options: {cache},
+      options: {cache, watch},
     } = context;
 
     hooks.targets.hook((targets) =>
@@ -82,6 +82,7 @@ export function buildNodeOutput() {
             configFile: 'babel.node.js',
             exportStyle: ExportStyle.CommonJs,
             cache,
+            watch,
           }),
         ];
       });
