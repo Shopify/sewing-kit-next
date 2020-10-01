@@ -8,7 +8,7 @@
     "@sewing-kit:registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "build": "tsc --p tsconfig.json"
+    "build": "cd ../../; yarn build --root packages/config"
   },
   "dependencies": {
     "@babel/core": "^7.8.0",

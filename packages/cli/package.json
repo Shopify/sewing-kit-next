@@ -12,7 +12,7 @@
     "sk": "./bin/sk"
   },
   "scripts": {
-    "build": "tsc --p tsconfig.json"
+    "build": "cd ../../; yarn build --root packages/cli"
   },
   "dependencies": {
     "@sewing-kit/config": "^0.1.7",
