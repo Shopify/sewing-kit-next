@@ -2,46 +2,98 @@
   "files": [],
   "include": [],
   "references": [
-    {"path": "./packages/core"},
-    {"path": "./packages/hooks"},
-    {"path": "./packages/tasks"},
-    {"path": "./packages/plugins"},
-    {"path": "./packages/config"},
-    {"path": "./packages/cli"},
-
-    {"path": "./packages/plugin-eslint"},
-    {"path": "./packages/plugin-stylelint"},
-    {"path": "./packages/plugin-jest"},
-    {"path": "./packages/plugin-webpack"},
-
-    {"path": "./packages/plugin-javascript"},
-    {"path": "./packages/plugin-typescript"},
-    {"path": "./packages/plugin-css"},
-    {"path": "./packages/plugin-sass"},
-
-    {"path": "./packages/graphql"},
-    {"path": "./packages/plugin-graphql"},
-
-    {"path": "./packages/plugin-react"},
-
-    {"path": "./packages/plugin-package-binaries"},
-    {"path": "./packages/plugin-package-commonjs"},
-    {"path": "./packages/plugin-package-esmodules"},
-    {"path": "./packages/plugin-package-esnext"},
-    {"path": "./packages/plugin-package-node"},
-    {"path": "./packages/plugin-package-typescript"},
-    {"path": "./packages/plugin-package-flexible-outputs"},
-
-    {"path": "./packages/plugin-service-base"},
-
-    {"path": "./packages/plugin-web-app-base"},
-    {"path": "./packages/plugin-webpack-builds"},
-    {"path": "./packages/plugin-differential-serving"},
-
-    {"path": "./packages/plugin-vscode"},
-
-    {"path": "./packages/eslint-plugin"},
-
-    {"path": "./packages/webpack-plugin-hash-output"}
+    {
+      "path": "./packages/cli"
+    },
+    {
+      "path": "./packages/config"
+    },
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./packages/eslint-plugin"
+    },
+    {
+      "path": "./packages/graphql"
+    },
+    {
+      "path": "./packages/hooks"
+    },
+    {
+      "path": "./packages/plugin-css"
+    },
+    {
+      "path": "./packages/plugin-differential-serving"
+    },
+    {
+      "path": "./packages/plugin-eslint"
+    },
+    {
+      "path": "./packages/plugin-graphql"
+    },
+    {
+      "path": "./packages/plugin-javascript"
+    },
+    {
+      "path": "./packages/plugin-jest"
+    },
+    {
+      "path": "./packages/plugin-package-binaries"
+    },
+    {
+      "path": "./packages/plugin-package-commonjs"
+    },
+    {
+      "path": "./packages/plugin-package-esmodules"
+    },
+    {
+      "path": "./packages/plugin-package-esnext"
+    },
+    {
+      "path": "./packages/plugin-package-flexible-outputs"
+    },
+    {
+      "path": "./packages/plugin-package-node"
+    },
+    {
+      "path": "./packages/plugin-package-typescript"
+    },
+    {
+      "path": "./packages/plugin-react"
+    },
+    {
+      "path": "./packages/plugin-sass"
+    },
+    {
+      "path": "./packages/plugin-service-base"
+    },
+    {
+      "path": "./packages/plugin-stylelint"
+    },
+    {
+      "path": "./packages/plugin-typescript"
+    },
+    {
+      "path": "./packages/plugin-vscode"
+    },
+    {
+      "path": "./packages/plugin-web-app-base"
+    },
+    {
+      "path": "./packages/plugin-webpack"
+    },
+    {
+      "path": "./packages/plugin-webpack-builds"
+    },
+    {
+      "path": "./packages/plugins"
+    },
+    {
+      "path": "./packages/tasks"
+    },
+    {
+      "path": "./packages/webpack-plugin-hash-output"
+    }
   ]
 }
