@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/plugin-package-node",
   "license": "MIT",
-  "version": "0.1.20",
+  "version": "0.2.0",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -11,11 +11,11 @@
     "build": "tsc --p tsconfig.json"
   },
   "dependencies": {
-    "@sewing-kit/hooks": "^0.1.5",
-    "@sewing-kit/plugin-javascript": "^0.1.17",
-    "@sewing-kit/plugins": "^0.1.5"
+    "@sewing-kit/hooks": "^0.1.6",
+    "@sewing-kit/plugin-javascript": "^0.2.0",
+    "@sewing-kit/plugins": "^0.1.6"
   },
   "optionalDependencies": {
-    "@sewing-kit/plugin-jest": "^0.1.20"
+    "@sewing-kit/plugin-jest": "^0.1.21"
   }
 }
