@@ -26,7 +26,7 @@ function compileBabelBuild() {
       api,
       hooks,
       project,
-      options: {cache},
+      options: {cache, watch},
     } = context;
 
     hooks.targets.hook((targets) =>
@@ -59,6 +59,7 @@ function compileBabelBuild() {
             configFile: 'babel.esm.js',
             exportStyle: ExportStyle.EsModules,
             cache,
+            watch
           }),
         ];
       });
@@ -226,23 +227,29 @@ describe('@sewing-kit/plugin-javascript', () => {
           await workspace.writeConfig(babelCompilationConfig);
           await writeToSrc(workspace, 'index.js');
 
-          await workspace.run('build', ['--watch']);
-          await writeToSrc(
-            workspace,
-            'index.js',
-            `export default const app = 'updated';`,
-          );
+          workspace.run('build', ['--watch']);
 
-          const builtIndex = readFromWorkspace(
-            workspace,
-            'build/esm/index.mjs',
-          );
+          await sleep(500);
+          await writeToSrc(workspace, 'index.js', 'foobar');
+          await sleep(500);
 
-          await sleep(3);
+          expect(
+            await readFromWorkspace(workspace, 'build/esm/index.mjs'),
+          ).toStrictEqual('foobar;');
+        });
+      });
 
-          expect(await builtIndex).toStrictEqual(
-            `export default const app = 'updated';`,
-          );
+      it('does not watch the builds', async () => {
+        await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+          await workspace.writeConfig(babelCompilationConfig);
+          await writeToSrc(workspace, 'index.js');
+
+          await workspace.run('build');
+          await writeToSrc(workspace, 'index.js', 'foobar');
+
+          expect(
+            await readFromWorkspace(workspace, 'build/esm/index.mjs'),
+          ).not.toStrictEqual('foobar;');
         });
       });
     });
