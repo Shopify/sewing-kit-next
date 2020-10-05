@@ -68,12 +68,14 @@ export function createCommand<Flags extends Spec>(
     const {
       '--root': root = process.cwd(),
       '--log-level': logLevel,
+      '--interactive': isInteractive,
       ...flags
     } = arg(
       {
         ...flagSpec,
         '--root': String,
         '--log-level': String,
+        '--interactive': Boolean,
         ...defaultStepInclusionFlags,
       },
       {argv},
@@ -82,6 +84,7 @@ export function createCommand<Flags extends Spec>(
     const ui = new Ui({
       ...(internalOptions as any),
       level: mapLogLevel(logLevel as any),
+      isInteractive,
     });
 
     const steps = new StepTracker(createInclusionOptions(flags as any));

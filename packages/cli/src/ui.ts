@@ -11,6 +11,7 @@ interface Options {
   stdout: NodeJS.WriteStream;
   stderr: NodeJS.WriteStream;
   level: LogLevel;
+  isInteractive: boolean;
 }
 
 const CHALK_MAPPINGS = new Map([
@@ -83,15 +84,18 @@ export class Ui {
   readonly stdout: FormattedStream;
   readonly stderr: FormattedStream;
   readonly level: LogLevel;
+  readonly isInteractive: boolean;
 
   constructor({
     stdout = process.stdout,
     stderr = process.stderr,
     level = LogLevel.Info,
+    isInteractive = false,
   }: Partial<Options> = {}) {
     this.stdout = new FormattedStream(stdout);
     this.stderr = new FormattedStream(stderr);
     this.level = level;
+    this.isInteractive = isInteractive;
   }
 
   log = (value: Loggable, {level = LogLevel.Info}: LogOptions = {}) => {
