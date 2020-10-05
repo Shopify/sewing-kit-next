@@ -1,6 +1,7 @@
 import {statSync as stat} from 'fs';
 import {join} from 'path';
 import {Package} from '@sewing-kit/plugins';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import {readFile} from 'fs-extra';
 import {Workspace, generateUniqueWorkspaceID} from '../../../tests/utilities';
 

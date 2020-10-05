@@ -222,30 +222,29 @@ export function createCompileBabelStep({
         : `.${extension}`;
 
       // TODO: use `cacheDependencies` and cache directories to get good caching going here
-      await step
-        .exec('node_modules/.bin/babel', [
-          sourceRoot,
-          ...toArgs(
-            {
-              outDir: outputPath,
-              // @see https://babeljs.io/docs/en/babel-cli#custom-config-path
-              configFile: babelConfigPath,
-              verbose: true,
-              // @see https://babeljs.io/docs/en/babel-cli#ignoring-babelrcjson-
-              noBabelrc: true,
-              babelConfig: false,
-              copyFiles: true,
-              noCopyIgnored: true,
-              extensions: babelExtensions.join(','),
-              // @see https://babeljs.io/docs/en/babel-cli#ignore-files
-              ignore: babelIgnorePatterns.join(','),
-              // @see https://babeljs.io/docs/en/babel-cli#set-file-extensions
-              outFileExtension: replaceExtension,
-              watch,
-            },
-            {dasherize: true},
-          ),
-        ]);
+      await step.exec('node_modules/.bin/babel', [
+        sourceRoot,
+        ...toArgs(
+          {
+            outDir: outputPath,
+            // @see https://babeljs.io/docs/en/babel-cli#custom-config-path
+            configFile: babelConfigPath,
+            verbose: true,
+            // @see https://babeljs.io/docs/en/babel-cli#ignoring-babelrcjson-
+            noBabelrc: true,
+            babelConfig: false,
+            copyFiles: true,
+            noCopyIgnored: true,
+            extensions: babelExtensions.join(','),
+            // @see https://babeljs.io/docs/en/babel-cli#ignore-files
+            ignore: babelIgnorePatterns.join(','),
+            // @see https://babeljs.io/docs/en/babel-cli#set-file-extensions
+            outFileExtension: replaceExtension,
+            watch,
+          },
+          {dasherize: true},
+        ),
+      ]);
 
       await writeEntries({
         project: pkg,

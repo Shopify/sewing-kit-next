@@ -26,7 +26,7 @@ function compileBabelBuild() {
       api,
       hooks,
       project,
-      options: {cache},
+      options: {cache, watch},
     } = context;
 
     hooks.targets.hook((targets) =>
@@ -59,6 +59,7 @@ function compileBabelBuild() {
             configFile: 'babel.esm.js',
             exportStyle: ExportStyle.EsModules,
             cache,
+            watch
           }),
         ];
       });
@@ -195,7 +196,7 @@ describe('@sewing-kit/plugin-javascript', () => {
     });
 
     describe('--no-cache', () => {
-      it('does not ready from the cache', async () => {
+      it('does not read from the cache', async () => {
         await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
           const builtIndexFilePath = resolve(
             workspace.root,
@@ -226,24 +227,36 @@ describe('@sewing-kit/plugin-javascript', () => {
           await workspace.writeConfig(babelCompilationConfig);
           await writeToSrc(workspace, 'index.js');
 
-          await workspace.run('build', ['--watch']);
-          await writeToSrc(
-            workspace,
-            'index.js',
-            `export default const app = 'updated';`,
-          );
+          workspace.run('build', ['--watch']);
+          // eslint-disable-next-line line-comment-position
+          await sleep(300); // wait for initial build
 
-          const builtIndex = readFromWorkspace(
-            workspace,
-            'build/esm/index.mjs',
-          );
+          await writeToSrc(workspace, 'index.js', 'const foo = "bar";');
 
-          await sleep(3);
+          // eslint-disable-next-line line-comment-position
+          await sleep(300); // wait for watcher
 
-          expect(await builtIndex).toStrictEqual(
-            `export default const app = 'updated';`,
-          );
+          expect(
+            await readFromWorkspace(workspace, 'build/esm/index.mjs'),
+          ).toStrictEqual('var foo = "bar";');
         });
+      });
+    });
+
+    it('does not watch builds', async () => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+        await workspace.writeConfig(babelCompilationConfig);
+        await writeToSrc(workspace, 'index.js');
+
+        await workspace.run('build');
+        await writeToSrc(workspace, 'index.js', 'const foo = "bar";');
+
+        // eslint-disable-next-line line-comment-position
+        await sleep(300); // wait for watcher
+
+        expect(
+          await readFromWorkspace(workspace, 'build/esm/index.mjs'),
+        ).not.toStrictEqual('var foo = "bar";');
       });
     });
   });
