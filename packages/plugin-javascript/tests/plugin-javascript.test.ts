@@ -10,6 +10,12 @@ import {
   sleep,
 } from './utilities';
 
+import execa from 'execa';
+
+const run = (command: string, options: string[]) => {
+  return execa(`yarn sk ${command}`, options);
+};
+
 const babelCompilationConfig = `
 import {createPackage} from '@sewing-kit/config';
 import {
@@ -227,7 +233,7 @@ describe('@sewing-kit/plugin-javascript', () => {
           await workspace.writeConfig(babelCompilationConfig);
           await writeToSrc(workspace, 'index.js');
 
-          workspace.run('build', ['--watch']);
+          run('build', ['--watch']);
           // eslint-disable-next-line line-comment-position
           await sleep(300); // wait for initial build
 
@@ -248,7 +254,7 @@ describe('@sewing-kit/plugin-javascript', () => {
         await workspace.writeConfig(babelCompilationConfig);
         await writeToSrc(workspace, 'index.js');
 
-        await workspace.run('build');
+        await run('build');
         await writeToSrc(workspace, 'index.js', 'const foo = "bar";');
 
         // eslint-disable-next-line line-comment-position

@@ -31,5 +31,9 @@
   "optionalDependencies": {
     "@sewing-kit/plugin-webpack": "^0.1.9",
     "webpack": ">=4 <5"
+  },
+  "devDependencies": {
+    "@types/execa": "^2.0.0",
+    "execa": "^4.0.3"
   }
 }
