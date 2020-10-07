@@ -19,7 +19,7 @@ module.exports = {
       files: [
         'sewing-kit.config.ts',
         'config/sewing-kit/**/*',
-        'templates/sewing-kit.templateconfig.hbs.ts',
+        'templates/**/*.ts',
       ],
       rules: {
         'import/no-extraneous-dependencies': 'off',

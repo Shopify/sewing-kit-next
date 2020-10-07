@@ -2,7 +2,7 @@
   "name": "@sewing-kit/{{name}}",
   "version": "0.0.0",
   "license": "MIT",
-  "description": "{{{description}}}",
+  "description": "{{description}}",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
