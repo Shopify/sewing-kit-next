@@ -2,7 +2,6 @@
   "files": [],
   "include": [],
   "references": [
-    {"path": "./packages/cli"},
     {"path": "./packages/config"},
     {"path": "./packages/core"},
     {"path": "./packages/eslint-plugin"},
@@ -31,6 +30,7 @@
     {"path": "./packages/plugin-webpack"},
     {"path": "./packages/plugin-webpack-builds"},
     {"path": "./packages/plugins"},
+    {"path": "./packages/stitch"},
     {"path": "./packages/tasks"},
     {"path": "./packages/webpack-plugin-hash-output"}
   ]
