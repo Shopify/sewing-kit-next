@@ -42,3 +42,8 @@ Please see the following packages for usage instructions:
 - Not sure why this project exists? Checkout the [Project Brief](https://docs.google.com/document/d/11C4POvYkPk6xKG-HsAH3dP-Yx-W4atxXW5cCv9BzO5s/edit#).
 - Curious about the implementation? Here's our [Architecture docs](./documentation/architecture.md).
 - Running a release? Give the [release and deploy](./documentation/contributing/release-and-deploy.md) docs a read.
+
+## 🙌🏽 Contribution docs
+
+- [Running a release](./documentation/contributing/release-and-deploy.md)
+- [Creating a new package](./documentation/contributing/creating-a-new-package.md)

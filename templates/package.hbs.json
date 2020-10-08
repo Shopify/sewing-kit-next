@@ -1,0 +1,28 @@
+{
+  "name": "@sewing-kit/{{name}}",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "{{description}}",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc --p tsconfig.json"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "@sewing-kit:registry": "https://registry.npmjs.org"
+  },
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/sewing-kit-next.git",
+    "directory": "packages/{{name}}"
+  },
+  "bugs": {
+    "url": "https://github.com/Shopify/sewing-kit-next/issues"
+  },
+  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/master/packages/{{name}}/README.md",
+  "dependencies": {},
+  "files": ["build/*", "index.js", "index.d.ts", "!tsconfig.tsbuildinfo"]
+}

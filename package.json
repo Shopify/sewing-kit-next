@@ -18,7 +18,8 @@
     "version-bump": "lerna version --no-push",
     "release": "lerna publish && git push --tags",
     "dev:example": "yarn sk dev --root './example'",
-    "tophat": "tophat"
+    "tophat": "tophat",
+    "generate:package": "plop package"
   },
   "workspaces": [
     "packages/*"
@@ -38,6 +39,7 @@
     "fs-extra": "^9.0.0",
     "glob": "^7.1.6",
     "lerna": "^3.20.2",
+    "plop": "^2.7.4",
     "tree-node-cli": "^1.3.0"
   },
   "dependencies": {},

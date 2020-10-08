@@ -16,7 +16,11 @@ module.exports = {
       extends: ['plugin:@sewing-kit/jest'],
     },
     {
-      files: ['sewing-kit.config.ts', 'config/sewing-kit/**/*'],
+      files: [
+        'sewing-kit.config.ts',
+        'config/sewing-kit/**/*',
+        'templates/**/*.ts',
+      ],
       rules: {
         'import/no-extraneous-dependencies': 'off',
       },

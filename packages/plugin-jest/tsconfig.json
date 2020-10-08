@@ -8,6 +8,7 @@
     "types": ["jest"]
   },
   "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts"],
   "references": [
     {"path": "../hooks"},
     {"path": "../plugins"},

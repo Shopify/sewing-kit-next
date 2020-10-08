@@ -2,10 +2,10 @@
   "extends": "../../config/typescript/tsconfig.base.json",
   "compilerOptions": {
     "outDir": "build/ts",
-    "baseUrl": "src",
-    "rootDir": "src"
+    "rootDir": "src",
+    "baseUrl": "src"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.test.ts"],
-  "references": [{"path": "../plugins"}]
+  "references": []
 }
