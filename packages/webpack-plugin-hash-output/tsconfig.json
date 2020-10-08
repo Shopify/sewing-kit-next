@@ -6,5 +6,6 @@
     "rootDir": "src"
   },
   "include": ["src/**/*.ts", "../../config/typescript/typings"],
+  "exclude": ["src/**/*.test.ts"],
   "references": []
 }
