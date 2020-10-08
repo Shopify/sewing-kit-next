@@ -1,6 +1,7 @@
 import {readdirSync, existsSync} from 'fs';
 import path from 'path';
 import glob from 'glob';
+import prettier from 'prettier';
 
 const jsPackages = getPackages();
 
@@ -158,6 +159,8 @@ function stripDescription(desc) {
 }
 
 function prettyStringify(jsonObj) {
-  // eslint-disable-next-line prefer-template
-  return JSON.stringify(jsonObj, undefined, 2) + '\n';
+  return prettier.format(JSON.stringify(jsonObj), {
+    parser: 'json',
+    bracketSpacing: false,
+  });
 }
