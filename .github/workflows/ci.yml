@@ -156,13 +156,13 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - uses: actions/cache@v1
-        id: eslint-cache
-        name: Restore ESLint cache
+        id: build-cache
+        name: Restore Build cache
         with:
-          path: .sewing-kit/cache/eslint
-          key: ${{ runner.os }}-eslint-${{ github.sha }}
+          path: .sewing-kit
+          key: ${{ runner.os }}-build-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-eslint-
+            ${{ runner.os }}-build-
 
-      - name: Lint
-        run: yarn lint
+      - name: Build
+        run: yarn build
