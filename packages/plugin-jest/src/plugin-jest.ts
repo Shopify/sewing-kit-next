@@ -79,7 +79,11 @@ interface JestFlags {
   cacheDirectory?: string;
 }
 
-export function jest() {
+export interface Options {
+  readonly jestEnvironment?: string;
+}
+
+export function jest({jestEnvironment = 'node'}: Options) {
   return createWorkspaceTestPlugin(
     PLUGIN,
     ({workspace, hooks, options, api}) => {
@@ -212,7 +216,7 @@ export function jest() {
                     setupEnvironmentFiles,
                     setupTestsFiles,
                   ] = await Promise.all([
-                    hooks.jestEnvironment!.run('node'),
+                    hooks.jestEnvironment!.run(jestEnvironment),
                     hooks.jestWatchIgnore!.run([
                       project.fs.buildPath(),
                       project.fs.resolvePath('node_modules/'),
