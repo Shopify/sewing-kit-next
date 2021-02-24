@@ -4,6 +4,6 @@ dependencies:
     - yarn lerna -- bootstrap
 deploy:
   pre:
-    - echo 'building...'
+    - yarn run build
   override:
-    - echo 'running beta'
+    - yarn run lerna publish from-package --dist-tag beta --yes
