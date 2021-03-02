@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/plugin-eslint",
   "license": "MIT",
-  "version": "0.1.7-sk0-sk1-hybrid.4",
+  "version": "0.1.6",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -11,9 +11,9 @@
     "build": "tsc --p tsconfig.json"
   },
   "dependencies": {
-    "@sewing-kit/config": "^0.1.8-sk0-sk1-hybrid.4",
-    "@sewing-kit/hooks": "^0.1.7-sk0-sk1-hybrid.4",
-    "@sewing-kit/plugins": "^0.1.7-sk0-sk1-hybrid.4",
+    "@sewing-kit/config": "^0.1.7",
+    "@sewing-kit/hooks": "^0.1.6",
+    "@sewing-kit/plugins": "^0.1.6",
     "eslint": "^7.0.0"
   }
 }
