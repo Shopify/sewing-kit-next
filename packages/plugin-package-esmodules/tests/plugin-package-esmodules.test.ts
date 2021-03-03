@@ -27,7 +27,7 @@ describe('@sewing-kit/plugin-package-esmodules', () => {
       await workspace.run('build');
 
       expect(await workspace.contents('index.mjs')).toContain(
-        'export * from "./build/esm/index"',
+        'export * from "./build/esm/index.mjs"',
       );
       expect(await workspace.contents('build/esm/index.mjs')).toContain(
         'export function pkg(',
@@ -96,7 +96,7 @@ describe('@sewing-kit/plugin-package-esmodules', () => {
       await workspace.run('build');
 
       expect(await workspace.contents('index.mjs')).toContain(
-        'export * from "./build/esm/custom";',
+        'export * from "./build/esm/custom.mjs";',
       );
     });
   });

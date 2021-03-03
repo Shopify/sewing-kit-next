@@ -164,6 +164,12 @@ export function createCompileBabelStep({
                 useESModules: exportStyle === ExportStyle.EsModules,
               },
             ],
+            // Add mandatory file extensions to import/exports
+            // https://nodejs.org/docs/latest-v14.x/api/esm.html#esm_mandatory_file_extensions
+            [
+              'babel-plugin-add-import-extension',
+              {extension: extension.replace('.', '')},
+            ],
           ],
         }),
         configuration.babelIgnorePatterns!.run(['**/*.test.js']),
@@ -367,10 +373,10 @@ async function writeEntries({
 
       const relativeFromSourceRoot = relative(sourceRoot, absoluteEntryPath);
       const destinationInOutput = resolve(outputPath, relativeFromSourceRoot);
-      const relativeFromRoot = normalizedRelative(
+      const relativeFromRoot = `${normalizedRelative(
         project.root,
         destinationInOutput,
-      );
+      )}${extension}`;
 
       if (exportStyle === ExportStyle.CommonJs) {
         await project.fs.write(
@@ -398,17 +404,17 @@ async function writeEntries({
         // intentional no-op
       }
 
-      await project.fs.write(
-        `${entry.name ?? 'index'}${extension}`,
-        [
-          `export * from ${JSON.stringify(relativeFromRoot)};`,
-          hasDefault
-            ? `export {default} from ${JSON.stringify(relativeFromRoot)};`
-            : false,
-        ]
-          .filter(Boolean)
-          .join('\n'),
-      );
+      const entryExtension = `${entry.name ?? 'index'}${extension}`;
+      const entryContents = [
+        `export * from ${JSON.stringify(relativeFromRoot)};`,
+        hasDefault
+          ? `export {default} from ${JSON.stringify(relativeFromRoot)};`
+          : false,
+      ]
+        .filter(Boolean)
+        .join('\n');
+
+      await project.fs.write(entryExtension, entryContents);
     }),
   );
 }
