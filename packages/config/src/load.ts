@@ -30,6 +30,18 @@ const DIRECTORIES_NOT_TO_USE_FOR_NAME = new Set([
   'ui',
 ]);
 
+const legacySewingKitPlugins = [
+  'graphql',
+  'jest',
+  'manifest',
+  'paths',
+  'sass',
+  'webpack',
+  'vendors',
+  'devServer',
+  'rollup',
+];
+
 const IS_TSX = /.tsx?$/;
 const IS_MJS = /.mjs$/;
 
@@ -197,9 +209,15 @@ async function loadConfigFile<T extends {name: string; root: string}>(
   let result;
   try {
     result = await normalized();
-  } catch {
-    // we hit a legacy sewing-kit config
-    return null;
+  } catch (error) {
+    const parsingLegacyPlugin = legacySewingKitPlugins.find((plugin) =>
+      error.message.includes(`'${plugin}' of undefined`),
+    );
+
+    if (parsingLegacyPlugin) {
+      // we hit a legacy sewing-kit config
+      return null;
+    }
   }
 
   if (!looksLikeValidConfigurationObject(result)) {
