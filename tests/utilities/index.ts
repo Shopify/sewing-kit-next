@@ -48,8 +48,11 @@ export class Workspace {
     });
   }
 
-  async writeConfig(contents: string) {
-    await writeFile(resolve(this.root, 'sewing-kit.config.js'), contents);
+  async writeConfig(contents: string, config = 'sewing-kit.config.js') {
+    const configPath = resolve(this.root, config);
+
+    await mkdirp(dirname(configPath));
+    await writeFile(configPath, contents);
   }
 
   async writeFile(file: string, contents: string) {
