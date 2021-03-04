@@ -9,7 +9,7 @@
   },
   "bin": {
     "sewing-kit-next": "./bin/sewing-kit-next",
-    "sk-next": "./bin/sk-next"
+    "skn": "./bin/skn"
   },
   "scripts": {
     "build": "tsc --p tsconfig.json"
