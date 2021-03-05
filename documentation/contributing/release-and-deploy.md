@@ -20,6 +20,8 @@ yarn run version-bump
 
 Follow the prompts to choose a version for each package.
 
+This command will also lint all the CHANGELOGs to ensure their most recent releases are documented. If a package is changed and includes no source changes (due to a transitive dependency update by lerna), please note this in the changelog as well.
+
 **Note:** The packages adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 4. Push your changes and open a PR titled "Publish release"
