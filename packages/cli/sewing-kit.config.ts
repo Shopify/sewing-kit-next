@@ -7,7 +7,7 @@ export default createPackage((pkg) => {
   pkg.binary({
     name: 'sewing-kit-next',
     root: './src/cli',
-    aliases: ['sk-next'],
+    aliases: ['skn'],
   });
   pkg.use(createSewingKitPackagePlugin());
 });
