@@ -22,26 +22,33 @@ async function run() {
 
 // Verify that the version in the package.json exists in the changelog
 function lintVersions(pkgs: string[]) {
-  pkgs.forEach((pkg) => {
-    const changelogPath = path.resolve(pkg, '../CHANGELOG.md');
-    const {version, name} = fs.readJSONSync(pkg);
+  const staleChangelogs = pkgs
+    .map((pkg) => {
+      const changelogPath = path.resolve(pkg, '../CHANGELOG.md');
+      const {version, name} = fs.readJSONSync(pkg);
 
-    const changelogContents = fs.readFileSync(changelogPath, {
-      encoding: 'utf-8',
-    });
+      const changelogContents = fs.readFileSync(changelogPath, {
+        encoding: 'utf-8',
+      });
 
-    if (changelogContents.includes(version)) {
-      return false;
-    }
+      if (changelogContents.includes(version)) {
+        return null;
+      }
 
+      return `- v${version} in ${name}. (See ${changelogPath})`;
+    })
+    .filter((error) => Boolean(error));
+
+  if (staleChangelogs.length > 0) {
     console.log(`
 FAILED CHANGELOG LINT:
 The following packages do not have their latest version in their respective CHANGELOG.md.
-Please update these changelogs and run \`yarn run:ts scripts/changelogs/lint.ts\`.
-     `);
-    console.log(`- v${version} in ${name}. (See ${changelogPath})`);
-    return true;
-  });
+Please update these changelogs and run \`yarn run lint:changelogs\`.
+    `);
+    staleChangelogs.forEach((msg) => console.log(msg));
+  } else {
+    console.log('👍 CHANGELOGs look good!');
+  }
 }
 
 function format() {
