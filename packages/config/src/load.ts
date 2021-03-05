@@ -30,6 +30,18 @@ const DIRECTORIES_NOT_TO_USE_FOR_NAME = new Set([
   'ui',
 ]);
 
+const legacySewingKitPlugins = [
+  'graphql',
+  'jest',
+  'manifest',
+  'paths',
+  'sass',
+  'webpack',
+  'vendors',
+  'devServer',
+  'rollup',
+];
+
 const IS_TSX = /.tsx?$/;
 const IS_MJS = /.mjs$/;
 
@@ -44,6 +56,10 @@ interface LoadContext {
   readonly parents: WeakMap<AnyPlugin, AnyPlugin>;
 }
 
+type LoadedConfigFile<
+  T extends {name: string; root: string}
+> = ConfigurationBuilderResult<T> & {readonly file: string};
+
 export async function loadWorkspace(root: string): Promise<LoadedWorkspace> {
   const packages = new Set<Package>();
   const webApps = new Set<WebApp>();
@@ -51,16 +67,22 @@ export async function loadWorkspace(root: string): Promise<LoadedWorkspace> {
   const pluginMap = new WeakMap<Project, readonly ProjectPlugin<Project>[]>();
   const pluginParents = new WeakMap<AnyPlugin, AnyPlugin>();
 
-  const configFiles = glob('**/sewing-kit.config.*', {
+  const configFiles = glob('**/sewing-{kit,kit-next}.config.*', {
     cwd: root as string,
     ignore: ['**/node_modules/**', `${root}/**/build/**`],
     absolute: true,
   });
 
   const loadContext: LoadContext = {parents: pluginParents};
-  const loadedConfigs = await Promise.all(
-    configFiles.map((config) => loadConfig(config, loadContext)),
-  );
+  const loadedConfigs = (
+    await Promise.all(
+      configFiles.map((config) => loadConfig(config, loadContext)),
+    )
+  ).filter((config) => Boolean(config)) as LoadedConfigFile<{
+    name: string;
+    root: string;
+  }>[];
+
   const workspaceConfigs = loadedConfigs.filter(
     (config) =>
       config.workspacePlugins.length > 0 ||
@@ -156,44 +178,14 @@ async function loadConfig<
     });
   }
 
-  if (IS_TSX.test(file)) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require('@babel/register')({
-      extensions: ['.mjs', '.js', '.ts', '.tsx'],
-      ignore: [ignoreFromCompilation],
-      presets: [
-        require.resolve('@babel/preset-typescript'),
-        [require.resolve('@babel/preset-env'), {targets: {node: true}}],
-      ],
-    });
-
-    return loadConfigFile<T>(file, context);
-  }
-
-  if (IS_MJS.test(file)) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require('@babel/register')({
-      extensions: ['.mjs', '.js'],
-      ignore: [ignoreFromCompilation],
-      presets: [
-        [require.resolve('@babel/preset-env'), {targets: {node: true}}],
-      ],
-    });
-
-    return loadConfigFile<T>(file, context);
-  }
-
+  loadInlineTranspiler(file);
   return loadConfigFile<T>(file, context);
-
-  function ignoreFromCompilation(filePath: string) {
-    return IGNORE_FOLDERS.some((folder) => filePath.includes(resolve(folder)));
-  }
 }
 
 async function loadConfigFile<T extends {name: string; root: string}>(
   file: string,
   context: LoadContext,
-): Promise<ConfigurationBuilderResult<T> & {readonly file: string}> {
+): Promise<LoadedConfigFile<T> | null> {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const exports = require(file);
   const normalized = exports?.default ?? exports;
@@ -214,7 +206,19 @@ async function loadConfigFile<T extends {name: string; root: string}>(
     });
   }
 
-  const result = await normalized();
+  let result;
+  try {
+    result = await normalized();
+  } catch (error) {
+    const parsingLegacyPlugin = legacySewingKitPlugins.find((plugin) =>
+      error.message.includes(`'${plugin}' of undefined`),
+    );
+
+    if (parsingLegacyPlugin) {
+      // we hit a legacy sewing-kit config
+      return null;
+    }
+  }
 
   if (!looksLikeValidConfigurationObject(result)) {
     throw new DiagnosticError({
@@ -286,4 +290,33 @@ async function expandPlugin<Plugin extends AnyPlugin>(
   );
 
   return [plugin, ...expandedChildren.flat()];
+}
+
+function loadInlineTranspiler(file: string) {
+  if (IS_TSX.test(file)) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require('@babel/register')({
+      extensions: ['.mjs', '.js', '.ts', '.tsx'],
+      ignore: [ignoreFromCompilation],
+      presets: [
+        require.resolve('@babel/preset-typescript'),
+        [require.resolve('@babel/preset-env'), {targets: {node: true}}],
+      ],
+    });
+  }
+
+  if (IS_MJS.test(file)) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require('@babel/register')({
+      extensions: ['.mjs', '.js'],
+      ignore: [ignoreFromCompilation],
+      presets: [
+        [require.resolve('@babel/preset-env'), {targets: {node: true}}],
+      ],
+    });
+  }
+
+  function ignoreFromCompilation(filePath: string) {
+    return IGNORE_FOLDERS.some((folder) => filePath.includes(resolve(folder)));
+  }
 }

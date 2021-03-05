@@ -8,8 +8,8 @@
     "@sewing-kit:registry": "https://registry.npmjs.org"
   },
   "bin": {
-    "sewing-kit": "./bin/sewing-kit",
-    "sk": "./bin/sk"
+    "sewing-kit-next": "./bin/sewing-kit-next",
+    "skn": "./bin/skn"
   },
   "scripts": {
     "build": "tsc --p tsconfig.json"
