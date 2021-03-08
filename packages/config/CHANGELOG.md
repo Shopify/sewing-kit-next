@@ -7,6 +7,13 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.9] - 2021-03-05
+
+## Changed
+
+- Support `sewing-kit-next.config.*` config as well ([#117](https://github.com/Shopify/sewing-kit-next/pull/117))
+- no-op when detecting legacy sewing-kit (SK0) config ([#117](https://github.com/Shopify/sewing-kit-next/pull/117))
+
 ## [0.1.8]
 
 ### Added

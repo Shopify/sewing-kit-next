@@ -7,6 +7,12 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.3.0] - 2021-03-05
+
+## Changed
+
+- **Breaking change:** Renamed `sewing-kit` binary to `sewing-kit-next` ([#117](https://github.com/Shopify/sewing-kit-next/pull/117))
+
 ## [0.2.1]
 
 ### Added
