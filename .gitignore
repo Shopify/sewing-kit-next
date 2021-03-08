@@ -16,3 +16,4 @@ packages/*/*.d.ts
 packages/*/*.ts
 packages/*/*.mjs
 !packages/*/sewing-kit.config.ts
+.DS_Store

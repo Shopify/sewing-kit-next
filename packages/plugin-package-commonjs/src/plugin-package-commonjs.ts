@@ -31,7 +31,7 @@ export function buildCommonJsOutput() {
       api,
       hooks,
       project,
-      options: {cache},
+      options: {cache, watch},
     } = context;
 
     hooks.targets.hook((targets) =>
@@ -68,6 +68,7 @@ export function buildCommonJsOutput() {
             configFile: 'babel.cjs.js',
             exportStyle: ExportStyle.CommonJs,
             cache,
+            watch,
           }),
         ];
       });

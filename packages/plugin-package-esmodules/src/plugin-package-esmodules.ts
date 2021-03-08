@@ -56,7 +56,7 @@ export function buildEsModulesOutput() {
       api,
       hooks,
       project,
-      options: {cache},
+      options: {cache, watch},
     } = context;
 
     hooks.targets.hook((targets) =>
@@ -86,6 +86,7 @@ export function buildEsModulesOutput() {
             configFile: 'babel.esm.js',
             exportStyle: ExportStyle.EsModules,
             cache,
+            watch,
           }),
         ];
       });

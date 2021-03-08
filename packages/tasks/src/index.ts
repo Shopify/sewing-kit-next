@@ -162,6 +162,7 @@ export interface BuildTaskOptions {
   readonly simulateEnv: Env;
   readonly sourceMaps?: boolean;
   readonly cache?: boolean;
+  readonly watch?: boolean;
 }
 
 export interface BuildWorkspaceTaskHooks {

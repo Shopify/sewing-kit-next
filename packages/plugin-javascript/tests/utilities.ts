@@ -1,6 +1,8 @@
 import {statSync as stat} from 'fs';
-
+import {join} from 'path';
 import {Package} from '@sewing-kit/plugins';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {readFile} from 'fs-extra';
 import {Workspace, generateUniqueWorkspaceID} from '../../../tests/utilities';
 
 export function getModifiedTime(filepath: string) {
@@ -24,7 +26,14 @@ export async function writeToSrc(
   await sleep(10);
 }
 
-async function sleep(ms) {
+export async function readFromWorkspace(
+  workspace: Workspace,
+  filepath: string,
+): Promise<string> {
+  return (await readFile(join(workspace.root, filepath))).toString();
+}
+
+export async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 

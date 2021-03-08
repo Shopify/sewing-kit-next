@@ -8,7 +8,7 @@
     "@sewing-kit:registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "build": "tsc --p tsconfig.json"
+    "build": "cd ../../; yarn build --root packages/plugin-webpack"
   },
   "dependencies": {
     "@sewing-kit/plugins": "^0.1.7",

@@ -1,10 +1,20 @@
 import {resolve} from 'path';
-
 import {
   withWorkspace,
   generateUniqueWorkspaceID,
 } from '../../../tests/utilities';
-import {getModifiedTime, writeToSrc} from './utilities';
+import {
+  getModifiedTime,
+  writeToSrc,
+  readFromWorkspace,
+  sleep,
+} from './utilities';
+
+import execa from 'execa';
+
+const run = (command: string, options: string[]) => {
+  return execa(`yarn sk ${command}`, options);
+};
 
 const babelCompilationConfig = `
 import {createPackage} from '@sewing-kit/config';
@@ -22,7 +32,7 @@ function compileBabelBuild() {
       api,
       hooks,
       project,
-      options: {cache},
+      options: {cache, watch},
     } = context;
 
     hooks.targets.hook((targets) =>
@@ -55,6 +65,7 @@ function compileBabelBuild() {
             configFile: 'babel.esm.js',
             exportStyle: ExportStyle.EsModules,
             cache,
+            watch
           }),
         ];
       });
@@ -69,7 +80,7 @@ export default createPackage((pkg) => {
 
 describe('@sewing-kit/plugin-javascript', () => {
   describe('createCompileBabelStep()', () => {
-    describe('cache', () => {
+    describe('--cache', () => {
       it('reads from the cache and skips compilation if hash is same', async () => {
         await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
           const builtIndexFilePath = resolve(
@@ -191,7 +202,7 @@ describe('@sewing-kit/plugin-javascript', () => {
     });
 
     describe('--no-cache', () => {
-      it('does not ready from the cache', async () => {
+      it('does not read from the cache', async () => {
         await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
           const builtIndexFilePath = resolve(
             workspace.root,
@@ -213,6 +224,45 @@ describe('@sewing-kit/plugin-javascript', () => {
             getModifiedTime(builtIndexFilePath),
           );
         });
+      });
+    });
+
+    describe('--watch', () => {
+      it('watches builds', async () => {
+        await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+          await workspace.writeConfig(babelCompilationConfig);
+          await writeToSrc(workspace, 'index.js');
+
+          run('build', ['--watch']);
+          // eslint-disable-next-line line-comment-position
+          await sleep(300); // wait for initial build
+
+          await writeToSrc(workspace, 'index.js', 'const foo = "bar";');
+
+          // eslint-disable-next-line line-comment-position
+          await sleep(300); // wait for watcher
+
+          expect(
+            await readFromWorkspace(workspace, 'build/esm/index.mjs'),
+          ).toStrictEqual('var foo = "bar";');
+        });
+      });
+    });
+
+    it('does not watch builds', async () => {
+      await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+        await workspace.writeConfig(babelCompilationConfig);
+        await writeToSrc(workspace, 'index.js');
+
+        await run('build');
+        await writeToSrc(workspace, 'index.js', 'const foo = "bar";');
+
+        // eslint-disable-next-line line-comment-position
+        await sleep(300); // wait for watcher
+
+        expect(
+          await readFromWorkspace(workspace, 'build/esm/index.mjs'),
+        ).not.toStrictEqual('var foo = "bar";');
       });
     });
   });

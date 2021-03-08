@@ -120,6 +120,7 @@ interface CompileBabelOptions {
   readonly extension?: string;
   readonly exportStyle?: ExportStyle;
   readonly cache?: boolean;
+  readonly watch?: boolean;
   readonly cacheDependencies?: string[];
 }
 
@@ -132,6 +133,7 @@ export function createCompileBabelStep({
   extension = '.js',
   exportStyle = ExportStyle.CommonJs,
   cache,
+  watch = false,
   cacheDependencies: initialCacheDependencies = [],
 }: CompileBabelOptions) {
   return api.createStep(
@@ -244,6 +246,7 @@ export function createCompileBabelStep({
             ignore: babelIgnorePatterns.join(','),
             // @see https://babeljs.io/docs/en/babel-cli#set-file-extensions
             outFileExtension: replaceExtension,
+            watch,
           },
           {dasherize: true},
         ),
