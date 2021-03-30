@@ -9,6 +9,7 @@ const {
   readFile: mockReadFile,
   mkdirp: mockMkdirp,
   copy: mockCopy,
+  remove: mockRemove,
 } = jest.requireMock('fs-extra');
 const {sync: mockGlob} = jest.requireMock('glob');
 
@@ -23,6 +24,7 @@ describe('FileSystem', () => {
     mockMkdirp.mockReset();
     mockCopy.mockReset();
     mockGlob.mockReset();
+    mockRemove.mockReset();
   });
 
   describe('root', () => {
@@ -94,6 +96,22 @@ describe('FileSystem', () => {
         join(root, toDir),
         undefined,
       );
+    });
+  });
+
+  describe('remove', () => {
+    it('removes a file', async () => {
+      const fromFile = 'file.json';
+      await fileSystem.remove(fromFile);
+
+      expect(mockRemove).toHaveBeenCalledWith(join(root, fromFile));
+    });
+
+    it('removes directory', async () => {
+      const fromDir = 'folder';
+      await fileSystem.remove(fromDir);
+
+      expect(mockRemove).toHaveBeenCalledWith(join(root, fromDir));
     });
   });
 
