@@ -6,6 +6,7 @@ import {
   mkdirp,
   copy as copyExtra,
   CopyOptions,
+  remove,
 } from 'fs-extra';
 import glob, {IOptions as GlobOptions} from 'glob';
 
@@ -20,6 +21,11 @@ export class FileSystem {
     const resolved = this.resolvePath(file);
     await mkdirp(dirname(resolved));
     await writeFile(resolved, contents);
+  }
+
+  async remove(file: string) {
+    const resolved = this.resolvePath(file);
+    await remove(resolved);
   }
 
   async copy(from: string, to: string, options?: CopyOptions) {
