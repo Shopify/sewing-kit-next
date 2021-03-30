@@ -15,7 +15,12 @@
     "@sewing-kit/plugin-javascript": "^0.3.2",
     "@sewing-kit/plugins": "^0.1.9"
   },
-  "optionalDependencies": {
+  "peerDependencies": {
     "@sewing-kit/plugin-jest": "^0.1.24"
+  },
+  "peerDependenciesMeta": {
+    "@sewing-kit/plugin-jest": {
+      "optional": true
+    }
   }
 }

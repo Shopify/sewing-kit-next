@@ -22,9 +22,20 @@
     "postcss-preset-env": "^6.7.0",
     "style-loader": "^1.1.4"
   },
-  "optionalDependencies": {
+  "peerDependencies": {
     "@sewing-kit/plugin-jest": "^0.1.24",
     "@sewing-kit/plugin-webpack": "^0.1.12",
     "webpack": ">=4 <5"
+  },
+  "peerDependenciesMeta": {
+    "@sewing-kit/plugin-jest": {
+      "optional": true
+    },
+    "@sewing-kit/plugin-webpack": {
+      "optional": true
+    },
+    "webpack": {
+      "optional": true
+    }
   }
 }

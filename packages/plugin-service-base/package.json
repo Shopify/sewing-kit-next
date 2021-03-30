@@ -20,8 +20,16 @@
     "koa": "^2.11.0",
     "koa-webpack": "^5.3.0"
   },
-  "optionalDependencies": {
+  "peerDependencies": {
     "@sewing-kit/plugin-webpack": "^0.1.12",
     "webpack": ">=4 <5"
+  },
+  "peerDependenciesMeta": {
+    "@sewing-kit/plugin-webpack": {
+      "optional": true
+    },
+    "webpack": {
+      "optional": true
+    }
   }
 }
