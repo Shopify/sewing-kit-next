@@ -2,7 +2,7 @@
 
 import path from 'path';
 import glob from 'glob';
-
+import fs from 'fs-extra';
 import {format, staleChangelogs, ROOT} from './utilities';
 
 run();
@@ -20,18 +20,29 @@ function lintVersions(pkgs: string[]) {
   const changelogs = staleChangelogs(pkgs);
 
   if (changelogs.length > 0) {
-    console.log(`
-FAILED CHANGELOG LINT:
-The following packages do not have their latest version in their respective CHANGELOG.md.
-Please update these changelogs and run \`yarn run lint:changelogs\`.
-    `);
-    changelogs.forEach(({name, version, path}) =>
-      console.log(`- v${version} in ${name}. (See ${path})`),
-    );
+    changelogs.forEach(({name, version, path}) => {
+      console.log(`Updating CHANGELOG.md for ${name}. (See ${path})`);
 
-    console.log(`
-If the above changelogs are all the result of a transitive dependency bump, run \`yarn run lint:changelogs:fix\`.
-    `);
+      const changelogContents = fs.readFileSync(path, {
+        encoding: 'utf-8',
+      });
+
+      fs.writeFileSync(
+        path,
+        changelogContents.replace(
+          '## [Unreleased]',
+          `      
+## [Unreleased]
+
+## [${version}]
+
+- No updates. Transitive dependency bump.
+      `,
+        ),
+      );
+    });
+
+    format();
   } else {
     console.log('👍 CHANGELOGs look good!');
   }
