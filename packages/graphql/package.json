@@ -18,16 +18,13 @@
   "dependencies": {
     "@jest/transform": "^26.0.0",
     "graphql": ">=15.0.0 <16.0.0",
-    "loader-utils": "^2.0.0"
-  },
-  "peerDependency": {
-    "@types/webpack": "^4.0.0",
+    "loader-utils": "^2.0.0",
     "webpack": ">=4.0.0 <5.0.0"
   },
+  "peerDependency": {
+    "@types/webpack": "^4.0.0"
+  },
   "peerDependenciesMeta": {
-    "webpack": {
-      "optional": true
-    },
     "@types/webpack": {
       "optional": true
     }
