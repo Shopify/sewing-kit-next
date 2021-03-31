@@ -11,7 +11,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-Add remove to fs api ([#124](https://github.com/Shopify/sewing-kit-next/pull/124))
+Add `remove` to `fs` api ([#124](https://github.com/Shopify/sewing-kit-next/pull/124))
 
 ## [0.1.5]
 
