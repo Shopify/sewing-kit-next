@@ -20,7 +20,8 @@ yarn run version-bump
 
 Follow the prompts to choose a version for each package.
 
-This command will also lint all the CHANGELOGs to ensure their most recent releases are documented. If a package is changed and includes no source changes (due to a transitive dependency update by lerna), please note this in the changelog as well.
+This command will also lint all the CHANGELOGs to ensure their most recent releases are documented. Please review the stale changelogs and update them accordingly. 
+If changelogs have been updated due to transitive dependency bumps, you can autofix them with `yarn run lint:changelogs:fix`. Note: the autofixer assumes all the stale changelogs require a transitive depedency update.
 
 **Note:** The packages adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 

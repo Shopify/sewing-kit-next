@@ -27,6 +27,11 @@ function lintVersions(pkgs: string[]) {
         encoding: 'utf-8',
       });
 
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+
       fs.writeFileSync(
         path,
         changelogContents.replace(
@@ -34,7 +39,7 @@ function lintVersions(pkgs: string[]) {
           `      
 ## [Unreleased]
 
-## [${version}]
+## [${version}] - ${year}-${month}-${day}
 
 - No updates. Transitive dependency bump.
       `,
