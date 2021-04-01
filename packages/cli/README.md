@@ -1,6 +1,6 @@
 # `@sewing-kit/cli`
 
-The CLI for working with `sewing-kit`.
+The CLI for working with `sewing-kit-next`.
 
 These commands trigger the functionality imparted to your project by the plugins consumed in your `sewing-kit.config`s. The options will be passed to the plugins.
 
@@ -13,7 +13,7 @@ yarn add @sewing-kit/cli --dev
 ## Usage
 
 ```ts
-yarn sewing-kit <command> <options>
+yarn sewing-kit-next <command> <options>
 // or...
 yarn sk <command> <options>
 ```
