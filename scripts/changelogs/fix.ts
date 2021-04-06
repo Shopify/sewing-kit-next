@@ -29,8 +29,8 @@ function lintVersions(pkgs: string[]) {
 
       const date = new Date();
       const year = date.getFullYear();
-      const month = date.getMonth();
-      const day = date.getDate();
+      const month = pad(date.getMonth() + 1);
+      const day = pad(date.getDate());
 
       fs.writeFileSync(
         path,
@@ -51,4 +51,8 @@ function lintVersions(pkgs: string[]) {
   } else {
     console.log('👍 CHANGELOGs look good!');
   }
+}
+
+function pad(num) {
+  return `0${num}`.slice(-2);
 }

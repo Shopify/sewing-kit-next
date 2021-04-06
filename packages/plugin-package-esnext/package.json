@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/plugin-package-esnext",
   "license": "MIT",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -11,11 +11,11 @@
     "build": "tsc --p tsconfig.json"
   },
   "dependencies": {
-    "@sewing-kit/hooks": "^0.1.8",
-    "@sewing-kit/plugin-javascript": "^0.3.1",
-    "@sewing-kit/plugins": "^0.1.8"
+    "@sewing-kit/hooks": "^0.1.9",
+    "@sewing-kit/plugin-javascript": "^0.3.2",
+    "@sewing-kit/plugins": "^0.1.9"
   },
   "optionalDependencies": {
-    "@sewing-kit/plugin-webpack": "^0.1.11"
+    "@sewing-kit/plugin-webpack": "^0.1.12"
   }
 }
