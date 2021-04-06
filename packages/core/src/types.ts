@@ -1,3 +1,6 @@
+import {CopyOptions} from 'fs-extra';
+import {IOptions as GlobOptions} from 'glob';
+
 export enum Runtime {
   Node = 'node',
   Browser = 'browser',
@@ -68,4 +71,17 @@ export interface Step {
   readonly resources?: StepResources;
   needs?(step: Step): boolean;
   run(runner: StepRunner): void | Promise<void>;
+}
+
+// When passing this around to plugins we need to maintain type integrity
+export interface FileSystem {
+  read(file: string): Promise<string>;
+  write(file: string, contents: string): Promise<void>;
+  remove(file: string): Promise<void>;
+  copy(from: string, to: string, options?: CopyOptions): Promise<void>;
+  hasFile(file: string): Promise<boolean>;
+  hasDirectory(dir: string): Promise<boolean>;
+  glob(pattern: string, options: Omit<GlobOptions, 'cwd'>): Promise<string[]>;
+  buildPath(...paths: string[]): string;
+  resolvePath(...paths: string[]): string;
 }
