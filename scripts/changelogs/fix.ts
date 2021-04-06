@@ -29,7 +29,8 @@ function lintVersions(pkgs: string[]) {
 
       const date = new Date();
       const year = date.getFullYear();
-      const month = date.getMonth();
+      // getMonth is zeroth based
+      const month = date.getMonth() + 1;
       const day = date.getDate();
 
       fs.writeFileSync(
