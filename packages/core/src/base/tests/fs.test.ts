@@ -7,6 +7,7 @@ jest.mock('glob');
 const {
   writeFile: mockWriteFile,
   readFile: mockReadFile,
+  appendFile: mockAppendFile,
   mkdirp: mockMkdirp,
   copy: mockCopy,
   remove: mockRemove,
@@ -21,6 +22,7 @@ describe('FileSystem', () => {
   beforeEach(() => {
     mockWriteFile.mockReset();
     mockReadFile.mockReset();
+    mockAppendFile.mockReset();
     mockMkdirp.mockReset();
     mockCopy.mockReset();
     mockGlob.mockReset();
@@ -67,6 +69,32 @@ describe('FileSystem', () => {
 
       expect(mockMkdirp).toHaveBeenCalledWith(join(root, 'some'));
       expect(mockWriteFile).toHaveBeenCalledWith(
+        join(root, fileName),
+        contents,
+      );
+    });
+  });
+
+  describe('append', () => {
+    it('appends file', async () => {
+      const fileName = 'something.txt';
+      const contents = 'hi, world';
+      await fileSystem.append(fileName, contents);
+
+      expect(mockMkdirp).toHaveBeenCalledWith(root);
+      expect(mockAppendFile).toHaveBeenCalledWith(
+        join(root, fileName),
+        contents,
+      );
+    });
+
+    it('appends nested file', async () => {
+      const fileName = 'some/thing.txt';
+      const contents = 'hi, world';
+      await fileSystem.append(fileName, contents);
+
+      expect(mockMkdirp).toHaveBeenCalledWith(join(root, 'some'));
+      expect(mockAppendFile).toHaveBeenCalledWith(
         join(root, fileName),
         contents,
       );

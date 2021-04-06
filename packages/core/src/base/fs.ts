@@ -1,12 +1,13 @@
 import {resolve, dirname} from 'path';
 
 import {
-  writeFile,
+  appendFile,
   readFile,
   mkdirp,
   copy as copyExtra,
   CopyOptions,
   remove,
+  writeFile,
 } from 'fs-extra';
 import glob, {IOptions as GlobOptions} from 'glob';
 
@@ -23,6 +24,12 @@ export class FileSystem implements FSType {
     const resolved = this.resolvePath(file);
     await mkdirp(dirname(resolved));
     await writeFile(resolved, contents);
+  }
+
+  async append(file: string, contents: string) {
+    const resolved = this.resolvePath(file);
+    await mkdirp(dirname(resolved));
+    await appendFile(resolved, contents);
   }
 
   async remove(file: string) {
