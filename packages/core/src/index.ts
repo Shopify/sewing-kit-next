@@ -18,6 +18,7 @@ export type Project =
   | import('./service').Service;
 
 export type {
+  FileSystem,
   Log,
   LogFormatter,
   LogOptions,

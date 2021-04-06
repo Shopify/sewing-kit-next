@@ -10,7 +10,9 @@ import {
 } from 'fs-extra';
 import glob, {IOptions as GlobOptions} from 'glob';
 
-export class FileSystem {
+import type {FileSystem as FSType} from '../types';
+
+export class FileSystem implements FSType {
   constructor(public readonly root: string) {}
 
   async read(file: string) {

@@ -7,6 +7,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+Expose `FileSystem` type ([#128](https://github.com/Shopify/sewing-kit-next/pull/128))
+
 ## [0.2.0] - 2021-03-30
 
 ### Added
