@@ -77,6 +77,7 @@ export interface Step {
 export interface FileSystem {
   read(file: string): Promise<string>;
   write(file: string, contents: string): Promise<void>;
+  append(file: string, contents: string): Promise<void>;
   remove(file: string): Promise<void>;
   copy(from: string, to: string, options?: CopyOptions): Promise<void>;
   hasFile(file: string): Promise<boolean>;
