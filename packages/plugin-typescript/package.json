@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/plugin-typescript",
   "license": "MIT",
-  "version": "0.1.26",
+  "version": "0.1.25",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -14,7 +14,7 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/preset-typescript": "^7.9.0",
-    "@sewing-kit/plugin-javascript": "^0.3.3",
+    "@sewing-kit/plugin-javascript": "^0.3.2",
     "@sewing-kit/plugins": "^0.1.9",
     "fs-extra": "^9.0.0",
     "typescript": "^3.9.0"
