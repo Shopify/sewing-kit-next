@@ -13,7 +13,12 @@
   "dependencies": {
     "@sewing-kit/plugins": "^0.1.9"
   },
-  "optionalDependencies": {
+  "peerDependencies": {
     "@sewing-kit/plugin-webpack": "^0.1.12"
+  },
+  "peerDependenciesMeta": {
+    "@sewing-kit/plugin-webpack": {
+      "optional": true
+    }
   }
 }
