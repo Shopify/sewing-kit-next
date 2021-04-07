@@ -15,7 +15,7 @@
     "type-check": "yarn sk type-check",
     "check": "yarn lint && yarn test --no-watch && yarn type-check",
     "prerelease": "yarn build",
-    "version-bump": "lerna version --no-push && yarn run lint:changelogs",
+    "version-bump": "lerna version --no-push --include-merged-tags && yarn run lint:changelogs",
     "lint:changelogs": "yarn run:ts scripts/changelogs/lint.ts",
     "lint:changelogs:fix": "yarn run:ts scripts/changelogs/fix.ts",
     "release": "lerna publish && git push --tags",
