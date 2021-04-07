@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/plugin-react",
   "license": "MIT",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
