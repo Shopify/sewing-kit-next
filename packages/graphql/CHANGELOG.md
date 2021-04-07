@@ -7,15 +7,11 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [0.1.5] - 2021-04-06
+## [0.1.6] - 2021-04-07
 
 ### Changed
 
 - Change `webpack` to required `dependencies` [[#125](https://github.com/Shopify/sewing-kit-next/pull/125/files)]
-
-## [0.1.4] - 2021-03-30
-
-- No updates. Transitive dependency bump.
 
 ## [0.1.3]
 
