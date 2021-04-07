@@ -7,15 +7,11 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [0.0.17] - 2021-04-06
+## [0.0.16] - 2021-04-07
 
 ### Changed
 
 - Change `optionalDependencies` to `peerDependencies [[#125](https://github.com/Shopify/sewing-kit-next/pull/125/files)]
-
-## [0.0.16] - 2021-03-30
-
-- No updates. Transitive dependency bump.
 
 ## [0.0.15]
 
