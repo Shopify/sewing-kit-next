@@ -15,10 +15,6 @@ export class Workspace extends Base {
   readonly packages: readonly Package[];
   readonly services: readonly Service[];
 
-  get private() {
-    return this.webApps.length > 0 || this.services.length > 0;
-  }
-
   get projects() {
     return [...this.packages, ...this.webApps, ...this.services];
   }

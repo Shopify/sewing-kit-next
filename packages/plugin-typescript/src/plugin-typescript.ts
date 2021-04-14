@@ -125,7 +125,12 @@ export function workspaceTypeScript() {
         typescriptHeap: new WaterfallHook(),
       }));
 
-      if (workspace.private) {
+      // We don’t build TypeScript definitions for workspaces that only include
+      // web apps or services
+      if (
+        (workspace.webApps.length > 0 || workspace.services.length > 0) &&
+        workspace.packages.length === 0
+      ) {
         return;
       }
 
