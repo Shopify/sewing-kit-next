@@ -7,6 +7,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Remove `private` getter on the `Workspace` class [[#139](https://github.com/Shopify/sewing-kit-next/pull/139)]
+
 ## [0.2.1] - 2021-04-06
 
 ### Added
