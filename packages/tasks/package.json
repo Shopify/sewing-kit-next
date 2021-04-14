@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/tasks",
   "license": "MIT",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -11,7 +11,7 @@
     "build": "tsc --p tsconfig.json"
   },
   "dependencies": {
-    "@sewing-kit/core": "^0.2.1",
-    "@sewing-kit/hooks": "^0.1.9"
+    "@sewing-kit/core": "^0.3.0",
+    "@sewing-kit/hooks": "^0.1.10"
   }
 }
