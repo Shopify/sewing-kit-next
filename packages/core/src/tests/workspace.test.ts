@@ -15,19 +15,16 @@ describe('Workspace', () => {
   it('creates a workspace for a WebApp', () => {
     const webAppWorkspace = createTestWebAppWorkspace(name, root);
     expect(webAppWorkspace.projects[0].kind).toBe(ProjectKind.WebApp);
-    expect(webAppWorkspace.private).toBe(true);
   });
 
   it('creates a workspace for a Package', () => {
     const packageWorkspace = createTestPackageWorkspace(name, root);
     expect(packageWorkspace.projects[0].kind).toBe(ProjectKind.Package);
-    expect(packageWorkspace.private).toBe(false);
   });
 
   it('creates a workspace for a Service', () => {
     const serviceWorkspace = createTestServiceWorkspace(name, root);
     expect(serviceWorkspace.projects[0].kind).toBe(ProjectKind.Service);
-    expect(serviceWorkspace.private).toBe(true);
   });
 
   it('creates a workspace containing a WebApp, Package and Service', () => {
