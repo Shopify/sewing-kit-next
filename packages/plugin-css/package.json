@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/plugin-css",
   "license": "MIT",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -11,7 +11,7 @@
     "build": "tsc --p tsconfig.json"
   },
   "dependencies": {
-    "@sewing-kit/plugins": "^0.1.9",
+    "@sewing-kit/plugins": "^0.1.10",
     "@types/mini-css-extract-plugin": "^0.9.1",
     "@types/optimize-css-assets-webpack-plugin": "^5.0.1",
     "css-loader": "^3.5.2",
