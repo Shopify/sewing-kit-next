@@ -17,53 +17,41 @@ export interface Options {
 export function buildTypeScriptDefinitions({
   typesAtRoot = false,
 }: Options = {}) {
-  return createProjectBuildPlugin<Package>(
-    PLUGIN,
-    ({hooks, project, workspace, api}) => {
-      // We don’t build TypeScript definitions for projects that also include
-      // web apps/ services.
-      if (workspace.private) {
-        return;
-      }
+  return createProjectBuildPlugin<Package>(PLUGIN, ({hooks, project, api}) => {
+    hooks.steps.hook((steps) => [
+      ...steps,
+      api.createStep(
+        {
+          id: 'PackageTypeScript.WriteTypeDefinitions',
+          label: 'write type definitions',
+        },
+        async () => {
+          await Promise.all(
+            project.entries.map((entry) =>
+              remove(project.fs.resolvePath(`${entry.name || 'index'}.d.ts`)),
+            ),
+          );
 
-      hooks.steps.hook((steps) => [
-        ...steps,
-        api.createStep(
-          {
-            id: 'PackageTypeScript.WriteTypeDefinitions',
-            label: 'write type definitions',
-          },
-          async () => {
-            await Promise.all(
-              project.entries.map((entry) =>
-                remove(project.fs.resolvePath(`${entry.name || 'index'}.d.ts`)),
-              ),
+          if (typesAtRoot) {
+            const outputPath = await getOutputPath(project);
+            const files = await project.fs.glob(
+              project.fs.resolvePath(outputPath, '**/*.d.ts'),
             );
 
-            if (typesAtRoot) {
-              const outputPath = await getOutputPath(project);
-              const files = await project.fs.glob(
-                project.fs.resolvePath(outputPath, '**/*.d.ts'),
-              );
-
-              await Promise.all(
-                files.map((file) =>
-                  copy(
-                    file,
-                    project.fs.resolvePath(relative(outputPath, file)),
-                  ),
-                ),
-              );
-            } else {
-              writeTypeScriptEntries(project, {
-                strategy: EntryStrategy.ReExport,
-              });
-            }
-          },
-        ),
-      ]);
-    },
-  );
+            await Promise.all(
+              files.map((file) =>
+                copy(file, project.fs.resolvePath(relative(outputPath, file))),
+              ),
+            );
+          } else {
+            writeTypeScriptEntries(project, {
+              strategy: EntryStrategy.ReExport,
+            });
+          }
+        },
+      ),
+    ]);
+  });
 }
 
 async function getOutputPath(pkg: Package) {
