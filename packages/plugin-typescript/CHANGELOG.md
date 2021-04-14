@@ -7,6 +7,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.27] - 2021-04-14
+
 - Update `workspaceTypeScript` early bailout logic to fix [#138](https://github.com/Shopify/sewing-kit-next/issues/138) [[#139](https://github.com/Shopify/sewing-kit-next/pull/139)]
 
 ## [0.1.26] - 2021-04-07
