@@ -7,6 +7,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Support `error` as a `--log-level` for better backwards compatibility with legacy sewing-kit and sewing_kit
+
 ## [0.3.3] - 2021-04-14
 
 - No updates. Transitive dependency bump.
