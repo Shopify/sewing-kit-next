@@ -261,6 +261,9 @@ function mapLogLevel(level?: string) {
   switch (level) {
     case 'errors':
       return LogLevel.Errors;
+    // legacy sewing-kit and sewing_kit use 'error'
+    case 'error':
+      return LogLevel.Errors;
     case 'warnings':
       return LogLevel.Warnings;
     case 'info':
