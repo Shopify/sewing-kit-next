@@ -1,6 +1,6 @@
 # 🧵 Sewing Kit
 
-> An opinionated orchestrator of web development tools,
+> An opinionated orchestrator of web development tools
 
 [Unicorn](https://vault.shopify.io/projects/14357) | [Project Brief](https://docs.google.com/document/d/11C4POvYkPk6xKG-HsAH3dP-Yx-W4atxXW5cCv9BzO5s/edit#) | [Technical Design Doc](https://docs.google.com/document/d/1pYIpE4vLtVcqsYKr4w50F1EmEl7fZdVL40v_5C5ZFJw/edit#)
 
