@@ -10,7 +10,7 @@ import {
   updateSewingKitBabelPreset,
 } from '@sewing-kit/plugin-javascript';
 
-import {} from '@sewing-kit/plugin-jest';
+import type {} from '@sewing-kit/plugin-jest';
 
 const PLUGIN = 'SewingKit.PackageNode';
 const VARIANT = 'node';

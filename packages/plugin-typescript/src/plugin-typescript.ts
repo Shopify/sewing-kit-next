@@ -16,9 +16,9 @@ import {createJavaScriptWebpackRuleSet} from '@sewing-kit/plugin-javascript';
 
 import {addTypeScriptBabelConfig} from './utilities';
 
-import {} from '@sewing-kit/plugin-jest';
-import {} from '@sewing-kit/plugin-eslint';
-import {} from '@sewing-kit/plugin-webpack';
+import type {} from '@sewing-kit/plugin-jest';
+import type {} from '@sewing-kit/plugin-eslint';
+import type {} from '@sewing-kit/plugin-webpack';
 
 interface TypeScriptTypeCheckingHooks {
   readonly typescriptHeap: WaterfallHook<number>;

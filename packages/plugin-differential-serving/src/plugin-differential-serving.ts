@@ -3,7 +3,7 @@ import {createProjectBuildPlugin, WebApp} from '@sewing-kit/plugins';
 import {updateSewingKitBabelPreset} from '@sewing-kit/plugin-javascript';
 import {updatePostcssEnvPreset} from '@sewing-kit/plugin-css';
 
-import {} from '@sewing-kit/plugin-webpack';
+import type {} from '@sewing-kit/plugin-webpack';
 
 import {LATEST_EVERGREEN} from './groups';
 
