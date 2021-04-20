@@ -354,7 +354,7 @@ async function hashFiles(fileNames: string[]) {
   return fileHashes;
 }
 
-async function writeEntries({
+export async function writeEntries({
   project,
   extension,
   outputPath,
