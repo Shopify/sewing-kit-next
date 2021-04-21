@@ -7,6 +7,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.16] - 2021-04-21
+
 ### Fix
 
 - Use explicit type imports for configuration hooks [[#144](https://github.com/Shopify/sewing-kit-next/pull/144/files)
