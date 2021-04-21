@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.28] - 2021-04-21
+
+- No updates. Transitive dependency bump.
+
 ## [0.1.27] - 2021-04-14
 
 - Remove `workspace.private` bailout check [[#139](https://github.com/Shopify/sewing-kit-next/pull/139)]
