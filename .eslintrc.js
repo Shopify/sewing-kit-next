@@ -12,7 +12,8 @@ module.exports = {
     'no-restricted-syntax': [
       'error',
       {
-        selector: 'ImportDeclaration[specifiers.length=0][importKind=value]',
+        selector:
+          'ImportDeclaration[specifiers.length=0][importKind=value][source.value!=/core-js.*/]',
         message: "Use 'import type' for empty imports",
       },
     ],
