@@ -9,6 +9,13 @@ module.exports = {
     'no-warning-comments': 'off',
     // A bunch of tools do wonky stuff with Node
     'node/global-require': 'off',
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'ImportDeclaration[specifiers.length=0][importKind=value]',
+        message: "Use 'import type' for empty imports",
+      },
+    ],
   },
   overrides: [
     {
