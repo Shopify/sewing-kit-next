@@ -1,5 +1,5 @@
 import {createProjectPlugin} from '@sewing-kit/plugins';
-import {} from '@sewing-kit/plugin-webpack';
+import type {} from '@sewing-kit/plugin-webpack';
 
 export function vscode() {
   return createProjectPlugin('SewingKit.VSCode', ({tasks: {dev, build}}) => {

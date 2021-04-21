@@ -14,7 +14,7 @@ import {
   createJavaScriptWebpackRuleSet,
 } from '@sewing-kit/plugin-javascript';
 
-import {} from '@sewing-kit/plugin-webpack';
+import type {} from '@sewing-kit/plugin-webpack';
 
 const PLUGIN = 'SewingKit.PackageEsNext';
 const VARIANT = 'esnext';

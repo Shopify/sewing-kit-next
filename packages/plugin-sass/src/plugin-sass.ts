@@ -8,7 +8,7 @@ import {
 } from '@sewing-kit/plugins';
 import {createCSSWebpackRuleSet} from '@sewing-kit/plugin-css';
 
-import {} from '@sewing-kit/plugin-webpack';
+import type {} from '@sewing-kit/plugin-webpack';
 
 declare module '@sewing-kit/hooks' {
   interface BuildProjectConfigurationCustomHooks {

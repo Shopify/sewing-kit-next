@@ -10,8 +10,9 @@ import {
   updateSewingKitBabelPreset,
   createCompileBabelStep,
 } from '@sewing-kit/plugin-javascript';
-import {} from '@sewing-kit/plugin-webpack';
-import {} from '@sewing-kit/hooks';
+
+import type {} from '@sewing-kit/plugin-webpack';
+import type {} from '@sewing-kit/hooks';
 
 const PLUGIN = 'SewingKit.PackageEsModules';
 const VARIANT = 'esmodules';

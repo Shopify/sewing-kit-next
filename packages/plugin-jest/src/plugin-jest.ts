@@ -12,7 +12,7 @@ import {
 import {updateSewingKitBabelPreset} from '@sewing-kit/plugin-javascript';
 
 // Brings in the Babel hook augmentations
-import {} from 'jest';
+import type {} from 'jest';
 
 const PLUGIN = 'SewingKit.Jest';
 
