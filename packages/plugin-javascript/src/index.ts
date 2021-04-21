@@ -6,5 +6,6 @@ export {
   updateSewingKitBabelPreset,
   updateBabelPlugin,
   updateBabelPreset,
+  writeEntries,
 } from './utilities';
 export type {BabelConfig, BabelHooks} from './types';

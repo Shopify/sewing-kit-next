@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Expose the `writeEntries` helper so it can be used by build plugins. [[#145](https://github.com/Shopify/sewing-kit-next/pull/145)]
+
 ## [0.3.4] - 2021-04-14
 
 - No updates. Transitive dependency bump.
