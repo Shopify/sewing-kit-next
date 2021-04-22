@@ -1,6 +1,6 @@
 {
   "name": "@sewing-kit/plugin-rollup",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "description": "",
   "main": "index.js",
@@ -23,6 +23,19 @@
     "url": "https://github.com/Shopify/sewing-kit-next/issues"
   },
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/master/packages/plugin-rollup/README.md",
-  "dependencies": {},
-  "files": ["build/*", "index.js", "index.d.ts", "!tsconfig.tsbuildinfo"]
+  "dependencies": {
+    "@babel/core": "^7.13.16",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^18.0.0",
+    "@rollup/plugin-node-resolve": "^11.2.1",
+    "@sewing-kit/plugin-javascript": "^0.3.4",
+    "@sewing-kit/plugins": "^0.1.10",
+    "rollup": "^2.45.2"
+  },
+  "files": [
+    "build/*",
+    "index.js",
+    "index.d.ts",
+    "!tsconfig.tsbuildinfo"
+  ]
 }
