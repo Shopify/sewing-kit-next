@@ -1,5 +1,3 @@
-import path from 'path';
-
 import {
   createProjectBuildPlugin,
   Package,
@@ -177,38 +175,15 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
                 rollupOutputs,
               );
 
-              function entriesConfigForOutput(outputDir: string) {
-                const outputdirBase = path.basename(outputDir || '');
-
-                if (outputdirBase.endsWith('/esm')) {
-                  return {
-                    outputPath: outputDir,
-                    exportStyle: ExportStyle.EsModules,
-                    extension: '.mjs',
-                  };
-                }
-                if (outputdirBase.endsWith('/cjs')) {
-                  return {
-                    outputPath: outputDir,
-                    exportStyle: ExportStyle.CommonJs,
-                    extension: '.js',
-                  };
-                }
-                if (outputdirBase.endsWith('/esnext')) {
-                  return {
-                    outputPath: outputDir,
-                    exportStyle: ExportStyle.EsModules,
-                    extension: '.esnext',
-                  };
-                }
-
-                return null;
-              }
-
               for (const output of rollupOutputs) {
-                const entryConfig = entriesConfigForOutput(output.dir || '');
+                const outputDir = output.dir || '';
+                const entryConfig = entriesConfigForOutput(outputDir);
                 if (entryConfig) {
-                  await writeEntries({project, ...entryConfig});
+                  await writeEntries({
+                    project,
+                    outputPath: outputDir,
+                    ...entryConfig,
+                  });
                 }
               }
 
@@ -332,6 +307,31 @@ function inputPluginsFactory({
       ...babelConfig,
     }),
   ];
+}
+
+function entriesConfigForOutput(outputDir: string) {
+  if (outputDir.endsWith('/esm')) {
+    return {
+      exportStyle: ExportStyle.EsModules,
+      extension: '.mjs',
+    };
+  }
+
+  if (outputDir.endsWith('/cjs')) {
+    return {
+      exportStyle: ExportStyle.CommonJs,
+      extension: '.js',
+    };
+  }
+
+  if (outputDir.endsWith('/esnext')) {
+    return {
+      exportStyle: ExportStyle.EsModules,
+      extension: '.esnext',
+    };
+  }
+
+  return null;
 }
 
 async function build(
