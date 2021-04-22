@@ -153,9 +153,10 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
           api.createStep(
             {id: 'Rollup', label: 'Building the package with Rollup'},
             async (stepRunner) => {
-              const inputEntries = target.project.entries.map((entry) =>
-                require.resolve(entry.root, {paths: [project.root]}),
-              );
+              const inputEntries = [
+                ...target.project.entries,
+                ...target.project.binaries,
+              ].map(({root}) => require.resolve(root, {paths: [project.root]}));
               const rollupPlugins =
                 (await configuration.rollupPlugins?.run([])) ?? [];
               const rollupOutputs =
