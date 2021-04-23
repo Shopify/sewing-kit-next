@@ -11,6 +11,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Expose the `writeEntries` helper so it can be used by build plugins. [[#145](https://github.com/Shopify/sewing-kit-next/pull/145)]
 
+### Changed
+
+- Updated babel dependency to 7.13. ([#148](https://github.com/Shopify/sewing-kit-next/pull/148))
+
 ## [0.3.4] - 2021-04-14
 
 - No updates. Transitive dependency bump.

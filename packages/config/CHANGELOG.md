@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Updated babel dependency to 7.13. ([#148](https://github.com/Shopify/sewing-kit-next/pull/148))
+
 ## [0.1.12] - 2021-04-14
 
 - No updates. Transitive dependency bump.
@@ -21,7 +25,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [0.1.9] - 2021-03-05
 
-## Changed
+### Changed
 
 - Support `sewing-kit-next.config.*` config as well ([#117](https://github.com/Shopify/sewing-kit-next/pull/117))
 - no-op when detecting legacy sewing-kit (SK0) config ([#117](https://github.com/Shopify/sewing-kit-next/pull/117))
