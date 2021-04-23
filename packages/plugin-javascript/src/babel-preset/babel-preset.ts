@@ -22,7 +22,6 @@ export default function babelPresetSewingKit(
 ) {
   return {
     plugins: [
-      require.resolve('@babel/plugin-syntax-dynamic-import'),
       require.resolve('@babel/plugin-proposal-numeric-separator'),
       require.resolve('@babel/plugin-proposal-optional-chaining'),
       require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
