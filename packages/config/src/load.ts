@@ -300,7 +300,7 @@ function loadInlineTranspiler(file: string) {
       ignore: [ignoreFromCompilation],
       presets: [
         require.resolve('@babel/preset-typescript'),
-        [require.resolve('@babel/preset-env'), {targets: {node: true}}],
+        [require.resolve('@babel/preset-env'), {targets: 'current node'}],
       ],
     });
   }
@@ -311,7 +311,7 @@ function loadInlineTranspiler(file: string) {
       extensions: ['.mjs', '.js'],
       ignore: [ignoreFromCompilation],
       presets: [
-        [require.resolve('@babel/preset-env'), {targets: {node: true}}],
+        [require.resolve('@babel/preset-env'), {targets: 'current node'}],
       ],
     });
   }

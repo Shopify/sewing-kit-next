@@ -8,8 +8,9 @@ module.exports = {
     ['@babel/plugin-proposal-class-properties', {loose: true}],
     '@babel/plugin-proposal-numeric-separator',
   ],
+  targets: 'current node',
   presets: [
-    ['@babel/preset-env', {targets: {node: 'current'}, modules: 'commonjs'}],
+    ['@babel/preset-env', {modules: 'commonjs'}],
     '@babel/preset-typescript',
   ],
 };
