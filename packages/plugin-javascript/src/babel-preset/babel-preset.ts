@@ -22,7 +22,6 @@ export default function babelPresetSewingKit(
 ) {
   return {
     plugins: [
-      require.resolve('@babel/plugin-syntax-dynamic-import'),
       require.resolve('@babel/plugin-proposal-numeric-separator'),
       require.resolve('@babel/plugin-proposal-optional-chaining'),
       require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
@@ -36,7 +35,7 @@ export default function babelPresetSewingKit(
           useBuiltIns: polyfill === 'inline' ? false : polyfill,
           corejs: 3,
           modules: modules === 'preserve' ? false : modules,
-          targets: target === 'node' ? {node: 'current'} : target,
+          targets: target === 'node' ? 'current node' : target,
           ignoreBrowserslistConfig: target != null,
           bugfixes: true,
         },

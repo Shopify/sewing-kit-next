@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Updated babel dependency to 7.13. ([#148](https://github.com/Shopify/sewing-kit-next/pull/148))
+
 ## [0.1.28] - 2021-04-21
 
 ### Fix
