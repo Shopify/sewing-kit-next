@@ -16,7 +16,6 @@ export type {WorkspaceTasks, ProjectTasks} from '@sewing-kit/tasks';
 export {SeriesHook, WaterfallHook} from '@sewing-kit/hooks';
 export {
   ProjectKind,
-  Project,
   Package,
   PackageBinary,
   PackageEntry,
@@ -25,6 +24,7 @@ export {
   Workspace,
   Runtime,
 } from '@sewing-kit/core';
+export type {Project} from '@sewing-kit/core';
 
 export type {PluginApi} from './api';
 export {

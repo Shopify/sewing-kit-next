@@ -19,7 +19,8 @@ import {
 } from './base';
 import {PluginSource} from './plugins';
 
-export {ConfigurationKind, ConfigurationBuilderResult};
+export {ConfigurationKind};
+export type {ConfigurationBuilderResult};
 
 const DIRECTORIES_NOT_TO_USE_FOR_NAME = new Set([
   'src',

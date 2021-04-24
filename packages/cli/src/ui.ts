@@ -4,7 +4,8 @@ import {supportsHyperlink} from 'supports-hyperlinks';
 
 import {LogLevel, LogOptions, Loggable, LogFormatter} from '@sewing-kit/core';
 
-export {LogLevel, LogOptions, Loggable, LogFormatter};
+export {LogLevel};
+export type {LogOptions, Loggable, LogFormatter};
 
 interface Options {
   stdin: NodeJS.ReadStream;
