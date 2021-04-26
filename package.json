@@ -36,7 +36,6 @@
     "@shopify/tophat": "^0.0.5",
     "@types/fs-extra": "^9.0.0",
     "core-js": "^3.6.5",
-    "eslint-find-rules": "^3.5.0",
     "execa": "^4.0.0",
     "fs-extra": "^9.0.0",
     "glob": "^7.1.6",
