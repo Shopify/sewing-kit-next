@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Updated
+
+- Updated Jest dependency to latest - v26.6.3 [[#152](https://github.com/Shopify/sewing-kit-next/pull/152)]
+
 ## [0.1.27] - 2021-04-21
 
 ### Fix
