@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Update `jest-parts/module-mapper` to be es-modules compliant [[#149](https://github.com/Shopify/sewing-kit-next/pull/149)]
+- Renamed `jest-parts/module-mapper` to `jest-module-mapper` and added an explict entrypoint for it [[#153](https://github.com/Shopify/sewing-kit-next/pull/153)]
 
 ## [0.1.27] - 2021-04-21
 
