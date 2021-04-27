@@ -1,4 +1,4 @@
-module.exports = new Proxy(
+const idProxy = new Proxy(
   {},
   {
     get(_, key) {
@@ -10,3 +10,5 @@ module.exports = new Proxy(
     },
   },
 );
+
+export default idProxy;
