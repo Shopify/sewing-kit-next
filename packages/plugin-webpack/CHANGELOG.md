@@ -9,7 +9,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Update `noop` hleper to be es-modules compliant [[#149](https://github.com/Shopify/sewing-kit-next/pull/149)]
+- Update `noop` helper to be es-modules compliant [[#149](https://github.com/Shopify/sewing-kit-next/pull/149)]
+- Added explict entrypoint for `noop` helper [[#153](https://github.com/Shopify/sewing-kit-next/pull/153)]
 
 ## [0.1.13] - 2021-04-14
 

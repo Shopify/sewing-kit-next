@@ -88,9 +88,7 @@ export function css({
                   ...moduleMapper,
                   [`\\.(${extensions
                     .map((ext) => ext.replace(/^\./, ''))
-                    .join('|')})$`]: require.resolve(
-                    './jest-parts/module-mapper',
-                  ),
+                    .join('|')})$`]: require.resolve('./jest-module-mapper'),
                 };
           });
         });
