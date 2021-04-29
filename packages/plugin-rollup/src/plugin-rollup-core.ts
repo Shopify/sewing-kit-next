@@ -5,6 +5,7 @@ import {
   WaterfallHook,
   Runtime,
   LogLevel,
+  DiagnosticError,
 } from '@sewing-kit/plugins';
 import {
   writeEntries,
@@ -109,9 +110,10 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
         }
 
         if (babelTargets.length === 0) {
-          throw new Error(
-            `No targets found for "${project.name}". Try setting a Runtime in your sewing-kit.config.`,
-          );
+          throw new DiagnosticError({
+            title: `No targets found for "${project.name}".`,
+            suggestion: `Set a pkg.runtime() in your sewing-kit.config. Use "pkg.runtime(Runtime.Node)" for a node-only package. Use "pkg.runtime(Runtime.Node, Runtime.Browser)" for an isomorphic package that can be ran in node and the browser`,
+          });
         }
 
         // Add default plugins and outputs for the default build variants
@@ -161,9 +163,10 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
                 (await configuration.rollupOutputs?.run([])) ?? [];
 
               if (inputEntries.length === 0) {
-                throw new Error(
-                  `No inputs found for "${project.name}". Try setting an Entry in your sewing-kit.config.`,
-                );
+                throw new DiagnosticError({
+                  title: `No inputs found for "${project.name}".`,
+                  suggestion: `Set a pkg.entry() in your sewing-kit.config. Use 'pkg.entry({root: './src/index'})" to use the index file`,
+                });
               }
 
               if (rollupOutputs.length === 0) {
