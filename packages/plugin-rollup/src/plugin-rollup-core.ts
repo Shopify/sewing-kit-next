@@ -101,52 +101,6 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
           return;
         }
 
-        const babelTargets: string[] = [];
-        if (target.runtime.includes(Runtime.Browser)) {
-          babelTargets.push(options.browserTargets);
-        }
-        if (target.runtime.includes(Runtime.Node)) {
-          babelTargets.push(options.nodeTargets);
-        }
-
-        if (babelTargets.length === 0) {
-          throw new DiagnosticError({
-            title: `No targets found for "${project.name}".`,
-            suggestion: `Set a pkg.runtime() in your sewing-kit.config. Use "pkg.runtime(Runtime.Node)" for a node-only package. Use "pkg.runtime(Runtime.Node, Runtime.Browser)" for an isomorphic package that can be ran in node and the browser`,
-          });
-        }
-
-        // Add default plugins and outputs for the default build variants
-        hooks.configure.hook(async (hooks) => {
-          const babelConfig = (await hooks.babelConfig?.run({
-            presets: [
-              [
-                '@sewing-kit/plugin-javascript/babel-preset',
-                // undefined targets as we use the top-level targets option
-                {modules: 'auto', target: undefined},
-              ],
-            ],
-            plugins: [],
-          })) || {presets: [], plugins: []};
-
-          hooks.rollupPlugins?.hook((plugins) =>
-            plugins.concat(
-              rollupDefaultPluginsBuilder(name, babelConfig, babelTargets) ||
-                [],
-            ),
-          );
-
-          hooks.rollupOutputs?.hook((outputs) =>
-            outputs.concat(
-              rollupDefaultOutputsBuilder(
-                name,
-                options,
-                project.fs.buildPath(),
-              ),
-            ),
-          );
-        });
-
         // Add build steps
         hooks.steps.hook((steps, configuration) => [
           ...steps,
@@ -157,10 +111,6 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
                 ...target.project.entries,
                 ...target.project.binaries,
               ].map(({root}) => require.resolve(root, {paths: [project.root]}));
-              const rollupPlugins =
-                (await configuration.rollupPlugins?.run([])) ?? [];
-              const rollupOutputs =
-                (await configuration.rollupOutputs?.run([])) ?? [];
 
               if (inputEntries.length === 0) {
                 throw new DiagnosticError({
@@ -168,6 +118,44 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
                   suggestion: `Set a pkg.entry() in your sewing-kit.config. Use 'pkg.entry({root: './src/index'})" to use the index file`,
                 });
               }
+
+              const babelConfig = (await configuration.babelConfig?.run({
+                presets: [
+                  // undefined targets as we use the top-level targets option
+                  [
+                    '@sewing-kit/plugin-javascript/babel-preset',
+                    {modules: 'auto', target: undefined},
+                  ],
+                ],
+                plugins: [],
+              })) || {presets: [], plugins: []};
+
+              const babelTargets: string[] = [];
+              if (target.runtime.includes(Runtime.Browser)) {
+                babelTargets.push(options.browserTargets);
+              }
+              if (target.runtime.includes(Runtime.Node)) {
+                babelTargets.push(options.nodeTargets);
+              }
+
+              if (babelTargets.length === 0) {
+                throw new DiagnosticError({
+                  title: `No targets found for "${project.name}".`,
+                  suggestion: `Set a pkg.runtime() in your sewing-kit.config. Use "pkg.runtime(Runtime.Node)" for a node-only package. Use "pkg.runtime(Runtime.Node, Runtime.Browser)" for an isomorphic package that can be ran in node and the browser`,
+                });
+              }
+
+              const rollupPlugins = await configuration.rollupPlugins!.run(
+                rollupDefaultPluginsBuilder(name, babelConfig, babelTargets),
+              );
+
+              const rollupOutputs = await configuration.rollupOutputs!.run(
+                rollupDefaultOutputsBuilder(
+                  name,
+                  options,
+                  project.fs.buildPath(),
+                ),
+              );
 
               if (rollupOutputs.length === 0) {
                 return;
@@ -213,7 +201,7 @@ function rollupDefaultPluginsBuilder(
   variant: string,
   babelConfig: BabelConfig,
   targets: string[],
-): InputOptions['plugins'] {
+): RollupPlugin[] {
   if (variant === 'main') {
     return inputPluginsFactory({babelConfig, targets});
   }
@@ -290,7 +278,7 @@ function inputPluginsFactory({
 }: {
   targets: string[];
   babelConfig: BabelConfig;
-}): InputOptions['plugins'] {
+}): RollupPlugin[] {
   return [
     nodeResolve({
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
