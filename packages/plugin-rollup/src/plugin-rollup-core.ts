@@ -52,6 +52,13 @@ const defaultOptions = {
   esnext: true,
 };
 
+/**
+ * Core configuration of a Rollup-based build.
+ *
+ * Allows for creating commonjs, esmodules and esnext builds.
+ * Rollup plugins can be customised by using the rollupPlugins hook.
+ * Rollup output config can be customised by using the rollupOutputs hook.
+ */
 export function rollupCore(baseOptions: RollupCorePluginOptions) {
   const options: ResolvedRollupCorePluginOptions = {
     ...defaultOptions,

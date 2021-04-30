@@ -7,8 +7,8 @@ export function rollupCss() {
     'SewingKit.Rollup.Css',
     ({hooks}) => {
       hooks.target.hook(({hooks}) => {
-        hooks.configure.hook((hooks) => {
-          hooks.rollupPlugins?.hook((rollupPlugins) => {
+        hooks.configure.hook((configuration) => {
+          configuration.rollupPlugins?.hook((rollupPlugins) => {
             const dummyPlugin = () => ({name: 'dummyCssPlugin'});
 
             rollupPlugins.push(dummyPlugin());
