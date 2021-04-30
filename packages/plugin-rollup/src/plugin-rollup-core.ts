@@ -190,7 +190,9 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
                 }
               }
 
-              const logOutputs = rollupOutputs.map(({dir}) => dir);
+              const logOutputs = rollupOutputs.map(({dir = ''}) =>
+                project.fs.relativePath(dir),
+              );
               const logInputs = target.project.entries
                 .map(({root}) => root)
                 .join(', ');
