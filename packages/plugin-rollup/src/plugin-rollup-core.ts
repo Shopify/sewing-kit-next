@@ -18,6 +18,7 @@ import {
   OutputOptions,
   PreRenderedChunk,
   Plugin as RollupPlugin,
+  ExternalOption,
 } from 'rollup';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
@@ -26,6 +27,7 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 interface RollupHooks {
   readonly rollupPlugins: WaterfallHook<RollupPlugin[]>;
   readonly rollupOutputs: WaterfallHook<OutputOptions[]>;
+  readonly rollupExternal: WaterfallHook<ExternalOption>;
 }
 
 declare module '@sewing-kit/hooks' {
@@ -75,6 +77,7 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
         addHooks<RollupHooks>(() => ({
           rollupPlugins: new WaterfallHook(),
           rollupOutputs: new WaterfallHook(),
+          rollupExternal: new WaterfallHook(),
         })),
       );
 
@@ -156,6 +159,10 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
                 rollupDefaultPluginsBuilder(name, babelConfig, babelTargets),
               );
 
+              const rollupExternal = await configuration.rollupExternal!.run(
+                [],
+              );
+
               const rollupOutputs = await configuration.rollupOutputs!.run(
                 rollupDefaultOutputsBuilder(
                   name,
@@ -169,7 +176,11 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
               }
 
               await build(
-                {input: inputEntries, plugins: rollupPlugins},
+                {
+                  input: inputEntries,
+                  plugins: rollupPlugins,
+                  external: rollupExternal,
+                },
                 rollupOutputs,
               );
 
@@ -292,7 +303,7 @@ function inputPluginsFactory({
       // Only resolve files paths starting with a .
       // This treats every other path - i.e. modules like
       // `@shopify/address` or node built-ins like `path` as
-      // externals that shoould not be bundled.
+      // externals that should not be bundled.
       resolveOnly: [/^\./],
     }),
     commonjs(),
