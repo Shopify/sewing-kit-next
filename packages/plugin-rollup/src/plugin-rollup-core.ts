@@ -24,6 +24,8 @@ import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 
+import {rollupNameForTargetOptions} from './utilities';
+
 interface RollupHooks {
   readonly rollupPlugins: WaterfallHook<RollupPlugin[]>;
   readonly rollupOutputs: WaterfallHook<OutputOptions[]>;
@@ -81,32 +83,20 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
         })),
       );
 
-      // Define default build variants to build based off options.
-      // Enabling cjs/esm builds shall enable the 'main' variant
-      // Enabling esnext builds shall enable the 'esnext' variant
+      // Define additional build variant to build esnext output if enabled
       hooks.targets.hook((targets) => {
         return targets.map((target) => {
-          if (!target.default) {
+          if (!target.default || !options.esnext) {
             return target;
           }
 
-          const newVariants = [];
-
-          if (options.commonjs || options.esmodules) {
-            newVariants.push({rollupName: 'main'});
-          }
-
-          if (options.esnext) {
-            newVariants.push({rollupName: 'esnext'});
-          }
-
-          return target.add(...newVariants);
+          return target.add({rollupName: 'esnext'});
         });
       });
 
       // Define config for build variants
       hooks.target.hook(async ({target, hooks}) => {
-        const name = target.options.rollupName || '';
+        const name = rollupNameForTargetOptions(target.options);
 
         if (!name) {
           return;
@@ -155,7 +145,7 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
       });
 
       hooks.target.hook(({target, hooks}) => {
-        const name = target.options.rollupName || '';
+        const name = rollupNameForTargetOptions(target.options);
 
         if (!name) {
           return;

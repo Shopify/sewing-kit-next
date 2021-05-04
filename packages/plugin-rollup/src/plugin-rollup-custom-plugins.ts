@@ -4,6 +4,7 @@ import type {Plugin as RollupPlugin} from 'rollup';
 
 // Ambient types for hooks provided by rollup-plugin-core
 import type {} from './plugin-rollup-core';
+import {rollupNameForTargetOptions} from './utilities';
 
 type PluginsOrPluginsBuilder =
   | ((target: string) => RollupPlugin[])
@@ -22,13 +23,19 @@ export function rollupCustomPlugins(plugins: PluginsOrPluginsBuilder) {
     'SewingKit.Rollup.CustomPlugins',
     ({hooks}) => {
       hooks.target.hook(({hooks, target}) => {
+        const name = rollupNameForTargetOptions(target.options);
+
+        if (!name) {
+          return;
+        }
+
         hooks.configure.hook((configuration) => {
           configuration.rollupPlugins?.hook((rollupPlugins) => {
             // plugins may be either an array of plugins or a builder function
             // that returns the plugins for a given target
             const pluginsArray = Array.isArray(plugins)
               ? plugins
-              : plugins(target.options.rollupName || '');
+              : plugins(name);
 
             return rollupPlugins.concat(pluginsArray);
           });
