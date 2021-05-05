@@ -18,7 +18,6 @@ import {
   OutputOptions,
   PreRenderedChunk,
   Plugin as RollupPlugin,
-  ExternalOption,
 } from 'rollup';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
@@ -27,9 +26,10 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import {rollupNameForTargetOptions} from './utilities';
 
 interface RollupHooks {
-  readonly rollupPlugins: WaterfallHook<RollupPlugin[]>;
+  readonly rollupInput: WaterfallHook<string[]>;
+  readonly rollupPlugins: WaterfallHook<NonNullable<InputOptions['plugins']>>;
+  readonly rollupExternal: WaterfallHook<NonNullable<InputOptions['external']>>;
   readonly rollupOutputs: WaterfallHook<OutputOptions[]>;
-  readonly rollupExternal: WaterfallHook<ExternalOption>;
 }
 
 declare module '@sewing-kit/hooks' {
@@ -77,9 +77,10 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
       // by adding additional plugins and outputs per build variant
       hooks.configureHooks.hook(
         addHooks<RollupHooks>(() => ({
+          rollupInput: new WaterfallHook(),
           rollupPlugins: new WaterfallHook(),
-          rollupOutputs: new WaterfallHook(),
           rollupExternal: new WaterfallHook(),
+          rollupOutputs: new WaterfallHook(),
         })),
       );
 
@@ -103,34 +104,53 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
         }
 
         hooks.configure.hook(async (configuration) => {
-          const babelConfig = (await configuration.babelConfig?.run({
-            presets: [
-              ['@sewing-kit/plugin-javascript/babel-preset', {modules: 'auto'}],
-            ],
-            plugins: [],
-          })) || {presets: [], plugins: []};
+          configuration.rollupInput?.hook((input) => {
+            const inputEntries = [
+              ...target.project.entries,
+              ...target.project.binaries,
+            ].map(({root}) => require.resolve(root, {paths: [project.root]}));
 
-          const babelTargets: string[] = [];
-          if (target.runtime.includes(Runtime.Browser)) {
-            babelTargets.push(options.browserTargets);
-          }
-          if (target.runtime.includes(Runtime.Node)) {
-            babelTargets.push(options.nodeTargets);
-          }
+            if (inputEntries.length === 0) {
+              throw new DiagnosticError({
+                title: `No inputs found for "${project.name}".`,
+                suggestion: `Set a pkg.entry() in your sewing-kit.config. Use 'pkg.entry({root: './src/index'})" to use the index file`,
+              });
+            }
 
-          if (babelTargets.length === 0) {
-            throw new DiagnosticError({
-              title: `No targets found for "${project.name}".`,
-              suggestion: `Set a pkg.runtime() in your sewing-kit.config. Use "pkg.runtime(Runtime.Node)" for a node-only package. Use "pkg.runtime(Runtime.Node, Runtime.Browser)" for an isomorphic package that can be ran in node and the browser`,
-            });
-          }
+            return input.concat(inputEntries);
+          });
 
-          configuration.rollupPlugins?.hook((plugins) =>
-            plugins.concat(
+          configuration.rollupPlugins?.hook(async (plugins) => {
+            const babelConfig = (await configuration.babelConfig?.run({
+              presets: [
+                [
+                  '@sewing-kit/plugin-javascript/babel-preset',
+                  {modules: 'auto'},
+                ],
+              ],
+              plugins: [],
+            })) || {presets: [], plugins: []};
+
+            const babelTargets: string[] = [];
+            if (target.runtime.includes(Runtime.Browser)) {
+              babelTargets.push(options.browserTargets);
+            }
+            if (target.runtime.includes(Runtime.Node)) {
+              babelTargets.push(options.nodeTargets);
+            }
+
+            if (babelTargets.length === 0) {
+              throw new DiagnosticError({
+                title: `No targets found for "${project.name}".`,
+                suggestion: `Set a pkg.runtime() in your sewing-kit.config. Use "pkg.runtime(Runtime.Node)" for a node-only package. Use "pkg.runtime(Runtime.Node, Runtime.Browser)" for an isomorphic package that can be ran in node and the browser`,
+              });
+            }
+
+            return plugins.concat(
               rollupDefaultPluginsBuilder(name, babelConfig, babelTargets) ||
                 [],
-            ),
-          );
+            );
+          });
 
           configuration.rollupOutputs?.hook((outputs) =>
             outputs.concat(
@@ -157,20 +177,8 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
           api.createStep(
             {id: 'Rollup', label: 'Building the package with Rollup'},
             async (stepRunner) => {
-              const inputEntries = [
-                ...target.project.entries,
-                ...target.project.binaries,
-              ].map(({root}) => require.resolve(root, {paths: [project.root]}));
-
-              if (inputEntries.length === 0) {
-                throw new DiagnosticError({
-                  title: `No inputs found for "${project.name}".`,
-                  suggestion: `Set a pkg.entry() in your sewing-kit.config. Use 'pkg.entry({root: './src/index'})" to use the index file`,
-                });
-              }
-
               const rollupInputOptions = {
-                input: inputEntries,
+                input: await configuration.rollupInput!.run([]),
                 plugins: await configuration.rollupPlugins!.run([]),
                 external: await configuration.rollupExternal!.run([]),
               };
