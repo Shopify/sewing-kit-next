@@ -208,7 +208,7 @@ export function pkg(greet) {
     [
       'as an function to configure per target',
       '(target) => [injecterPlugin({value: target})]',
-      'const MAGIC = "main"',
+      'const MAGIC = "default"',
       'const MAGIC = "esnext"',
     ],
   ])(

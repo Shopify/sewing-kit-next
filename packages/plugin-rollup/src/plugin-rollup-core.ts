@@ -3,25 +3,10 @@ import {
   Package,
   addHooks,
   WaterfallHook,
-  Runtime,
   LogLevel,
-  DiagnosticError,
 } from '@sewing-kit/plugins';
-import {
-  writeEntries,
-  BabelConfig,
-  ExportStyle,
-} from '@sewing-kit/plugin-javascript';
-import {
-  rollup as rollupFn,
-  InputOptions,
-  OutputOptions,
-  PreRenderedChunk,
-  Plugin as RollupPlugin,
-} from 'rollup';
-import babel from '@rollup/plugin-babel';
-import commonjs from '@rollup/plugin-commonjs';
-import nodeResolve from '@rollup/plugin-node-resolve';
+import {writeEntries, ExportStyle} from '@sewing-kit/plugin-javascript';
+import {rollup as rollupFn, InputOptions, OutputOptions} from 'rollup';
 
 import {rollupNameForTargetOptions} from './utilities';
 
@@ -40,130 +25,39 @@ declare module '@sewing-kit/hooks' {
   }
 }
 
-export interface RollupCorePluginOptions {
-  browserTargets: string;
-  nodeTargets: string;
-  commonjs?: boolean;
-  esmodules?: boolean;
-  esnext?: boolean;
-}
-
-type ResolvedRollupCorePluginOptions = Required<RollupCorePluginOptions>;
-
-const defaultOptions = {
-  commonjs: true,
-  esmodules: true,
-  esnext: true,
-};
-
 /**
  * Core configuration of a Rollup-based build.
  *
- * Allows for creating commonjs, esmodules and esnext builds.
- * Rollup plugins can be customised by using the rollupPlugins hook.
- * Rollup output config can be customised by using the rollupOutputs hook.
+ * Rollup input can be customised using the rollupInput hook
+ * Rollup plugins can be customised using the rollupPlugins hook.
+ * Rollup externals can be customised using the rollupExternals hook.
+ * Rollup outputs can be customised by using the rollupOutputs hook.
  */
-export function rollupCore(baseOptions: RollupCorePluginOptions) {
-  const options: ResolvedRollupCorePluginOptions = {
-    ...defaultOptions,
-    ...baseOptions,
-  };
+export function rollupHooks() {
+  return createProjectBuildPlugin<Package>('SewingKit.Rollup', ({hooks}) => {
+    // Define hooks that are available to be configured
+    // Allows for consumers and other SK plugins to adjust the rollup config
+    // by adding additional plugins and outputs per build variant
+    //
+    // input, plugins and external are part of the InputOptions object
+    // @see https://rollupjs.org/guide/en/#inputoptions-object
+    // outputs is the OutputOptions object
+    // @see https://rollupjs.org/guide/en/#outputoptions-object
+    hooks.configureHooks.hook(
+      addHooks<RollupHooks>(() => ({
+        rollupInput: new WaterfallHook(),
+        rollupPlugins: new WaterfallHook(),
+        rollupExternal: new WaterfallHook(),
+        rollupOutputs: new WaterfallHook(),
+      })),
+    );
+  });
+}
 
+export function rollupBuild() {
   return createProjectBuildPlugin<Package>(
     'SewingKit.Rollup.Core',
     ({api, hooks, project}) => {
-      // Define hooks that are available to be configured
-      // Allows for consumers and other SK plugins to adjust the rollup config
-      // by adding additional plugins and outputs per build variant
-      hooks.configureHooks.hook(
-        addHooks<RollupHooks>(() => ({
-          rollupInput: new WaterfallHook(),
-          rollupPlugins: new WaterfallHook(),
-          rollupExternal: new WaterfallHook(),
-          rollupOutputs: new WaterfallHook(),
-        })),
-      );
-
-      // Define additional build variant to build esnext output if enabled
-      hooks.targets.hook((targets) => {
-        return targets.map((target) => {
-          if (!target.default || !options.esnext) {
-            return target;
-          }
-
-          return target.add({rollupName: 'esnext'});
-        });
-      });
-
-      // Define config for build variants
-      hooks.target.hook(async ({target, hooks}) => {
-        const name = rollupNameForTargetOptions(target.options);
-
-        if (!name) {
-          return;
-        }
-
-        hooks.configure.hook(async (configuration) => {
-          configuration.rollupInput?.hook((input) => {
-            const inputEntries = [
-              ...target.project.entries,
-              ...target.project.binaries,
-            ].map(({root}) => require.resolve(root, {paths: [project.root]}));
-
-            if (inputEntries.length === 0) {
-              throw new DiagnosticError({
-                title: `No inputs found for "${project.name}".`,
-                suggestion: `Set a pkg.entry() in your sewing-kit.config. Use 'pkg.entry({root: './src/index'})" to use the index file`,
-              });
-            }
-
-            return input.concat(inputEntries);
-          });
-
-          configuration.rollupPlugins?.hook(async (plugins) => {
-            const babelConfig = (await configuration.babelConfig?.run({
-              presets: [
-                [
-                  '@sewing-kit/plugin-javascript/babel-preset',
-                  {modules: 'auto'},
-                ],
-              ],
-              plugins: [],
-            })) || {presets: [], plugins: []};
-
-            const babelTargets: string[] = [];
-            if (target.runtime.includes(Runtime.Browser)) {
-              babelTargets.push(options.browserTargets);
-            }
-            if (target.runtime.includes(Runtime.Node)) {
-              babelTargets.push(options.nodeTargets);
-            }
-
-            if (babelTargets.length === 0) {
-              throw new DiagnosticError({
-                title: `No targets found for "${project.name}".`,
-                suggestion: `Set a pkg.runtime() in your sewing-kit.config. Use "pkg.runtime(Runtime.Node)" for a node-only package. Use "pkg.runtime(Runtime.Node, Runtime.Browser)" for an isomorphic package that can be ran in node and the browser`,
-              });
-            }
-
-            return plugins.concat(
-              rollupDefaultPluginsBuilder(name, babelConfig, babelTargets) ||
-                [],
-            );
-          });
-
-          configuration.rollupOutputs?.hook((outputs) =>
-            outputs.concat(
-              rollupDefaultOutputsBuilder(
-                name,
-                options,
-                project.fs.buildPath(),
-              ),
-            ),
-          );
-        });
-      });
-
       hooks.target.hook(({target, hooks}) => {
         const name = rollupNameForTargetOptions(target.options);
 
@@ -185,7 +79,10 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
 
               const rollupOutputs = await configuration.rollupOutputs!.run([]);
 
-              if (rollupOutputs.length === 0) {
+              if (
+                rollupInputOptions.input.length === 0 ||
+                rollupOutputs.length === 0
+              ) {
                 return;
               }
 
@@ -220,111 +117,6 @@ export function rollupCore(baseOptions: RollupCorePluginOptions) {
       });
     },
   );
-}
-
-function rollupDefaultPluginsBuilder(
-  variant: string,
-  babelConfig: BabelConfig,
-  targets: string[],
-): RollupPlugin[] {
-  if (variant === 'main') {
-    return inputPluginsFactory({babelConfig, targets});
-  }
-
-  if (variant === 'esnext') {
-    return inputPluginsFactory({
-      babelConfig,
-      targets: ['last 1 chrome versions'],
-    });
-  }
-
-  return [];
-}
-
-function rollupDefaultOutputsBuilder(
-  variant: string,
-  options: ResolvedRollupCorePluginOptions,
-  rootDir: string,
-): OutputOptions[] {
-  // Foo.ts is compilied to Foo.js, while Foo.scss is compiled to Foo.scss.js
-  // Optionally changing the .js for .mjs / .esnext
-  const entryFileNamesBuilder = (ext = '.js') => {
-    const NonAssetExtensions = ['.js', '.jsx', '.ts', '.tsx'];
-    return (chunkInfo: PreRenderedChunk) => {
-      const isAssetfile = !NonAssetExtensions.some((nonAssetExt) =>
-        (chunkInfo.facadeModuleId || '').endsWith(nonAssetExt),
-      );
-
-      return `[name]${isAssetfile ? '[extname]' : ''}${ext}`;
-    };
-  };
-
-  if (variant === 'main') {
-    const outputs: OutputOptions[] = [];
-
-    if (options.commonjs) {
-      outputs.push({
-        format: 'cjs',
-        dir: `${rootDir}/cjs`,
-        preserveModules: true,
-        exports: 'named',
-      });
-    }
-
-    if (options.esmodules) {
-      outputs.push({
-        format: 'esm',
-        dir: `${rootDir}/esm`,
-        preserveModules: true,
-        entryFileNames: entryFileNamesBuilder('.mjs'),
-      });
-    }
-
-    return outputs;
-  }
-
-  if (variant === 'esnext') {
-    return [
-      {
-        format: 'esm',
-        dir: `${rootDir}/esnext`,
-        preserveModules: true,
-        entryFileNames: entryFileNamesBuilder('.esnext'),
-      },
-    ];
-  }
-
-  return [];
-}
-
-function inputPluginsFactory({
-  targets,
-  babelConfig,
-}: {
-  targets: string[];
-  babelConfig: BabelConfig;
-}): RollupPlugin[] {
-  return [
-    nodeResolve({
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      // Only resolve files paths starting with a .
-      // This treats every other path - i.e. modules like
-      // `@shopify/address` or node built-ins like `path` as
-      // externals that should not be bundled.
-      resolveOnly: [/^\./],
-    }),
-    commonjs(),
-    babel({
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      envName: 'production',
-      exclude: 'node_modules/**',
-      babelHelpers: 'bundled',
-      configFile: false,
-      // @ts-expect-error targets is a valid babel option but @types/babel__core doesn't know that yet
-      targets,
-      ...babelConfig,
-    }),
-  ];
 }
 
 function entriesConfigForOutput(outputDir: string) {
