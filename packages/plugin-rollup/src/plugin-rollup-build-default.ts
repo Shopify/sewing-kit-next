@@ -186,9 +186,11 @@ export function rollupBuildDefault(
                 }
               }
 
-              for (const entryConfig of entryConfigs) {
-                await writeEntries({project, ...entryConfig});
-              }
+              await Promise.all(
+                entryConfigs.map((config) =>
+                  writeEntries({project, ...config}),
+                ),
+              );
             },
           ),
         ]);

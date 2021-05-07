@@ -13,6 +13,7 @@ interface RollupHooks {
   readonly rollupInput: WaterfallHook<string[]>;
   readonly rollupPlugins: WaterfallHook<NonNullable<InputOptions['plugins']>>;
   readonly rollupExternal: WaterfallHook<NonNullable<InputOptions['external']>>;
+  readonly rollupInputOptions: WaterfallHook<InputOptions>;
   readonly rollupOutputs: WaterfallHook<OutputOptions[]>;
 }
 
@@ -26,27 +27,27 @@ declare module '@sewing-kit/hooks' {
 
 /**
  * Core configuration of a Rollup-based build.
+ * Exposes hooks that configure rollup.
  *
- * Rollup input can be customised using the rollupInput hook
- * Rollup plugins can be customised using the rollupPlugins hook.
- * Rollup externals can be customised using the rollupExternals hook.
- * Rollup outputs can be customised by using the rollupOutputs hook.
+ * The `rollupInput`, `rollupPlugins` and `rollupExternals` hooks map to
+ * `input`, `plugins` and `externals` keys of Rollup's `InputOptions` object
+ * as documented at https://rollupjs.org/guide/en/#inputoptions-object.
+ *
+ * The `rollupInputOptions` hook is a whole `InputOptions` object, including any
+ * values set in `rollupInput`, `rollupPlugins` and `rollupExternals`, this
+ * can be used if you need to control any advanced input configuration options.
+ *
+ * The `rollupOutputs` hook is an array of Rollup's `OutputOptions` objects as
+ * documented at https://rollupjs.org/guide/en/#outputoptions-object.
  */
 export function rollupHooks() {
   return createProjectBuildPlugin<Package>('SewingKit.Rollup', ({hooks}) => {
-    // Define hooks that are available to be configured
-    // Allows for consumers and other SK plugins to adjust the rollup config
-    // by adding additional plugins and outputs per build variant
-    //
-    // input, plugins and external are part of the InputOptions object
-    // @see https://rollupjs.org/guide/en/#inputoptions-object
-    // outputs is the OutputOptions object
-    // @see https://rollupjs.org/guide/en/#outputoptions-object
     hooks.configureHooks.hook(
       addHooks<RollupHooks>(() => ({
         rollupInput: new WaterfallHook(),
         rollupPlugins: new WaterfallHook(),
         rollupExternal: new WaterfallHook(),
+        rollupInputOptions: new WaterfallHook(),
         rollupOutputs: new WaterfallHook(),
       })),
     );
@@ -70,24 +71,31 @@ export function rollupBuild() {
           api.createStep(
             {id: 'Rollup', label: 'Building the package with Rollup'},
             async (stepRunner) => {
-              const rollupInputOptions = {
-                input: await configuration.rollupInput!.run([]),
-                plugins: await configuration.rollupPlugins!.run([]),
-                external: await configuration.rollupExternal!.run([]),
-              };
-
-              const rollupOutputs = await configuration.rollupOutputs!.run([]);
+              const [rollupInputOptions, outputs] = await Promise.all([
+                Promise.all([
+                  configuration.rollupInput!.run([]),
+                  configuration.rollupPlugins!.run([]),
+                  configuration.rollupExternal!.run([]),
+                ]).then(([input, plugins, external]) => {
+                  return configuration.rollupInputOptions!.run({
+                    input,
+                    plugins,
+                    external,
+                  });
+                }),
+                configuration.rollupOutputs!.run([]),
+              ]);
 
               if (
-                rollupInputOptions.input.length === 0 ||
-                rollupOutputs.length === 0
+                (rollupInputOptions.input ?? []).length === 0 ||
+                outputs.length === 0
               ) {
                 return;
               }
 
-              await build(rollupInputOptions, rollupOutputs);
+              await build(rollupInputOptions, outputs);
 
-              const logOutputs = rollupOutputs.map(({dir = ''}) =>
+              const logOutputs = outputs.map(({dir = ''}) =>
                 project.fs.relativePath(dir),
               );
               const logInputs = target.project.entries
