@@ -12,7 +12,7 @@ $ yarn add @sewing-kit/plugin-rollup
 
 ## Usage
 
-Add `rollup` to your sewing-kit plugins.
+Add `rollupOpinionated` to your sewing-kit plugins.
 
 ```
 import {createPackage, Runtime} from '@sewing-kit/config';
@@ -23,7 +23,7 @@ export default createPackage((pkg) => {
   pkg.runtime(Runtime.Node);
   pkg.use(
     javascript(),
-    rollup({
+    rollupOpinionated({
       // Required. A browserslist string that shall be targeted when your runtime includes `Runtime.Browser`
       browserTargets: 'defaults',
       // Required. A browserslist string that shall be targeted when your runtime includes `Runtime.Node`

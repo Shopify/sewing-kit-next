@@ -9,13 +9,13 @@ describe('@sewing-kit/plugin-rollup', () => {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {rollup} from '@sewing-kit/plugin-rollup';
+        import {rollupOpinionated} from '@sewing-kit/plugin-rollup';
 
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
           pkg.use(
             javascript(),
-            rollup({
+            rollupOpinionated({
               browserTargets: 'chrome 88',
               nodeTargets: 'node 12',
             }),
@@ -72,13 +72,13 @@ function pkg(greet) {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {rollup} from '@sewing-kit/plugin-rollup';
+        import {rollupOpinionated} from '@sewing-kit/plugin-rollup';
 
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
           pkg.use(
             javascript(),
-            rollup({
+            rollupOpinionated({
               esmodules: false,
               esnext: false,
               browserTargets: 'chrome 88',
@@ -116,7 +116,7 @@ export function pkg(greet) {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {rollup} from '@sewing-kit/plugin-rollup';
+        import {rollupOpinionated} from '@sewing-kit/plugin-rollup';
 
         export default createPackage((pkg) => {
           pkg.entry({root: './src/index'});
@@ -125,7 +125,7 @@ export function pkg(greet) {
           pkg.runtime(Runtime.Node);
           pkg.use(
             javascript(),
-            rollup({
+            rollupOpinionated({
               esmodules: false,
               esnext: false,
               browserTargets: 'chrome 88',
@@ -164,13 +164,13 @@ export function pkg(greet) {
         await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {rollup} from '@sewing-kit/plugin-rollup';
+        import {rollupOpinionated} from '@sewing-kit/plugin-rollup';
 
         export default createPackage((pkg) => {
           pkg.runtimes(${runtimes});
           pkg.use(
             javascript(),
-            rollup({
+            rollupOpinionated({
               // Needs to transpile exponentiation
               browserTargets: 'chrome 10',
               // Doesn't need to transpile exponentiation
@@ -218,7 +218,7 @@ export function pkg(greet) {
         await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {rollup} from '@sewing-kit/plugin-rollup';
+        import {rollupOpinionated} from '@sewing-kit/plugin-rollup';
 
         function injecterPlugin({value}) {
           return {
@@ -233,7 +233,7 @@ export function pkg(greet) {
           pkg.runtime(Runtime.Node);
           pkg.use(
             javascript(),
-            rollup({
+            rollupOpinionated({
               browserTargets: 'chrome 88',
               nodeTargets: 'node 12',
               plugins: ${pluginsValue}

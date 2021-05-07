@@ -5,7 +5,7 @@ import {
   createComposedProjectPlugin,
 } from '@sewing-kit/plugins';
 
-import {rollup} from '@sewing-kit/plugin-rollup';
+import {rollupOpinionated} from '@sewing-kit/plugin-rollup';
 
 const PLUGIN = 'SewingKit.PackageFlexibleOutputs';
 
@@ -36,7 +36,7 @@ export function buildFlexibleOutputs({
 }: Options) {
   return createComposedProjectPlugin<Package>(PLUGIN, async (composer) => {
     const composed = await Promise.all([
-      rollup({
+      rollupOpinionated({
         browserTargets,
         nodeTargets,
         commonjs,

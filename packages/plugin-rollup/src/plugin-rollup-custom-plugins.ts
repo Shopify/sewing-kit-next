@@ -2,8 +2,8 @@ import {createProjectBuildPlugin, Package} from '@sewing-kit/plugins';
 
 import type {Plugin as RollupPlugin} from 'rollup';
 
-// Ambient types for hooks provided by rollup-plugin-core
-import type {} from './plugin-rollup-core';
+// Ambient types for hooks provided by rollup-plugin
+import type {} from './plugin-rollup';
 import {rollupNameForTargetOptions} from './utilities';
 
 type PluginsOrPluginsBuilder =
