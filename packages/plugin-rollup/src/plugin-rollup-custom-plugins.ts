@@ -15,7 +15,7 @@ type PluginsOrPluginsBuilder =
  *
  * Accepts either:
  * - An array of Rollup plugins to be added
- * - A function that accepts the Rollup build type ('main' or 'esnext') and
+ * - A function that accepts the Rollup build type ('default' or 'esnext') and
  *   returns an array of Rollup plugins to be added
  */
 export function rollupCustomPlugins(plugins: PluginsOrPluginsBuilder) {

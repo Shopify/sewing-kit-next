@@ -10,6 +10,7 @@ import {entryFileNamesBuilder, inputPluginsFactory} from './utilities';
 const defaultOptions = {
   commonjs: true,
   esmodules: true,
+  esnext: true,
 };
 
 export interface RollupBuildDefaultPluginOptions {
@@ -17,6 +18,7 @@ export interface RollupBuildDefaultPluginOptions {
   nodeTargets: string;
   commonjs?: boolean;
   esmodules?: boolean;
+  esnext?: boolean;
 }
 
 type ResolvedRollupCorePluginOptions = Required<
@@ -34,9 +36,21 @@ export function rollupBuildDefault(
   return createProjectBuildPlugin<Package>(
     'SewingKit.Rollup.DefaultBuild',
     ({hooks, project}) => {
+      // Define additional build variant to build esnext output
+      hooks.targets.hook((targets) => {
+        return targets.map((target) => {
+          return options.esnext && target.default
+            ? target.add({rollupName: 'esnext'})
+            : target;
+        });
+      });
+
       // Define config for build variants
       hooks.target.hook(async ({target, hooks}) => {
-        if (Object.keys(target.options).length !== 0) {
+        const isDefaultBuild = Object.keys(target.options).length === 0;
+        const isEsnextBuild =
+          options.esnext && target.options.rollupName === 'esnext';
+        if (!(isDefaultBuild || isEsnextBuild)) {
           return;
         }
 
@@ -69,11 +83,16 @@ export function rollupBuildDefault(
             })) || {presets: [], plugins: []};
 
             const babelTargets: string[] = [];
-            if (target.runtime.includes(Runtime.Browser)) {
-              babelTargets.push(options.browserTargets);
-            }
-            if (target.runtime.includes(Runtime.Node)) {
-              babelTargets.push(options.nodeTargets);
+
+            if (isDefaultBuild) {
+              if (target.runtime.includes(Runtime.Browser)) {
+                babelTargets.push(options.browserTargets);
+              }
+              if (target.runtime.includes(Runtime.Node)) {
+                babelTargets.push(options.nodeTargets);
+              }
+            } else if (isEsnextBuild) {
+              babelTargets.push('last 1 chrome versions');
             }
 
             if (babelTargets.length === 0) {
@@ -91,21 +110,30 @@ export function rollupBuildDefault(
           configuration.rollupOutputs?.hook((outputs) => {
             const additionalOutputs: typeof outputs = [];
 
-            if (options.commonjs) {
-              additionalOutputs.push({
-                format: 'cjs',
-                dir: project.fs.buildPath('cjs'),
-                preserveModules: true,
-                exports: 'named',
-              });
-            }
+            if (isDefaultBuild) {
+              if (options.commonjs) {
+                additionalOutputs.push({
+                  format: 'cjs',
+                  dir: project.fs.buildPath('cjs'),
+                  preserveModules: true,
+                  exports: 'named',
+                });
+              }
 
-            if (options.esmodules) {
+              if (options.esmodules) {
+                additionalOutputs.push({
+                  format: 'esm',
+                  dir: project.fs.buildPath('esm'),
+                  preserveModules: true,
+                  entryFileNames: entryFileNamesBuilder('.mjs'),
+                });
+              }
+            } else if (isEsnextBuild) {
               additionalOutputs.push({
                 format: 'esm',
-                dir: project.fs.buildPath('esm'),
+                dir: project.fs.buildPath('esnext'),
                 preserveModules: true,
-                entryFileNames: entryFileNamesBuilder('.mjs'),
+                entryFileNames: entryFileNamesBuilder('.esnext'),
               });
             }
 
