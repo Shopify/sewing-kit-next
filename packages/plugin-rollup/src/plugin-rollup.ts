@@ -5,7 +5,6 @@ import {
   WaterfallHook,
   LogLevel,
 } from '@sewing-kit/plugins';
-import {writeEntries, ExportStyle} from '@sewing-kit/plugin-javascript';
 import {rollup as rollupFn, InputOptions, OutputOptions} from 'rollup';
 
 import {rollupNameForTargetOptions} from './utilities';
@@ -88,18 +87,6 @@ export function rollupBuild() {
 
               await build(rollupInputOptions, rollupOutputs);
 
-              for (const output of rollupOutputs) {
-                const outputDir = output.dir || '';
-                const entryConfig = entriesConfigForOutput(outputDir);
-                if (entryConfig) {
-                  await writeEntries({
-                    project,
-                    outputPath: outputDir,
-                    ...entryConfig,
-                  });
-                }
-              }
-
               const logOutputs = rollupOutputs.map(({dir = ''}) =>
                 project.fs.relativePath(dir),
               );
@@ -117,31 +104,6 @@ export function rollupBuild() {
       });
     },
   );
-}
-
-function entriesConfigForOutput(outputDir: string) {
-  if (outputDir.endsWith('/esm')) {
-    return {
-      exportStyle: ExportStyle.EsModules,
-      extension: '.mjs',
-    };
-  }
-
-  if (outputDir.endsWith('/cjs')) {
-    return {
-      exportStyle: ExportStyle.CommonJs,
-      extension: '.js',
-    };
-  }
-
-  if (outputDir.endsWith('/esnext')) {
-    return {
-      exportStyle: ExportStyle.EsModules,
-      extension: '.esnext',
-    };
-  }
-
-  return null;
 }
 
 async function build(

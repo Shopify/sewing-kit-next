@@ -5,7 +5,11 @@ import {
   DiagnosticError,
 } from '@sewing-kit/plugins';
 
-import {BabelConfig} from '@sewing-kit/plugin-javascript';
+import {
+  BabelConfig,
+  writeEntries,
+  ExportStyle,
+} from '@sewing-kit/plugin-javascript';
 
 import {Plugin as RollupPlugin, PreRenderedChunk} from 'rollup';
 
@@ -41,7 +45,7 @@ export function rollupBuildDefault(
 
   return createProjectBuildPlugin<Package>(
     'SewingKit.Rollup.DefaultBuild',
-    ({hooks, project}) => {
+    ({api, hooks, project}) => {
       // Define additional build variant to build esnext output
       hooks.targets.hook((targets) => {
         return targets.map((target) => {
@@ -54,8 +58,7 @@ export function rollupBuildDefault(
       // Define config for build variants
       hooks.target.hook(async ({target, hooks}) => {
         const isDefaultBuild = Object.keys(target.options).length === 0;
-        const isEsnextBuild =
-          options.esnext && target.options.rollupName === 'esnext';
+        const isEsnextBuild = target.options.rollupName === 'esnext';
         if (!(isDefaultBuild || isEsnextBuild)) {
           return;
         }
@@ -135,17 +138,60 @@ export function rollupBuildDefault(
                 });
               }
             } else if (isEsnextBuild) {
-              additionalOutputs.push({
-                format: 'esm',
-                dir: project.fs.buildPath('esnext'),
-                preserveModules: true,
-                entryFileNames: entryFileNamesBuilder('.esnext'),
-              });
+              if (options.esmodules) {
+                additionalOutputs.push({
+                  format: 'esm',
+                  dir: project.fs.buildPath('esnext'),
+                  preserveModules: true,
+                  entryFileNames: entryFileNamesBuilder('.esnext'),
+                });
+              }
             }
 
             return outputs.concat(additionalOutputs);
           });
         });
+
+        // Create entries
+        hooks.steps.hook((steps) => [
+          ...steps,
+          api.createStep(
+            {id: 'Rollup.Entries', label: 'Adding entries for Rollup outputs'},
+            async () => {
+              const entryConfigs = [];
+
+              if (isDefaultBuild) {
+                if (options.commonjs) {
+                  entryConfigs.push({
+                    exportStyle: ExportStyle.CommonJs,
+                    outputPath: project.fs.buildPath('cjs'),
+                    extension: '.js',
+                  });
+                }
+
+                if (options.esmodules) {
+                  entryConfigs.push({
+                    exportStyle: ExportStyle.EsModules,
+                    outputPath: project.fs.buildPath('esm'),
+                    extension: '.mjs',
+                  });
+                }
+              } else if (isEsnextBuild) {
+                if (options.esnext) {
+                  entryConfigs.push({
+                    exportStyle: ExportStyle.EsModules,
+                    outputPath: project.fs.buildPath('esnext'),
+                    extension: '.esnext',
+                  });
+                }
+              }
+
+              for (const entryConfig of entryConfigs) {
+                await writeEntries({project, ...entryConfig});
+              }
+            },
+          ),
+        ]);
       });
     },
   );
