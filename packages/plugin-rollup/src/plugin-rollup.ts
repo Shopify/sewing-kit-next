@@ -54,6 +54,9 @@ export function rollupHooks() {
   });
 }
 
+/**
+ * Run a rollup build step using data from the hooks provided by `rollupHooks`
+ */
 export function rollupBuild() {
   return createProjectBuildPlugin<Package>(
     'SewingKit.Rollup.Core',
@@ -69,9 +72,9 @@ export function rollupBuild() {
         hooks.steps.hook((steps, configuration) => [
           ...steps,
           api.createStep(
-            {id: 'Rollup', label: 'Building the package with Rollup'},
+            {id: 'Rollup.Build', label: 'bundling with rollup'},
             async (stepRunner) => {
-              const [rollupInputOptions, outputs] = await Promise.all([
+              const [inputOptions, outputs] = await Promise.all([
                 Promise.all([
                   configuration.rollupInput!.run([]),
                   configuration.rollupPlugins!.run([]),
@@ -87,13 +90,13 @@ export function rollupBuild() {
               ]);
 
               if (
-                (rollupInputOptions.input ?? []).length === 0 ||
+                (inputOptions.input ?? []).length === 0 ||
                 outputs.length === 0
               ) {
                 return;
               }
 
-              await build(rollupInputOptions, outputs);
+              await build(inputOptions, outputs);
 
               const logOutputs = outputs.map(({dir = ''}) =>
                 project.fs.relativePath(dir),
@@ -118,10 +121,10 @@ async function build(
   inputOptions: InputOptions,
   outputOptionsArray: OutputOptions[],
 ) {
+  // console.log(inputOptions, outputOptionsArray);
+
   // create a bundle
   const bundle = await rollupFn(inputOptions);
-
-  // console.log(inputOptions, outputOptionsArray);
 
   for (const outputOptions of outputOptionsArray) {
     await bundle.write(outputOptions);
