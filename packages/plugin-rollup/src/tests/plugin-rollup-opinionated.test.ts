@@ -207,9 +207,9 @@ export function pkg(greet) {
     ],
     [
       'as an function to configure per target',
-      '(target) => [injecterPlugin({value: target})]',
-      'const MAGIC = "default"',
-      'const MAGIC = "esnext"',
+      '(target) => [injecterPlugin({value: JSON.stringify(target.options)})]',
+      'const MAGIC = "{}"',
+      'const MAGIC = "{\\"rollupEsnext\\":true}"',
     ],
   ])(
     'allows injecting custom rollup plugins %s',
@@ -224,7 +224,7 @@ export function pkg(greet) {
           return {
             name: 'test-injecter',
             transform(code) {
-              return code + 'export const MAGIC = "' + value + '";';
+              return code + 'export const MAGIC = ' + JSON.stringify(value) + ';';
             }
           }
         }

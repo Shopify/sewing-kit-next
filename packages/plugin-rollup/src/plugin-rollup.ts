@@ -7,8 +7,6 @@ import {
 } from '@sewing-kit/plugins';
 import {rollup as rollupFn, InputOptions, OutputOptions} from 'rollup';
 
-import {rollupNameForTargetOptions} from './utilities';
-
 interface RollupHooks {
   readonly rollupInput: WaterfallHook<string[]>;
   readonly rollupPlugins: WaterfallHook<NonNullable<InputOptions['plugins']>>;
@@ -19,10 +17,6 @@ interface RollupHooks {
 
 declare module '@sewing-kit/hooks' {
   interface BuildPackageConfigurationCustomHooks extends RollupHooks {}
-
-  interface BuildPackageTargetOptions {
-    rollupName?: string;
-  }
 }
 
 /**
@@ -62,12 +56,6 @@ export function rollupBuild() {
     'SewingKit.Rollup.Core',
     ({api, hooks, project}) => {
       hooks.target.hook(({target, hooks}) => {
-        const name = rollupNameForTargetOptions(target.options);
-
-        if (!name) {
-          return;
-        }
-
         // Add build steps
         hooks.steps.hook((steps, configuration) => [
           ...steps,

@@ -17,6 +17,12 @@ import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 
+declare module '@sewing-kit/hooks' {
+  interface BuildPackageTargetOptions {
+    rollupEsnext?: boolean;
+  }
+}
+
 const defaultOptions = {
   commonjs: true,
   esmodules: true,
@@ -50,7 +56,7 @@ export function rollupBuildDefault(
       hooks.targets.hook((targets) => {
         return targets.map((target) => {
           return options.esnext && target.default
-            ? target.add({rollupName: 'esnext'})
+            ? target.add({rollupEsnext: true})
             : target;
         });
       });
@@ -58,7 +64,7 @@ export function rollupBuildDefault(
       // Define config for build variants
       hooks.target.hook(async ({target, hooks}) => {
         const isDefaultBuild = Object.keys(target.options).length === 0;
-        const isEsnextBuild = target.options.rollupName === 'esnext';
+        const isEsnextBuild = Boolean(target.options.rollupEsnext);
         if (!(isDefaultBuild || isEsnextBuild)) {
           return;
         }
