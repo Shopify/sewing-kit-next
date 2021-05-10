@@ -111,9 +111,7 @@ async function build(
   // create a bundle
   const bundle = await rollupFn(inputOptions);
 
-  for (const outputOptions of outputOptionsArray) {
-    await bundle.write(outputOptions);
-  }
+  await Promise.all(outputOptionsArray.map((options) => bundle.write(options)));
 
   // closes the bundle
   await bundle.close();
