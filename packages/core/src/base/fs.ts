@@ -1,4 +1,4 @@
-import {resolve, dirname} from 'path';
+import {resolve, relative, dirname} from 'path';
 
 import {
   appendFile,
@@ -64,5 +64,9 @@ export class FileSystem implements FSType {
 
   resolvePath(...paths: string[]) {
     return resolve(this.root, ...paths);
+  }
+
+  relativePath(path: string) {
+    return relative(this.root, path);
   }
 }

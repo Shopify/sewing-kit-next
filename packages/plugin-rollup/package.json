@@ -1,0 +1,38 @@
+{
+  "name": "@sewing-kit/plugin-rollup",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc --p tsconfig.json"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "@sewing-kit:registry": "https://registry.npmjs.org"
+  },
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/sewing-kit-next.git",
+    "directory": "packages/plugin-rollup"
+  },
+  "bugs": {
+    "url": "https://github.com/Shopify/sewing-kit-next/issues"
+  },
+  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/master/packages/plugin-rollup/README.md",
+  "dependencies": {
+    "@sewing-kit/hooks": "0.1.10",
+    "@sewing-kit/plugin-javascript": "^0.3.4",
+    "@sewing-kit/plugins": "^0.1.10",
+    "rollup": "^2.47.0"
+  },
+  "files": [
+    "build/*",
+    "index.js",
+    "index.d.ts",
+    "!tsconfig.tsbuildinfo"
+  ]
+}
