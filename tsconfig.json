@@ -22,6 +22,7 @@
     {"path": "./packages/plugin-package-node"},
     {"path": "./packages/plugin-package-typescript"},
     {"path": "./packages/plugin-react"},
+    {"path": "./packages/plugin-rollup"},
     {"path": "./packages/plugin-sass"},
     {"path": "./packages/plugin-service-base"},
     {"path": "./packages/plugin-stylelint"},

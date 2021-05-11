@@ -3,6 +3,7 @@ import 'core-js/features/array/flat-map';
 
 import {resolve, dirname} from 'path';
 import {Readable, Writable} from 'stream';
+import {StringDecoder} from 'string_decoder';
 
 import {
   mkdirp,
@@ -23,14 +24,21 @@ const commandMap = {
 type CommandMap = typeof commandMap;
 
 class TestOutputStream extends Writable {
-  private buffer = '';
+  private data = '';
+  private decoder = new StringDecoder();
 
-  _write(buffer: Buffer) {
-    this.buffer += buffer.toString();
+  _write(chunk: Buffer, encoding: string, callback: () => void) {
+    this.data += encoding === 'buffer' ? this.decoder.write(chunk) : chunk;
+    callback();
+  }
+
+  _final(callback: () => void) {
+    this.data += this.decoder.end();
+    callback();
   }
 
   toString() {
-    return this.buffer;
+    return this.data;
   }
 }
 
@@ -46,6 +54,14 @@ export class Workspace {
     await commandTask([...args, '--root', this.root], {
       __internal: {stdin, stdout, stderr},
     });
+
+    stdout.end();
+    stderr.end();
+
+    return {
+      stdout: stdout.toString(),
+      stderr: stderr.toString(),
+    };
   }
 
   async writeConfig(contents: string, config = 'sewing-kit.config.js') {
