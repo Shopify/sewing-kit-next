@@ -7,26 +7,17 @@ describe('@sewing-kit/plugin-rollup', () => {
   it('does nothing if no rollupInputOptions / rollupOuputOptions are configured', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-            import {createPackage, Runtime} from '@sewing-kit/config';
-            import {createProjectBuildPlugin} from '@sewing-kit/plugins';
-            import {javascript} from '@sewing-kit/plugin-javascript';
-            import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
-            export default createPackage((pkg) => {
-              pkg.use(
-                javascript(),
-                rollupHooks(),
-                rollupBuild(),
-              );
-            });
-          `);
+        import {createPackage, Runtime} from '@sewing-kit/config';
+        import {createProjectBuildPlugin} from '@sewing-kit/plugins';
+        import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
+        export default createPackage((pkg) => {
+          pkg.use(rollupHooks(), rollupBuild());
+        });
+      `);
 
       await workspace.writeFile(
         'src/index.js',
-        `
-    export function pkg(greet) {
-      console.log(\`Hello, \${greet}!\`);
-    }
-            `,
+        `export function pkg(greet) { console.log(\`Hello, \${greet}!\`);}`,
       );
 
       await workspace.run('build');
@@ -40,15 +31,9 @@ describe('@sewing-kit/plugin-rollup', () => {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {createProjectBuildPlugin} from '@sewing-kit/plugins';
-        import {javascript} from '@sewing-kit/plugin-javascript';
         import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
         export default createPackage((pkg) => {
-          pkg.use(
-            javascript(),
-            rollupHooks(),
-            rollupBuild(),
-            rollupConfig(),
-          );
+          pkg.use(rollupHooks(), rollupBuild(), rollupConfig());
         });
         function rollupConfig() {
           return createProjectBuildPlugin('Test', ({hooks, project}) => {
@@ -71,8 +56,7 @@ describe('@sewing-kit/plugin-rollup', () => {
         `
 export function pkg(greet) {
   console.log(\`Hello, \${greet}!\`);
-}
-        `,
+}`,
       );
 
       await workspace.run('build');
@@ -94,15 +78,9 @@ function pkg(greet) {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {createProjectBuildPlugin} from '@sewing-kit/plugins';
-        import {javascript} from '@sewing-kit/plugin-javascript';
         import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
         export default createPackage((pkg) => {
-          pkg.use(
-            javascript(),
-            rollupHooks(),
-            rollupBuild(),
-            rollupConfig(),
-          );
+          pkg.use(rollupHooks(), rollupBuild(), rollupConfig());
         });
         function rollupConfig() {
           return createProjectBuildPlugin('Test', ({hooks, project}) => {
@@ -137,12 +115,12 @@ function pkg(greet) {
       await workspace.writeFile(
         'src/index.js',
         `
-        import {x} from "./x.js";
-        import {y} from "./y.js";
+import {x} from "./x.js";
+import {y} from "./y.js";
 export function pkg(greet) {
   console.log(\`Hello, \${greet}! \${x} \${y}\`);
 }
-        `,
+`,
       );
 
       await workspace.writeFile('src/x.js', `export const x = 1;`);

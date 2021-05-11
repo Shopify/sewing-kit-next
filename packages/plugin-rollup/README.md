@@ -20,11 +20,10 @@ Add both plugins to your project, along with hook configuration of the hooks. Th
 ```
 import {createPackage, Runtime} from '@sewing-kit/config';
 import {createProjectBuildPlugin} from '@sewing-kit/plugins';
-import {javascript} from '@sewing-kit/plugin-javascript';
 import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
 
 export default createPackage((pkg) => {
-  pkg.use(javascript(), rollupHooks(), rollupBuild(), rollupConfig());
+  pkg.use(rollupHooks(), rollupBuild(), rollupConfig());
 });
 
 function rollupConfig() {
