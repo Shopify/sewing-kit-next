@@ -1,4 +1,4 @@
-import {resolve, dirname, relative} from 'path';
+import {resolve, relative, dirname} from 'path';
 
 import {
   appendFile,

@@ -1,11 +1,10 @@
 import {
   createProjectBuildPlugin,
-  Package,
   addHooks,
   WaterfallHook,
   LogLevel,
 } from '@sewing-kit/plugins';
-import {rollup as rollupFn, InputOptions, OutputOptions} from 'rollup';
+import type {rollup as rollupFnType, InputOptions, OutputOptions} from 'rollup';
 
 interface RollupHooks {
   readonly rollupInput: WaterfallHook<string[]>;
@@ -16,7 +15,7 @@ interface RollupHooks {
 }
 
 declare module '@sewing-kit/hooks' {
-  interface BuildPackageConfigurationCustomHooks extends RollupHooks {}
+  interface BuildProjectConfigurationCustomHooks extends RollupHooks {}
 }
 
 /**
@@ -35,7 +34,7 @@ declare module '@sewing-kit/hooks' {
  * documented at https://rollupjs.org/guide/en/#outputoptions-object.
  */
 export function rollupHooks() {
-  return createProjectBuildPlugin<Package>('SewingKit.Rollup', ({hooks}) => {
+  return createProjectBuildPlugin('SewingKit.Rollup', ({hooks}) => {
     hooks.configureHooks.hook(
       addHooks<RollupHooks>(() => ({
         rollupInput: new WaterfallHook(),
@@ -52,8 +51,8 @@ export function rollupHooks() {
  * Run a rollup build step using data from the hooks provided by `rollupHooks`
  */
 export function rollupBuild() {
-  return createProjectBuildPlugin<Package>(
-    'SewingKit.Rollup.Core',
+  return createProjectBuildPlugin(
+    'SewingKit.Rollup.Build',
     ({api, hooks, project}) => {
       hooks.target.hook(({target, hooks}) => {
         // Add build steps
@@ -84,7 +83,8 @@ export function rollupBuild() {
                 return;
               }
 
-              await build(inputOptions, outputs);
+              const rollupFn = (await import('rollup')).rollup;
+              await build(rollupFn, inputOptions, outputs);
 
               const logOutputs = outputs.map(({dir = ''}) =>
                 project.fs.relativePath(dir),
@@ -106,17 +106,14 @@ export function rollupBuild() {
 }
 
 async function build(
+  rollup: typeof rollupFnType,
   inputOptions: InputOptions,
   outputOptionsArray: OutputOptions[],
 ) {
-  // console.log(inputOptions, outputOptionsArray);
-
   // create a bundle
-  const bundle = await rollupFn(inputOptions);
+  const bundle = await rollup(inputOptions);
 
-  for (const outputOptions of outputOptionsArray) {
-    await bundle.write(outputOptions);
-  }
+  await Promise.all(outputOptionsArray.map((options) => bundle.write(options)));
 
   // closes the bundle
   await bundle.close();

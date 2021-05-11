@@ -7,27 +7,17 @@ describe('@sewing-kit/plugin-rollup', () => {
   it('does nothing if no rollupInputOptions / rollupOuputOptions are configured', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-            import {createPackage, Runtime} from '@sewing-kit/config';
-            import {createProjectBuildPlugin} from '@sewing-kit/plugins';
-            import {javascript} from '@sewing-kit/plugin-javascript';
-            import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
-
-            export default createPackage((pkg) => {
-              pkg.use(
-                javascript(),
-                rollupHooks(),
-                rollupBuild(),
-              );
-            });
-          `);
+        import {createPackage, Runtime} from '@sewing-kit/config';
+        import {createProjectBuildPlugin} from '@sewing-kit/plugins';
+        import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
+        export default createPackage((pkg) => {
+          pkg.use(rollupHooks(), rollupBuild());
+        });
+      `);
 
       await workspace.writeFile(
         'src/index.js',
-        `
-    export function pkg(greet) {
-      console.log(\`Hello, \${greet}!\`);
-    }
-            `,
+        `export function pkg(greet) { console.log(\`Hello, \${greet}!\`);}`,
       );
 
       await workspace.run('build');
@@ -41,18 +31,10 @@ describe('@sewing-kit/plugin-rollup', () => {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {createProjectBuildPlugin} from '@sewing-kit/plugins';
-        import {javascript} from '@sewing-kit/plugin-javascript';
         import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
-
         export default createPackage((pkg) => {
-          pkg.use(
-            javascript(),
-            rollupHooks(),
-            rollupBuild(),
-            rollupConfig(),
-          );
+          pkg.use(rollupHooks(), rollupBuild(), rollupConfig());
         });
-
         function rollupConfig() {
           return createProjectBuildPlugin('Test', ({hooks, project}) => {
             hooks.target.hook(({hooks}) => {
@@ -60,7 +42,6 @@ describe('@sewing-kit/plugin-rollup', () => {
                 configuration.rollupInputOptions?.hook(() => {
                   return {input: project.fs.resolvePath('./src/index.js')};
                 });
-
                 configuration.rollupOutputs?.hook(() => {
                   return [{format: 'esm', dir: project.fs.buildPath('esm')}];
                 });
@@ -75,8 +56,7 @@ describe('@sewing-kit/plugin-rollup', () => {
         `
 export function pkg(greet) {
   console.log(\`Hello, \${greet}!\`);
-}
-        `,
+}`,
       );
 
       await workspace.run('build');
@@ -98,18 +78,10 @@ function pkg(greet) {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {createProjectBuildPlugin} from '@sewing-kit/plugins';
-        import {javascript} from '@sewing-kit/plugin-javascript';
         import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
-
         export default createPackage((pkg) => {
-          pkg.use(
-            javascript(),
-            rollupHooks(),
-            rollupBuild(),
-            rollupConfig(),
-          );
+          pkg.use(rollupHooks(), rollupBuild(), rollupConfig());
         });
-
         function rollupConfig() {
           return createProjectBuildPlugin('Test', ({hooks, project}) => {
             hooks.target.hook(({hooks}) => {
@@ -117,15 +89,12 @@ function pkg(greet) {
                 configuration.rollupInput?.hook(() => {
                   return [project.fs.resolvePath('./src/index.js')];
                 });
-
                 configuration.rollupExternal?.hook(() => {
                   return [/y.js$/];
                 });
-
                 configuration.rollupPlugins?.hook(() => {
                   return [injecterPlugin()];
                 });
-
                 configuration.rollupOutputs?.hook(() => {
                   return [{format: 'esm', dir: project.fs.buildPath('esm')}];
                 });
@@ -133,7 +102,6 @@ function pkg(greet) {
             });
           });
         }
-
         function injecterPlugin() {
           return {
             name: 'test-injecter',
@@ -147,12 +115,12 @@ function pkg(greet) {
       await workspace.writeFile(
         'src/index.js',
         `
-        import {x} from "./x.js";
-        import {y} from "./y.js";
+import {x} from "./x.js";
+import {y} from "./y.js";
 export function pkg(greet) {
   console.log(\`Hello, \${greet}! \${x} \${y}\`);
 }
-        `,
+`,
       );
 
       await workspace.writeFile('src/x.js', `export const x = 1;`);
@@ -171,9 +139,10 @@ function pkg(greet) {
       expect(esmBuildContent).toContain(`export { pkg }`);
 
       // The contents of x.js is inlined.
-      // the contents of y.js is not inlined because it is in the externals list
       expect(esmBuildContent).not.toContain("import { x } from './x.js';");
       expect(esmBuildContent).toContain('const x = 1;');
+
+      // the contents of y.js is not inlined because it is in the externals list
       expect(esmBuildContent).toContain("import { y } from './y.js';");
       expect(esmBuildContent).not.toContain('const y = 2;');
 

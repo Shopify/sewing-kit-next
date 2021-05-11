@@ -9,7 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-Add `relativePath` to FileSystem
+Add `relativePath` to FileSystem [[#160](https://github.com/Shopify/sewing-kit-next/pull/160)]
 
 ## [0.3.0] - 2021-04-14
 
