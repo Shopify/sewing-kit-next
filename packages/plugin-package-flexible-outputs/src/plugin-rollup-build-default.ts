@@ -11,7 +11,7 @@ import {
   ExportStyle,
 } from '@sewing-kit/plugin-javascript';
 
-import {Plugin as RollupPlugin, PreRenderedChunk} from 'rollup';
+import type {Plugin as RollupPlugin, PreRenderedChunk} from 'rollup';
 
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
@@ -56,7 +56,7 @@ export function rollupBuildDefault(
       hooks.targets.hook((targets) => {
         return targets.map((target) => {
           return options.esnext && target.default
-            ? target.add({rollupEsnext: true})
+            ? target.add({rollupEsnext: true} as any)
             : target;
         });
       });

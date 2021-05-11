@@ -3,8 +3,15 @@ import {
   addHooks,
   WaterfallHook,
   LogLevel,
+  Target,
+  Project,
 } from '@sewing-kit/plugins';
-import type {rollup as rollupFnType, InputOptions, OutputOptions} from 'rollup';
+import type {
+  rollup as rollupFnType,
+  Plugin as RollupPlugin,
+  InputOptions,
+  OutputOptions,
+} from 'rollup';
 
 interface RollupHooks {
   readonly rollupInput: WaterfallHook<string[]>;
@@ -100,6 +107,37 @@ export function rollupBuild() {
             },
           ),
         ]);
+      });
+    },
+  );
+}
+
+/**
+ * Sewing-kit plugin for adding additional Rollup plugins to the build.
+ *
+ * Accepts either:
+ * - An array of Rollup plugins to be added
+ * - A function that accepts a Target object and returns an array of Rollup
+ *   plugins to be added
+ */
+export function rollupCustomPlugins(
+  plugins: ((target: Target<Project, {}>) => RollupPlugin[]) | RollupPlugin[],
+) {
+  return createProjectBuildPlugin(
+    'SewingKit.Rollup.CustomPlugins',
+    ({hooks}) => {
+      hooks.target.hook(({hooks, target}) => {
+        hooks.configure.hook((configuration) => {
+          configuration.rollupPlugins?.hook((rollupPlugins) => {
+            // plugins may be either an array of plugins or a builder function
+            // that returns the plugins for a given target
+            const pluginsArray = Array.isArray(plugins)
+              ? plugins
+              : plugins(target);
+
+            return rollupPlugins.concat(pluginsArray);
+          });
+        });
       });
     },
   );

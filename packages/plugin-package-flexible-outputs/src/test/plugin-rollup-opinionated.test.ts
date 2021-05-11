@@ -3,13 +3,13 @@ import {
   generateUniqueWorkspaceID,
 } from '../../../../tests/utilities';
 
-describe('@sewing-kit/plugin-rollup', () => {
+describe('@sewing-kit/plugin-package-flexible-outputs', () => {
   it('builds commmonjs, esmodules and esnext outputs by default', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {rollupOpinionated} from '@sewing-kit/plugin-rollup';
+        import {rollupOpinionated} from '@sewing-kit/plugin-package-flexible-outputs';
 
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
@@ -32,7 +32,7 @@ export function pkg(greet) {
         `,
       );
 
-      await workspace.run('build');
+      const result = await workspace.run('build');
 
       const expectedFunctionOutput = `
 function pkg(greet) {
@@ -72,7 +72,7 @@ function pkg(greet) {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {rollupOpinionated} from '@sewing-kit/plugin-rollup';
+        import {rollupOpinionated} from '@sewing-kit/plugin-package-flexible-outputs';
 
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
@@ -116,7 +116,7 @@ export function pkg(greet) {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {rollupOpinionated} from '@sewing-kit/plugin-rollup';
+        import {rollupOpinionated} from '@sewing-kit/plugin-package-flexible-outputs';
 
         export default createPackage((pkg) => {
           pkg.entry({root: './src/index'});
@@ -164,7 +164,7 @@ export function pkg(greet) {
         await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {rollupOpinionated} from '@sewing-kit/plugin-rollup';
+        import {rollupOpinionated} from '@sewing-kit/plugin-package-flexible-outputs';
 
         export default createPackage((pkg) => {
           pkg.runtimes(${runtimes});
@@ -218,7 +218,7 @@ export function pkg(greet) {
         await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {rollupOpinionated} from '@sewing-kit/plugin-rollup';
+        import {rollupOpinionated} from '@sewing-kit/plugin-package-flexible-outputs';
 
         function injecterPlugin({value}) {
           return {

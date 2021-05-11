@@ -5,7 +5,9 @@ import {
   createComposedProjectPlugin,
 } from '@sewing-kit/plugins';
 
-import {rollupOpinionated} from '@sewing-kit/plugin-rollup';
+import {rollupOpinionated} from './plugin-rollup-opinionated';
+
+export {rollupOpinionated};
 
 const PLUGIN = 'SewingKit.PackageFlexibleOutputs';
 
