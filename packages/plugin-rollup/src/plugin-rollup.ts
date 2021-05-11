@@ -4,7 +4,7 @@ import {
   WaterfallHook,
   LogLevel,
 } from '@sewing-kit/plugins';
-import {rollup as rollupFn, InputOptions, OutputOptions} from 'rollup';
+import type {rollup as rollupFnType, InputOptions, OutputOptions} from 'rollup';
 
 interface RollupHooks {
   readonly rollupInput: WaterfallHook<string[]>;
@@ -83,7 +83,8 @@ export function rollupBuild() {
                 return;
               }
 
-              await build(inputOptions, outputs);
+              const rollupFn = (await import('rollup')).rollup;
+              await build(rollupFn, inputOptions, outputs);
 
               const logOutputs = outputs.map(({dir = ''}) =>
                 project.fs.relativePath(dir),
@@ -105,11 +106,12 @@ export function rollupBuild() {
 }
 
 async function build(
+  rollup: typeof rollupFnType,
   inputOptions: InputOptions,
   outputOptionsArray: OutputOptions[],
 ) {
   // create a bundle
-  const bundle = await rollupFn(inputOptions);
+  const bundle = await rollup(inputOptions);
 
   await Promise.all(outputOptionsArray.map((options) => bundle.write(options)));
 
