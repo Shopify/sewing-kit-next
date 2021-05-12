@@ -70,9 +70,9 @@ export default createPackage((pkg) => {
     rollupConfig(),
     // Adds the injecterPlugin to all targets with the same config
     rollupPlugins([injecterPlugin('all')]),
-    // Only adds the injecterPlugin when compiling the default target
+    // Only adds the injecterPlugin when compiling the target with the specialBuild option set
     rollupPlugins((target) => {
-      return target.default ? [injecterPlugin('only default')] : [];
+      return target.options.specialBuild ? [injecterPlugin('only specialBuild')] : [];
     }),
   );
 
