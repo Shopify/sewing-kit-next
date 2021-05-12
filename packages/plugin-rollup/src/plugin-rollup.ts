@@ -113,14 +113,14 @@ export function rollupBuild() {
 }
 
 /**
- * Sewing-kit plugin for adding additional Rollup plugins to the build.
+ * Utility plugin for cleanly adding additional Rollup plugins to the build.
  *
  * Accepts either:
  * - An array of Rollup plugins to be added
  * - A function that accepts a Target object and returns an array of Rollup
  *   plugins to be added
  */
-export function rollupCustomPlugins(
+export function rollupPlugins(
   plugins: ((target: Target<Project, {}>) => RollupPlugin[]) | RollupPlugin[],
 ) {
   return createProjectBuildPlugin(
