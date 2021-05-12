@@ -7,6 +7,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Added `await` when calling writeTypeScriptEntries
+
 ## [0.1.28] - 2021-04-21
 
 - No updates. Transitive dependency bump.

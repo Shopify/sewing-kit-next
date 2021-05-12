@@ -8,11 +8,12 @@ import {
 const PLUGIN = 'SewingKit.PackageFlexibleOutputs';
 
 export interface Options {
+  readonly browserTargets: string;
+  readonly nodeTargets: string;
   readonly binaries?: boolean;
   readonly commonjs?: boolean;
   readonly esmodules?: boolean;
   readonly esnext?: boolean;
-  readonly node?: boolean;
   readonly typescript?:
     | boolean
     | Parameters<
@@ -23,40 +24,35 @@ export interface Options {
 const emptyPromise = Promise.resolve(undefined);
 
 export function buildFlexibleOutputs({
+  browserTargets,
+  nodeTargets,
   binaries = true,
   commonjs = true,
   esmodules = true,
   esnext = true,
-  node = true,
   typescript = true,
-}: Options = {}) {
+}: Options) {
   return createComposedProjectPlugin<Package>(PLUGIN, async (composer) => {
     const composed = await Promise.all([
+      import('@sewing-kit/plugin-rollup').then((mod) => mod.rollupHooks()),
+      import('@sewing-kit/plugin-rollup').then((mod) => mod.rollupBuild()),
+
+      import('./plugin-rollup-config').then(({rollupConfig}) =>
+        rollupConfig({
+          browserTargets,
+          nodeTargets,
+          commonjs,
+          esmodules,
+          esnext,
+        }),
+      ),
+
       binaries
         ? import(
             '@sewing-kit/plugin-package-binaries'
           ).then(({buildBinaries}) => buildBinaries())
         : emptyPromise,
-      commonjs
-        ? import(
-            '@sewing-kit/plugin-package-commonjs'
-          ).then(({buildCommonJsOutput}) => buildCommonJsOutput())
-        : emptyPromise,
-      esmodules
-        ? import(
-            '@sewing-kit/plugin-package-esmodules'
-          ).then(({buildEsModulesOutput}) => buildEsModulesOutput())
-        : emptyPromise,
-      esnext
-        ? import(
-            '@sewing-kit/plugin-package-esnext'
-          ).then(({buildEsNextOutput}) => buildEsNextOutput())
-        : emptyPromise,
-      node
-        ? import('@sewing-kit/plugin-package-node').then(({buildNodeOutput}) =>
-            buildNodeOutput(),
-          )
-        : emptyPromise,
+
       typescript
         ? import(
             '@sewing-kit/plugin-package-typescript'

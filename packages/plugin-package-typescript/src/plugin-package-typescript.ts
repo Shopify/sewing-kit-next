@@ -44,7 +44,7 @@ export function buildTypeScriptDefinitions({
               ),
             );
           } else {
-            writeTypeScriptEntries(project, {
+            await writeTypeScriptEntries(project, {
               strategy: EntryStrategy.ReExport,
             });
           }

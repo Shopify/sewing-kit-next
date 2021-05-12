@@ -7,6 +7,19 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Breaking Changes
+
+This plugin now uses `plugin-rollup` for building JS. Build targets are no longer inferred from a browserslist configuration. You will need to add two new required parameters - `nodeTargets` and `browserTargets` when you call `buildFlexibleOutputs` to specify build targets. All other options remain the same. For `browserTargets` in Shopify projects we recommend extending from [`@shopify/browserslist-config`](https://github.com/Shopify/web-configs/tree/main/packages/browserslist-config).
+
+```diff
+buildFlexibleOutputs({
++  browserTargets: 'defaults',
++  nodeTargets: 'node 12',
+}),
+```
+
+The `node` option has been removed, as is not sufficiently different from the `commonjs` target, and its differences were not worth the overhead of managing an additional build.
+
 ## [0.1.28] - 2021-04-21
 
 - No updates. Transitive dependency bump.
