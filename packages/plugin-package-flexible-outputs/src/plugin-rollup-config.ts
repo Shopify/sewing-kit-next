@@ -209,6 +209,9 @@ export function rollupConfig(options: RollupConfigOptions) {
 /**
  * Foo.ts is compilied to Foo.js, while Foo.scss is compiled to Foo.scss.js
  * Optionally changing the .js for .mjs / .esnext
+ *
+ * Can be replaced with returning the string `[name][assetExtname]${ext}`
+ * if https://github.com/rollup/rollup/pull/4077 is merged & released
  */
 function entryFileNamesBuilder(ext = '.js') {
   const NonAssetExtensions = ['.js', '.jsx', '.ts', '.tsx'];
