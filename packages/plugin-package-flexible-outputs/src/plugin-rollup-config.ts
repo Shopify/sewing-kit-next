@@ -29,7 +29,7 @@ const defaultOptions = {
   esnext: true,
 };
 
-export interface RollupBuildDefaultPluginOptions {
+export interface RollupConfigOptions {
   browserTargets: string;
   nodeTargets: string;
   commonjs?: boolean;
@@ -37,20 +37,16 @@ export interface RollupBuildDefaultPluginOptions {
   esnext?: boolean;
 }
 
-type ResolvedRollupCorePluginOptions = Required<
-  RollupBuildDefaultPluginOptions
->;
+type ResolvedRollupCorePluginOptions = Required<RollupConfigOptions>;
 
-export function rollupBuildDefault(
-  baseOptions: RollupBuildDefaultPluginOptions,
-) {
+export function rollupConfig(baseOptions: RollupConfigOptions) {
   const options: ResolvedRollupCorePluginOptions = {
     ...defaultOptions,
     ...baseOptions,
   };
 
   return createProjectBuildPlugin<Package>(
-    'SewingKit.Rollup.DefaultBuild',
+    'SewingKit.PackageFlexibleOutputs.RollupConfig',
     ({api, hooks, project}) => {
       // Define additional build variant to build esnext output
       hooks.targets.hook((targets) => {

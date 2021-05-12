@@ -1,16 +1,9 @@
 import {createComposedProjectPlugin} from '@sewing-kit/plugins';
 
-import {
-  rollupHooks,
-  rollupBuild,
-  rollupCustomPlugins,
-} from '@sewing-kit/plugin-rollup';
-import {
-  rollupBuildDefault,
-  RollupBuildDefaultPluginOptions,
-} from './plugin-rollup-build-default';
+import {rollupCustomPlugins} from '@sewing-kit/plugin-rollup';
+import {buildFlexibleOutputs, Options} from './index';
 
-interface RollupPluginOptions extends RollupBuildDefaultPluginOptions {
+interface RollupPluginOptions extends Options {
   css?: boolean;
   plugins?: Parameters<typeof rollupCustomPlugins>[0];
 }
@@ -21,9 +14,7 @@ export function rollupOpinionated({
   ...rest
 }: RollupPluginOptions) {
   return createComposedProjectPlugin('SewingKit.Rollup.OpinionatedSetup', [
-    rollupHooks(),
-    rollupBuild(),
-    rollupBuildDefault(rest),
+    buildFlexibleOutputs(rest),
     css && rollupCss(),
     plugins && rollupCustomPlugins(plugins),
   ]);
