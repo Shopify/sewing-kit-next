@@ -17,7 +17,7 @@ The low-level functionality of this package is split into two parts.
 
 Add both plugins to your project, along with configuration of the hooks. This example configures the `rollupInputOptions` and `rollupOutputs` hooks.
 
-```
+```js
 import {createPackage, Runtime} from '@sewing-kit/config';
 import {createProjectBuildPlugin} from '@sewing-kit/plugins';
 import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
@@ -49,3 +49,56 @@ The `rollupInput`, `rollupPlugins` and `rollupExternals` hooks map to `input`, `
 The `rollupInputOptions` hook defines a whole `InputOptions` object, it includes any values set in `rollupInput`, `rollupPlugins` and `rollupExternals`, this can be used if you need to control any advanced input configuration options.
 
 The `rollupOutputs` hook is an array of Rollup's `OutputOptions` objects as documented at https://rollupjs.org/guide/en/#outputoptions-object.
+
+### `rollupPlugins` Helper
+
+This package exports a `rollupPlugins` sewing-kit plugin that provides a shorthand to add items to the `rollupPlugins` hook. Give this plugin either an array of rollup plugins, or a function that takes a sewing-kit `Target` and returns an array of rollup plugins. This allows you to control what plugins are added based upon the `Target`.
+
+```js
+import {createPackage, Runtime} from '@sewing-kit/config';
+import {createProjectBuildPlugin} from '@sewing-kit/plugins';
+import {
+  rollupHooks,
+  rollupBuild,
+  rollupPlugins,
+} from '@sewing-kit/plugin-rollup';
+
+export default createPackage((pkg) => {
+  pkg.use(
+    rollupHooks(),
+    rollupBuild(),
+    rollupConfig(),
+    // Adds the injecterPlugin to all targets with the same config
+    rollupPlugins([injecterPlugin('all')]),
+    // Only adds the injecterPlugin when compiling the default target
+    rollupPlugins((target) => {
+      return target.default ? [injecterPlugin('only default')] : [];
+    }),
+  );
+
+  // A sample Rollup plugin that shall append some content to each file
+  function injecterPlugin(string) {
+    return {
+      name: `test-injecter`,
+      transform(code) {
+        return code + '/*Injected content ~' + string + '~ */';
+      },
+    };
+  }
+});
+
+function rollupConfig() {
+  return createProjectBuildPlugin('Test', ({hooks, project}) => {
+    hooks.target.hook(({hooks}) => {
+      hooks.configure.hook((configuration) => {
+        configuration.rollupInputOptions?.hook(() => {
+          return {input: project.fs.resolvePath('./src/index.js')};
+        });
+        configuration.rollupOutputs?.hook(() => {
+          return [{format: 'esm', dir: project.fs.buildPath('esm')}];
+        });
+      });
+    });
+  });
+}
+```
