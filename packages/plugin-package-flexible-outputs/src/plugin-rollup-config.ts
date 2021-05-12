@@ -5,13 +5,9 @@ import {
   DiagnosticError,
 } from '@sewing-kit/plugins';
 
-import {
-  BabelConfig,
-  writeEntries,
-  ExportStyle,
-} from '@sewing-kit/plugin-javascript';
+import {writeEntries, ExportStyle} from '@sewing-kit/plugin-javascript';
 
-import type {Plugin as RollupPlugin, PreRenderedChunk} from 'rollup';
+import type {PreRenderedChunk} from 'rollup';
 
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
@@ -23,34 +19,25 @@ declare module '@sewing-kit/hooks' {
   }
 }
 
-const defaultOptions = {
-  commonjs: true,
-  esmodules: true,
-  esnext: true,
-};
-
-export interface RollupConfigOptions {
+interface RollupConfigOptions {
   browserTargets: string;
   nodeTargets: string;
-  commonjs?: boolean;
-  esmodules?: boolean;
-  esnext?: boolean;
+  commonjs: boolean;
+  esmodules: boolean;
+  esnext: boolean;
 }
 
-type ResolvedRollupCorePluginOptions = Required<RollupConfigOptions>;
-
-export function rollupConfig(baseOptions: RollupConfigOptions) {
-  const options: ResolvedRollupCorePluginOptions = {
-    ...defaultOptions,
-    ...baseOptions,
-  };
-
+export function rollupConfig(options: RollupConfigOptions) {
   return createProjectBuildPlugin<Package>(
     'SewingKit.PackageFlexibleOutputs.RollupConfig',
     ({api, hooks, project}) => {
       // Define additional build variant to build esnext output
       hooks.targets.hook((targets) => {
         return targets.map((target) => {
+          // `as any` cast because plugin-package-{esnext,esmodules} etc add an
+          // extra key to BuildPackageTargetOptions but do not set it as
+          // optional, even though it is. `as any` can be removed once we remove
+          // the BuildPackageTargetOptions augment from plugin-package-*
           return options.esnext && target.default
             ? target.add({rollupEsnext: true} as any)
             : target;
@@ -113,9 +100,27 @@ export function rollupConfig(baseOptions: RollupConfigOptions) {
               });
             }
 
-            return plugins.concat(
-              inputPluginsFactory({babelConfig, targets: babelTargets}),
-            );
+            return plugins.concat([
+              nodeResolve({
+                extensions: ['.js', '.jsx', '.ts', '.tsx'],
+                // Only resolve files paths starting with a .
+                // This treats every other path - i.e. modules like
+                // `@shopify/address` or node built-ins like `path` as
+                // externals that should not be bundled.
+                resolveOnly: [/^\./],
+              }),
+              commonjs(),
+              babel({
+                extensions: ['.js', '.jsx', '.ts', '.tsx'],
+                envName: 'production',
+                exclude: 'node_modules/**',
+                babelHelpers: 'bundled',
+                configFile: false,
+                // @ts-expect-error targets is a valid babel option but @types/babel__core doesn't know that yet
+                targets: babelTargets,
+                ...babelConfig,
+              }),
+            ]);
           });
 
           configuration.rollupOutputs?.hook((outputs) => {
@@ -201,41 +206,11 @@ export function rollupConfig(baseOptions: RollupConfigOptions) {
   );
 }
 
-function inputPluginsFactory({
-  targets,
-  babelConfig,
-}: {
-  targets: string[];
-  babelConfig: BabelConfig;
-}): RollupPlugin[] {
-  return [
-    nodeResolve({
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      // Only resolve files paths starting with a .
-      // This treats every other path - i.e. modules like
-      // `@shopify/address` or node built-ins like `path` as
-      // externals that should not be bundled.
-      resolveOnly: [/^\./],
-    }),
-    commonjs(),
-    babel({
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      envName: 'production',
-      exclude: 'node_modules/**',
-      babelHelpers: 'bundled',
-      configFile: false,
-      // @ts-expect-error targets is a valid babel option but @types/babel__core doesn't know that yet
-      targets,
-      ...babelConfig,
-    }),
-  ];
-}
-
 /**
  * Foo.ts is compilied to Foo.js, while Foo.scss is compiled to Foo.scss.js
  * Optionally changing the .js for .mjs / .esnext
  */
-export function entryFileNamesBuilder(ext = '.js') {
+function entryFileNamesBuilder(ext = '.js') {
   const NonAssetExtensions = ['.js', '.jsx', '.ts', '.tsx'];
   return (chunkInfo: PreRenderedChunk) => {
     const isAssetfile = !NonAssetExtensions.some((nonAssetExt) =>
