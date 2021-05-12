@@ -26,7 +26,7 @@ describe('@sewing-kit/plugin-rollup', () => {
     });
   });
 
-  it('can configure input options through the rollupInputOptions  hook', async () => {
+  it('can configure input options through the rollupInputOptions hook', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
@@ -73,7 +73,7 @@ function pkg(greet) {
     });
   });
 
-  it('can configure input options through the rollupInput and rollupPlugins hooks', async () => {
+  it('can configure input options through the rollupInput, rollupExternal and rollupPlugins hooks', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
@@ -148,6 +148,59 @@ function pkg(greet) {
 
       // Content injected by a rollup plugin to prove rollup plugins are configured
       expect(esmBuildContent).toContain('/*Content injected from plugin */');
+    });
+  });
+
+  it('can configure rollup plugins using the rollupPlugins helper plugin', async () => {
+    await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+      await workspace.writeConfig(`
+        import {createPackage, Runtime} from '@sewing-kit/config';
+        import {createProjectBuildPlugin} from '@sewing-kit/plugins';
+        import {rollupHooks, rollupBuild, rollupPlugins} from '@sewing-kit/plugin-rollup';
+        export default createPackage((pkg) => {
+          pkg.use(
+            rollupHooks(),
+            rollupBuild(),
+            rollupConfig(),
+            rollupPlugins([injecterPlugin('all')]),
+            rollupPlugins((target) => [injecterPlugin(JSON.stringify(target.options))]),
+          );
+        });
+        function rollupConfig() {
+          return createProjectBuildPlugin('Test', ({hooks, project}) => {
+            hooks.target.hook(({hooks}) => {
+              hooks.configure.hook((configuration) => {
+                configuration.rollupInput?.hook(() => {
+                  return [project.fs.resolvePath('./src/index.js')];
+                });
+                configuration.rollupOutputs?.hook(() => {
+                  return [{format: 'esm', dir: project.fs.buildPath('esm')}];
+                });
+              });
+            });
+          });
+        }
+        function injecterPlugin(string) {
+          return {
+            name: 'test-injecter',
+            transform(code) {
+              return code + '/*Injected content ~' + string + '~ */';
+            }
+          }
+        }
+      `);
+
+      await workspace.writeFile('src/index.js', `export function pkg() {}`);
+
+      await workspace.run('build');
+
+      const esmBuildContent = await workspace.contents('build/esm/index.js');
+
+      // Content injected from the first call to rollupPlugins
+      expect(esmBuildContent).toContain('/*Injected content ~all~ */');
+
+      // Content injected from the second call to rollupPlugins
+      expect(esmBuildContent).toContain('/*Injected content ~{}~ */');
     });
   });
 });

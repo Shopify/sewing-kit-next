@@ -1,1 +1,1 @@
-export {rollupHooks, rollupBuild} from './plugin-rollup';
+export {rollupHooks, rollupBuild, rollupPlugins} from './plugin-rollup';
