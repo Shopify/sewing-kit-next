@@ -13,7 +13,7 @@ export const createSewingKitPackagePlugin = ({typesAtRoot = false} = {}) =>
     typescript(),
     buildFlexibleOutputs({
       browserTargets: 'defaults',
-      nodeTargets: 'node 10',
+      nodeTargets: 'node 10.14',
       esmodules: false,
       esnext: false,
       commonjs: true,

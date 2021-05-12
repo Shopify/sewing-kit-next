@@ -18,7 +18,7 @@ buildFlexibleOutputs({
 }),
 ```
 
-The `node` option has been removed, as is not sufficiently different from the `commonjs` target, and its differences were not worth the overhead of managing an additional build.
+The `node` option has been removed, as it is not sufficiently different from the `commonjs` target, and its differences were not worth the overhead of managing an additional build.
 
 ## [0.1.28] - 2021-04-21
 
