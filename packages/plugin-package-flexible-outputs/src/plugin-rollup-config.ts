@@ -34,12 +34,8 @@ export function rollupConfig(options: RollupConfigOptions) {
       // Define additional build variant to build esnext output
       hooks.targets.hook((targets) => {
         return targets.map((target) => {
-          // `as any` cast because plugin-package-{esnext,esmodules} etc add an
-          // extra key to BuildPackageTargetOptions but do not set it as
-          // optional, even though it is. `as any` can be removed once we remove
-          // the BuildPackageTargetOptions augment from plugin-package-*
           return options.esnext && target.default
-            ? target.add({rollupEsnext: true} as any)
+            ? target.add({rollupEsnext: true})
             : target;
         });
       });
