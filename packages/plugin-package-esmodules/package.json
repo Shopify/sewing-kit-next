@@ -9,18 +9,5 @@
   },
   "scripts": {
     "build": "tsc --p tsconfig.json"
-  },
-  "dependencies": {
-    "@sewing-kit/hooks": "^0.1.10",
-    "@sewing-kit/plugin-javascript": "^0.3.4",
-    "@sewing-kit/plugins": "^0.1.10"
-  },
-  "peerDependencies": {
-    "@sewing-kit/plugin-webpack": "^0.1.12"
-  },
-  "peerDependenciesMeta": {
-    "@sewing-kit/plugin-webpack": {
-      "optional": true
-    }
   }
 }

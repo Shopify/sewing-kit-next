@@ -1,34 +1,17 @@
 import {
   Project,
-  Package,
   createProjectPlugin,
-  createProjectBuildPlugin,
   Env,
   Runtime,
   TargetRuntime,
 } from '@sewing-kit/plugins';
-import {
-  ExportStyle,
-  updateSewingKitBabelPreset,
-  createCompileBabelStep,
-  createJavaScriptWebpackRuleSet,
-} from '@sewing-kit/plugin-javascript';
+import {createJavaScriptWebpackRuleSet} from '@sewing-kit/plugin-javascript';
 
 import type {} from '@sewing-kit/plugin-webpack';
 
-const PLUGIN = 'SewingKit.PackageEsNext';
-const VARIANT = 'esnext';
-const EXTENSION = '.esnext';
-
-declare module '@sewing-kit/hooks' {
-  interface BuildPackageTargetOptions {
-    [VARIANT]: boolean;
-  }
-}
-
 export function esnextOutput() {
   return createProjectPlugin<Project>(
-    `${PLUGIN}.Consumer`,
+    `SewingKit.PackageEsNext.Consumer`,
     ({api, project, tasks: {build, dev}}) => {
       build.hook(({hooks, options}) => {
         hooks.target.hook(({target, hooks}) => {
@@ -103,55 +86,6 @@ export function esnextOutput() {
   );
 }
 
-export function buildEsNextOutput() {
-  return createProjectBuildPlugin<Package>(PLUGIN, (context) => {
-    const {
-      api,
-      hooks,
-      project,
-      options: {cache},
-    } = context;
-
-    hooks.targets.hook((targets) =>
-      targets.map((target) =>
-        target.default ? target.add({esnext: true}) : target,
-      ),
-    );
-
-    hooks.target.hook(({target, hooks}) => {
-      if (!target.options.esnext) return;
-
-      hooks.configure.hook((configuration) => {
-        configuration.babelConfig?.hook(
-          updateSewingKitBabelPreset({
-            polyfill: 'inline',
-            modules: 'preserve',
-            target: ['last 1 chrome version'],
-          }),
-        );
-      });
-
-      hooks.steps.hook((steps, configuration) => {
-        const outputPath = project.fs.buildPath('esnext');
-
-        return [
-          ...steps,
-          createCompileBabelStep({
-            api,
-            project,
-            outputPath,
-            configuration,
-            extension: EXTENSION,
-            configFile: 'babel.esnext.js',
-            exportStyle: ExportStyle.EsModules,
-            cache,
-          }),
-        ];
-      });
-    });
-  });
-}
-
 function addExtension(extensions: readonly string[]): readonly string[] {
-  return [EXTENSION, ...extensions];
+  return ['.esnext', ...extensions];
 }

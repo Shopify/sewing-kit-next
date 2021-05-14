@@ -10,10 +10,7 @@
   "references": [
     {"path": "../hooks"},
     {"path": "../plugins"},
-    {"path": "../plugin-package-binaries"},
-    {"path": "../plugin-package-esmodules"},
-    {"path": "../plugin-package-esnext"},
-    {"path": "../plugin-package-typescript"},
+    {"path": "../plugin-typescript"},
     {"path": "../plugin-rollup"}
   ]
 }

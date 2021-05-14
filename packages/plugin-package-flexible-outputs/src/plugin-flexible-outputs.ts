@@ -48,14 +48,14 @@ export function buildFlexibleOutputs({
       ),
 
       binaries
-        ? import(
-            '@sewing-kit/plugin-package-binaries'
-          ).then(({buildBinaries}) => buildBinaries())
+        ? import('./plugin-package-binaries').then(({buildBinaries}) =>
+            buildBinaries(),
+          )
         : emptyPromise,
 
       typescript
         ? import(
-            '@sewing-kit/plugin-package-typescript'
+            './plugin-package-typescript'
           ).then(({buildTypeScriptDefinitions}) =>
             typeof typescript === 'boolean'
               ? buildTypeScriptDefinitions()
@@ -80,12 +80,12 @@ export function flexibleOutputs({
     async (composer) => {
       const composed = await Promise.all([
         esmodules
-          ? import(
-              '@sewing-kit/plugin-package-esmodules'
-            ).then(({esmodulesOutput}) => esmodulesOutput())
+          ? import('./plugin-package-esmodules').then(({esmodulesOutput}) =>
+              esmodulesOutput(),
+            )
           : emptyPromise,
         esnext
-          ? import('@sewing-kit/plugin-package-esnext').then(({esnextOutput}) =>
+          ? import('./plugin-package-esnext').then(({esnextOutput}) =>
               esnextOutput(),
             )
           : emptyPromise,
