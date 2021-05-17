@@ -18,9 +18,20 @@
     "@sewing-kit/hooks": "^0.1.10",
     "@sewing-kit/plugin-javascript": "^0.3.4",
     "@sewing-kit/plugin-rollup": "^0.1.0",
-    "@sewing-kit/plugin-typescript": "^0.1.28",
     "@sewing-kit/plugins": "^0.1.10",
     "fs-extra": "^9.0.0"
+  },
+  "peerDependencies": {
+    "@sewing-kit/plugin-typescript": "^0.1.28",
+    "@sewing-kit/plugin-webpack": "^0.1.12"
+  },
+  "peerDependenciesMeta": {
+    "@sewing-kit/plugin-typescript": {
+      "optional": true
+    },
+    "@sewing-kit/plugin-webpack": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.0"

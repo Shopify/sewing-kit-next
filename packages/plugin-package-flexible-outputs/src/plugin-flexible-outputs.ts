@@ -33,38 +33,43 @@ export function buildFlexibleOutputs({
   typescript = true,
 }: Options) {
   return createComposedProjectPlugin<Package>(PLUGIN, async (composer) => {
-    const composed = await Promise.all([
-      import('@sewing-kit/plugin-rollup').then((mod) => mod.rollupHooks()),
-      import('@sewing-kit/plugin-rollup').then((mod) => mod.rollupBuild()),
+    const hasPluginTypescriptDependency = await import(
+      '@sewing-kit/plugin-typescript'
+    ).then(
+      () => true,
+      () => false,
+    );
 
-      import('./plugin-rollup-config').then(({rollupConfig}) =>
-        rollupConfig({
-          browserTargets,
-          nodeTargets,
-          commonjs,
-          esmodules,
-          esnext,
-        }),
-      ),
-
-      binaries
-        ? import('./plugin-package-binaries').then(({buildBinaries}) =>
-            buildBinaries(),
-          )
-        : emptyPromise,
-
-      typescript
-        ? import(
-            './plugin-package-typescript'
-          ).then(({buildTypeScriptDefinitions}) =>
-            typeof typescript === 'boolean'
-              ? buildTypeScriptDefinitions()
-              : buildTypeScriptDefinitions(typescript),
-          )
+    const [
+      {rollupHooks, rollupBuild},
+      {rollupConfig},
+      {buildBinaries} = {buildBinaries: undefined},
+      {buildTypeScriptDefinitions} = {buildTypeScriptDefinitions: undefined},
+    ] = await Promise.all([
+      import('@sewing-kit/plugin-rollup'),
+      import('./plugin-rollup-config'),
+      binaries ? import('./plugin-package-binaries') : emptyPromise,
+      hasPluginTypescriptDependency && typescript
+        ? import('./plugin-package-typescript')
         : emptyPromise,
     ]);
 
-    composer.use(...composed);
+    composer.use(
+      rollupHooks(),
+      rollupBuild(),
+      rollupConfig({
+        browserTargets,
+        nodeTargets,
+        commonjs,
+        esmodules,
+        esnext,
+      }),
+      buildBinaries && buildBinaries(),
+      buildTypeScriptDefinitions &&
+        buildTypeScriptDefinitions(
+          typeof typescript === 'boolean' ? {} : typescript,
+        ),
+    );
   });
 }
 
