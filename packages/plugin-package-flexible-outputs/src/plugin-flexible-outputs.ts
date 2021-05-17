@@ -17,7 +17,7 @@ export interface Options {
   readonly typescript?:
     | boolean
     | Parameters<
-        typeof import('@sewing-kit/plugin-package-typescript').buildTypeScriptDefinitions
+        typeof import('./plugin-package-typescript').buildTypeScriptDefinitions
       >[0];
 }
 
