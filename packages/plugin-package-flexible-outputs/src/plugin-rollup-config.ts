@@ -10,6 +10,7 @@ import {writeEntries, ExportStyle} from '@sewing-kit/plugin-javascript';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
+import externals from 'rollup-plugin-node-externals';
 
 declare module '@sewing-kit/hooks' {
   interface BuildPackageTargetOptions {
@@ -95,13 +96,12 @@ export function rollupConfig(options: RollupConfigOptions) {
             }
 
             return plugins.concat([
+              externals({
+                deps: true,
+                packagePath: project.fs.resolvePath('./package.json'),
+              }),
               nodeResolve({
                 extensions: ['.js', '.jsx', '.ts', '.tsx'],
-                // Only resolve files paths starting with a .
-                // This treats every other path - i.e. modules like
-                // `@shopify/address` or node built-ins like `path` as
-                // externals that should not be bundled.
-                resolveOnly: [/^\./],
               }),
               commonjs(),
               babel({
