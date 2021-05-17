@@ -29,12 +29,12 @@ declare module '@sewing-kit/hooks' {
  * Core configuration of a Rollup-based build.
  * Exposes hooks that configure rollup.
  *
- * The `rollupInput`, `rollupPlugins` and `rollupExternals` hooks map to
+ * The `rollupInput`, `rollupPlugins` and `rollupExternal` hooks map to
  * `input`, `plugins` and `externals` keys of Rollup's `InputOptions` object
  * as documented at https://rollupjs.org/guide/en/#inputoptions-object.
  *
  * The `rollupInputOptions` hook is a whole `InputOptions` object, including any
- * values set in `rollupInput`, `rollupPlugins` and `rollupExternals`, this
+ * values set in `rollupInput`, `rollupPlugins` and `rollupExternal`, this
  * can be used if you need to control any advanced input configuration options.
  *
  * The `rollupOutputs` hook is an array of Rollup's `OutputOptions` objects as
