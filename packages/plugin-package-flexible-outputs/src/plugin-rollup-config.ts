@@ -7,8 +7,6 @@ import {
 
 import {writeEntries, ExportStyle} from '@sewing-kit/plugin-javascript';
 
-import type {PreRenderedChunk} from 'rollup';
-
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
@@ -128,6 +126,7 @@ export function rollupConfig(options: RollupConfigOptions) {
                   format: 'cjs',
                   dir: project.fs.buildPath('cjs'),
                   preserveModules: true,
+                  entryFileNames: '[name][assetExtname].js',
                   exports: 'named',
                 });
               }
@@ -137,7 +136,7 @@ export function rollupConfig(options: RollupConfigOptions) {
                   format: 'esm',
                   dir: project.fs.buildPath('esm'),
                   preserveModules: true,
-                  entryFileNames: entryFileNamesBuilder('.mjs'),
+                  entryFileNames: '[name][assetExtname].mjs',
                 });
               }
             } else if (isEsnextBuild) {
@@ -146,7 +145,7 @@ export function rollupConfig(options: RollupConfigOptions) {
                   format: 'esm',
                   dir: project.fs.buildPath('esnext'),
                   preserveModules: true,
-                  entryFileNames: entryFileNamesBuilder('.esnext'),
+                  entryFileNames: '[name][assetExtname].esnext',
                 });
               }
             }
@@ -200,22 +199,4 @@ export function rollupConfig(options: RollupConfigOptions) {
       });
     },
   );
-}
-
-/**
- * Foo.ts is compilied to Foo.js, while Foo.scss is compiled to Foo.scss.js
- * Optionally changing the .js for .mjs / .esnext
- *
- * Can be replaced with returning the string `[name][assetExtname]${ext}`
- * if https://github.com/rollup/rollup/pull/4077 is merged & released
- */
-function entryFileNamesBuilder(ext = '.js') {
-  const NonAssetExtensions = ['.js', '.jsx', '.ts', '.tsx'];
-  return (chunkInfo: PreRenderedChunk) => {
-    const isAssetfile = !NonAssetExtensions.some((nonAssetExt) =>
-      (chunkInfo.facadeModuleId || '').endsWith(nonAssetExt),
-    );
-
-    return `[name]${isAssetfile ? '[extname]' : ''}${ext}`;
-  };
 }
