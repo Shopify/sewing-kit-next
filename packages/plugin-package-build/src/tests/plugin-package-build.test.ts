@@ -3,18 +3,18 @@ import {
   generateUniqueWorkspaceID,
 } from '../../../../tests/utilities';
 
-describe('@sewing-kit/plugin-package-flexible-outputs', () => {
+describe('@sewing-kit/plugin-package-build', () => {
   it('builds commmonjs, esmodules and esnext outputs by default', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {buildFlexibleOutputs} from '@sewing-kit/plugin-package-flexible-outputs';
+        import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
           pkg.use(
             javascript(),
-            buildFlexibleOutputs({
+            packageBuild({
               browserTargets: 'chrome 88',
               nodeTargets: 'node 12',
             }),
@@ -71,12 +71,12 @@ function pkg(greet) {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {buildFlexibleOutputs} from '@sewing-kit/plugin-package-flexible-outputs';
+        import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
           pkg.use(
             javascript(),
-            buildFlexibleOutputs({
+            packageBuild({
               esmodules: false,
               esnext: false,
               browserTargets: 'chrome 88',
@@ -114,7 +114,7 @@ export function pkg(greet) {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {buildFlexibleOutputs} from '@sewing-kit/plugin-package-flexible-outputs';
+        import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {
           pkg.entry({root: './src/index'});
           pkg.entry({name: 'second', root: './src/second'});
@@ -122,7 +122,7 @@ export function pkg(greet) {
           pkg.runtime(Runtime.Node);
           pkg.use(
             javascript(),
-            buildFlexibleOutputs({
+            packageBuild({
               esmodules: false,
               esnext: false,
               browserTargets: 'chrome 88',
@@ -161,12 +161,12 @@ export function pkg(greet) {
         await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/config';
         import {javascript} from '@sewing-kit/plugin-javascript';
-        import {buildFlexibleOutputs} from '@sewing-kit/plugin-package-flexible-outputs';
+        import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {
           pkg.runtimes(${runtimes});
           pkg.use(
             javascript(),
-            buildFlexibleOutputs({
+            packageBuild({
               // Needs to transpile exponentiation
               browserTargets: 'chrome 10',
               // Doesn't need to transpile exponentiation

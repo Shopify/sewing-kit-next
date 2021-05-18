@@ -9,16 +9,11 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Breaking Changes
 
-This plugin now uses `plugin-rollup` for building JS. Build targets are no longer inferred from a browserslist configuration. You will need to add two new required parameters - `nodeTargets` and `browserTargets` when you call `buildFlexibleOutputs` to specify build targets. All other options remain the same. For `browserTargets` in Shopify projects we recommend extending from [`@shopify/browserslist-config`](https://github.com/Shopify/web-configs/tree/main/packages/browserslist-config).
+This plugin is no longer used for creating packages. It is only used for the consumption of pacakages that expose esmodules and esnext formats. For package building, replace usage of `plugin-package-flexible-outputs` with `plugin-package-build`. The `buildFlexibleOutputs` export has been removed. [[#165](https://github.com/Shopify/sewing-kit-next/pull/165)]
 
-```diff
-buildFlexibleOutputs({
-+  browserTargets: 'defaults',
-+  nodeTargets: 'node 12',
-}),
-```
+### Changed
 
-The `node` option has been removed, as it is not sufficiently different from the `commonjs` target, and its differences were not worth the overhead of managing an additional build.
+This package no longer depends up on `plugin-package-{commonjs,esmodules,esnext,node,typescript}`. The contents of `plugin-package-{esmodules,esnext}` have been inlined into this package. [[#165](https://github.com/Shopify/sewing-kit-next/pull/165)]
 
 ## [0.1.28] - 2021-04-21
 

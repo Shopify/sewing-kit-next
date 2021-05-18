@@ -5,13 +5,13 @@ import {
 } from '@sewing-kit/plugins';
 import {javascript} from '@sewing-kit/plugin-javascript';
 import {typescript} from '@sewing-kit/plugin-typescript';
-import {buildFlexibleOutputs} from '@sewing-kit/plugin-package-flexible-outputs';
+import {packageBuild} from '@sewing-kit/plugin-package-build';
 
 export const createSewingKitPackagePlugin = ({typesAtRoot = false} = {}) =>
   createComposedProjectPlugin<Package>('SewingKit.InternalPackage', [
     javascript(),
     typescript(),
-    buildFlexibleOutputs({
+    packageBuild({
       browserTargets: 'defaults',
       nodeTargets: 'node 10.14',
       esmodules: false,

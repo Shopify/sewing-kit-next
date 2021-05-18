@@ -1,24 +1,22 @@
 import {Package, createComposedProjectPlugin} from '@sewing-kit/plugins';
-
 import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
+
 import {rollupConfig} from './plugin-rollup-config';
 import {buildBinaries} from './plugin-package-binaries';
 
-export interface Options {
+import type {BuildTypeScriptDefinitionsOptions} from './plugin-package-typescript';
+
+export interface PackageBuildOptions {
   readonly browserTargets: string;
   readonly nodeTargets: string;
   readonly binaries?: boolean;
   readonly commonjs?: boolean;
   readonly esmodules?: boolean;
   readonly esnext?: boolean;
-  readonly typescript?:
-    | boolean
-    | Parameters<
-        typeof import('./plugin-package-typescript').buildTypeScriptDefinitions
-      >[0];
+  readonly typescript?: boolean | BuildTypeScriptDefinitionsOptions;
 }
 
-export function buildFlexibleOutputs({
+export function packageBuild({
   browserTargets,
   nodeTargets,
   binaries = true,
@@ -26,9 +24,9 @@ export function buildFlexibleOutputs({
   esmodules = true,
   esnext = true,
   typescript = true,
-}: Options) {
+}: PackageBuildOptions) {
   return createComposedProjectPlugin<Package>(
-    'SewingKit.PackageBuildFlexibleOutputs',
+    'SewingKit.PackageBuild',
     async (composer) => {
       composer.use(
         rollupHooks(),
