@@ -11,12 +11,15 @@
     "build": "tsc --p tsconfig.json"
   },
   "dependencies": {
-    "@sewing-kit/plugin-package-binaries": "^0.1.10",
-    "@sewing-kit/plugin-package-commonjs": "^0.2.5",
-    "@sewing-kit/plugin-package-esmodules": "^0.2.6",
-    "@sewing-kit/plugin-package-esnext": "^0.2.6",
-    "@sewing-kit/plugin-package-node": "^0.2.6",
-    "@sewing-kit/plugin-package-typescript": "^0.1.28",
+    "@sewing-kit/plugin-javascript": "^0.3.4",
     "@sewing-kit/plugins": "^0.1.10"
+  },
+  "peerDependencies": {
+    "@sewing-kit/plugin-webpack": "^0.1.12"
+  },
+  "peerDependenciesMeta": {
+    "@sewing-kit/plugin-webpack": {
+      "optional": true
+    }
   }
 }

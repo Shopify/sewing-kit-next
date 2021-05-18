@@ -7,5 +7,10 @@
   },
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.test.ts"],
-  "references": [{"path": "../plugins"}]
+  "references": [
+    {"path": "../hooks"},
+    {"path": "../plugins"},
+    {"path": "../plugin-typescript"},
+    {"path": "../plugin-rollup"}
+  ]
 }

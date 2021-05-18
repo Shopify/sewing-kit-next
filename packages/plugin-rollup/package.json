@@ -29,6 +29,6 @@
   "dependencies": {
     "@sewing-kit/hooks": "0.1.10",
     "@sewing-kit/plugins": "^0.1.10",
-    "rollup": "^2.47.0"
+    "rollup": "^2.48.0"
   }
 }

@@ -1,0 +1,36 @@
+{
+  "name": "@sewing-kit/plugin-package-build",
+  "license": "MIT",
+  "version": "0.1.0",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "@sewing-kit:registry": "https://registry.npmjs.org"
+  },
+  "scripts": {
+    "build": "tsc --p tsconfig.json"
+  },
+  "dependencies": {
+    "@babel/core": "^7.13.16",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@sewing-kit/hooks": "^0.1.10",
+    "@sewing-kit/plugin-javascript": "^0.3.4",
+    "@sewing-kit/plugin-rollup": "^0.1.0",
+    "@sewing-kit/plugins": "^0.1.10",
+    "fs-extra": "^9.0.0",
+    "rollup-plugin-node-externals": "^2.2.0"
+  },
+  "peerDependencies": {
+    "@sewing-kit/plugin-typescript": "^0.1.28"
+  },
+  "peerDependenciesMeta": {
+    "@sewing-kit/plugin-typescript": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.0"
+  }
+}

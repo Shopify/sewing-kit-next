@@ -10,13 +10,13 @@ import {
 
 const PLUGIN = 'SewingKit.PackageTypeScript';
 
-export interface Options {
+export interface BuildTypeScriptDefinitionsOptions {
   readonly typesAtRoot?: boolean;
 }
 
 export function buildTypeScriptDefinitions({
   typesAtRoot = false,
-}: Options = {}) {
+}: BuildTypeScriptDefinitionsOptions = {}) {
   return createProjectBuildPlugin<Package>(PLUGIN, ({hooks, project, api}) => {
     hooks.steps.hook((steps) => [
       ...steps,
@@ -44,7 +44,7 @@ export function buildTypeScriptDefinitions({
               ),
             );
           } else {
-            writeTypeScriptEntries(project, {
+            await writeTypeScriptEntries(project, {
               strategy: EntryStrategy.ReExport,
             });
           }

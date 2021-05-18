@@ -44,9 +44,9 @@ function rollupConfig() {
 
 ### Hooks
 
-The `rollupInput`, `rollupPlugins` and `rollupExternals` hooks map to `input`, `plugins` and `externals` keys of Rollup's `InputOptions` object as documented at https://rollupjs.org/guide/en/#inputoptions-object.
+The `rollupInput`, `rollupPlugins` and `rollupExternal` hooks map to `input`, `plugins` and `externals` keys of Rollup's `InputOptions` object as documented at https://rollupjs.org/guide/en/#inputoptions-object.
 
-The `rollupInputOptions` hook defines a whole `InputOptions` object, it includes any values set in `rollupInput`, `rollupPlugins` and `rollupExternals`, this can be used if you need to control any advanced input configuration options.
+The `rollupInputOptions` hook defines a whole `InputOptions` object, it includes any values set in `rollupInput`, `rollupPlugins` and `rollupExternal`, this can be used if you need to control any advanced input configuration options.
 
 The `rollupOutputs` hook is an array of Rollup's `OutputOptions` objects as documented at https://rollupjs.org/guide/en/#outputoptions-object.
 
@@ -72,7 +72,9 @@ export default createPackage((pkg) => {
     rollupPlugins([injecterPlugin('all')]),
     // Only adds the injecterPlugin when compiling the target with the specialBuild option set
     rollupPlugins((target) => {
-      return target.options.specialBuild ? [injecterPlugin('only specialBuild')] : [];
+      return target.options.specialBuild
+        ? [injecterPlugin('only specialBuild')]
+        : [];
     }),
   );
 

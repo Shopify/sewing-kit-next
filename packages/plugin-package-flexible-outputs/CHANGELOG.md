@@ -7,6 +7,14 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Breaking Changes
+
+This plugin is no longer used for creating packages. It is only used for the consumption of pacakages that expose esmodules and esnext formats. For package building, replace usage of `plugin-package-flexible-outputs` with `plugin-package-build`. The `buildFlexibleOutputs` export has been removed. [[#165](https://github.com/Shopify/sewing-kit-next/pull/165)]
+
+### Changed
+
+This package no longer depends up on `plugin-package-{commonjs,esmodules,esnext,node,typescript}`. The contents of `plugin-package-{esmodules,esnext}` have been inlined into this package. [[#165](https://github.com/Shopify/sewing-kit-next/pull/165)]
+
 ## [0.1.28] - 2021-04-21
 
 - No updates. Transitive dependency bump.
