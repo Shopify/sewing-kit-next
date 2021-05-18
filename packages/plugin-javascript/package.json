@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/plugin-javascript",
   "license": "MIT",
-  "version": "0.3.4",
+  "version": "0.4.0-alpha.0",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -22,8 +22,8 @@
     "@babel/plugin-proposal-optional-chaining": "^7.14.2",
     "@babel/plugin-transform-runtime": "^7.14.3",
     "@babel/preset-env": "^7.14.2",
-    "@sewing-kit/hooks": "^0.1.10",
-    "@sewing-kit/plugins": "^0.1.10",
+    "@sewing-kit/hooks": "^0.2.0-alpha.0",
+    "@sewing-kit/plugins": "^0.2.0-alpha.0",
     "@types/babel__core": "^7.1.7",
     "babel-loader": "^8.1.0",
     "babel-plugin-add-import-extension": "^1.4.4",

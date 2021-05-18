@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/plugin-package-flexible-outputs",
   "license": "MIT",
-  "version": "0.1.28",
+  "version": "0.2.0-alpha.0",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -14,8 +14,8 @@
     "build": "tsc --p tsconfig.json"
   },
   "dependencies": {
-    "@sewing-kit/plugin-javascript": "^0.3.4",
-    "@sewing-kit/plugins": "^0.1.10"
+    "@sewing-kit/plugin-javascript": "^0.4.0-alpha.0",
+    "@sewing-kit/plugins": "^0.2.0-alpha.0"
   },
   "peerDependencies": {
     "@sewing-kit/plugin-webpack": "^0.1.12"
