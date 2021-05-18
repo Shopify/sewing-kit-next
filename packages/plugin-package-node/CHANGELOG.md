@@ -9,7 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Breaking Changes
 
-- Package has been removed as its functionality has been rolled into `plugin-package-flexible-outputs` [[#165](https://github.com/Shopify/sewing-kit-next/pull/165)]
+- Package has been removed as its functionality has been rolled into `plugin-package-build` [[#165](https://github.com/Shopify/sewing-kit-next/pull/165)]
 
 ## [0.2.6] - 2021-04-21
 
