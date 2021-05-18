@@ -95,10 +95,14 @@ export function rollupConfig(options: RollupConfigOptions) {
               });
             }
 
+            const packagePath = (await project.fs.hasFile('./package.json'))
+              ? project.fs.resolvePath('./package.json')
+              : [];
+
             return plugins.concat([
               externals({
                 deps: true,
-                packagePath: project.fs.resolvePath('./package.json'),
+                packagePath,
               }),
               nodeResolve({
                 extensions: ['.js', '.jsx', '.ts', '.tsx'],
