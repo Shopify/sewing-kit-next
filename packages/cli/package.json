@@ -7,6 +7,9 @@
     "access": "public",
     "@sewing-kit:registry": "https://registry.npmjs.org"
   },
+  "engines": {
+    "node": "^12.22.0 || >=14.17.0"
+  },
   "bin": {
     "sewing-kit-next": "./bin/sewing-kit-next",
     "skn": "./bin/skn"
