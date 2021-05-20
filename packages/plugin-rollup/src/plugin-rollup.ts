@@ -121,7 +121,9 @@ export function rollupBuild() {
  *   plugins to be added
  */
 export function rollupPlugins(
-  plugins: ((target: Target<Project, {}>) => RollupPlugin[]) | RollupPlugin[],
+  plugins:
+    | ((target: Target<Project, {[key: string]: unknown}>) => RollupPlugin[])
+    | RollupPlugin[],
 ) {
   return createProjectBuildPlugin(
     'SewingKit.Rollup.CustomPlugins',

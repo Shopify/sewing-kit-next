@@ -87,21 +87,21 @@ export type StepTarget =
 export interface StepDetails {
   readonly step: Step;
   readonly target: StepTarget;
-  readonly dependencies?: readonly Step[];
+  readonly dependencies?: ReadonlyArray<Step>;
 }
 
 export interface RunOptions {
   readonly title: string;
-  readonly pre: readonly Step[];
-  readonly post: readonly Step[];
-  readonly steps: readonly StepDetails[];
+  readonly pre: ReadonlyArray<Step>;
+  readonly post: ReadonlyArray<Step>;
+  readonly steps: ReadonlyArray<StepDetails>;
   epilogue?(log: Ui['log']): any;
 }
 
 interface StepGroupDetails {
-  readonly steps: readonly StepDetails[];
-  readonly skip?: readonly string[];
-  readonly isolate?: readonly string[];
+  readonly steps: ReadonlyArray<StepDetails>;
+  readonly skip?: ReadonlyArray<string>;
+  readonly isolate?: ReadonlyArray<string>;
   readonly flagNames?: FlagNames;
   readonly label: string;
   readonly separator: boolean;
@@ -322,7 +322,7 @@ export async function run(
           {level: LogLevel.Debug, ...options},
         );
 
-      async function runNested(steps: readonly Step[], target: StepTarget) {
+      async function runNested(steps: ReadonlyArray<Step>, target: StepTarget) {
         if (steps.length === 0) {
           return;
         }
@@ -695,7 +695,7 @@ interface Work {
 
 class StepQueue {
   private readonly cpus: number;
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   private readonly memory: number;
   private readonly runners = new Set<StepQueueRunner>();
@@ -712,7 +712,11 @@ class StepQueue {
     this.memory = memory;
   }
 
-  enqueue(step: Step, dependencies: readonly Step[], run: () => Promise<void>) {
+  enqueue(
+    step: Step,
+    dependencies: ReadonlyArray<Step>,
+    run: () => Promise<void>,
+  ) {
     // const {resources: {cpu: defaultCpu, memory} = {}} = step;
     // const cpu = defaultCpu ?? 1;
 
@@ -802,7 +806,10 @@ enum StepRunPermission {
   IsolatedAndNotSkipped,
 }
 
-function createChecker(skip?: readonly string[], isolate?: readonly string[]) {
+function createChecker(
+  skip?: ReadonlyArray<string>,
+  isolate?: ReadonlyArray<string>,
+) {
   const isExplicitlySkipped = skip?.length
     ? createCheckerFromIds(skip)
     : undefined;
@@ -831,7 +838,7 @@ function createChecker(skip?: readonly string[], isolate?: readonly string[]) {
   };
 }
 
-function createCheckerFromIds(ids: readonly string[]) {
+function createCheckerFromIds(ids: ReadonlyArray<string>) {
   const regex = new RegExp(
     `^${ids
       .map((id) =>

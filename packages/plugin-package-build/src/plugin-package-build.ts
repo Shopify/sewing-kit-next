@@ -3,7 +3,6 @@ import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
 
 import {rollupConfig} from './plugin-rollup-config';
 import {buildBinaries} from './plugin-package-binaries';
-
 import type {BuildTypeScriptDefinitionsOptions} from './plugin-package-typescript';
 
 export interface PackageBuildOptions {

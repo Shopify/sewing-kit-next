@@ -2,11 +2,11 @@ import {Workspace, Project} from '@sewing-kit/core';
 import {WorkspacePlugin, ProjectPlugin} from '@sewing-kit/plugins';
 
 export interface PluginSource {
-  pluginsForWorkspace(workspace: Workspace): readonly WorkspacePlugin[];
-  pluginsForProject<Type extends Project>(
+  pluginsForWorkspace(workspace: Workspace): ReadonlyArray<WorkspacePlugin>;
+  pluginsForProject<TType extends Project>(
     project: Project,
-  ): readonly ProjectPlugin<Type>[];
-  ancestorsForPlugin<Plugin extends ProjectPlugin<any> | WorkspacePlugin>(
-    plugin: Plugin,
-  ): readonly Plugin[];
+  ): ReadonlyArray<ProjectPlugin<TType>>;
+  ancestorsForPlugin<TPlugin extends ProjectPlugin<any> | WorkspacePlugin>(
+    plugin: TPlugin,
+  ): ReadonlyArray<TPlugin>;
 }

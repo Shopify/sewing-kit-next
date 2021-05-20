@@ -12,18 +12,18 @@ import type {} from '@sewing-kit/plugin-webpack';
 
 declare module '@sewing-kit/hooks' {
   interface BuildProjectConfigurationCustomHooks {
-    readonly sassIncludePaths: WaterfallHook<readonly string[]>;
+    readonly sassIncludePaths: WaterfallHook<ReadonlyArray<string>>;
   }
 
   interface DevProjectConfigurationCustomHooks {
-    readonly sassIncludePaths: WaterfallHook<readonly string[]>;
+    readonly sassIncludePaths: WaterfallHook<ReadonlyArray<string>>;
   }
 }
 
 interface Options {
   readonly id?: string;
   readonly postcss?: Parameters<typeof createCSSWebpackRuleSet>[0]['postcss'];
-  readonly sassIncludes?: readonly string[];
+  readonly sassIncludes?: ReadonlyArray<string>;
 }
 
 const PLUGIN = 'SewingKit.Sass';

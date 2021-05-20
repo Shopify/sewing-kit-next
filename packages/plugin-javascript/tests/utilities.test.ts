@@ -7,6 +7,7 @@ import {
   fileContentsHash,
   generateBabelPackageCacheValue,
 } from '../src/utilities';
+
 import {getModifiedTime, writeToSrc, createTestPackage} from './utilities';
 
 describe('utilities', () => {

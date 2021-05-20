@@ -45,7 +45,7 @@ class TestOutputStream extends Writable {
 export class Workspace {
   constructor(public readonly root: string) {}
 
-  async run<K extends keyof CommandMap>(command: K, args: string[] = []) {
+  async run<TK extends keyof CommandMap>(command: TK, args: string[] = []) {
     const stdout = new TestOutputStream();
     const stderr = new TestOutputStream();
     const stdin = new Readable();
@@ -94,7 +94,6 @@ export class Workspace {
   }
 
   debug() {
-    // eslint-disable-next-line no-console
     console.log(toTree(this.root, {allFiles: true}));
   }
 }

@@ -1,5 +1,4 @@
 import getPort from 'get-port';
-
 import {
   Env,
   WebApp,
@@ -138,6 +137,7 @@ export function webpackDevWebApp({
               app.use(async (ctx, next) => {
                 ctx.set('Access-Control-Allow-Origin', '*');
                 ctx.set('Timing-Allow-Origin', '*');
+                // eslint-disable-next-line node/callback-return
                 await next();
               });
 
@@ -172,6 +172,7 @@ export function webpackDevWebApp({
                   return;
                 }
 
+                // eslint-disable-next-line node/callback-return
                 await next();
               });
 
@@ -186,7 +187,6 @@ export function webpackDevWebApp({
               );
 
               app.listen(port, ip, () => {
-                // eslint-disable-next-line no-console
                 console.log(`Asset server listening on ${ip}:${port}`);
               });
             }),

@@ -7,6 +7,7 @@ import {
   ValueOrGetter,
   unwrapPossibleGetter,
 } from '@sewing-kit/plugins';
+
 import type {CSSWebpackHooks, PostcssPlugins} from './types';
 import type {Options as PostcssPresetOptions} from './postcss-preset';
 
@@ -33,7 +34,7 @@ export async function createCSSWebpackRuleSet({
   postcss?: boolean | PostcssPlugins;
   cssModules?: boolean;
   cacheDirectory: string;
-  cacheDependencies?: readonly string[];
+  cacheDependencies?: ReadonlyArray<string>;
 }) {
   const fullCss = usesRealCss(target);
   const production = env === Env.Production;
@@ -144,9 +145,9 @@ export function usesRealCss(target: Target<any, any>) {
   return target.runtime.includes(Runtime.Browser);
 }
 
-export function updatePostcssPlugin<Options = object>(
+export function updatePostcssPlugin<TOptions = {[key: string]: unknown}>(
   plugin: string | string[],
-  options: ValueOrGetter<Options, [Partial<Options>]>,
+  options: ValueOrGetter<TOptions, [Partial<TOptions>]>,
   {addIfMissing = true} = {},
 ) {
   const normalizedPlugins = Array.isArray(plugin) ? plugin : [plugin];
@@ -159,7 +160,7 @@ export function updatePostcssPlugin<Options = object>(
       if (normalize in newPlugins && newPlugins[normalize] != null) {
         hasMatch = true;
 
-        const existingValue: Partial<Options> =
+        const existingValue: Partial<TOptions> =
           typeof newPlugins[normalize] === 'boolean'
             ? {}
             : (newPlugins[normalize] as any);

@@ -1,8 +1,8 @@
-/* eslint-disable no-console */
-
 import path from 'path';
+
 import glob from 'glob';
 import fs from 'fs-extra';
+
 import {format, staleChangelogs, ROOT} from './utilities';
 
 run();

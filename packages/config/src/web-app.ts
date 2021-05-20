@@ -1,5 +1,6 @@
 import {ProjectPlugin} from '@sewing-kit/plugins';
 import {WebApp, ServiceWorkerOptions, WebAppOptions} from '@sewing-kit/core';
+
 import {BaseBuilder, ConfigurationKind} from './base';
 
 class WebAppOptionBuilder extends BaseBuilder<

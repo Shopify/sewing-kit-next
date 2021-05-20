@@ -1,6 +1,7 @@
 import {statSync as stat} from 'fs';
 
 import {Package} from '@sewing-kit/plugins';
+
 import {Workspace, generateUniqueWorkspaceID} from '../../../tests/utilities';
 
 export function getModifiedTime(filepath: string) {

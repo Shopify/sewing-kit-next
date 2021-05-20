@@ -1,5 +1,6 @@
 import {join} from 'path';
 import {createHash} from 'crypto';
+
 import {
   Env,
   Task,
@@ -31,18 +32,20 @@ interface WebpackHooks {
     Extract<import('webpack').Configuration['target'], string>
   >;
   readonly webpackRules: WaterfallHook<
-    readonly import('webpack').RuleSetRule[]
+    ReadonlyArray<import('webpack').RuleSetRule>
   >;
   readonly webpackDevtool: WaterfallHook<
     import('webpack').Options.Devtool | undefined
   >;
-  readonly webpackPlugins: WaterfallHook<readonly import('webpack').Plugin[]>;
+  readonly webpackPlugins: WaterfallHook<
+    ReadonlyArray<import('webpack').Plugin>
+  >;
   readonly webpackConfig: WaterfallHook<
     Readonly<import('webpack').Configuration>
   >;
   readonly webpackPublicPath: WaterfallHook<string>;
   readonly webpackExternals: WaterfallHook<
-    readonly import('webpack').ExternalsElement[]
+    ReadonlyArray<import('webpack').ExternalsElement>
   >;
 
   readonly webpackOutputDirectory: WaterfallHook<string>;
@@ -50,10 +53,10 @@ interface WebpackHooks {
   readonly webpackOutputChunkFilename: WaterfallHook<string>;
   readonly webpackOutputHashFunction: WaterfallHook<string>;
   readonly webpackOutputHashDigestLength: WaterfallHook<number>;
-  readonly webpackEntries: WaterfallHook<readonly string[]>;
-  readonly webpackExtensions: WaterfallHook<readonly string[]>;
+  readonly webpackEntries: WaterfallHook<ReadonlyArray<string>>;
+  readonly webpackExtensions: WaterfallHook<ReadonlyArray<string>>;
   readonly webpackAliases: WaterfallHook<{[key: string]: string}>;
-  readonly webpackMainFields: WaterfallHook<readonly string[]>;
+  readonly webpackMainFields: WaterfallHook<ReadonlyArray<string>>;
 
   readonly webpackOptimize: WaterfallHook<
     import('webpack').Options.Optimization
@@ -84,19 +87,19 @@ interface WebpackHooks {
 }
 
 type WebpackStats = import('webpack').Stats;
-type WebpackStatsMap<Type extends Project> = Map<
-  Type extends WebApp
+type WebpackStatsMap<TType extends Project> = Map<
+  TType extends WebApp
     ? BuildWebAppTargetOptions
-    : Type extends Package
+    : TType extends Package
     ? BuildPackageTargetOptions
-    : Type extends Service
+    : TType extends Service
     ? BuildServiceTargetOptions
     : never,
   WebpackStats
 >;
 
-interface WebpackProjectContext<Type extends Project = Project> {
-  readonly webpackStats: WebpackStatsMap<Type>;
+interface WebpackProjectContext<TType extends Project = Project> {
+  readonly webpackStats: WebpackStatsMap<TType>;
 }
 
 declare module '@sewing-kit/hooks' {
@@ -548,7 +551,7 @@ interface CacheLoaderOptions {
   postfix?: string;
   project: Project;
   cachePath: string;
-  dependencies: readonly string[];
+  dependencies: ReadonlyArray<string>;
   configuration: Partial<WebpackHooks>;
 }
 
@@ -614,8 +617,8 @@ interface WebpackConfigurationChangePluginOptions {
   include?: (Task.Dev | Task.Build)[];
 }
 
-type ValueOrArray<Value> = Value | Value[];
-type ValueOrGetter<Value> = Value | (() => Value | Promise<Value>);
+type ValueOrArray<TValue> = TValue | TValue[];
+type ValueOrGetter<TValue> = TValue | (() => TValue | Promise<TValue>);
 
 export function webpackRules(
   rules: ValueOrGetter<ValueOrArray<import('webpack').Rule>>,

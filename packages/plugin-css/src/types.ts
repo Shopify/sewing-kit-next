@@ -1,4 +1,5 @@
 import type {WaterfallHook} from '@sewing-kit/plugins';
+
 import type {Features, Stage, ImportFrom, Autoprefixer} from './postcss-preset';
 
 export interface CSSWebpackLoaderModule {
@@ -41,11 +42,11 @@ export interface CSSWebpackPostcssLoaderOptions {
 }
 
 export interface PostcssPlugins {
-  [key: string]: object | true;
+  [key: string]: {[key: string]: unknown} | true;
 }
 
 export interface CSSWebpackHooks {
-  readonly cssCustomValues: WaterfallHook<readonly ImportFrom[]>;
+  readonly cssCustomValues: WaterfallHook<ReadonlyArray<ImportFrom>>;
 
   readonly postcssPlugins: WaterfallHook<PostcssPlugins>;
   readonly postcssEnvFeatures: WaterfallHook<Features>;
@@ -63,16 +64,16 @@ export interface CSSWebpackHooks {
   readonly cssWebpackLoaderModule: WaterfallHook<
     CSSWebpackLoaderModule | false
   >;
-  readonly cssWebpackPostcssLoaderOptions: WaterfallHook<
-    CSSWebpackPostcssLoaderOptions
-  >;
+  readonly cssWebpackPostcssLoaderOptions: WaterfallHook<CSSWebpackPostcssLoaderOptions>;
   readonly cssWebpackPostcssLoaderContext: WaterfallHook<{[key: string]: any}>;
   readonly cssWebpackOptimizeOptions: WaterfallHook<
     import('optimize-css-assets-webpack-plugin').Options
   >;
-  readonly cssWebpackCacheDependencies: WaterfallHook<readonly string[]>;
+  readonly cssWebpackCacheDependencies: WaterfallHook<ReadonlyArray<string>>;
 }
 
 export interface CSSTestingHooks {
-  readonly cssModuleIdentityProxyExtensions: WaterfallHook<readonly string[]>;
+  readonly cssModuleIdentityProxyExtensions: WaterfallHook<
+    ReadonlyArray<string>
+  >;
 }

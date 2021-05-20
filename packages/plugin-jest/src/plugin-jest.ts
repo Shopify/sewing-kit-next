@@ -19,7 +19,7 @@ const PLUGIN = 'SewingKit.Jest';
 type DeepReadonly<T> = Readonly<
   {
     [K in keyof T]: T[K] extends (infer U)[] | infer Rest
-      ? readonly U[] | Rest
+      ? ReadonlyArray<U> | Rest
       : T[K];
   }
 >;
@@ -27,27 +27,27 @@ type DeepReadonly<T> = Readonly<
 type JestConfig = DeepReadonly<import('@jest/types').Config.InitialOptions>;
 
 interface JestProjectHooks {
-  readonly jestExtensions: WaterfallHook<readonly string[]>;
+  readonly jestExtensions: WaterfallHook<ReadonlyArray<string>>;
   readonly jestEnvironment: WaterfallHook<string>;
   readonly jestModuleMapper: WaterfallHook<{
     [key: string]: string;
   }>;
-  readonly jestSetupEnv: WaterfallHook<readonly string[]>;
-  readonly jestSetupTests: WaterfallHook<readonly string[]>;
+  readonly jestSetupEnv: WaterfallHook<ReadonlyArray<string>>;
+  readonly jestSetupTests: WaterfallHook<ReadonlyArray<string>>;
   readonly jestTransforms: WaterfallHook<
     {[key: string]: string},
     {readonly babelTransform: string}
   >;
-  readonly jestTestMatch: WaterfallHook<readonly string[]>;
+  readonly jestTestMatch: WaterfallHook<ReadonlyArray<string>>;
   readonly jestConfig: WaterfallHook<JestConfig>;
-  readonly jestWatchIgnore: WaterfallHook<readonly string[]>;
+  readonly jestWatchIgnore: WaterfallHook<ReadonlyArray<string>>;
 }
 
 interface JestWorkspaceHooks {
-  readonly jestSetupEnv: WaterfallHook<readonly string[]>;
-  readonly jestSetupTests: WaterfallHook<readonly string[]>;
+  readonly jestSetupEnv: WaterfallHook<ReadonlyArray<string>>;
+  readonly jestSetupTests: WaterfallHook<ReadonlyArray<string>>;
   readonly jestConfig: WaterfallHook<JestConfig>;
-  readonly jestWatchPlugins: WaterfallHook<readonly string[]>;
+  readonly jestWatchPlugins: WaterfallHook<ReadonlyArray<string>>;
   readonly jestFlags: WaterfallHook<JestFlags>;
 }
 
@@ -77,6 +77,7 @@ interface JestFlags {
   coverage?: boolean;
   updateSnapshot?: boolean;
   cacheDirectory?: string;
+  [key: string]: unknown;
 }
 
 export function jest() {
@@ -349,7 +350,7 @@ export function jest() {
 }
 
 function packageEntryMatcherMap({runtimeName, entries, fs}: Package) {
-  const map: Record<string, string> = Object.create(null);
+  const map: {[key: string]: string} = Object.create(null);
 
   for (const {name, root} of entries) {
     map[`^${name ? join(runtimeName, name) : runtimeName}$`] = fs.resolvePath(

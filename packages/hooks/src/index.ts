@@ -16,31 +16,31 @@ export const UNSET = Symbol('SewingKit.Hooks.Unset');
 type Unset = typeof UNSET;
 
 export type SeriesHookArguments<
-  First = Unset,
-  Second = Unset,
-  Third = Unset
-> = First extends Unset
+  TFirst = Unset,
+  TSecond = Unset,
+  TThird = Unset
+> = TFirst extends Unset
   ? []
-  : Second extends Unset
-  ? [First]
-  : Third extends Unset
-  ? [First, Second]
-  : [First, Second, Third];
+  : TSecond extends Unset
+  ? [TFirst]
+  : TThird extends Unset
+  ? [TFirst, TSecond]
+  : [TFirst, TSecond, TThird];
 
-export type SeriesHookFunction<First, Second, Third> = (
-  ...args: SeriesHookArguments<First, Second, Third>
+export type SeriesHookFunction<TFirst, TSecond, TThird> = (
+  ...args: SeriesHookArguments<TFirst, TSecond, TThird>
 ) => void | Promise<void>;
 
-export class SeriesHook<First = Unset, Second = Unset, Third = Unset> {
-  private hooks = new Set<SeriesHookFunction<First, Second, Third>>();
+export class SeriesHook<TFirst = Unset, TSecond = Unset, TThird = Unset> {
+  private hooks = new Set<SeriesHookFunction<TFirst, TSecond, TThird>>();
 
   get hasHooks() {
     return this.hooks.size > 0;
   }
 
   hook(
-    idOrHook: string | SeriesHookFunction<First, Second, Third>,
-    maybeHook?: SeriesHookFunction<First, Second, Third>,
+    idOrHook: string | SeriesHookFunction<TFirst, TSecond, TThird>,
+    maybeHook?: SeriesHookFunction<TFirst, TSecond, TThird>,
   ) {
     if (typeof idOrHook === 'function') {
       this.hooks.add(idOrHook);
@@ -51,7 +51,7 @@ export class SeriesHook<First = Unset, Second = Unset, Third = Unset> {
     return this;
   }
 
-  async run(...args: SeriesHookArguments<First, Second, Third>) {
+  async run(...args: SeriesHookArguments<TFirst, TSecond, TThird>) {
     for (const hook of [...this.hooks]) {
       await hook(...args);
     }
@@ -59,29 +59,31 @@ export class SeriesHook<First = Unset, Second = Unset, Third = Unset> {
 }
 
 export type WaterfallHookArguments<
-  Value,
-  First = Unset,
-  Second = Unset,
-  Third = Unset
-> = First extends Unset
-  ? [Value]
-  : Second extends Unset
-  ? [Value, First]
-  : Third extends Unset
-  ? [Value, First, Second]
-  : [Value, First, Second, Third];
+  TValue,
+  TFirst = Unset,
+  TSecond = Unset,
+  TThird = Unset
+> = TFirst extends Unset
+  ? [TValue]
+  : TSecond extends Unset
+  ? [TValue, TFirst]
+  : TThird extends Unset
+  ? [TValue, TFirst, TSecond]
+  : [TValue, TFirst, TSecond, TThird];
 
-export type WaterfallHookFunction<Value, First, Second, Third> = (
-  ...args: WaterfallHookArguments<Value, First, Second, Third>
-) => Value | Promise<Value>;
+export type WaterfallHookFunction<TValue, TFirst, TSecond, TThird> = (
+  ...args: WaterfallHookArguments<TValue, TFirst, TSecond, TThird>
+) => TValue | Promise<TValue>;
 
 export class WaterfallHook<
-  Value,
-  First = Unset,
-  Second = Unset,
-  Third = Unset
+  TValue,
+  TFirst = Unset,
+  TSecond = Unset,
+  TThird = Unset
 > {
-  private hooks = new Set<WaterfallHookFunction<Value, First, Second, Third>>();
+  private hooks = new Set<
+    WaterfallHookFunction<TValue, TFirst, TSecond, TThird>
+  >();
 
   get hasHooks() {
     return this.hooks.size > 0;
@@ -89,8 +91,8 @@ export class WaterfallHook<
 
   // ID is automatically being passed in, but we just aren’t using it for anything
   hook(
-    idOrHook: string | WaterfallHookFunction<Value, First, Second, Third>,
-    maybeHook?: WaterfallHookFunction<Value, First, Second, Third>,
+    idOrHook: string | WaterfallHookFunction<TValue, TFirst, TSecond, TThird>,
+    maybeHook?: WaterfallHookFunction<TValue, TFirst, TSecond, TThird>,
   ) {
     if (typeof idOrHook === 'function') {
       this.hooks.add(idOrHook);
@@ -101,7 +103,7 @@ export class WaterfallHook<
     return this;
   }
 
-  async run(...args: WaterfallHookArguments<Value, First, Second, Third>) {
+  async run(...args: WaterfallHookArguments<TValue, TFirst, TSecond, TThird>) {
     const [initialValue, ...extraArgs] = args;
 
     let currentValue = initialValue;
@@ -133,19 +135,21 @@ export interface BuildProjectContext
     Partial<BuildProjectCustomContext> {}
 
 export interface BuildProjectTargetDetails<
-  Type extends Project,
-  Options,
-  Context,
-  Hooks
+  TType extends Project,
+  TOptions,
+  TContext,
+  THooks
 > {
-  readonly target: Target<Project & Type, Options>;
-  readonly context: Context;
-  readonly hooks: Hooks;
+  readonly target: Target<Project & TType, TOptions>;
+  readonly context: TContext;
+  readonly hooks: THooks;
 }
 
 // PACKAGE
 
-export interface BuildPackageTargetOptions {}
+export interface BuildPackageTargetOptions {
+  [key: string]: unknown;
+}
 
 export interface BuildPackageConfigurationCustomHooks
   extends BuildProjectConfigurationCustomHooks {}
@@ -174,18 +178,18 @@ export interface BuildPackageHookContext {
 export interface BuildPackageTargetHooks {
   readonly configure: SeriesHook<BuildPackageConfigurationHooks>;
   readonly steps: WaterfallHook<
-    readonly Step[],
+    ReadonlyArray<Step>,
     BuildPackageConfigurationHooks
   >;
 }
 
 export interface BuildPackageHooks {
   readonly targets: WaterfallHook<
-    readonly TargetBuilder<Package, BuildPackageTargetOptions>[]
+    ReadonlyArray<TargetBuilder<Package, BuildPackageTargetOptions>>
   >;
   readonly configureHooks: WaterfallHook<BuildPackageConfigurationHooks>;
   readonly context: WaterfallHook<BuildPackageContext>;
-  readonly steps: WaterfallHook<readonly Step[], BuildPackageHookContext>;
+  readonly steps: WaterfallHook<ReadonlyArray<Step>, BuildPackageHookContext>;
   readonly target: SeriesHook<
     BuildProjectTargetDetails<
       Package,
@@ -198,7 +202,9 @@ export interface BuildPackageHooks {
 
 // SERVICE
 
-export interface BuildServiceTargetOptions {}
+export interface BuildServiceTargetOptions {
+  [key: string]: unknown;
+}
 
 export interface BuildServiceConfigurationCustomHooks
   extends BuildProjectConfigurationCustomHooks {}
@@ -227,18 +233,18 @@ export interface BuildServiceHookContext {
 export interface BuildServiceTargetHooks {
   readonly configure: SeriesHook<BuildServiceConfigurationHooks>;
   readonly steps: WaterfallHook<
-    readonly Step[],
+    ReadonlyArray<Step>,
     BuildServiceConfigurationHooks
   >;
 }
 
 export interface BuildServiceHooks {
   readonly targets: WaterfallHook<
-    readonly TargetBuilder<Service, BuildServiceTargetOptions>[]
+    ReadonlyArray<TargetBuilder<Service, BuildServiceTargetOptions>>
   >;
   readonly configureHooks: WaterfallHook<BuildServiceConfigurationHooks>;
   readonly context: WaterfallHook<BuildServiceContext>;
-  readonly steps: WaterfallHook<readonly Step[], BuildServiceHookContext>;
+  readonly steps: WaterfallHook<ReadonlyArray<Step>, BuildServiceHookContext>;
   readonly target: SeriesHook<
     BuildProjectTargetDetails<
       Service,
@@ -251,7 +257,9 @@ export interface BuildServiceHooks {
 
 // WEB APP
 
-export interface BuildWebAppTargetOptions {}
+export interface BuildWebAppTargetOptions {
+  [key: string]: unknown;
+}
 
 export interface BuildWebAppConfigurationCustomHooks
   extends BuildProjectConfigurationCustomHooks {}
@@ -279,16 +287,19 @@ export interface BuildWebAppHookContext {
 
 export interface BuildWebAppTargetHooks {
   readonly configure: SeriesHook<BuildWebAppConfigurationHooks>;
-  readonly steps: WaterfallHook<readonly Step[], BuildWebAppConfigurationHooks>;
+  readonly steps: WaterfallHook<
+    ReadonlyArray<Step>,
+    BuildWebAppConfigurationHooks
+  >;
 }
 
 export interface BuildWebAppHooks {
   readonly targets: WaterfallHook<
-    readonly TargetBuilder<WebApp, BuildWebAppTargetOptions>[]
+    ReadonlyArray<TargetBuilder<WebApp, BuildWebAppTargetOptions>>
   >;
   readonly configureHooks: WaterfallHook<BuildWebAppConfigurationHooks>;
   readonly context: WaterfallHook<BuildWebAppContext>;
-  readonly steps: WaterfallHook<readonly Step[], BuildWebAppHookContext>;
+  readonly steps: WaterfallHook<ReadonlyArray<Step>, BuildWebAppHookContext>;
   readonly target: SeriesHook<
     BuildProjectTargetDetails<
       WebApp,
@@ -361,7 +372,7 @@ export interface DevPackageHooks {
   readonly configure: SeriesHook<DevPackageConfigurationHooks>;
   readonly context: WaterfallHook<DevPackageContext>;
   readonly steps: WaterfallHook<
-    readonly Step[],
+    ReadonlyArray<Step>,
     DevPackageConfigurationHooks,
     DevPackageContext
   >;
@@ -396,7 +407,7 @@ export interface DevServiceHooks {
   readonly configure: SeriesHook<DevServiceConfigurationHooks>;
   readonly context: WaterfallHook<DevServiceContext>;
   readonly steps: WaterfallHook<
-    readonly Step[],
+    ReadonlyArray<Step>,
     DevServiceConfigurationHooks,
     DevServiceContext
   >;
@@ -426,7 +437,7 @@ export interface DevWebAppHooks {
   readonly configure: SeriesHook<DevWebAppConfigurationHooks>;
   readonly context: WaterfallHook<DevWebAppContext>;
   readonly steps: WaterfallHook<
-    readonly Step[],
+    ReadonlyArray<Step>,
     DevWebAppConfigurationHooks,
     DevWebAppContext
   >;

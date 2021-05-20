@@ -58,10 +58,10 @@ export interface StepRunner {
   status(status: Loggable): void;
   exec(
     file: string,
-    args?: readonly string[] | import('execa').Options,
+    args?: ReadonlyArray<string> | import('execa').Options,
     options?: import('execa').Options,
   ): import('execa').ExecaChildProcess;
-  runNested(steps: readonly Step[]): Promise<void>;
+  runNested(steps: ReadonlyArray<Step>): Promise<void>;
 }
 
 export interface Step {

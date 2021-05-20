@@ -156,7 +156,7 @@ export async function runBuild(
 
       const targetBuilderToSteps = new Map<
         TargetBuilder<WebApp, BuildWebAppTargetOptions>,
-        readonly Step[]
+        ReadonlyArray<Step>
       >();
 
       for (const targetBuilder of targets) {
@@ -293,7 +293,7 @@ export async function runBuild(
 
       const targetBuilderToSteps = new Map<
         TargetBuilder<Service, BuildServiceTargetOptions>,
-        readonly Step[]
+        ReadonlyArray<Step>
       >();
 
       for (const targetBuilder of targets) {
@@ -427,7 +427,7 @@ export async function runBuild(
 
       const targetBuilderToSteps = new Map<
         TargetBuilder<Package, BuildPackageTargetOptions>,
-        readonly Step[]
+        ReadonlyArray<Step>
       >();
 
       for (const targetBuilder of targets) {
@@ -527,7 +527,7 @@ export async function runBuild(
   });
 }
 
-function stringifyVariant(variant: object) {
+function stringifyVariant(variant: {[key: string]: unknown}) {
   return Object.entries(variant)
     .map(([key, value]) => {
       return value === true ? key : `${key}: ${value}`;

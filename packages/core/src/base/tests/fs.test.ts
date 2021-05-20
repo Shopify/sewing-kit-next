@@ -1,4 +1,5 @@
 import {join} from 'path';
+
 import {FileSystem} from '../fs';
 
 jest.mock('fs-extra');

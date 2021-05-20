@@ -23,13 +23,13 @@ export class PackageEntry {
 export interface PackageBinaryOptions {
   readonly name: string;
   readonly root: string;
-  readonly aliases?: readonly string[];
+  readonly aliases?: ReadonlyArray<string>;
 }
 
 export class PackageBinary {
   readonly name: string;
   readonly root: string;
-  readonly aliases: readonly string[];
+  readonly aliases: ReadonlyArray<string>;
 
   constructor({name, root, aliases = []}: PackageBinaryOptions) {
     this.name = name;
@@ -40,15 +40,15 @@ export class PackageBinary {
 
 export interface PackageOptions extends BaseOptions {
   runtimes?: Runtime[];
-  readonly entries?: readonly PackageEntryOptions[];
-  readonly binaries?: readonly PackageBinaryOptions[];
+  readonly entries?: ReadonlyArray<PackageEntryOptions>;
+  readonly binaries?: ReadonlyArray<PackageBinaryOptions>;
 }
 
 export class Package extends Base {
   readonly kind = ProjectKind.Package;
   readonly runtimes: Runtime[] | undefined;
-  readonly entries: readonly PackageEntry[];
-  readonly binaries: readonly PackageBinary[];
+  readonly entries: ReadonlyArray<PackageEntry>;
+  readonly binaries: ReadonlyArray<PackageBinary>;
 
   get id() {
     return `Package.${toId(this.name)}`;

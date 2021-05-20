@@ -1,6 +1,6 @@
 import {join, resolve, relative} from 'path';
-import {copy, utimes, symlink} from 'fs-extra';
 
+import {copy, utimes, symlink} from 'fs-extra';
 import {
   Env,
   Package,
@@ -42,7 +42,7 @@ export function typescript() {
           hooks.jestExtensions?.hook(addTypeScriptExtensions);
           hooks.jestTransforms?.hook((transforms, {babelTransform}) => ({
             ...transforms,
-            ['^.+\\.tsx?$']: babelTransform,
+            '^.+\\.tsx?$': babelTransform,
           }));
 
           hooks.babelConfig?.hook(addTypeScriptBabelConfig);
@@ -439,11 +439,11 @@ function normalizedRelative(from: string, to: string) {
   return rel.startsWith('.') ? rel : `./${rel}`;
 }
 
-function addTypeScriptExtensions(extensions: readonly string[]) {
+function addTypeScriptExtensions(extensions: ReadonlyArray<string>) {
   return ['.ts', '.tsx', ...extensions];
 }
 
-function addTypeScriptTestIgnorePattern(patterns: readonly string[]) {
+function addTypeScriptTestIgnorePattern(patterns: ReadonlyArray<string>) {
   return [
     '**/*.test.ts',
     '**/*.test.tsx',
@@ -453,7 +453,9 @@ function addTypeScriptTestIgnorePattern(patterns: readonly string[]) {
   ];
 }
 
-async function addWebpackPlugins(plugins: readonly import('webpack').Plugin[]) {
+async function addWebpackPlugins(
+  plugins: ReadonlyArray<import('webpack').Plugin>,
+) {
   const [
     {IgnoreMissingTypeExportWarningsPlugin},
     {WatchIgnorePlugin},

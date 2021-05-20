@@ -5,15 +5,15 @@ type Service = import('./service').Service;
 type Package = import('./package').Package;
 
 export interface WorkspaceOptions extends BaseOptions {
-  readonly webApps: readonly WebApp[];
-  readonly packages: readonly Package[];
-  readonly services: readonly Service[];
+  readonly webApps: ReadonlyArray<WebApp>;
+  readonly packages: ReadonlyArray<Package>;
+  readonly services: ReadonlyArray<Service>;
 }
 
 export class Workspace extends Base {
-  readonly webApps: readonly WebApp[];
-  readonly packages: readonly Package[];
-  readonly services: readonly Service[];
+  readonly webApps: ReadonlyArray<WebApp>;
+  readonly packages: ReadonlyArray<Package>;
+  readonly services: ReadonlyArray<Service>;
 
   get projects() {
     return [...this.packages, ...this.webApps, ...this.services];
