@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/plugins",
   "license": "MIT",
-  "version": "0.2.0-alpha.1",
+  "version": "0.2.0",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -14,9 +14,9 @@
     "build": "tsc --p tsconfig.json"
   },
   "dependencies": {
-    "@sewing-kit/core": "^0.4.0-alpha.1",
-    "@sewing-kit/hooks": "^0.2.0-alpha.1",
-    "@sewing-kit/tasks": "^0.2.0-alpha.1",
+    "@sewing-kit/core": "^0.4.0",
+    "@sewing-kit/hooks": "^0.2.0",
+    "@sewing-kit/tasks": "^0.2.0",
     "change-case": "^4.1.0"
   }
 }
