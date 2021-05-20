@@ -9,7 +9,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Breaking Changes
 
-This plugin is no longer used for creating packages. It is only used for the consumption of pacakages that expose esmodules and esnext formats. For package building, replace usage of `plugin-package-flexible-outputs` with `plugin-package-build`. The `buildFlexibleOutputs` export has been removed. [[#165](https://github.com/Shopify/sewing-kit-next/pull/165)]
+- This plugin is no longer used for creating packages. It is only used for the consumption of pacakages that expose esmodules and esnext formats. For package building, replace usage of `plugin-package-flexible-outputs` with `plugin-package-build`. The `buildFlexibleOutputs` export has been removed. [[#165](https://github.com/Shopify/sewing-kit-next/pull/165)]
+- Update minimum supported node version to 12.14.0. Add engines field to help enforce usage of this version. [[#170](https://github.com/Shopify/sewing-kit-next/pull/170)]
 
 ### Changed
 
