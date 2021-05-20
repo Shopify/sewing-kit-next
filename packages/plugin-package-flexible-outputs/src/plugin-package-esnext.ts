@@ -86,6 +86,8 @@ export function esnextOutput() {
   );
 }
 
-function addExtension(extensions: readonly string[]): readonly string[] {
+function addExtension(
+  extensions: ReadonlyArray<string>,
+): ReadonlyArray<string> {
   return ['.esnext', ...extensions];
 }

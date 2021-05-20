@@ -48,6 +48,7 @@ export class Base {
 
     try {
       return {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         version: require(`${name}/package.json`).version,
       };
     } catch {

@@ -144,7 +144,7 @@ export interface Features {
   // @see https://github.com/csstools/css-prefers-color-scheme
   'prefers-color-scheme-query'?: boolean;
   // @see https://github.com/postcss/postcss-color-rebeccapurple
-  'rebeccapurple-color'?: boolean | object;
+  'rebeccapurple-color'?: boolean | {[key: string]: unknown};
   // @see https://github.com/csstools/postcss-preset-env/blob/ca9d4ff2daf34dc0a83f0cb29de087027235e27b/src/patch/postcss-system-ui-font-family.js
   'system-ui-font-family'?: boolean;
 }
@@ -158,7 +158,7 @@ export interface Autoprefixer {
   readonly supports?: boolean;
   readonly flexbox?: boolean | 'no-2009';
   readonly grid?: false | 'autoplace' | 'no-autoplace';
-  readonly stats?: object;
+  readonly stats?: {[key: string]: unknown};
   readonly ignoreUnknownVersions?: boolean;
 }
 
@@ -166,11 +166,11 @@ export interface Autoprefixer {
 export interface Options {
   readonly stage?: Stage;
   readonly features?: Features;
-  readonly browsers?: string | readonly string[];
+  readonly browsers?: string | ReadonlyArray<string>;
   readonly autoprefixer?: Autoprefixer | boolean;
   readonly preserve?: boolean;
-  readonly importFrom?: ImportFrom | readonly ImportFrom[];
-  readonly exportTo?: ExportTo | readonly ExportTo[];
+  readonly importFrom?: ImportFrom | ReadonlyArray<ImportFrom>;
+  readonly exportTo?: ExportTo | ReadonlyArray<ExportTo>;
 }
 
 export default postcss.plugin<Options>(

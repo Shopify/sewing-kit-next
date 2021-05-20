@@ -1,4 +1,5 @@
 import {createWorkspace} from '@sewing-kit/config';
+
 import {eslint} from '../src/plugin-eslint';
 
 describe('@sewing-kit/eslint', () => {

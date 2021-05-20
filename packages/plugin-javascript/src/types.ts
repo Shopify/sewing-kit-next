@@ -1,13 +1,13 @@
 import type {WaterfallHook} from '@sewing-kit/plugins';
 
 export interface BabelConfig {
-  presets: (string | [string, object?])[];
-  plugins: (string | [string, object?])[];
+  presets: (string | [string, {[key: string]: unknown}?])[];
+  plugins: (string | [string, {[key: string]: unknown}?])[];
 }
 
 export interface BabelHooks {
   readonly babelConfig: WaterfallHook<BabelConfig>;
-  readonly babelExtensions: WaterfallHook<readonly string[]>;
-  readonly babelIgnorePatterns: WaterfallHook<readonly string[]>;
-  readonly babelCacheDependencies: WaterfallHook<readonly string[]>;
+  readonly babelExtensions: WaterfallHook<ReadonlyArray<string>>;
+  readonly babelIgnorePatterns: WaterfallHook<ReadonlyArray<string>>;
+  readonly babelCacheDependencies: WaterfallHook<ReadonlyArray<string>>;
 }

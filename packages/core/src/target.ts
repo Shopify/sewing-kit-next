@@ -2,6 +2,7 @@ import {Runtime} from './types';
 import {Package} from './package';
 import {WebApp} from './web-app';
 import {Service} from './service';
+
 import type {Project} from '.';
 
 export class TargetRuntime {
@@ -38,26 +39,26 @@ export class TargetRuntime {
   }
 }
 
-export interface Target<Kind extends Project, Options> {
-  readonly options: Options;
-  readonly project: Kind;
+export interface Target<TKind extends Project, TOptions> {
+  readonly options: TOptions;
+  readonly project: TKind;
   readonly runtime: TargetRuntime;
 }
 
-interface BuilderOptions<Kind extends Project, Options> {
-  project: Kind;
-  options?: Options[];
+interface BuilderOptions<TKind extends Project, TOptions> {
+  project: TKind;
+  options?: TOptions[];
   runtime?: TargetRuntime;
-  needs?: Iterable<TargetBuilder<Kind, Options>>;
+  needs?: Iterable<TargetBuilder<TKind, TOptions>>;
   default?: boolean;
 }
 
-export class TargetBuilder<Kind extends Project, Options> {
+export class TargetBuilder<TKind extends Project, TOptions> {
   readonly default: boolean;
-  readonly needs: Set<TargetBuilder<Kind, Options>>;
-  readonly project: Kind;
+  readonly needs: Set<TargetBuilder<TKind, TOptions>>;
+  readonly project: TKind;
   readonly runtime: TargetRuntime;
-  private readonly options: Options[];
+  private readonly options: TOptions[];
 
   constructor({
     project,
@@ -65,7 +66,7 @@ export class TargetBuilder<Kind extends Project, Options> {
     needs,
     runtime = TargetRuntime.fromProject(project),
     default: isDefault = options == null,
-  }: BuilderOptions<Kind, Options>) {
+  }: BuilderOptions<TKind, TOptions>) {
     this.project = project;
     this.runtime = runtime;
     this.default = isDefault;
@@ -73,7 +74,7 @@ export class TargetBuilder<Kind extends Project, Options> {
     this.needs = new Set(needs);
   }
 
-  add(...options: Options[]) {
+  add(...options: TOptions[]) {
     return new TargetBuilder({
       project: this.project,
       runtime: this.runtime,
@@ -82,7 +83,7 @@ export class TargetBuilder<Kind extends Project, Options> {
     });
   }
 
-  multiply(multiplier: (options: Options) => Options[]) {
+  multiply(multiplier: (options: TOptions) => TOptions[]) {
     return new TargetBuilder({
       project: this.project,
       runtime: this.runtime,
@@ -91,7 +92,7 @@ export class TargetBuilder<Kind extends Project, Options> {
     });
   }
 
-  toTargets(): Target<Kind, Options>[] {
+  toTargets(): Target<TKind, TOptions>[] {
     const {project, runtime, options} = this;
 
     return options.map((options) => ({
@@ -146,10 +147,10 @@ export interface StepRunner {
   status(status: Loggable): void;
   exec(
     file: string,
-    args?: readonly string[] | import('execa').Options,
+    args?: ReadonlyArray<string> | import('execa').Options,
     options?: import('execa').Options,
   ): import('execa').ExecaChildProcess;
-  runNested(steps: readonly Step[]): Promise<void>;
+  runNested(steps: ReadonlyArray<Step>): Promise<void>;
 }
 
 export interface Step {

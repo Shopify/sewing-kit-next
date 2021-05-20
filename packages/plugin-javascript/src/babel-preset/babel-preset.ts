@@ -8,7 +8,8 @@ export interface Options {
   debug?: boolean;
   modules?: Module;
   polyfill?: Polyfill;
-  target?: Target | string | readonly string[];
+  target?: Target | string | ReadonlyArray<string>;
+  [key: string]: unknown;
 }
 
 export default function babelPresetSewingKit(

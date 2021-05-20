@@ -17,18 +17,19 @@ export interface StylelintFlags {
   readonly maxWarnings?: number;
   readonly customSyntax?: string;
   readonly cacheLocation?: string;
-  readonly ignorePattern?: readonly string[];
+  readonly ignorePattern?: ReadonlyArray<string>;
   readonly ignoreDisables?: boolean;
   readonly allowEmptyInput?: boolean;
   readonly reportNeedlessDisables?: boolean;
   readonly reportInvalidScopeDisables?: boolean;
+  [key: string]: unknown;
 }
 
 declare module '@sewing-kit/hooks' {
   interface LintWorkspaceConfigurationCustomHooks {
     readonly stylelintFlags: WaterfallHook<StylelintFlags>;
-    readonly stylelintExtensions: WaterfallHook<readonly string[]>;
-    readonly stylelintIgnorePatterns: WaterfallHook<readonly string[]>;
+    readonly stylelintExtensions: WaterfallHook<ReadonlyArray<string>>;
+    readonly stylelintIgnorePatterns: WaterfallHook<ReadonlyArray<string>>;
   }
 }
 

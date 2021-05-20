@@ -57,7 +57,7 @@ export class StreamController {
             this.bufferLineCount =
               currentLinesToKeep.length + newLinesToKeep.length;
           }
-
+          // eslint-disable-next-line node/callback-return
           callback();
         }
       },

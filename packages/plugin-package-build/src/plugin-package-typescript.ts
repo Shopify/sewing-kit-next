@@ -1,7 +1,6 @@
 import {relative} from 'path';
 
 import {copy, remove} from 'fs-extra';
-
 import {Package, createProjectBuildPlugin} from '@sewing-kit/plugins';
 import {
   EntryStrategy,

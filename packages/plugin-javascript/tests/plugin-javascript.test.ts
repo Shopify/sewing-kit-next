@@ -4,6 +4,7 @@ import {
   withWorkspace,
   generateUniqueWorkspaceID,
 } from '../../../tests/utilities';
+
 import {getModifiedTime, writeToSrc} from './utilities';
 
 const babelCompilationConfig = `

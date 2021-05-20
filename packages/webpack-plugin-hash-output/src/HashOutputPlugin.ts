@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as crypto from 'crypto';
+
 import type {Plugin, Compiler, compilation} from 'webpack';
 
 interface WebpackAsset {

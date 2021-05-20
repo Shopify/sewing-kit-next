@@ -21,7 +21,6 @@ async function run() {
   if (commandModule) {
     await commandModule(argv);
   } else {
-    // eslint-disable-next-line no-console
     console.log(`Command not found: ${command} (${argv.join(' ')})`);
     process.exitCode = 1;
   }
