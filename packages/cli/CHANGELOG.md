@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Breaking Changes
+
+- Update minimum supported node version to 12.14.0. Add engines field to help enforce usage of this version. [[#170](https://github.com/Shopify/sewing-kit-next/pull/170)]
+
 ## [0.3.4] 2021-04-16
 
 ### Fix
@@ -29,7 +33,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Changed
 
-- **Breaking change:** Renamed `sewing-kit` binary to `sewing-kit-next` ([#117](https://github.com/Shopify/sewing-kit-next/pull/117))
+- **Breaking change:** Renamed `sewing-kit` binary to `sewing-kit-next` [[#117](https://github.com/Shopify/sewing-kit-next/pull/117)]
 
 ## [0.2.1]
 

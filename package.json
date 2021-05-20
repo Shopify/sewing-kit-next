@@ -31,8 +31,8 @@
     "buildDirectory": "build"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.16",
-    "@babel/node": "^7.13.13",
+    "@babel/core": "^7.14.3",
+    "@babel/node": "^7.14.2",
     "@shopify/eslint-plugin": "^40.2.2",
     "@shopify/tophat": "^0.0.5",
     "@shopify/typescript-configs": "^4.0.0",

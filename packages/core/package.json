@@ -1,11 +1,14 @@
 {
   "name": "@sewing-kit/core",
   "license": "MIT",
-  "version": "0.3.0",
+  "version": "0.4.0-alpha.1",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
     "@sewing-kit:registry": "https://registry.npmjs.org"
+  },
+  "engines": {
+    "node": ">=12.14.0"
   },
   "scripts": {
     "build": "tsc --p tsconfig.json"

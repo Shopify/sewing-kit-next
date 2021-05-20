@@ -1,19 +1,22 @@
 {
   "name": "@sewing-kit/plugin-eslint",
   "license": "MIT",
-  "version": "0.1.11",
+  "version": "0.2.0-alpha.1",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
     "@sewing-kit:registry": "https://registry.npmjs.org"
   },
+  "engines": {
+    "node": ">=12.14.0"
+  },
   "scripts": {
     "build": "tsc --p tsconfig.json"
   },
   "dependencies": {
-    "@sewing-kit/config": "^0.1.12",
-    "@sewing-kit/hooks": "^0.1.10",
-    "@sewing-kit/plugins": "^0.1.10",
+    "@sewing-kit/config": "^0.2.0-alpha.1",
+    "@sewing-kit/hooks": "^0.2.0-alpha.1",
+    "@sewing-kit/plugins": "^0.2.0-alpha.1",
     "eslint": "^7.0.0"
   }
 }
