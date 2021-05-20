@@ -1,6 +1,5 @@
-/* eslint-disable no-console */
-
 import path from 'path';
+
 import glob from 'glob';
 
 import {format, staleChangelogs, ROOT} from './utilities';

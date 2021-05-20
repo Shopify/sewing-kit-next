@@ -6,7 +6,7 @@ import {
 } from '@sewing-kit/plugins';
 import {DiagnosticError} from '@sewing-kit/core';
 
-type WritableValue<T> = T extends readonly (infer U)[] ? U[] : T;
+type WritableValue<T> = T extends ReadonlyArray<infer U> ? U[] : T;
 
 type Writable<T> = {
   -readonly [K in keyof T]: WritableValue<T[K]>;
@@ -29,13 +29,13 @@ export interface ConfigurationBuilderResult<
 > {
   readonly kind: ConfigurationKind;
   readonly options: Partial<Writable<T>>;
-  readonly workspacePlugins: readonly WorkspacePlugin[];
-  readonly projectPlugins: readonly ProjectPlugin[];
+  readonly workspacePlugins: ReadonlyArray<WorkspacePlugin>;
+  readonly projectPlugins: ReadonlyArray<ProjectPlugin>;
   readonly [BUILDER_RESULT_MARKER]: true;
 }
 
 export class BaseBuilder<
-  PluginType,
+  TPluginType,
   T extends {readonly name: string; readonly root: string} = {
     readonly name: string;
     readonly root: string;
@@ -61,7 +61,9 @@ export class BaseBuilder<
     return this;
   }
 
-  use(...plugins: (PluginType | WorkspacePlugin | false | undefined | null)[]) {
+  use(
+    ...plugins: (TPluginType | WorkspacePlugin | false | undefined | null)[]
+  ) {
     for (const pluginTyped of plugins) {
       const plugin = pluginTyped as any;
 

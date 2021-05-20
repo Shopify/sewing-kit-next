@@ -1,6 +1,6 @@
 import {Readable, Writable} from 'stream';
-import arg, {Result, Spec} from 'arg';
 
+import arg, {Result, Spec} from 'arg';
 import {loadWorkspace, LoadedWorkspace} from '@sewing-kit/config/load';
 import {AnyPlugin, PluginApi} from '@sewing-kit/plugins';
 import {WaterfallHook, SeriesHook} from '@sewing-kit/hooks';
@@ -32,12 +32,12 @@ export enum StepInclusionFlag {
 }
 
 interface StepInclusionOptions {
-  readonly skipSteps?: readonly string[];
-  readonly skipPreSteps?: readonly string[];
-  readonly skipPostSteps?: readonly string[];
-  readonly isolateSteps?: readonly string[];
-  readonly isolatePreSteps?: readonly string[];
-  readonly isolatePostSteps?: readonly string[];
+  readonly skipSteps?: ReadonlyArray<string>;
+  readonly skipPreSteps?: ReadonlyArray<string>;
+  readonly skipPostSteps?: ReadonlyArray<string>;
+  readonly isolateSteps?: ReadonlyArray<string>;
+  readonly isolatePreSteps?: ReadonlyArray<string>;
+  readonly isolatePostSteps?: ReadonlyArray<string>;
 }
 
 const defaultStepInclusionFlags = {
@@ -49,9 +49,11 @@ const defaultStepInclusionFlags = {
   [StepInclusionFlag.IsolatePostStep]: [String] as [StringConstructor],
 };
 
-export function createCommand<Flags extends Spec>(
-  flagSpec: Flags,
-  run: (flags: Result<Flags>, context: TaskContext) => Promise<void>,
+type TFunction = (...args: any[]) => any;
+
+export function createCommand<TFlags extends Spec>(
+  flagSpec: TFlags,
+  run: (flags: Result<TFlags>, context: TaskContext) => Promise<void>,
 ) {
   return async (
     argv: string[],
@@ -124,11 +126,11 @@ export async function createWorkspaceTasksAndApplyPlugins(
 }
 
 export async function createProjectTasksAndApplyPlugins<
-  Type extends WebApp | Package | Service
->(project: Type, context: TaskContext) {
+  TType extends WebApp | Package | Service
+>(project: TType, context: TaskContext) {
   const {workspace, plugins: pluginSource} = context;
 
-  const tasks: ProjectTasks<Type> = {
+  const tasks: ProjectTasks<TType> = {
     build: new SeriesHook(),
     dev: new SeriesHook(),
     test: new SeriesHook(),
@@ -214,8 +216,8 @@ function wrapValue<T>(plugin: AnyPlugin, value: T): T {
           }
 
           return function hook(
-            hookOrId: string | Function,
-            maybeHook?: Function,
+            hookOrId: string | TFunction,
+            maybeHook?: TFunction,
           ) {
             return typeof hookOrId === 'string'
               ? realValue.call(
@@ -242,7 +244,7 @@ function wrapValue<T>(plugin: AnyPlugin, value: T): T {
     : value;
 }
 
-function wrapHook(plugin: AnyPlugin, hook: Function) {
+function wrapHook(plugin: AnyPlugin, hook: TFunction) {
   return (first: any, ...rest: any[]) =>
     hook(wrapValue(plugin, first), ...rest);
 }
@@ -328,7 +330,7 @@ class StepTracker {
     this.parents.set(step, parent);
   }
 
-  getStepAncestors(step: Step): readonly Step[] {
+  getStepAncestors(step: Step): ReadonlyArray<Step> {
     const parent = this.parents.get(step);
     return parent ? [parent, ...this.getStepAncestors(parent)] : [];
   }

@@ -5,7 +5,6 @@
     {"path": "./packages/cli"},
     {"path": "./packages/config"},
     {"path": "./packages/core"},
-    {"path": "./packages/eslint-plugin"},
     {"path": "./packages/graphql"},
     {"path": "./packages/hooks"},
     {"path": "./packages/plugin-css"},

@@ -1,14 +1,16 @@
 module.exports = {
   extends: [
-    'plugin:@sewing-kit/typescript',
-    'plugin:@sewing-kit/node',
-    'plugin:@sewing-kit/prettier',
+    'plugin:@shopify/typescript',
+    'plugin:@shopify/node',
+    'plugin:@shopify/prettier',
   ],
   rules: {
     // Leaving TODOs for the time being
     'no-warning-comments': 'off',
     // A bunch of tools do wonky stuff with Node
     'node/global-require': 'off',
+    // this rule doesn't play well with the hooks api currently
+    'babel/no-unused-expressions': 'off',
     'no-restricted-syntax': [
       'error',
       {
@@ -21,7 +23,11 @@ module.exports = {
   overrides: [
     {
       files: ['*.test.ts', '*.test.tsx', './tests/**/*'],
-      extends: ['plugin:@sewing-kit/jest'],
+      extends: ['plugin:@shopify/jest'],
+      rules: {
+        // this rule doesn't work well with itContains when it's a straight up boolean
+        'jest/no-truthy-falsy': 'off',
+      },
     },
     {
       files: [

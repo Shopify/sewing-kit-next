@@ -2,8 +2,8 @@ import {join} from 'path';
 
 interface PackageJsonInternal {
   name?: string;
-  dependencies?: Record<string, string>;
-  devDependencies?: Record<string, string>;
+  dependencies?: {[key: string]: string};
+  devDependencies?: {[key: string]: string};
 }
 
 export class PackageJson {

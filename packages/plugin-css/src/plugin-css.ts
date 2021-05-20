@@ -216,7 +216,7 @@ export function css({
           'env' | 'sourceMaps' | 'configuration' | 'target'
         >,
       ) {
-        return async (rules: readonly import('webpack').Rule[]) => {
+        return async (rules: ReadonlyArray<import('webpack').Rule>) => {
           return [
             ...rules,
             {
@@ -330,7 +330,10 @@ export function postcssEnvFeatures(
 }
 
 export function cssCustomValues(
-  importFrom: ValueOrGetter<ValueOrArray<ImportFrom>, [readonly ImportFrom[]]>,
+  importFrom: ValueOrGetter<
+    ValueOrArray<ImportFrom>,
+    [ReadonlyArray<ImportFrom>]
+  >,
 ) {
   return createProjectPlugin(
     `${PLUGIN}.SetPostcssEnvFeatures`,
@@ -365,7 +368,7 @@ export function cssModuleExtensions(extensions: string | string[]) {
       test.hook(({hooks}) => {
         hooks.configure.hook(({cssModuleIdentityProxyExtensions}) => {
           cssModuleIdentityProxyExtensions?.hook(
-            (oldExtensions: readonly string[]) => [
+            (oldExtensions: ReadonlyArray<string>) => [
               ...oldExtensions,
               ...(typeof extensions === 'string' ? [extensions] : extensions),
             ],

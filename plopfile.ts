@@ -1,8 +1,7 @@
 import {readdirSync, existsSync} from 'fs';
 import path from 'path';
-import glob from 'glob';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
+import glob from 'glob';
 import prettier from 'prettier';
 
 const jsPackages = getPackages();

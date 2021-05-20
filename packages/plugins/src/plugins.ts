@@ -28,23 +28,23 @@ interface BasePlugin {
   readonly parent?: BasePlugin;
 }
 
-export interface PluginComposer<Plugin extends BasePlugin> {
-  use(...plugins: (Plugin | false | undefined | null)[]): void;
+export interface PluginComposer<TPlugin extends BasePlugin> {
+  use(...plugins: (TPlugin | false | undefined | null)[]): void;
 }
 
-export interface ProjectPluginContext<Type extends Project> {
+export interface ProjectPluginContext<TType extends Project> {
   readonly api: PluginApi;
-  readonly tasks: ProjectTasks<Type>;
-  readonly project: Type;
+  readonly tasks: ProjectTasks<TType>;
+  readonly project: TType;
   readonly workspace: Workspace;
 }
 
-export interface ProjectPlugin<Type extends Project = Project>
+export interface ProjectPlugin<TType extends Project = Project>
   extends BasePlugin {
   readonly target: PluginTarget.Project;
   readonly parent?: ProjectPlugin<Project>;
-  run?(context: ProjectPluginContext<Type>): any;
-  compose?(composer: PluginComposer<ProjectPlugin<Type>>): any;
+  run?(context: ProjectPluginContext<TType>): any;
+  compose?(composer: PluginComposer<ProjectPlugin<TType>>): any;
 }
 
 export interface WorkspacePluginContext {
@@ -63,59 +63,61 @@ export interface WorkspacePlugin extends BasePlugin {
 export type AnyPlugin = ProjectPlugin<Project> | WorkspacePlugin;
 
 export function createProjectPlugin<
-  Type extends Project = WebApp | Service | Package
+  TType extends Project = WebApp | Service | Package
 >(
   id: BasePlugin['id'],
-  run: NonNullable<ProjectPlugin<Type>['run']>,
-): ProjectPlugin<Type> {
+  run: NonNullable<ProjectPlugin<TType>['run']>,
+): ProjectPlugin<TType> {
   return {id, run, target: PluginTarget.Project, [PLUGIN_MARKER]: true};
 }
 
 export const createProjectBuildPlugin = <
-  Type extends Project = WebApp | Service | Package
+  TType extends Project = WebApp | Service | Package
 >(
   id: BasePlugin['id'],
   run: (
-    context: Omit<ProjectPluginContext<Type>, 'tasks'> & BuildProjectTask<Type>,
+    context: Omit<ProjectPluginContext<TType>, 'tasks'> &
+      BuildProjectTask<TType>,
   ) => void | Promise<void>,
 ) =>
-  createProjectPlugin<Type>(id, ({tasks, ...context}) => {
+  createProjectPlugin<TType>(id, ({tasks, ...context}) => {
     tasks.build.hook((task) => run({...context, ...task}));
   });
 
 export const createProjectDevPlugin = <
-  Type extends Project = WebApp | Service | Package
+  TType extends Project = WebApp | Service | Package
 >(
   id: BasePlugin['id'],
   run: (
-    context: Omit<ProjectPluginContext<Type>, 'tasks'> & DevProjectTask<Type>,
+    context: Omit<ProjectPluginContext<TType>, 'tasks'> & DevProjectTask<TType>,
   ) => void | Promise<void>,
 ) =>
-  createProjectPlugin<Type>(id, ({tasks, ...context}) => {
+  createProjectPlugin<TType>(id, ({tasks, ...context}) => {
     tasks.dev.hook((task) => run({...context, ...task}));
   });
 
 export const createProjectTestPlugin = <
-  Type extends Project = WebApp | Service | Package
+  TType extends Project = WebApp | Service | Package
 >(
   id: BasePlugin['id'],
   run: (
-    context: Omit<ProjectPluginContext<Type>, 'tasks'> & TestProjectTask<Type>,
+    context: Omit<ProjectPluginContext<TType>, 'tasks'> &
+      TestProjectTask<TType>,
   ) => void | Promise<void>,
 ) =>
-  createProjectPlugin<Type>(id, ({tasks, ...context}) => {
+  createProjectPlugin<TType>(id, ({tasks, ...context}) => {
     tasks.test.hook((task) => run({...context, ...task}));
   });
 
 export function createComposedProjectPlugin<
-  Type extends Project = WebApp | Service | Package
+  TType extends Project = WebApp | Service | Package
 >(
   id: BasePlugin['id'],
   pluginsOrCompose:
-    | readonly (ProjectPlugin<Type> | false | null | undefined)[]
-    | NonNullable<ProjectPlugin<Type>['compose']>,
-): ProjectPlugin<Type> {
-  const compose: NonNullable<ProjectPlugin<Type>['compose']> =
+    | ReadonlyArray<ProjectPlugin<TType> | false | null | undefined>
+    | NonNullable<ProjectPlugin<TType>['compose']>,
+): ProjectPlugin<TType> {
+  const compose: NonNullable<ProjectPlugin<TType>['compose']> =
     typeof pluginsOrCompose === 'function'
       ? pluginsOrCompose
       : (composer) => {
@@ -187,7 +189,7 @@ export const createWorkspaceLintPlugin = (
 export function createComposedWorkspacePlugin(
   id: BasePlugin['id'],
   pluginsOrCompose:
-    | readonly (WorkspacePlugin | false | null | undefined)[]
+    | ReadonlyArray<WorkspacePlugin | false | null | undefined>
     | NonNullable<WorkspacePlugin['compose']>,
 ): WorkspacePlugin {
   const compose: NonNullable<WorkspacePlugin['compose']> =

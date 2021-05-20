@@ -3,6 +3,7 @@ import {
   withWorkspace,
   generateUniqueWorkspaceID,
 } from '../../../../tests/utilities';
+
 import {defaultEntry, packageConfig, legacySewingKitConfig} from './utilities';
 
 const configs = [

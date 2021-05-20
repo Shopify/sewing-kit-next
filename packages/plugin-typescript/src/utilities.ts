@@ -1,6 +1,6 @@
 import {resolve, relative} from 'path';
-import {symlink, utimes} from 'fs-extra';
 
+import {symlink, utimes} from 'fs-extra';
 import type {BabelConfig} from '@sewing-kit/plugin-javascript';
 import {Package} from '@sewing-kit/plugins';
 

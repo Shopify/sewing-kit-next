@@ -1,4 +1,5 @@
 import {WebApp, Package, Service} from '@sewing-kit/core';
+
 import {
   projectTypeSwitch,
   toArgs,
@@ -101,7 +102,10 @@ describe('addHooks', () => {
     const two = '二';
     const three = '三';
 
-    const countingFactory = addHooks<object>(() => ({two, three}));
+    const countingFactory = addHooks<{[key: string]: unknown}>(() => ({
+      two,
+      three,
+    }));
     expect(countingFactory({one})).toStrictEqual({one, two, three});
   });
 });

@@ -26,11 +26,13 @@ export function esmodulesOutput() {
   );
 }
 
-function addExtension(extensions: readonly string[]): readonly string[] {
+function addExtension(
+  extensions: ReadonlyArray<string>,
+): ReadonlyArray<string> {
   return ['.mjs', ...extensions];
 }
 
-function addWebpackRule(rules: readonly any[]) {
+function addWebpackRule(rules: ReadonlyArray<any>) {
   return [
     ...rules,
     {

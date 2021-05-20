@@ -1,5 +1,6 @@
 import path from 'path';
 import {execSync} from 'child_process';
+
 import fs from 'fs-extra';
 
 export const ROOT = path.resolve(__dirname, '../../');

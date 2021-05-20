@@ -122,7 +122,7 @@ function minifySource(source: string) {
     .replace(/\s*({|}|\(|\)|\.|:|,)\s*/g, '$1');
 }
 
-function definitionDependencies(definitions: readonly DefinitionNode[]) {
+function definitionDependencies(definitions: ReadonlyArray<DefinitionNode>) {
   const executableDefinitions: ExecutableDefinitionNode[] = definitions.filter(
     (definition) =>
       definition.kind === 'OperationDefinition' ||
@@ -202,6 +202,7 @@ function selectionsForDefinition(
   return selectionsForSelectionSet(definition.selectionSet);
 }
 
+/* eslint-disable consistent-return */
 function* selectionSetsForDefinition(
   definition: DefinitionNode,
 ): IterableIterator<SelectionSetNode> {
@@ -222,6 +223,7 @@ function* selectionSetsForDefinition(
     }
   }
 }
+/* eslint-enable consistent-return */
 
 function* selectionsForSelectionSet({
   selections,

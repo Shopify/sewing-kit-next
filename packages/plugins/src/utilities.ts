@@ -1,12 +1,15 @@
 import {paramCase} from 'change-case';
 import {Project, Package, WebApp, Service} from '@sewing-kit/core';
 
-type TypeOrCreator<Type, ProjectType> = Type | ((project: ProjectType) => Type);
+type TypeOrCreator<TType, TProjectType> =
+  | TType
+  | ((project: TProjectType) => TType);
 
+/* eslint-disable consistent-return */
 export function projectTypeSwitch<
-  PackageReturn = undefined,
-  WebAppReturn = undefined,
-  ServiceReturn = undefined
+  TPackageReturn = undefined,
+  TWebAppReturn = undefined,
+  TServiceReturn = undefined
 >(
   project: Project,
   {
@@ -14,9 +17,9 @@ export function projectTypeSwitch<
     webApp,
     service,
   }: {
-    package?: TypeOrCreator<PackageReturn, Package>;
-    webApp?: TypeOrCreator<WebAppReturn, WebApp>;
-    service?: TypeOrCreator<ServiceReturn, Service>;
+    package?: TypeOrCreator<TPackageReturn, Package>;
+    webApp?: TypeOrCreator<TWebAppReturn, WebApp>;
+    service?: TypeOrCreator<TServiceReturn, Service>;
   },
 ) {
   if (project instanceof Package) {
@@ -27,8 +30,11 @@ export function projectTypeSwitch<
     return typeof service === 'function' ? (service as any)(project) : service;
   }
 }
-
-export function toArgs(flags: object, {dasherize = false, json = true} = {}) {
+/* eslint-enable consistent-return */
+export function toArgs(
+  flags: {[key: string]: unknown},
+  {dasherize = false, json = true} = {},
+) {
   return Object.entries(flags).reduce<string[]>((all, [key, value]) => {
     const newArgs: string[] = [];
     const normalizedKey = dasherize ? paramCase(key) : key;
@@ -58,27 +64,27 @@ export function toArgs(flags: object, {dasherize = false, json = true} = {}) {
 
 export function addHooks<T>(
   adder: () => T,
-): <Hooks extends Partial<T>>(hooks: Hooks) => Hooks & T {
+): <THooks extends Partial<T>>(hooks: THooks) => THooks & T {
   return (hooks) => ({...hooks, ...adder()});
 }
 
-export type ValueOrArray<Value> = Value | Value[];
-export type ValueOrGetter<Value, Args extends any[] = []> =
-  | Value
-  | ((...args: Args) => Value | Promise<Value>);
+export type ValueOrArray<TValue> = TValue | TValue[];
+export type ValueOrGetter<TValue, TArgs extends any[] = []> =
+  | TValue
+  | ((...args: TArgs) => TValue | Promise<TValue>);
 
-export function unwrapPossibleGetter<T, Args extends any[] = []>(
-  maybeGetter: ValueOrGetter<T, Args>,
-  ...args: Args
+export function unwrapPossibleGetter<T, TArgs extends any[] = []>(
+  maybeGetter: ValueOrGetter<T, TArgs>,
+  ...args: TArgs
 ): T | Promise<T> {
   return typeof maybeGetter === 'function'
     ? (maybeGetter as any)(...args)
     : maybeGetter;
 }
 
-export async function unwrapPossibleArrayGetter<T, Args extends any[] = []>(
-  maybeGetter: ValueOrGetter<ValueOrArray<T>, Args>,
-  ...args: Args
+export async function unwrapPossibleArrayGetter<T, TArgs extends any[] = []>(
+  maybeGetter: ValueOrGetter<ValueOrArray<T>, TArgs>,
+  ...args: TArgs
 ) {
   const result = await unwrapPossibleGetter(maybeGetter, ...args);
   return Array.isArray(result) ? result : [result];

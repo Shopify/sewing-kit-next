@@ -1,7 +1,7 @@
 import {dirname, basename, resolve} from 'path';
+
 import {sync as glob} from 'glob';
 import {pathExists} from 'fs-extra';
-
 import {
   Package,
   WebApp,
@@ -65,7 +65,10 @@ export async function loadWorkspace(root: string): Promise<LoadedWorkspace> {
   const packages = new Set<Package>();
   const webApps = new Set<WebApp>();
   const services = new Set<Service>();
-  const pluginMap = new WeakMap<Project, readonly ProjectPlugin<Project>[]>();
+  const pluginMap = new WeakMap<
+    Project,
+    ReadonlyArray<ProjectPlugin<Project>>
+  >();
   const pluginParents = new WeakMap<AnyPlugin, AnyPlugin>();
 
   const configFiles = glob('**/sewing-{kit,kit-next}.config.*', {
@@ -162,7 +165,7 @@ export async function loadWorkspace(root: string): Promise<LoadedWorkspace> {
 
   return {workspace, plugins};
 
-  function ancestorsForPlugin(plugin: AnyPlugin): readonly AnyPlugin[] {
+  function ancestorsForPlugin(plugin: AnyPlugin): ReadonlyArray<AnyPlugin> {
     const parent = pluginParents.get(plugin);
     return parent ? [parent, ...ancestorsForPlugin(parent)] : [];
   }
@@ -265,10 +268,10 @@ function looksLikeValidConfigurationObject(
   );
 }
 
-async function expandPlugin<Plugin extends AnyPlugin>(
-  plugin: Plugin,
+async function expandPlugin<TPlugin extends AnyPlugin>(
+  plugin: TPlugin,
   context: LoadContext,
-): Promise<Plugin[]> {
+): Promise<TPlugin[]> {
   if (plugin.compose == null) {
     return [plugin];
   }

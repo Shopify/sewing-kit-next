@@ -3,7 +3,6 @@ import {createHash} from 'crypto';
 
 import {fromFile} from 'hasha';
 import nodeObjectHash from 'node-object-hash';
-
 import {
   Env,
   Project,
@@ -61,7 +60,7 @@ export async function createJavaScriptWebpackRuleSet({
               target.runtime.runtimes.size === 1
                 ? 'node'
                 : undefined,
-          } as BabelPresetOptions,
+          },
         ],
       ],
     }),
@@ -97,7 +96,7 @@ function babelCacheIdentifier(
   env: Env,
   project: Project,
   babelOptions: Partial<BabelConfig>,
-  dependencies: readonly string[],
+  dependencies: ReadonlyArray<string>,
 ) {
   const optionsHash = nodeObjectHash().hash(babelOptions);
   const prefix = `sk:${env}:`;
@@ -424,9 +423,9 @@ function normalizedRelative(from: string, to: string) {
   return rel.startsWith('.') ? rel : `./${rel}`;
 }
 
-export function updateBabelPlugin<Options extends object = object>(
+export function updateBabelPlugin<TOptions extends {[key: string]: unknown}>(
   plugin: string | string[],
-  options: ValueOrGetter<Options, [Partial<Options>]>,
+  options: ValueOrGetter<TOptions, [Partial<TOptions>]>,
   {addIfMissing = true} = {},
 ) {
   const normalizedPlugins = Array.isArray(plugin) ? plugin : [plugin];
@@ -439,31 +438,31 @@ export function updateBabelPlugin<Options extends object = object>(
       plugins:
         config.plugins &&
         (await Promise.all(
-          config.plugins.map<Promise<string | [string, object?]>>(
-            async (plugin) => {
-              const [name, currentOptions = {}] = Array.isArray(plugin)
-                ? plugin
-                : [plugin];
+          config.plugins.map<
+            Promise<string | [string, {[key: string]: unknown}?]>
+          >(async (plugin) => {
+            const [name, currentOptions = {}] = Array.isArray(plugin)
+              ? plugin
+              : [plugin];
 
-              if (normalizedPlugins.includes(name)) {
-                hasMatch = true;
+            if (normalizedPlugins.includes(name)) {
+              hasMatch = true;
 
-                const newOptions = await unwrapPossibleGetter(
-                  options,
-                  currentOptions,
-                );
+              const newOptions = await unwrapPossibleGetter(
+                options,
+                currentOptions as any,
+              );
 
-                return [
-                  name,
-                  typeof options === 'function'
-                    ? {...newOptions}
-                    : {...currentOptions, ...newOptions},
-                ];
-              }
+              return [
+                name,
+                typeof options === 'function'
+                  ? {...newOptions}
+                  : {...currentOptions, ...newOptions},
+              ];
+            }
 
-              return plugin;
-            },
-          ),
+            return plugin;
+          }),
         )),
     };
 
@@ -478,9 +477,9 @@ export function updateBabelPlugin<Options extends object = object>(
   };
 }
 
-export function updateBabelPreset<Options extends object = object>(
+export function updateBabelPreset<TOptions extends {[key: string]: unknown}>(
   preset: string | string[],
-  options: ValueOrGetter<Options, [Partial<Options>]>,
+  options: ValueOrGetter<TOptions, [Partial<TOptions>]>,
   {addIfMissing = true} = {},
 ) {
   const normalizedPresets = Array.isArray(preset) ? preset : [preset];
@@ -493,31 +492,31 @@ export function updateBabelPreset<Options extends object = object>(
       presets:
         config.presets &&
         (await Promise.all(
-          config.presets.map<Promise<string | [string, object?]>>(
-            async (preset) => {
-              const [name, currentOptions = {}] = Array.isArray(preset)
-                ? preset
-                : [preset];
+          config.presets.map<
+            Promise<string | [string, {[key: string]: unknown}?]>
+          >(async (preset) => {
+            const [name, currentOptions = {}] = Array.isArray(preset)
+              ? preset
+              : [preset];
 
-              if (normalizedPresets.includes(name)) {
-                hasMatch = true;
+            if (normalizedPresets.includes(name)) {
+              hasMatch = true;
 
-                const newOptions = await unwrapPossibleGetter(
-                  options,
-                  currentOptions,
-                );
+              const newOptions = await unwrapPossibleGetter(
+                options,
+                currentOptions as any,
+              );
 
-                return [
-                  name,
-                  typeof options === 'function'
-                    ? {...newOptions}
-                    : {...currentOptions, ...newOptions},
-                ];
-              }
+              return [
+                name,
+                typeof options === 'function'
+                  ? {...newOptions}
+                  : {...currentOptions, ...newOptions},
+              ];
+            }
 
-              return preset;
-            },
-          ),
+            return preset;
+          }),
         )),
     };
 

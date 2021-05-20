@@ -32,8 +32,6 @@ const CUSTOM_ENTRIES = new Map([
   ],
 ]);
 const NEEDS_FULL_BUILD = new Set([
-  // Needs a full build so it’s available for editor feedback
-  'eslint-plugin',
   // Needs a full build so that the Babel configuration is available
   // for self builds (Babel can’t reference sewing-kit’s source).
   'plugin-javascript',

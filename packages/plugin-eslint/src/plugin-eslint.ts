@@ -14,11 +14,11 @@ export interface ESLintFlags {
   readonly ext?: string[];
   readonly global?: string[];
   readonly parser?: string;
-  readonly parserOptions?: object;
+  readonly parserOptions?: {[key: string]: unknown};
   readonly resolvePluginsRelativeTo?: string;
   readonly rulesdir?: string;
   readonly plugin?: string[];
-  readonly rule?: object;
+  readonly rule?: {[key: string]: unknown};
   readonly fix?: boolean;
   readonly fixDryRun?: boolean;
   readonly fixType?: ('problem' | 'suggestion' | 'layout')[];
@@ -35,10 +35,11 @@ export interface ESLintFlags {
   readonly cacheLocation?: string;
   readonly noErrorOnUnmatchedPattern?: boolean;
   readonly debug?: true;
+  [key: string]: unknown;
 }
 
 export interface ESLintHooks {
-  readonly eslintExtensions: WaterfallHook<readonly string[]>;
+  readonly eslintExtensions: WaterfallHook<ReadonlyArray<string>>;
   readonly eslintFlags: WaterfallHook<ESLintFlags>;
 }
 
