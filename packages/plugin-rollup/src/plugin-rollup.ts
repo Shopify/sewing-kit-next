@@ -1,5 +1,6 @@
 import {
   createProjectBuildPlugin,
+  createProjectPlugin,
   addHooks,
   WaterfallHook,
   LogLevel,
@@ -23,6 +24,7 @@ interface RollupHooks {
 
 declare module '@sewing-kit/hooks' {
   interface BuildProjectConfigurationCustomHooks extends RollupHooks {}
+  interface DevProjectConfigurationCustomHooks extends RollupHooks {}
 }
 
 /**
@@ -41,16 +43,22 @@ declare module '@sewing-kit/hooks' {
  * documented at https://rollupjs.org/guide/en/#outputoptions-object.
  */
 export function rollupHooks() {
-  return createProjectBuildPlugin('SewingKit.Rollup', ({hooks}) => {
-    hooks.configureHooks.hook(
-      addHooks<RollupHooks>(() => ({
-        rollupInput: new WaterfallHook(),
-        rollupPlugins: new WaterfallHook(),
-        rollupExternal: new WaterfallHook(),
-        rollupInputOptions: new WaterfallHook(),
-        rollupOutputs: new WaterfallHook(),
-      })),
-    );
+  return createProjectPlugin('SewingKit.Rollup', ({tasks: {dev, build}}) => {
+    const addRollupHooks = addHooks<RollupHooks>(() => ({
+      rollupInput: new WaterfallHook(),
+      rollupPlugins: new WaterfallHook(),
+      rollupExternal: new WaterfallHook(),
+      rollupInputOptions: new WaterfallHook(),
+      rollupOutputs: new WaterfallHook(),
+    }));
+
+    build.hook(({hooks}) => {
+      hooks.configureHooks.hook(addRollupHooks);
+    });
+
+    dev.hook(({hooks}) => {
+      hooks.configureHooks.hook(addRollupHooks);
+    });
   });
 }
 
