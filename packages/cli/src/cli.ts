@@ -1,6 +1,3 @@
-import 'core-js/features/array/flat';
-import 'core-js/features/array/flat-map';
-
 import {build, dev, test, lint, typeCheck} from './commands';
 
 const commands = new Map([
