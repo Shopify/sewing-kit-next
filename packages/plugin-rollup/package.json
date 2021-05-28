@@ -1,6 +1,6 @@
 {
   "name": "@sewing-kit/plugin-rollup",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "license": "MIT",
   "description": "A sewing-kit plugin that runs rollup as a build step",
   "main": "index.js",
