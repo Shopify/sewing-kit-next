@@ -7,6 +7,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.4.1] - 2021-05-28
+
 ### Changed
 
 - Set `corejs` to `false` when `polyfill` is `inline`. ([#173](https://github.com/Shopify/sewing-kit-next/pull/173))
