@@ -1,6 +1,3 @@
-import 'core-js/features/array/flat';
-import 'core-js/features/array/flat-map';
-
 import {resolve, dirname} from 'path';
 import {Readable, Writable} from 'stream';
 import {StringDecoder} from 'string_decoder';
