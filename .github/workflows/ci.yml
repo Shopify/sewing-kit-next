@@ -1,50 +1,14 @@
 name: CI
 
-on: [push]
+on:
+  pull_request:
+    branches: ['**']
+  push:
+    branches: [main]
 
 jobs:
-  type-check:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - uses: actions/checkout@v1
-        name: Checkout
-
-      - uses: actions/setup-node@v1
-        name: Setup node.js and yarn
-        with:
-          node-version: 12.14.0
-
-      - name: Get yarn cache directory
-        id: yarn-cache-get-dir
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v1
-        id: yarn-cache
-        name: Restore yarn cache
-        with:
-          path: ${{ steps.yarn-cache-get-dir.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Yarn install
-        run: yarn install --frozen-lockfile
-
-      - uses: actions/cache@v1
-        id: typescript-cache
-        name: Restore TypeScript cache
-        with:
-          path: .sewing-kit/cache/typescript/
-          key: ${{ runner.os }}-typescript-v2-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-typescript-v2-
-
-      - name: Type check
-        run: yarn type-check
-
   test:
+    name: 'Test'
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -70,99 +34,23 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
+      - uses: actions/cache@v1
+        id: sewing-kit-cache
+        name: Restore sewing-kit cache
+        with:
+          path: .sewing-kit
+          key: ${{ runner.os }}-sewing-kit-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-sewing-kit-
+
       - name: Yarn install
         run: yarn install --frozen-lockfile
 
-      - uses: actions/cache@v1
-        id: jest-cache
-        name: Restore jest cache
-        with:
-          path: .sewing-kit/cache/jest/
-          key: ${{ runner.os }}-jest-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-jest-
+      - name: Build
+        run: yarn build
 
       - name: Test
         run: yarn test
 
-  lint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - uses: actions/checkout@v1
-        name: Checkout
-
-      - uses: actions/setup-node@v1
-        name: Setup node.js and yarn
-        with:
-          node-version: 12.14.0
-
-      - name: Get yarn cache directory
-        id: yarn-cache-get-dir
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v1
-        id: yarn-cache
-        name: Restore yarn cache
-        with:
-          path: ${{ steps.yarn-cache-get-dir.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Yarn install
-        run: yarn install --frozen-lockfile
-
-      - uses: actions/cache@v1
-        id: eslint-cache
-        name: Restore ESLint cache
-        with:
-          path: .sewing-kit/cache/eslint
-          key: ${{ runner.os }}-eslint-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-eslint-
-
       - name: Lint
         run: yarn lint
-
-  build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - uses: actions/checkout@v1
-        name: Checkout
-
-      - uses: actions/setup-node@v1
-        name: Setup node.js and yarn
-        with:
-          node-version: 12.14.0
-
-      - name: Get yarn cache directory
-        id: yarn-cache-get-dir
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v1
-        id: yarn-cache
-        name: Restore yarn cache
-        with:
-          path: ${{ steps.yarn-cache-get-dir.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Yarn install
-        run: yarn install --frozen-lockfile
-
-      - uses: actions/cache@v1
-        id: build-cache
-        name: Restore Build cache
-        with:
-          path: .sewing-kit
-          key: ${{ runner.os }}-build-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-build-
-
-      - name: Build
-        run: yarn build
