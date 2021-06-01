@@ -7,6 +7,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.4.1] - 2021-06-01
+
 ### Changed
 
 - Removed dependency on core-js as we no longer need the polyfills it provides [[#174](https://github.com/Shopify/sewing-kit-next/pull/174)]

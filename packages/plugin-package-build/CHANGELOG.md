@@ -7,6 +7,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.3] - 2021-06-01
+
 ### Changed
 
 - Fixed bin file generation to ensure it always points at the `build/cjs` folder [[#178](https://github.com/Shopify/sewing-kit-next/pull/178)]
