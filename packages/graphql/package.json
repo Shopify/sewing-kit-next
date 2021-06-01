@@ -10,9 +10,6 @@
   "engines": {
     "node": ">=12.14.0"
   },
-  "scripts": {
-    "build": "tsc --p tsconfig.json"
-  },
   "devDependencies": {
     "@types/common-tags": "^1.8.0",
     "@types/loader-utils": "^1.0.0",

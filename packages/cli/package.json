@@ -14,9 +14,6 @@
     "sewing-kit-next": "./bin/sewing-kit-next",
     "skn": "./bin/skn"
   },
-  "scripts": {
-    "build": "tsc --p tsconfig.json"
-  },
   "dependencies": {
     "@sewing-kit/config": "^0.2.1",
     "@sewing-kit/core": "^0.4.0",

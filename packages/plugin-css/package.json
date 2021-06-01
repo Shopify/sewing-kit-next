@@ -10,9 +10,6 @@
   "engines": {
     "node": ">=12.14.0"
   },
-  "scripts": {
-    "build": "tsc --p tsconfig.json"
-  },
   "dependencies": {
     "@sewing-kit/plugins": "^0.2.1",
     "@types/mini-css-extract-plugin": "^0.9.1",

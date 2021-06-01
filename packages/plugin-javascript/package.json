@@ -10,9 +10,6 @@
   "engines": {
     "node": ">=12.14.0"
   },
-  "scripts": {
-    "build": "tsc --p tsconfig.json"
-  },
   "dependencies": {
     "@babel/cli": "^7.14.5",
     "@babel/core": "^7.14.6",

@@ -10,9 +10,6 @@
   "engines": {
     "node": ">=12.14.0"
   },
-  "scripts": {
-    "build": "tsc --p tsconfig.json"
-  },
   "dependencies": {
     "@babel/preset-react": "^7.14.5",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.3.1",

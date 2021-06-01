@@ -10,9 +10,6 @@
   "engines": {
     "node": ">=12.14.0"
   },
-  "scripts": {
-    "build": "tsc --p tsconfig.json"
-  },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.14.5",
     "@babel/plugin-proposal-decorators": "^7.14.5",
