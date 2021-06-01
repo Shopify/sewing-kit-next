@@ -20,12 +20,12 @@
     "react-refresh": "^0.8.2"
   },
   "peerDependencies": {
-    "@babel/core": "^7.0.0",
+    "@sewing-kit/plugin-javascript": "^0.4.1",
     "@sewing-kit/plugin-jest": "^0.1.24",
     "@sewing-kit/plugin-webpack": "^0.1.12"
   },
   "peerDependenciesMeta": {
-    "@babel/core": {
+    "@sewing-kit/plugin-javascript": {
       "optional": true
     },
     "@sewing-kit/plugin-jest": {

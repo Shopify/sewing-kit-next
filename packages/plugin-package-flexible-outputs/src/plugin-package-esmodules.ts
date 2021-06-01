@@ -1,7 +1,6 @@
 import {WebApp, Service, createProjectPlugin} from '@sewing-kit/plugins';
 
 import type {} from '@sewing-kit/plugin-webpack';
-import type {} from '@sewing-kit/hooks';
 
 export function esmodulesOutput() {
   return createProjectPlugin<WebApp | Service>(
