@@ -2,7 +2,6 @@ import {relative, dirname} from 'path';
 
 import {
   Package,
-  Runtime,
   createProjectBuildPlugin,
   ProjectPluginContext,
 } from '@sewing-kit/plugins';
@@ -25,14 +24,6 @@ function createWriteBinariesStep({
 }: Pick<ProjectPluginContext<Package>, 'project' | 'api'>) {
   const binaryCount = project.binaries.length;
 
-  const allNodeEntries =
-    project.runtimes?.length === 1 &&
-    project.runtimes?.includes(Runtime.Node) &&
-    project.entries.every(
-      ({runtimes}) =>
-        (runtimes?.length === 1 && runtimes?.includes(Runtime.Node)) ?? false,
-    );
-
   const sourceRoot = project.fs.resolvePath('src');
 
   return api.createStep(
@@ -50,7 +41,7 @@ function createWriteBinariesStep({
           );
 
           const destinationInOutput = project.fs.buildPath(
-            allNodeEntries ? 'cjs' : 'node',
+            'cjs',
             relativeFromSourceRoot,
           );
 

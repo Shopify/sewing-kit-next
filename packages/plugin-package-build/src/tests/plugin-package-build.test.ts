@@ -147,6 +147,43 @@ export function pkg(greet) {
     });
   });
 
+  it('generates binary files', async () => {
+    await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+      await workspace.writeConfig(`
+        import {createPackage, Runtime} from '@sewing-kit/config';
+        import {javascript} from '@sewing-kit/plugin-javascript';
+        import {packageBuild} from '@sewing-kit/plugin-package-build';
+        export default createPackage((pkg) => {
+          pkg.binary({name: 'cmd', root: './src/index'});
+          pkg.runtime(Runtime.Node);
+          pkg.use(
+            javascript(),
+            packageBuild({
+              esmodules: false,
+              esnext: false,
+              browserTargets: 'chrome 88',
+              nodeTargets: 'node 12',
+            }),
+          );
+        });
+      `);
+
+      // defined in pkg.binary
+      await workspace.writeFile('src/index.js', `export const x = 'cmd';`);
+
+      const result = await workspace.run('build');
+
+      // Build content
+      expect(await workspace.contains('build/cjs/index.js')).toBeTruthy();
+
+      // Bin file
+      expect(await workspace.contains('bin/cmd')).toBeTruthy();
+      expect(await workspace.contents('bin/cmd')).toContain(
+        `#!/usr/bin/env node\nrequire("../build/cjs/index")`,
+      );
+    });
+  });
+
   it.each([
     // uses target: "node 12", exponentiation supported, so should not transpile
     ['Runtime.Node', 'const x = 2 ** 2;'],
