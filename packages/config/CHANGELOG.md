@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## Unreleased
 
-## [0.2.0] - 2021-05-20
+## 0.2.0 - 2021-05-20
 
-### Breaking Changes
+### Breaking Change
 
 - Update minimum supported node version to 12.14.0. Add engines field to help enforce usage of this version. [[#170](https://github.com/Shopify/sewing-kit-next/pull/170)]
 
@@ -18,26 +18,26 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 - Updated babel dependency to 7.14. [[#170](https://github.com/Shopify/sewing-kit-next/pull/170)]
 - Updated babel dependency to 7.13. [[#148](https://github.com/Shopify/sewing-kit-next/pull/148)]
 
-## [0.1.12] - 2021-04-14
+## 0.1.12 - 2021-04-14
 
 - No updates. Transitive dependency bump.
 
-## [0.1.11] - 2021-04-06
+## 0.1.11 - 2021-04-06
 
 - No updates. Transitive dependency bump.
 
-## [0.1.10] - 2021-03-30
+## 0.1.10 - 2021-03-30
 
 - No updates. Transitive dependency bump.
 
-## [0.1.9] - 2021-03-05
+## 0.1.9 - 2021-03-05
 
 ### Changed
 
 - Support `sewing-kit-next.config.*` config as well ([#117](https://github.com/Shopify/sewing-kit-next/pull/117))
 - no-op when detecting legacy sewing-kit (SK0) config ([#117](https://github.com/Shopify/sewing-kit-next/pull/117))
 
-## [0.1.8]
+## 0.1.8
 
 ### Added
 

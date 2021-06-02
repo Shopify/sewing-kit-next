@@ -14,9 +14,11 @@
     "build": "tsc --p tsconfig.json"
   },
   "dependencies": {
-    "@sewing-kit/config": "^0.2.0",
     "@sewing-kit/hooks": "^0.2.0",
     "@sewing-kit/plugins": "^0.2.0",
     "eslint": "^7.0.0"
+  },
+  "devDependencies": {
+    "@sewing-kit/config": "^0.2.0"
   }
 }
