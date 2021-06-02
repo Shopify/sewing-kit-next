@@ -48,6 +48,14 @@ readChangelogs().forEach(({packageChangelogPath, packageChangelog}) => {
       );
     });
 
+    it('does not contain an empty Unreleased header', () => {
+      const unreleasedHeadingWithoutContent = /^## Unreleased$\s*## /gm;
+
+      expect(packageChangelog).not.toStrictEqual(
+        expect.stringMatching(unreleasedHeadingWithoutContent),
+      );
+    });
+
     it('does not contain duplicate headers', () => {
       const headerLines = packageChangelog
         .split('\n')
