@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Changed
+
+- Removed dependency on `@sewing-kit/config` as it is not used [[#187](https://github.com/Shopify/sewing-kit-next/pull/187)]
+
 ## 0.2.0 - 2021-05-20
 
 ### Breaking Change
