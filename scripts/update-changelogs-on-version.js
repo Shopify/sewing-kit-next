@@ -24,9 +24,19 @@ const {readFileSync, writeFileSync} = require('fs');
 
 const ROOT_PATH = path.resolve(__dirname, '..');
 
-JSON.parse(
+const updatedChangelogs = JSON.parse(
   execSync(`yarn run --silent lerna changed --json`, {stdio: ['pipe']}),
-).forEach(({location}) => updateChangelogForPackage(location));
+)
+  .map(({location}) => updateChangelogForPackage(location))
+  .filter((changelog) => changelog !== '');
+
+if (updatedChangelogs.length > 0) {
+  const changelogsForGit = updatedChangelogs
+    .map((changelogPath) => JSON.stringify(changelogPath))
+    .join(' ');
+
+  execSync(`git add ${changelogsForGit}`);
+}
 
 /**
  * @param {string} packageLocation
@@ -43,14 +53,14 @@ function updateChangelogForPackage(packageLocation) {
     console.log(
       `- ${relativeChangelogPath}: Skipping as ${newVersion} is a prerelease`,
     );
-    return;
+    return '';
   }
 
   if (changelogContent.includes(`\n## ${newVersion}`)) {
     console.log(
       `- ${relativeChangelogPath}: Skipping as ${newVersion} header is already present`,
     );
-    return;
+    return '';
   }
 
   if (changelogContent.includes('\n## Unreleased\n')) {
@@ -63,7 +73,10 @@ function updateChangelogForPackage(packageLocation) {
       `\n<!-- ## Unreleased -->\n\n${headingFormat(newVersion)}\n`,
     );
     writeFileSync(changelogPath, newContent);
-  } else if (changelogContent.includes('\n<!-- ## Unreleased -->\n')) {
+    return changelogPath;
+  }
+
+  if (changelogContent.includes('\n<!-- ## Unreleased -->\n')) {
     console.log(`- ${relativeChangelogPath}: Adding ${newVersion} header`);
 
     const newContent = changelogContent.replace(
@@ -73,11 +86,14 @@ function updateChangelogForPackage(packageLocation) {
       )}\n\n- No updates. Transitive dependency bump.\n`,
     );
     writeFileSync(changelogPath, newContent);
-  } else {
-    console.warn(
-      `- ${relativeChangelogPath}: Skipping as no commented, or uncommented 'Unreleased' header was found`,
-    );
+    return changelogPath;
   }
+
+  console.warn(
+    `- ${relativeChangelogPath}: Skipping as no commented, or uncommented 'Unreleased' header was found`,
+  );
+
+  return '';
 }
 
 /**
