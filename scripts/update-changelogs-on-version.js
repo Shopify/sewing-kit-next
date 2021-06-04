@@ -24,10 +24,24 @@ const {readFileSync, writeFileSync} = require('fs');
 
 const ROOT_PATH = path.resolve(__dirname, '..');
 
-const updatedChangelogs = JSON.parse(
+const modifiedPackageJsons = execSync(`git diff --name-only`, {stdio: ['pipe']})
+  .toString()
+  .trim()
+  .split('\n')
+  .filter((filename) => filename.endsWith('package.json'));
+
+const packageLocations = JSON.parse(
   execSync(`yarn run --silent lerna changed --json`, {stdio: ['pipe']}),
 )
-  .map(({location}) => updateChangelogForPackage(location))
+  .map(({location}) => location)
+  .filter((location) =>
+    modifiedPackageJsons.includes(
+      path.relative(ROOT_PATH, path.join(location, 'package.json')),
+    ),
+  );
+
+const updatedChangelogs = packageLocations
+  .map((location) => updateChangelogForPackage(location))
   .filter((changelog) => changelog !== '');
 
 if (updatedChangelogs.length > 0) {
