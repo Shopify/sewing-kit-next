@@ -55,7 +55,7 @@ function pkg(greet) {
 
       // Entrypoints
       expect(await workspace.contents('index.js')).toContain(
-        'module.exports = require("./build/cjs/index.js");',
+        'module.exports = interopRequireDefault(require("./build/cjs/index.js"));',
       );
       expect(await workspace.contents('index.mjs')).toContain(
         'export * from "./build/esm/index.mjs"',
