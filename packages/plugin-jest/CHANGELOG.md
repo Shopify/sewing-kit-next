@@ -9,6 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Update `jest` to version `27` [[#193](https://github.com/Shopify/sewing-kit-next/pull/193/)]
 - Add `@sewing-kit/hooks` as a dependency [[#187](https://github.com/Shopify/sewing-kit-next/pull/187)]
 
 ## 0.2.1 - 2021-05-28
