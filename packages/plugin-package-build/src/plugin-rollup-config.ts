@@ -130,6 +130,8 @@ export function rollupConfig(options: RollupConfigOptions) {
                   preserveModules: true,
                   entryFileNames: '[name][assetExtname].js',
                   exports: 'named',
+                  outro:
+                    'module.exports = Object.assign({}, module.exports, exports);',
                 });
               }
 
