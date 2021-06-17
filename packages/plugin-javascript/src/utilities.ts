@@ -380,7 +380,12 @@ export async function writeEntries({
       if (exportStyle === ExportStyle.CommonJs) {
         await project.fs.write(
           `${entry.name || 'index'}${extension}`,
-          `module.exports = require(${JSON.stringify(relativeFromRoot)});`,
+          `function interopRequireDefault(obj) {
+            return obj && obj.__esModule ? obj : {default: obj};
+          }
+          module.exports = interopRequireDefault(require(${JSON.stringify(
+            relativeFromRoot,
+          )}));`,
         );
 
         return;
