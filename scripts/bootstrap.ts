@@ -26,10 +26,7 @@ for (const file of glob('packages/*/*.{js,mjs,node,esnext,ts}', {
 const CUSTOM_ENTRIES = new Map([
   ['config', ['index', 'load']],
   ['plugin-javascript', ['index', 'babel-preset']],
-  [
-    'plugin-typescript',
-    ['index', 'babel-plugin-convert-empty-file-to-esmodule'],
-  ],
+  ['plugin-typescript', ['index']],
 ]);
 const NEEDS_FULL_BUILD = new Set([
   // Needs a full build so that the Babel configuration is available

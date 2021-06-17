@@ -14,9 +14,6 @@ export const addTypeScriptBabelConfig = (config: BabelConfig): BabelConfig => {
         {decoratorsBeforeExport: true},
       ],
       '@babel/plugin-proposal-class-properties',
-      require.resolve(
-        '@sewing-kit/plugin-typescript/babel-plugin-convert-empty-file-to-esmodule',
-      ),
     ],
     presets: [...config.presets, require.resolve('@babel/preset-typescript')],
   };
