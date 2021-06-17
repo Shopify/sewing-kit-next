@@ -18,9 +18,9 @@
     "@sewing-kit/plugin-javascript": "^0.4.1",
     "@sewing-kit/plugins": "^0.2.0",
     "@types/jest": "^26.0.23",
-    "babel-jest": "^26.6.3",
-    "jest": "^26.6.3",
-    "jest-watch-typeahead": "^0.6.3"
+    "babel-jest": "^27.0.2",
+    "jest": "^27.0.4",
+    "jest-watch-typeahead": "^0.6.4"
   },
   "peerDependencies": {
     "@babel/core": "^7.0.0"
