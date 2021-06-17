@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- ## Unreleased -->
 
+### Changed
+
+- Map `exports` to `module.exports` for `cjs` builds [[#190](https://github.com/Shopify/sewing-kit-next/pull/190)]
+
 ## 0.2.3 - 2021-06-01
 
 ### Changed
