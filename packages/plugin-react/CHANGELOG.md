@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Add dependency on `@sewing-kit/plugin-javascript` [[#187](https://github.com/Shopify/sewing-kit-next/pull/187)]
+- Update `@babel/*` packages to their latest versions `7.14.5` [[#191](https://github.com/Shopify/sewing-kit-next/pull/191)]
 
 ## 0.2.0 - 2021-05-20
 

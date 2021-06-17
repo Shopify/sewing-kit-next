@@ -14,9 +14,9 @@
     "build": "tsc --p tsconfig.json"
   },
   "dependencies": {
-    "@babel/preset-react": "^7.9.4",
-    "@sewing-kit/plugin-javascript": "^0.4.1",
+    "@babel/preset-react": "^7.14.5",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.3.1",
+    "@sewing-kit/plugin-javascript": "^0.4.1",
     "@sewing-kit/plugins": "^0.2.0",
     "react-refresh": "^0.8.2"
   },
