@@ -380,7 +380,8 @@ export async function writeEntries({
       if (exportStyle === ExportStyle.CommonJs) {
         await project.fs.write(
           `${entry.name || 'index'}${extension}`,
-          `function interopRequireDefault(obj) {
+          `// copied from https://github.com/babel/babel/blob/56044c7851d583d498f919e9546caddf8f80a72f/packages/babel-helpers/src/helpers.js#L558-L562
+          function interopRequireDefault(obj) {
             return obj && obj.__esModule ? obj : {default: obj};
           }
           module.exports = interopRequireDefault(require(${JSON.stringify(
