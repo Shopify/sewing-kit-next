@@ -250,7 +250,7 @@ export function jest() {
 
                   await api.write(
                     babelTransform,
-                    `const babelJestMd = require('babel-jest'); const babelJest = babelJestMd.__esModule ? babelJestMd.default : babelJestMd; module.exports = babelJest.createTransformer(${JSON.stringify(
+                    `const  {createTransformer} = require('babel-jest').default; module.exports = createTransformer(${JSON.stringify(
                       babelConfig,
                     )});`,
                   );
