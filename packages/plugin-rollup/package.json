@@ -5,12 +5,6 @@
   "description": "sewing-kit-next plugin for building with Rollup",
   "description": "A sewing-kit plugin that runs rollup as a build step",
   "sideEffects": false,
-  "files": [
-    "build/*",
-    "index.js",
-    "index.d.ts",
-    "!tsconfig.tsbuildinfo"
-  ],
   "publishConfig": {
     "access": "public",
     "@sewing-kit:registry": "https://registry.npmjs.org"
@@ -38,6 +32,12 @@
     "url": "https://github.com/Shopify/sewing-kit-next/issues"
   },
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/master/packages/plugin-rollup/README.md",
+  "files": [
+    "build/*",
+    "!*.tsbuildinfo",
+    "index.js",
+    "index.d.ts"
+  ],
   "dependencies": {
     "@sewing-kit/hooks": "^0.2.0",
     "@sewing-kit/plugins": "^0.2.1",

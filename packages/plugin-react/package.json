@@ -21,6 +21,12 @@
     "url": "https://github.com/Shopify/sewing-kit-next/issues"
   },
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/master/packages/plugin-react/README.md",
+  "files": [
+    "build/*",
+    "!*.tsbuildinfo",
+    "index.js",
+    "index.d.ts"
+  ],
   "dependencies": {
     "@babel/preset-react": "^7.14.5",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.3.1",

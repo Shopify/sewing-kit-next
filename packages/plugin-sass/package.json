@@ -21,6 +21,12 @@
     "url": "https://github.com/Shopify/sewing-kit-next/issues"
   },
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/master/packages/plugin-sass/README.md",
+  "files": [
+    "build/*",
+    "!*.tsbuildinfo",
+    "index.js",
+    "index.d.ts"
+  ],
   "dependencies": {
     "@sewing-kit/hooks": "^0.2.0",
     "@sewing-kit/plugins": "^0.2.1",

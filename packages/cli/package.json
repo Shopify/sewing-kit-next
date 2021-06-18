@@ -25,6 +25,13 @@
     "sewing-kit-next": "./bin/sewing-kit-next",
     "skn": "./bin/skn"
   },
+  "files": [
+    "bin/*",
+    "build/*",
+    "!*.tsbuildinfo",
+    "index.js",
+    "index.d.ts"
+  ],
   "dependencies": {
     "@sewing-kit/config": "^0.2.1",
     "@sewing-kit/core": "^0.4.0",

@@ -21,12 +21,18 @@
     "url": "https://github.com/Shopify/sewing-kit-next/issues"
   },
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/master/packages/graphql/README.md",
-  "devDependencies": {
-    "@types/common-tags": "^1.8.0",
-    "@types/loader-utils": "^1.0.0",
-    "@types/webpack": "^4.0.0",
-    "common-tags": "^1.8.0"
-  },
+  "files": [
+    "build/*",
+    "!*.tsbuildinfo",
+    "index.js",
+    "index.d.ts",
+    "jest-simple.js",
+    "jest-simple.d.ts",
+    "jest.js",
+    "jest.d.ts",
+    "webpack.js",
+    "webpack.d.ts"
+  ],
   "dependencies": {
     "@jest/transform": "^27.0.2",
     "graphql": ">=15.0.0 <16.0.0",
@@ -39,5 +45,11 @@
     "webpack": {
       "optional": true
     }
+  },
+  "devDependencies": {
+    "@types/common-tags": "^1.8.0",
+    "@types/loader-utils": "^1.0.0",
+    "@types/webpack": "^4.0.0",
+    "common-tags": "^1.8.0"
   }
 }
