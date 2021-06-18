@@ -378,9 +378,15 @@ export async function writeEntries({
       )}${extension}`;
 
       if (exportStyle === ExportStyle.CommonJs) {
+        // interopRequireDefault copied from https://github.com/babel/babel/blob/56044c7851d583d498f919e9546caddf8f80a72f/packages/babel-helpers/src/helpers.js#L558-L562
+        const linkPath = JSON.stringify(relativeFromRoot);
         await project.fs.write(
           `${entry.name || 'index'}${extension}`,
-          `module.exports = require(${JSON.stringify(relativeFromRoot)});`,
+          `function interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {default: obj};
+}
+module.exports = interopRequireDefault(require(${linkPath}));
+`,
         );
 
         return;
