@@ -12,13 +12,10 @@ const KNOWN_TEMPLATE_KEYS = [
   'files',
   'homepage',
   'license',
-  'main',
   'name',
   'publishConfig',
   'repository',
-  'scripts',
   'sideEffects',
-  'types',
   'version',
 ];
 

@@ -1,6 +1,7 @@
 {
   "name": "@sewing-kit/plugin-service-base",
   "license": "MIT",
+  "description": "sewing-kit-next plugin for services",
   "version": "0.2.2",
   "sideEffects": false,
   "publishConfig": {
@@ -10,6 +11,16 @@
   "engines": {
     "node": ">=12.14.0"
   },
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/sewing-kit-next.git",
+    "directory": "packages/plugin-service-base"
+  },
+  "bugs": {
+    "url": "https://github.com/Shopify/sewing-kit-next/issues"
+  },
+  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/master/packages/plugin-service-base/README.md",
   "dependencies": {
     "@sewing-kit/hooks": "^0.2.0",
     "@sewing-kit/plugin-javascript": "^0.4.2",

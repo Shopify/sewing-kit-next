@@ -1,6 +1,7 @@
 {
   "name": "@sewing-kit/plugin-typescript",
   "license": "MIT",
+  "description": "sewing-kit-next technology plugin for typescript",
   "version": "0.3.0",
   "sideEffects": false,
   "publishConfig": {
@@ -10,6 +11,16 @@
   "engines": {
     "node": ">=12.14.0"
   },
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/sewing-kit-next.git",
+    "directory": "packages/plugin-typescript"
+  },
+  "bugs": {
+    "url": "https://github.com/Shopify/sewing-kit-next/issues"
+  },
+  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/master/packages/plugin-typescript/README.md",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.14.5",
     "@babel/plugin-proposal-decorators": "^7.14.5",
