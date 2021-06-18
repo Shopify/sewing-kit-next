@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Update `@babel/*` packages to their latest versions `7.14.5` [[#191](https://github.com/Shopify/sewing-kit-next/pull/191)]
+- Add `interopRequireDefault` used by babel in `cjs` entry point generation [[#196](https://github.com/Shopify/sewing-kit-next/pull/196)]
 
 ## 0.4.1 - 2021-05-28
 
