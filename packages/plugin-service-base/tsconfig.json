@@ -7,10 +7,5 @@
   },
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.test.ts"],
-  "references": [
-    {"path": "../hooks"},
-    {"path": "../plugins"},
-    {"path": "../plugin-javascript"},
-    {"path": "../plugin-webpack"}
-  ]
+  "references": [{"path": "../plugins"}, {"path": "../plugin-webpack"}]
 }

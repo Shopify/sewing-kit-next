@@ -39,7 +39,7 @@ describe('templates/package.hbs.json', () => {
   });
 });
 
-const IGNORE_PACKAGES = ['@types/'];
+const IGNORE_PACKAGES = ['@types/', '@babel/cli', 'core-js'];
 
 packages.forEach(
   ({packageName, packageJSONPath, packageJSON, expectedPackageJSON}) => {
@@ -140,7 +140,9 @@ packages.forEach(
 
         const filesContent = glob
           .sync(resolve(packagesPath, packageName, '**/*.ts*'))
-          .filter((path) => !path.includes('/dist/'))
+          .filter(
+            (path) => !path.includes('/build/') && !path.endsWith('.d.ts'),
+          )
           .map((path) => readFileSync(path, 'utf8'));
 
         const expectValue = dependencies.filter((dep) =>
