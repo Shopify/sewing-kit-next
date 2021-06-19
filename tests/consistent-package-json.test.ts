@@ -19,8 +19,6 @@ const KNOWN_TEMPLATE_KEYS = [
   'version',
 ];
 
-const SINGLE_ENTRYPOINT_EXCEPTIONS = ['graphql-persisted'];
-
 const ROOT_PATH = resolve(__dirname, '..');
 const packagesPath = join(ROOT_PATH, 'packages');
 const rawPackageJSONTemplate = readFileSync(
@@ -50,7 +48,7 @@ packages.forEach(
           expect(packageJSON.author).toBe(expectedPackageJSON.author);
         });
 
-        it('specifies Quilt Issues as bugs URL', () => {
+        it('specifies sewing-kit-next issues as bugs URL', () => {
           expect(packageJSON.bugs).toStrictEqual(expectedPackageJSON.bugs);
         });
 
@@ -58,31 +56,22 @@ packages.forEach(
           expect(packageJSON.description).not.toBeUndefined();
         });
 
-        if (SINGLE_ENTRYPOINT_EXCEPTIONS.includes(packageName)) {
-          it('specifies publishable files, including at least one entrypoint', () => {
-            expect(packageJSON.files).toStrictEqual(
-              expect.arrayContaining(['build/*', '!*.tsbuildinfo']),
-            );
-            expect(packageJSON.files.length).toBeGreaterThan(2);
-          });
-        } else {
-          it('specifies publishable files, including index entrypoints', () => {
-            // Don't use arrayContaining here as it does not guarantee order
-            // We want to make sure the first set of items are always in a fixed
-            // order. Most importantly, the `!*.tsbuildinfo` exclusion must be
-            // after `build/*`.
-            /* eslint-disable jest/no-if */
-            if (packageJSON?.bin) {
-              expectedPackageJSON.files.unshift('bin/*');
-            }
-            /* eslint-enable */
-            expect(
-              packageJSON.files.slice(0, expectedPackageJSON.files.length),
-            ).toStrictEqual(expectedPackageJSON.files);
-          });
-        }
+        it('specifies publishable files, including index entrypoints', () => {
+          // Don't use arrayContaining here as it does not guarantee order
+          // We want to make sure the first set of items are always in a fixed
+          // order. Most importantly, the `!*.tsbuildinfo` exclusion must be
+          // after `build/*`.
+          /* eslint-disable jest/no-if */
+          if (packageJSON?.bin) {
+            expectedPackageJSON.files.unshift('bin/*');
+          }
+          /* eslint-enable */
+          expect(
+            packageJSON.files.slice(0, expectedPackageJSON.files.length),
+          ).toStrictEqual(expectedPackageJSON.files);
+        });
 
-        it('specifies Quilt deep-link homepage', () => {
+        it('specifies sewing-kit-next deep-link homepage', () => {
           expect(packageJSON.homepage).toBe(expectedPackageJSON.homepage);
         });
 
@@ -100,7 +89,7 @@ packages.forEach(
           );
         });
 
-        it('specifies a repository deep-linking into the Quilt monorepo', () => {
+        it('specifies a repository deep-linking into the sewing-kit-next monorepo', () => {
           expect(packageJSON.repository).toStrictEqual(
             expectedPackageJSON.repository,
           );
@@ -117,16 +106,6 @@ packages.forEach(
             expectedPackageJSON.engines.node,
           );
         });
-
-        if (!SINGLE_ENTRYPOINT_EXCEPTIONS.includes(packageName)) {
-          it('specifies the expected main', () => {
-            expect(packageJSON.main).toBe(expectedPackageJSON.main);
-          });
-
-          it('specifies the expected types', () => {
-            expect(packageJSON.types).toBe(expectedPackageJSON.types);
-          });
-        }
       });
 
       it(`ensures packages included in dependencies are used`, () => {
