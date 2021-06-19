@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]
+- Remove unused dependencies on `@sewing-kit/hooks`, `@sewing-kit/plugin-javascript` and `koa-webpack` [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]
 
 ## 0.2.2 - 2021-06-18
 
