@@ -14,9 +14,9 @@ yarn add @sewing-kit/plugins --dev
 
 ## Overview
 
-In `sewing-kit`, plugins are the things that actually "do" stuff. They piggyback off the architecture provided by `sewing-kit`'s core (i.e. [hooks](../packages/hooks)) to inject actual actions into your workspace's tasks.
+In `sewing-kit`, plugins are the things that actually "do" stuff. They piggyback off the architecture provided by `sewing-kit`'s core (i.e. [hooks](../hooks)) to inject actual actions into your workspace's tasks.
 
-The `@sewing-kit` monorepo provides a suite of ready-made plugins for common use cases, like [type-checking with TypeScript](../packages/plugin-typescript), [transpiling with Babel](../packages/plugin-javascript), and [testing with Jest](../packages/plugin-jest). However, using `sewing-kit`'s API you're able (and encouraged) to write your own to fit your specific needs.
+The `@sewing-kit` monorepo provides a suite of ready-made plugins for common use cases, like [type-checking with TypeScript](../plugin-typescript), [transpiling with Babel](../plugin-javascript), and [testing with Jest](../plugin-jest). However, using `sewing-kit`'s API you're able (and encouraged) to write your own to fit your specific needs.
 
 ## Example
 
@@ -52,7 +52,7 @@ export default createWorkspace((workspace) => {
 
 Plugins can do anything from configuring hooks, adding steps to tasks, or introducing hooks for other plugins to hook into. Note that `JestCoveragePlugin` makes use of the `jestConfig` hook, which isn't provided by core `sewing-kit` but is introduced to the workspace by `jest`.
 
-For more examples on how to write your own plugins, check out the source code for [`@sewing-kit/plugin-jest`](../packages/plugin-jest), [`@sewing-kit/plugin-eslint`](../packages/plugin-eslint), [`@sewing-kit/plugin-typescript`](../packages/plugin-typescript), among others.
+For more examples on how to write your own plugins, check out the source code for [`@sewing-kit/plugin-jest`](../plugin-jest), [`@sewing-kit/plugin-eslint`](../plugin-eslint), [`@sewing-kit/plugin-typescript`](../plugin-typescript), among others.
 
 ## Usage
 
