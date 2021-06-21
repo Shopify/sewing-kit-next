@@ -9,7 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Added package metadata and limit files included in packages. Ensure *.tsbuildinfo fiiles are absent to greatly shink package size
+- Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]
 
 ## 0.4.2 - 2021-06-18
 
