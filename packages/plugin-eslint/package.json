@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/Shopify/sewing-kit-next/issues"
   },
-  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/master/packages/plugin-eslint/README.md",
+  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-eslint/README.md",
   "files": [
     "build/*",
     "!*.tsbuildinfo",
