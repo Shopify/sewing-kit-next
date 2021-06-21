@@ -1,6 +1,7 @@
 {
   "name": "@sewing-kit/webpack-plugin-hash-output",
   "license": "MIT",
+  "description": "A webpack plugin for hash output",
   "version": "0.1.0",
   "sideEffects": false,
   "publishConfig": {
@@ -10,9 +11,22 @@
   "engines": {
     "node": ">=12.14.0"
   },
-  "scripts": {
-    "build": "tsc --p tsconfig.json"
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/sewing-kit-next.git",
+    "directory": "packages/webpack-plugin-hash-output"
   },
+  "bugs": {
+    "url": "https://github.com/Shopify/sewing-kit-next/issues"
+  },
+  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/webpack-plugin-hash-output/README.md",
+  "files": [
+    "build/*",
+    "!*.tsbuildinfo",
+    "index.js",
+    "index.d.ts"
+  ],
   "devDependencies": {
     "@types/webpack": "^4.41.12"
   }

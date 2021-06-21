@@ -1,6 +1,7 @@
 {
   "name": "@sewing-kit/plugin-package-flexible-outputs",
   "license": "MIT",
+  "description": "sewing-kit-next plugin for consuming esmodule and esnext output",
   "version": "0.2.2",
   "sideEffects": false,
   "publishConfig": {
@@ -10,9 +11,22 @@
   "engines": {
     "node": ">=12.14.0"
   },
-  "scripts": {
-    "build": "tsc --p tsconfig.json"
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/sewing-kit-next.git",
+    "directory": "packages/plugin-package-flexible-outputs"
   },
+  "bugs": {
+    "url": "https://github.com/Shopify/sewing-kit-next/issues"
+  },
+  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-package-flexible-outputs/README.md",
+  "files": [
+    "build/*",
+    "!*.tsbuildinfo",
+    "index.js",
+    "index.d.ts"
+  ],
   "dependencies": {
     "@sewing-kit/plugin-javascript": "^0.4.2",
     "@sewing-kit/plugins": "^0.2.1"

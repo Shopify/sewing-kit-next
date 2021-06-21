@@ -1,6 +1,7 @@
 {
   "name": "@sewing-kit/cli",
   "license": "MIT",
+  "description": "The CLI for sewing-kit-next",
   "version": "0.4.2",
   "sideEffects": false,
   "publishConfig": {
@@ -10,13 +11,27 @@
   "engines": {
     "node": ">=12.14.0"
   },
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/sewing-kit-next.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/Shopify/sewing-kit-next/issues"
+  },
+  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/cli/README.md",
   "bin": {
     "sewing-kit-next": "./bin/sewing-kit-next",
     "skn": "./bin/skn"
   },
-  "scripts": {
-    "build": "tsc --p tsconfig.json"
-  },
+  "files": [
+    "bin/*",
+    "build/*",
+    "!*.tsbuildinfo",
+    "index.js",
+    "index.d.ts"
+  ],
   "dependencies": {
     "@sewing-kit/config": "^0.2.1",
     "@sewing-kit/core": "^0.4.0",

@@ -1,6 +1,7 @@
 {
   "name": "@sewing-kit/plugin-service-base",
   "license": "MIT",
+  "description": "sewing-kit-next plugin for services",
   "version": "0.2.2",
   "sideEffects": false,
   "publishConfig": {
@@ -10,18 +11,27 @@
   "engines": {
     "node": ">=12.14.0"
   },
-  "scripts": {
-    "build": "tsc --p tsconfig.json"
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/sewing-kit-next.git",
+    "directory": "packages/plugin-service-base"
   },
+  "bugs": {
+    "url": "https://github.com/Shopify/sewing-kit-next/issues"
+  },
+  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-service-base/README.md",
+  "files": [
+    "build/*",
+    "!*.tsbuildinfo",
+    "index.js",
+    "index.d.ts"
+  ],
   "dependencies": {
-    "@sewing-kit/hooks": "^0.2.0",
-    "@sewing-kit/plugin-javascript": "^0.4.2",
     "@sewing-kit/plugins": "^0.2.1",
     "@types/koa": "^2.11.3",
-    "@types/koa-webpack": "^5.0.1",
     "execa": "^4.0.0",
-    "koa": "^2.11.0",
-    "koa-webpack": "^5.3.0"
+    "koa": "^2.11.0"
   },
   "peerDependencies": {
     "@sewing-kit/plugin-webpack": "^0.1.12",

@@ -1,6 +1,7 @@
 {
   "name": "@sewing-kit/plugin-webpack-builds",
   "license": "MIT",
+  "description": "sewing-kit-next plugin for webpack builds",
   "version": "0.2.1",
   "sideEffects": false,
   "publishConfig": {
@@ -10,9 +11,22 @@
   "engines": {
     "node": ">=12.14.0"
   },
-  "scripts": {
-    "build": "tsc --p tsconfig.json"
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/sewing-kit-next.git",
+    "directory": "packages/plugin-webpack-builds"
   },
+  "bugs": {
+    "url": "https://github.com/Shopify/sewing-kit-next/issues"
+  },
+  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-webpack-builds/README.md",
+  "files": [
+    "build/*",
+    "!*.tsbuildinfo",
+    "index.js",
+    "index.d.ts"
+  ],
   "dependencies": {
     "@sewing-kit/plugins": "^0.2.1"
   },

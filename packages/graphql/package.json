@@ -1,6 +1,7 @@
 {
   "name": "@sewing-kit/graphql",
   "license": "MIT",
+  "description": "Graphql transformers",
   "version": "0.3.0",
   "sideEffects": false,
   "publishConfig": {
@@ -10,15 +11,28 @@
   "engines": {
     "node": ">=12.14.0"
   },
-  "scripts": {
-    "build": "tsc --p tsconfig.json"
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/sewing-kit-next.git",
+    "directory": "packages/graphql"
   },
-  "devDependencies": {
-    "@types/common-tags": "^1.8.0",
-    "@types/loader-utils": "^1.0.0",
-    "@types/webpack": "^4.0.0",
-    "common-tags": "^1.8.0"
+  "bugs": {
+    "url": "https://github.com/Shopify/sewing-kit-next/issues"
   },
+  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/graphql/README.md",
+  "files": [
+    "build/*",
+    "!*.tsbuildinfo",
+    "index.js",
+    "index.d.ts",
+    "jest-simple.js",
+    "jest-simple.d.ts",
+    "jest.js",
+    "jest.d.ts",
+    "webpack.js",
+    "webpack.d.ts"
+  ],
   "dependencies": {
     "@jest/transform": "^27.0.2",
     "graphql": ">=15.0.0 <16.0.0",
@@ -31,5 +45,11 @@
     "webpack": {
       "optional": true
     }
+  },
+  "devDependencies": {
+    "@types/common-tags": "^1.8.0",
+    "@types/loader-utils": "^1.0.0",
+    "@types/webpack": "^4.0.0",
+    "common-tags": "^1.8.0"
   }
 }
