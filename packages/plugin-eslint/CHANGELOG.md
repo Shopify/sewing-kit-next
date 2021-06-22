@@ -10,7 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]
-- Removed `eslintExtensions` hook. ESLint lints files with extensions other than `.js` if they are specified in the lint configs's `overrides` section, so we don't need to control the list of extensions on the command line.
+- Removed `eslintExtensions` hook. ESLint lints files with extensions other than `.js` if they are specified in the lint configs's `overrides` section, so we don't need to control the list of extensions on the command line. [[#199](https://github.com/Shopify/sewing-kit-next/pull/199)]
 
 ## 0.2.1 - 2021-06-18
 
