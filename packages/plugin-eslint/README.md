@@ -27,22 +27,6 @@ export default createWorkspace((workspace) => {
 
 This plugin adds the following hooks to `LintWorkspaceConfigurationCustomHooks`:
 
-- `eslintExtensions`: an array of file extensions to lint with ESLint. Defaults to linting `.js` and `.mjs`.
-
-  ```tsx
-  import {createWorkspaceLintPlugin} from '@sewing-kit/config';
-
-  const plugin = createWorkspaceLintPlugin(({hooks}) => {
-    hooks.configure.hook((configure) => {
-      // In addition to the default extensions, also lint .graphql files
-      configure.eslintExtensions!.hook((extensions) => [
-        ...extensions,
-        '.graphql',
-      ]);
-    });
-  });
-  ```
-
 - `eslintFlags`: an object of options to convert into command line flags for the `eslint` command. These options are camelcase versions of their [CLI counterparts](https://eslint.org/docs/user-guide/command-line-interface).
 
   ```tsx

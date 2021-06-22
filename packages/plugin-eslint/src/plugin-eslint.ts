@@ -39,7 +39,6 @@ export interface ESLintFlags {
 }
 
 export interface ESLintHooks {
-  readonly eslintExtensions: WaterfallHook<ReadonlyArray<string>>;
   readonly eslintFlags: WaterfallHook<ESLintFlags>;
 }
 
@@ -53,7 +52,6 @@ export function eslint() {
   return createWorkspaceLintPlugin(PLUGIN, ({hooks, options, api}) => {
     hooks.configureHooks.hook(
       addHooks<ESLintHooks>(() => ({
-        eslintExtensions: new WaterfallHook(),
         eslintFlags: new WaterfallHook(),
       })),
     );
@@ -62,10 +60,6 @@ export function eslint() {
       ...steps,
       api.createStep({id: 'ESLint.Lint', label: 'run eslint'}, async (step) => {
         const {fix = false} = options;
-        const extensions = await configuration.eslintExtensions!.run([
-          '.mjs',
-          '.js',
-        ]);
         const args = toArgs(
           await configuration.eslintFlags!.run({
             fix,
@@ -73,7 +67,6 @@ export function eslint() {
             format: 'codeframe',
             cache: true,
             cacheLocation: api.cachePath('eslint/'),
-            ext: [...extensions],
             noErrorOnUnmatchedPattern: options.allowEmpty,
           }),
           {dasherize: true},
@@ -93,11 +86,7 @@ export function eslint() {
             throw new DiagnosticError({
               title: 'eslint failed because no files were found to lint',
               suggestion: (fmt) =>
-                fmt`Add at least one file with a .${
-                  extensions.length === 1
-                    ? extensions[0]
-                    : `{${extensions.join(',')}}`
-                } extension, or add additional sewing-kit plugins that will add more file extensions to the {code eslintExtensions} hook. Alternatively, you can remove the eslint plugin, or pass the {code --allow-empty} flag to the {code sewing-kit lint} command.`,
+                fmt`Add at least one file to lint, or add overrides to your eslint config to teach it about additional file types. Alternatively, you can remove the eslint plugin, or pass the {code --allow-empty} flag to the {code sewing-kit lint} command.`,
             });
           }
 
