@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]
+- Add `jestTestRunner` hook to allow for easily overriding Jest's [`testRunner`](https://jestjs.io/docs/configuration#testrunner-string) option [[#198](https://github.com/Shopify/sewing-kit-next/pull/198)]
 
 ## 0.3.0 - 2021-06-18
 

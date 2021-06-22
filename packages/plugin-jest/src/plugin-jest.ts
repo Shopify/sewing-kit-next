@@ -29,6 +29,7 @@ type JestConfig = DeepReadonly<import('@jest/types').Config.InitialOptions>;
 interface JestProjectHooks {
   readonly jestExtensions: WaterfallHook<ReadonlyArray<string>>;
   readonly jestEnvironment: WaterfallHook<string>;
+  readonly jestTestRunner: WaterfallHook<string>;
   readonly jestModuleMapper: WaterfallHook<{
     [key: string]: string;
   }>;
@@ -110,6 +111,7 @@ export function jest() {
           addHooks<JestProjectHooks>(() => ({
             jestExtensions: new WaterfallHook(),
             jestEnvironment: new WaterfallHook(),
+            jestTestRunner: new WaterfallHook(),
             jestModuleMapper: new WaterfallHook(),
             jestSetupEnv: new WaterfallHook(),
             jestSetupTests: new WaterfallHook(),
@@ -205,6 +207,7 @@ export function jest() {
 
                   const [
                     environment,
+                    testRunner,
                     watchIgnore,
                     babelConfig,
                     transform,
@@ -214,6 +217,7 @@ export function jest() {
                     setupTestsFiles,
                   ] = await Promise.all([
                     hooks.jestEnvironment!.run('node'),
+                    hooks.jestTestRunner!.run('jest-circus'),
                     hooks.jestWatchIgnore!.run([
                       project.fs.buildPath(),
                       project.fs.resolvePath('node_modules/'),
@@ -267,6 +271,7 @@ export function jest() {
                     ],
                     moduleFileExtensions: normalizedExtensions,
                     testEnvironment: environment,
+                    testRunner,
                     moduleNameMapper: moduleMapper,
                     setupFiles: setupEnvironmentFiles,
                     setupFilesAfterEnv: setupTestsFiles,
