@@ -206,15 +206,15 @@ export function jest() {
                   ]);
 
                   const [
-                    environment,
+                    testEnvironment,
                     testRunner,
-                    watchIgnore,
+                    watchPathIgnorePatterns,
                     babelConfig,
                     transform,
                     extensions,
-                    moduleMapper,
-                    setupEnvironmentFiles,
-                    setupTestsFiles,
+                    moduleNameMapper,
+                    setupFiles,
+                    setupFilesAfterEnv,
                   ] = await Promise.all([
                     hooks.jestEnvironment!.run('node'),
                     hooks.jestTestRunner!.run('jest-circus'),
@@ -259,7 +259,7 @@ export function jest() {
                     )});`,
                   );
 
-                  const normalizedExtensions = extensions.map((extension) =>
+                  const moduleFileExtensions = extensions.map((extension) =>
                     extension.replace(/^\./, ''),
                   );
 
@@ -267,15 +267,15 @@ export function jest() {
                     displayName: project.name,
                     rootDir: project.root,
                     testRegex: [
-                      `.+\\.test\\.(${normalizedExtensions.join('|')})$`,
+                      `.+\\.test\\.(${moduleFileExtensions.join('|')})$`,
                     ],
-                    moduleFileExtensions: normalizedExtensions,
-                    testEnvironment: environment,
+                    moduleFileExtensions,
+                    testEnvironment,
                     testRunner,
-                    moduleNameMapper: moduleMapper,
-                    setupFiles: setupEnvironmentFiles,
-                    setupFilesAfterEnv: setupTestsFiles,
-                    watchPathIgnorePatterns: watchIgnore,
+                    moduleNameMapper,
+                    setupFiles,
+                    setupFilesAfterEnv,
+                    watchPathIgnorePatterns,
                     transform,
                   });
 
