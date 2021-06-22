@@ -23,7 +23,7 @@ export default createWebApp((app) => {
 });
 ```
 
-This plugin integrates with [`@sewing-kit/plugin-webpack`](TODO), [`@sewing-kit/plugin-jest`](TODO), and [`@sewing-kit/plugin-eslint`](TODO). In Webpack and Jest, `.graphql` files are configured to be processed by the transforms in [`@sewing-kit/graphql`](TODO).
+This plugin integrates with [`@sewing-kit/plugin-webpack`](TODO) and [`@sewing-kit/plugin-jest`](TODO). In Webpack and Jest, `.graphql` files are configured to be processed by the transforms in [`@sewing-kit/graphql`](TODO).
 
 ### Webpack
 
@@ -59,29 +59,3 @@ The `graphql()` plugin accepts the following options:
     app.use(graphql({extensions: ['.graphql', '.gql']}));
   });
   ```
-
-## `workspaceGraphQL()`
-
-The `workspaceGraphQL` function returns a `sewing-kit` plugin. This plugin applies to the workspace, not an individual project.
-
-```ts
-import {createWorkspace} from '@sewing-kit/config';
-import {workspaceGraphQL} from '@sewing-kit/plugin-graphql';
-
-export default createWorkspace((app) => {
-  app.use(workspaceGraphQL());
-});
-```
-
-This plugin automatically configures `eslint` to lint `.graphql` files, if the [`@sewing-kit/plugin-eslint` `eslint` plugin](TODO) is also included in the workspace. For this to have an effect, you should make sure to include ESLint rules that apply to `.graphql` files, like [`eslint-plugin-graphql`](https://github.com/apollographql/eslint-plugin-graphql).
-
-This plugin accepts the same `extensions` option as the `graphql` plugin to enable support for alternate GraphQL file extensions.
-
-```ts
-import {createWorkspace} from '@sewing-kit/config';
-import {workspaceGraphQL} from '@sewing-kit/plugin-graphql';
-
-export default createWorkspace((app) => {
-  app.use(workspaceGraphQL({extensions: ['.graphql', '.gql']}));
-});
-```

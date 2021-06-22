@@ -1,14 +1,7 @@
-import {
-  Env,
-  WebApp,
-  Service,
-  createProjectPlugin,
-  createWorkspaceLintPlugin,
-} from '@sewing-kit/plugins';
+import {Env, WebApp, Service, createProjectPlugin} from '@sewing-kit/plugins';
 import type {ExportStyle} from '@sewing-kit/graphql';
 import type {} from '@sewing-kit/plugin-jest';
 import type {} from '@sewing-kit/plugin-webpack';
-import type {} from '@sewing-kit/plugin-eslint';
 
 const PLUGIN = 'SewingKit.GraphQL';
 
@@ -120,24 +113,6 @@ function extensionsToMatchers(extensions: string[]) {
     jestMatcher: `\\.${extensionPart}$`,
     webpackMatcher: new RegExp(`\\.(${extensionPart})$`),
   };
-}
-
-// TODO: add pre-build, -lint, -dev, and -type-check step to download
-// remote GraphQL schemas, or to generate the necessary representation
-// of local schemas
-export function workspaceGraphQL({
-  extensions: includeExtensions = DEFAULT_EXTENSIONS,
-}: Pick<Options, 'extensions'> = {}) {
-  return createWorkspaceLintPlugin(PLUGIN, ({hooks}) => {
-    hooks.configure.hook((configuration) => {
-      configuration.eslintExtensions?.hook((extensions) => [
-        ...extensions,
-        ...includeExtensions.map(
-          (extension) => `.${stripLeadingDot(extension)}`,
-        ),
-      ]);
-    });
-  });
 }
 
 function stripLeadingDot(extension: string) {

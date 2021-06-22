@@ -17,7 +17,6 @@ import {createJavaScriptWebpackRuleSet} from '@sewing-kit/plugin-javascript';
 import {addTypeScriptBabelConfig} from './utilities';
 
 import type {} from '@sewing-kit/plugin-jest';
-import type {} from '@sewing-kit/plugin-eslint';
 import type {} from '@sewing-kit/plugin-webpack';
 
 interface TypeScriptTypeCheckingHooks {
@@ -110,14 +109,8 @@ export function workspaceTypeScript() {
   return createWorkspacePlugin(PLUGIN, (context) => {
     const {
       workspace,
-      tasks: {build, lint, typeCheck},
+      tasks: {build, typeCheck},
     } = context;
-
-    lint.hook(({hooks}) => {
-      hooks.configure.hook((configure) => {
-        configure.eslintExtensions?.hook(addTypeScriptExtensions);
-      });
-    });
 
     build.hook(({hooks, options}) => {
       hooks.configureHooks.hook((hooks: any) => ({
