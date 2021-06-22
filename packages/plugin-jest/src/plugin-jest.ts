@@ -29,6 +29,7 @@ type JestConfig = DeepReadonly<import('@jest/types').Config.InitialOptions>;
 interface JestProjectHooks {
   readonly jestExtensions: WaterfallHook<ReadonlyArray<string>>;
   readonly jestEnvironment: WaterfallHook<string>;
+  readonly jestTestRunner: WaterfallHook<string>;
   readonly jestModuleMapper: WaterfallHook<{
     [key: string]: string;
   }>;
@@ -110,6 +111,7 @@ export function jest() {
           addHooks<JestProjectHooks>(() => ({
             jestExtensions: new WaterfallHook(),
             jestEnvironment: new WaterfallHook(),
+            jestTestRunner: new WaterfallHook(),
             jestModuleMapper: new WaterfallHook(),
             jestSetupEnv: new WaterfallHook(),
             jestSetupTests: new WaterfallHook(),
@@ -204,16 +206,18 @@ export function jest() {
                   ]);
 
                   const [
-                    environment,
-                    watchIgnore,
+                    testEnvironment,
+                    testRunner,
+                    watchPathIgnorePatterns,
                     babelConfig,
                     transform,
                     extensions,
-                    moduleMapper,
-                    setupEnvironmentFiles,
-                    setupTestsFiles,
+                    moduleNameMapper,
+                    setupFiles,
+                    setupFilesAfterEnv,
                   ] = await Promise.all([
                     hooks.jestEnvironment!.run('node'),
+                    hooks.jestTestRunner!.run('jest-circus'),
                     hooks.jestWatchIgnore!.run([
                       project.fs.buildPath(),
                       project.fs.resolvePath('node_modules/'),
@@ -255,7 +259,7 @@ export function jest() {
                     )});`,
                   );
 
-                  const normalizedExtensions = extensions.map((extension) =>
+                  const moduleFileExtensions = extensions.map((extension) =>
                     extension.replace(/^\./, ''),
                   );
 
@@ -263,14 +267,15 @@ export function jest() {
                     displayName: project.name,
                     rootDir: project.root,
                     testRegex: [
-                      `.+\\.test\\.(${normalizedExtensions.join('|')})$`,
+                      `.+\\.test\\.(${moduleFileExtensions.join('|')})$`,
                     ],
-                    moduleFileExtensions: normalizedExtensions,
-                    testEnvironment: environment,
-                    moduleNameMapper: moduleMapper,
-                    setupFiles: setupEnvironmentFiles,
-                    setupFilesAfterEnv: setupTestsFiles,
-                    watchPathIgnorePatterns: watchIgnore,
+                    moduleFileExtensions,
+                    testEnvironment,
+                    testRunner,
+                    moduleNameMapper,
+                    setupFiles,
+                    setupFilesAfterEnv,
+                    watchPathIgnorePatterns,
                     transform,
                   });
 
