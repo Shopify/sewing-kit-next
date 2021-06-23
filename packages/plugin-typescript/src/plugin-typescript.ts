@@ -13,8 +13,7 @@ import {
   TargetRuntime,
 } from '@sewing-kit/plugins';
 import {createJavaScriptWebpackRuleSet} from '@sewing-kit/plugin-javascript';
-
-import {addTypeScriptBabelConfig} from './utilities';
+import type {BabelConfig} from '@sewing-kit/plugin-javascript';
 
 import type {} from '@sewing-kit/plugin-jest';
 import type {} from '@sewing-kit/plugin-webpack';
@@ -255,9 +254,7 @@ function createWriteFallbackEntriesStep({
     },
     async () => {
       await Promise.all(
-        workspace.packages.map((pkg) =>
-          writeTypeScriptEntries(pkg, {strategy: EntryStrategy.Symlink}),
-        ),
+        workspace.packages.map((pkg) => writeTypeScriptEntriesSymlink(pkg)),
       );
     },
   );
@@ -333,15 +330,7 @@ export function createRunTypeScriptStep(
   );
 }
 
-export enum EntryStrategy {
-  Symlink,
-  ReExport,
-}
-
-export async function writeTypeScriptEntries(
-  pkg: Package,
-  {strategy}: {strategy: EntryStrategy},
-) {
+async function writeTypeScriptEntriesSymlink(pkg: Package) {
   const outputPath = await getOutputPath(pkg);
 
   const sourceRoot = pkg.fs.resolvePath('src');
@@ -354,56 +343,20 @@ export async function writeTypeScriptEntries(
     const destinationInOutput = resolve(outputPath, relativeFromSourceRoot);
     const relativeFromRoot = normalizedRelative(pkg.root, destinationInOutput);
 
-    if (strategy === EntryStrategy.ReExport) {
-      let hasDefault = true;
-      let content = '';
+    const symlinkFile = `${relativeFromRoot}.d.ts`;
+    if (!(await pkg.fs.hasFile(symlinkFile))) {
+      await pkg.fs.write(symlinkFile, '');
+      await utimes(pkg.fs.resolvePath(symlinkFile), 201001010000, 201001010000);
+    }
 
-      try {
-        content = await pkg.fs.read(
-          (await pkg.fs.glob(`${absoluteEntryPath}.*`))[0],
-        );
-
-        // export default ...
-        // export {Foo as default} from ...
-        // export {default} from ...
-        hasDefault =
-          /(?:export|as) default\b/.test(content) || /{default}/.test(content);
-      } catch {
-        // intentional no-op
-        content = '';
-      }
-
-      await pkg.fs.write(
-        `${entry.name || 'index'}.d.ts`,
-        [
-          `export * from ${JSON.stringify(relativeFromRoot)};`,
-          hasDefault
-            ? `export {default} from ${JSON.stringify(relativeFromRoot)};`
-            : false,
-        ]
-          .filter(Boolean)
-          .join('\n'),
+    try {
+      await symlink(
+        symlinkFile,
+        pkg.fs.resolvePath(`${entry.name || 'index'}.d.ts`),
       );
-    } else {
-      const symlinkFile = `${relativeFromRoot}.d.ts`;
-      if (!(await pkg.fs.hasFile(symlinkFile))) {
-        await pkg.fs.write(symlinkFile, '');
-        await utimes(
-          pkg.fs.resolvePath(symlinkFile),
-          201001010000,
-          201001010000,
-        );
-      }
-
-      try {
-        await symlink(
-          symlinkFile,
-          pkg.fs.resolvePath(`${entry.name || 'index'}.d.ts`),
-        );
-      } catch (error) {
-        if (error.code !== 'EEXIST') {
-          throw error;
-        }
+    } catch (error) {
+      if (error.code !== 'EEXIST') {
+        throw error;
       }
     }
   }
@@ -462,4 +415,19 @@ async function addWebpackPlugins(
     new IgnoreMissingTypeExportWarningsPlugin(),
     new WatchIgnorePlugin([/\.d\.ts$/]),
   ];
+}
+
+function addTypeScriptBabelConfig(config: BabelConfig): BabelConfig {
+  return {
+    ...config,
+    plugins: [
+      ...config.plugins,
+      [
+        require.resolve('@babel/plugin-proposal-decorators'),
+        {decoratorsBeforeExport: true},
+      ],
+      '@babel/plugin-proposal-class-properties',
+    ],
+    presets: [...config.presets, require.resolve('@babel/preset-typescript')],
+  };
 }

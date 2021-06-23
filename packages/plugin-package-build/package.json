@@ -37,14 +37,6 @@
     "fs-extra": "^9.0.0",
     "rollup-plugin-node-externals": "^2.2.0"
   },
-  "peerDependencies": {
-    "@sewing-kit/plugin-typescript": "^0.1.28"
-  },
-  "peerDependenciesMeta": {
-    "@sewing-kit/plugin-typescript": {
-      "optional": true
-    }
-  },
   "devDependencies": {
     "@types/fs-extra": "^9.0.0"
   }
