@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Breaking Change
+
+- Remove `createCompileBabelStep`, `writeEntries` and `ExportStyle` utilities. Project compilation using the Babel CLI is no longer supported, as Rollup provides a more complete experience.
+
 ### Changed
 
 - Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]

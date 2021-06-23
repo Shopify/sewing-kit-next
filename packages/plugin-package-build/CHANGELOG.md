@@ -11,6 +11,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]
 - Remove unused dependency on `@babel/core` [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]
+- Remove dependency on `@sewing-kit/plugin-javascript`. `plugin-package-build` is now responsible for writing js/mjs/esnext entry files.
 
 ## 0.2.4 - 2021-06-18
 

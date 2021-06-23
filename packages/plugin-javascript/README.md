@@ -210,41 +210,6 @@ const plugin = createPackageBuildPlugin('MyPlugin', ({api, options, hooks}) => {
 });
 ```
 
-### `createCompileBabelStep()`
-
-The `createCompileBabelStep` function returns a [`Step`](TODO) that will transpile the source code for a project using the Babel CLI. Babel will be run with the configuration registered in the [hooks documented above](TODO). This step will also write entry files to the root of your project for each [`entry`](TODO) in the package on which this plugin is run. The result is an isolated `build` directory for the compiled outputs, and a set of entries that provide access to only the parts of the package you have specifically designated as being accessible.
-
-```ts
-import {createPackageBuildPlugin} from '@sewing-kit/config';
-import {
-  createCompileBabelStep,
-  ExportStyle,
-} from '@sewing-kit/plugin-javascript';
-
-const plugin = createPackageBuildPlugin('MyPlugin', ({pkg, api, hooks}) => {
-  hooks.steps.hook((steps, {configuration}) => [
-    ...steps,
-    await createCompileBabelStep({
-      api,
-      project: pkg,
-      configuration,
-      // The name of the configuration file that is written for this build
-      configFile: 'babel.esm.js',
-      // Where Babel will put the compiled output
-      outputPath: pkg.fs.buildPath(),
-      // A custom extension to use for the compiled output files (optional,
-      // defaults to .js)
-      extension: '.mjs',
-      // Specifies how the automatically-generated entry files will export the
-      // built version of the library. Can be either `EsModules`, to re-export
-      // the package using native `esm`, or `CommonJs`, to re-export the package
-      // using `module.exports` and `require`.
-      exportStyle: ExportStyle.EsModules,
-    }),
-  ]);
-});
-```
-
 ### `updateBabelPreset()`
 
 The `updateBabelPreset` function returns a function intended for use in the [`babelConfig` hook](TODO). The resulting function will update the configuration for a Babel preset, or optionally add a Babel preset if no matching one is already present in the `babelConfig`. While this update can be done manually as well, this function is useful for normalizing the different way presets can be configured in a `babelConfig`.
