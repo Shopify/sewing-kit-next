@@ -10,6 +10,7 @@
   "references": [
     {"path": "../hooks"},
     {"path": "../plugins"},
+    {"path": "../plugin-javascript"},
     {"path": "../plugin-rollup"}
   ]
 }

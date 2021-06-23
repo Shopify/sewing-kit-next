@@ -11,6 +11,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import externals from 'rollup-plugin-node-externals';
 
+import type {} from '@sewing-kit/plugin-javascript';
+
 declare module '@sewing-kit/hooks' {
   interface BuildPackageTargetOptions {
     rollupEsnext?: boolean;
