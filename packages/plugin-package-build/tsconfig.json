@@ -11,7 +11,6 @@
     {"path": "../hooks"},
     {"path": "../plugins"},
     {"path": "../plugin-javascript"},
-    {"path": "../plugin-typescript"},
     {"path": "../plugin-rollup"}
   ]
 }

@@ -1,14 +1,17 @@
+import {resolve, relative} from 'path';
+
 import {
   createProjectBuildPlugin,
   Package,
   Runtime,
   DiagnosticError,
 } from '@sewing-kit/plugins';
-import {writeEntries, ExportStyle} from '@sewing-kit/plugin-javascript';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import externals from 'rollup-plugin-node-externals';
+
+import type {} from '@sewing-kit/plugin-javascript';
 
 declare module '@sewing-kit/hooks' {
   interface BuildPackageTargetOptions {
@@ -201,4 +204,87 @@ export function rollupConfig(options: RollupConfigOptions) {
       });
     },
   );
+}
+
+enum ExportStyle {
+  EsModules,
+  CommonJs,
+}
+
+async function writeEntries({
+  project,
+  extension,
+  outputPath,
+  exportStyle,
+}: {
+  project: Package;
+  extension: string;
+  outputPath: string;
+  exportStyle: ExportStyle;
+}) {
+  const sourceRoot = resolve(project.root, 'src');
+
+  await Promise.all(
+    project.entries.map(async (entry) => {
+      const absoluteEntryPath = (await project.fs.hasFile(`${entry.root}.*`))
+        ? project.fs.resolvePath(entry.root)
+        : project.fs.resolvePath(entry.root, 'index');
+
+      const relativeFromSourceRoot = relative(sourceRoot, absoluteEntryPath);
+      const destinationInOutput = resolve(outputPath, relativeFromSourceRoot);
+      const relativeFromRoot = `${normalizedRelative(
+        project.root,
+        destinationInOutput,
+      )}${extension}`;
+
+      if (exportStyle === ExportStyle.CommonJs) {
+        // interopRequireDefault copied from https://github.com/babel/babel/blob/56044c7851d583d498f919e9546caddf8f80a72f/packages/babel-helpers/src/helpers.js#L558-L562
+        const linkPath = JSON.stringify(relativeFromRoot);
+        await project.fs.write(
+          `${entry.name || 'index'}${extension}`,
+          `function interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {default: obj};
+}
+module.exports = interopRequireDefault(require(${linkPath}));
+`,
+        );
+
+        return;
+      }
+
+      let hasDefault = true;
+      let content = '';
+
+      try {
+        content = await project.fs.read(
+          (await project.fs.glob(`${absoluteEntryPath}.*`))[0],
+        );
+
+        // export default ...
+        // export {Foo as default} from ...
+        // export {default} from ...
+        hasDefault =
+          /(?:export|as) default\b/.test(content) || /{default}/.test(content);
+      } catch {
+        // intentional no-op
+      }
+
+      const entryExtension = `${entry.name ?? 'index'}${extension}`;
+      const entryContents = [
+        `export * from ${JSON.stringify(relativeFromRoot)};`,
+        hasDefault
+          ? `export {default} from ${JSON.stringify(relativeFromRoot)};`
+          : false,
+      ]
+        .filter(Boolean)
+        .join('\n');
+
+      await project.fs.write(entryExtension, entryContents);
+    }),
+  );
+}
+
+function normalizedRelative(from: string, to: string) {
+  const rel = relative(from, to);
+  return rel.startsWith('.') ? rel : `./${rel}`;
 }

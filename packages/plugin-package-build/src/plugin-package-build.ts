@@ -3,6 +3,7 @@ import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
 
 import {rollupConfig} from './plugin-rollup-config';
 import {buildBinaries} from './plugin-package-binaries';
+import {buildTypeScriptDefinitions} from './plugin-package-typescript';
 import type {BuildTypeScriptDefinitionsOptions} from './plugin-package-typescript';
 
 export interface PackageBuildOptions {
@@ -38,25 +39,11 @@ export function packageBuild({
           esnext,
         }),
         binaries && buildBinaries(),
+        typescript &&
+          buildTypeScriptDefinitions(
+            typeof typescript === 'boolean' ? {} : typescript,
+          ),
       );
-
-      // Typescript support only works if `@sewing-kit/plugin-typescript`
-      // is available as a peer dependency. Failing is expected if it is absent.
-      if (typescript) {
-        try {
-          const {buildTypeScriptDefinitions} = await import(
-            './plugin-package-typescript'
-          );
-
-          composer.use(
-            buildTypeScriptDefinitions(
-              typeof typescript === 'boolean' ? {} : typescript,
-            ),
-          );
-        } catch {
-          // intentional noop
-        }
-      }
     },
   );
 }

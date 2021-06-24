@@ -37,7 +37,7 @@ describe('templates/package.hbs.json', () => {
   });
 });
 
-const IGNORE_PACKAGES = ['@types/', '@babel/cli', 'core-js'];
+const IGNORE_PACKAGES = ['@types/', 'core-js'];
 
 packages.forEach(
   ({packageName, packageJSONPath, packageJSON, expectedPackageJSON}) => {

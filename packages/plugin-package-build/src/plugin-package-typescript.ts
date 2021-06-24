@@ -1,11 +1,7 @@
-import {relative} from 'path';
+import {relative, resolve} from 'path';
 
 import {copy, remove} from 'fs-extra';
 import {Package, createProjectBuildPlugin} from '@sewing-kit/plugins';
-import {
-  EntryStrategy,
-  writeTypeScriptEntries,
-} from '@sewing-kit/plugin-typescript';
 
 const PLUGIN = 'SewingKit.PackageTypeScript';
 
@@ -43,9 +39,7 @@ export function buildTypeScriptDefinitions({
               ),
             );
           } else {
-            await writeTypeScriptEntries(project, {
-              strategy: EntryStrategy.ReExport,
-            });
+            await writeTypeScriptEntries(project);
           }
         },
       ),
@@ -69,4 +63,54 @@ async function getOutputPath(pkg: Package) {
   }
 
   return pkg.fs.resolvePath('build/ts');
+}
+
+export async function writeTypeScriptEntries(pkg: Package) {
+  const outputPath = await getOutputPath(pkg);
+
+  const sourceRoot = pkg.fs.resolvePath('src');
+
+  for (const entry of pkg.entries) {
+    const absoluteEntryPath = (await pkg.fs.hasDirectory(entry.root))
+      ? pkg.fs.resolvePath(entry.root, 'index')
+      : pkg.fs.resolvePath(entry.root);
+    const relativeFromSourceRoot = relative(sourceRoot, absoluteEntryPath);
+    const destinationInOutput = resolve(outputPath, relativeFromSourceRoot);
+    const relativeFromRoot = normalizedRelative(pkg.root, destinationInOutput);
+
+    let hasDefault = true;
+    let content = '';
+
+    try {
+      content = await pkg.fs.read(
+        (await pkg.fs.glob(`${absoluteEntryPath}.*`))[0],
+      );
+
+      // export default ...
+      // export {Foo as default} from ...
+      // export {default} from ...
+      hasDefault =
+        /(?:export|as) default\b/.test(content) || /{default}/.test(content);
+    } catch {
+      // intentional no-op
+      content = '';
+    }
+
+    await pkg.fs.write(
+      `${entry.name || 'index'}.d.ts`,
+      [
+        `export * from ${JSON.stringify(relativeFromRoot)};`,
+        hasDefault
+          ? `export {default} from ${JSON.stringify(relativeFromRoot)};`
+          : false,
+      ]
+        .filter(Boolean)
+        .join('\n'),
+    );
+  }
+}
+
+function normalizedRelative(from: string, to: string) {
+  const rel = relative(from, to);
+  return rel.startsWith('.') ? rel : `./${rel}`;
 }
