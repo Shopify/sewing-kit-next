@@ -17,7 +17,7 @@ Sewing Kit is a front-end toolchain that aims to facilitate common front-end tas
 
 ## 💻 Installation
 
-To get started, add the Sewing Kit CLI package to your app's `devDepenencies`:
+To get started, add the Sewing Kit CLI package to your app's `devDependencies`:
 
 ```sh
 yarn add @sewing-kit/cli --dev
