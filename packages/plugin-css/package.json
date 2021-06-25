@@ -25,38 +25,6 @@
     "build/*",
     "!*.tsbuildinfo",
     "index.js",
-    "index.d.ts",
-    "jest-module-mapper.js",
-    "jest-module-mapper.d.ts",
-    "postcss-preset.js",
-    "postcss-preset.d.ts"
-  ],
-  "dependencies": {
-    "@sewing-kit/plugins": "^0.2.1",
-    "@types/mini-css-extract-plugin": "^0.9.1",
-    "@types/optimize-css-assets-webpack-plugin": "^5.0.1",
-    "css-loader": "^3.5.2",
-    "mini-css-extract-plugin": "^0.9.0",
-    "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "postcss": "^7.0.27",
-    "postcss-loader": "^3.0.0",
-    "postcss-preset-env": "^6.7.0",
-    "style-loader": "^1.1.4"
-  },
-  "peerDependencies": {
-    "@sewing-kit/plugin-jest": "^0.1.24",
-    "@sewing-kit/plugin-webpack": "^0.1.12",
-    "webpack": ">=4 <5"
-  },
-  "peerDependenciesMeta": {
-    "@sewing-kit/plugin-jest": {
-      "optional": true
-    },
-    "@sewing-kit/plugin-webpack": {
-      "optional": true
-    },
-    "webpack": {
-      "optional": true
-    }
-  }
+    "index.d.ts"
+  ]
 }

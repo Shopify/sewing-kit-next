@@ -7,9 +7,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-### Changed
+### Breaking Change
 
-- Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]
+- Removed package. Use `graphql-mini-transforms` instead.
 
 ## 0.3.0 - 2021-06-18
 

@@ -26,26 +26,5 @@
     "!*.tsbuildinfo",
     "index.js",
     "index.d.ts"
-  ],
-  "dependencies": {
-    "@sewing-kit/hooks": "^0.2.0",
-    "@sewing-kit/plugins": "^0.2.1",
-    "sass-loader": "^8.0.2"
-  },
-  "peerDependencies": {
-    "@sewing-kit/plugin-css": "*",
-    "@sewing-kit/plugin-webpack": "^0.1.12",
-    "webpack": ">=4 <5"
-  },
-  "peerDependenciesMeta": {
-    "@sewing-kit/plugin-css": {
-      "optional": true
-    },
-    "@sewing-kit/plugin-webpack": {
-      "optional": true
-    },
-    "webpack": {
-      "optional": true
-    }
-  }
+  ]
 }
