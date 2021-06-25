@@ -7,10 +7,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-### Changed
+### Breaking Change
 
-- Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]
-- Removed `workspaceGraphQL` plugin. This was only used for adding extensions to eslint, which is no longer required as graphql files can be included in linting by modifying ESLint config files. [[#199](https://github.com/Shopify/sewing-kit-next/pull/199)]
+- Removed package. Per technology and partial config plugins have been removed as we do not believe they are the right abstraction.
 
 ## 0.2.1 - 2021-06-18
 
