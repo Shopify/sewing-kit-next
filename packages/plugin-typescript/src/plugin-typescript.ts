@@ -1,9 +1,8 @@
-import {join, resolve, relative} from 'path';
+import {join, resolve} from 'path';
 
-import {copy, utimes, symlink} from 'fs-extra';
+import {copy} from 'fs-extra';
 import {
   Env,
-  Package,
   Workspace,
   WaterfallHook,
   DiagnosticError,

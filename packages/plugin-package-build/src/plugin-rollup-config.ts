@@ -1,5 +1,3 @@
-import {resolve, relative} from 'path';
-
 import {
   createProjectBuildPlugin,
   Package,
