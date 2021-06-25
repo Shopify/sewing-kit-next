@@ -25,7 +25,7 @@ declare module '@sewing-kit/hooks' {
 
 const PLUGIN = 'SewingKit.Prettier';
 
-export function prettier() {
+export function prettier({files = '.'} = {}) {
   return createWorkspaceLintPlugin(PLUGIN, ({hooks, options, api}) => {
     hooks.configureHooks.hook(
       addHooks<PrettierHooks>(() => ({
@@ -50,7 +50,7 @@ export function prettier() {
           );
 
           try {
-            await step.exec('node_modules/.bin/prettier', ['.', ...args], {
+            await step.exec('node_modules/.bin/prettier', [files, ...args], {
               all: true,
               env: {FORCE_COLOR: '1'},
             });

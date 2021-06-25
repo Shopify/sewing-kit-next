@@ -8,7 +8,7 @@ import {workspaceTypeScript} from '@sewing-kit/plugin-typescript';
 export default createWorkspace((workspace) => {
   workspace.use(
     eslint(),
-    prettier(),
+    prettier({files: '**/*.{json,md,yaml,yml}'}),
     jest(),
     workspaceTypeScript(),
     runWorkspaceTests(),
