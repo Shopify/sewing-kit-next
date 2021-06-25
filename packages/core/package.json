@@ -3,6 +3,14 @@
   "license": "MIT",
   "description": "The core data models for sewing-kit-next",
   "version": "0.4.0",
+  "main": "build/cjs/index.js",
+  "typesVersions": {
+    ">=1": {
+      "*": [
+        "./build/ts/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -23,9 +31,7 @@
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/core/README.md",
   "files": [
     "build/*",
-    "!*.tsbuildinfo",
-    "index.js",
-    "index.d.ts"
+    "!*.tsbuildinfo"
   ],
   "dependencies": {
     "@types/fs-extra": "^9.0.0",

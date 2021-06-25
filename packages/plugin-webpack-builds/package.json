@@ -3,6 +3,14 @@
   "license": "MIT",
   "description": "sewing-kit-next plugin for webpack builds",
   "version": "0.2.1",
+  "main": "build/cjs/index.js",
+  "typesVersions": {
+    ">=1": {
+      "*": [
+        "./build/ts/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -23,9 +31,7 @@
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-webpack-builds/README.md",
   "files": [
     "build/*",
-    "!*.tsbuildinfo",
-    "index.js",
-    "index.d.ts"
+    "!*.tsbuildinfo"
   ],
   "dependencies": {
     "@sewing-kit/plugins": "^0.2.1"

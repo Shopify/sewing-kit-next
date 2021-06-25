@@ -3,6 +3,14 @@
   "license": "MIT",
   "description": "sewing-kit-next technology plugin for typescript",
   "version": "0.3.0",
+  "main": "build/cjs/index.js",
+  "typesVersions": {
+    ">=1": {
+      "*": [
+        "./build/ts/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -23,9 +31,7 @@
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-typescript/README.md",
   "files": [
     "build/*",
-    "!*.tsbuildinfo",
-    "index.js",
-    "index.d.ts"
+    "!*.tsbuildinfo"
   ],
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.14.5",

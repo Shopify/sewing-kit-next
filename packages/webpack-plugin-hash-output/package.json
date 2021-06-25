@@ -3,6 +3,14 @@
   "license": "MIT",
   "description": "A webpack plugin for hash output",
   "version": "0.1.0",
+  "main": "build/cjs/index.js",
+  "typesVersions": {
+    ">=1": {
+      "*": [
+        "./build/ts/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -23,9 +31,7 @@
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/webpack-plugin-hash-output/README.md",
   "files": [
     "build/*",
-    "!*.tsbuildinfo",
-    "index.js",
-    "index.d.ts"
+    "!*.tsbuildinfo"
   ],
   "devDependencies": {
     "@types/webpack": "^4.41.12"

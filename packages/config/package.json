@@ -3,6 +3,17 @@
   "license": "MIT",
   "description": "Configuration creation helpers for sewing-kit-next",
   "version": "0.2.1",
+  "main": "build/cjs/index.js",
+  "typesVersions": {
+    ">=1": {
+      "load": [
+        "./load.d.ts"
+      ],
+      "*": [
+        "./build/ts/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -24,8 +35,6 @@
   "files": [
     "build/*",
     "!*.tsbuildinfo",
-    "index.js",
-    "index.d.ts",
     "load.js",
     "load.d.ts"
   ],
