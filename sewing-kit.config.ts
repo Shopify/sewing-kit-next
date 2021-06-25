@@ -1,11 +1,18 @@
 import {createWorkspace} from '@sewing-kit/config';
 import {createWorkspaceTestPlugin} from '@sewing-kit/plugins';
 import {eslint} from '@sewing-kit/plugin-eslint';
+import {prettier} from '@sewing-kit/plugin-prettier';
 import {jest} from '@sewing-kit/plugin-jest';
 import {workspaceTypeScript} from '@sewing-kit/plugin-typescript';
 
 export default createWorkspace((workspace) => {
-  workspace.use(eslint(), jest(), workspaceTypeScript(), runWorkspaceTests());
+  workspace.use(
+    eslint(),
+    prettier({files: '**/*.{json,md,yaml,yml}'}),
+    jest(),
+    workspaceTypeScript(),
+    runWorkspaceTests(),
+  );
 });
 
 function runWorkspaceTests() {

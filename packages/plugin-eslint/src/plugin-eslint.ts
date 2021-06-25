@@ -59,7 +59,7 @@ export function eslint() {
     hooks.steps.hook((steps, {configuration}) => [
       ...steps,
       api.createStep({id: 'ESLint.Lint', label: 'run eslint'}, async (step) => {
-        const {fix = false} = options;
+        const {fix = false, allowEmpty = false} = options;
         const args = toArgs(
           await configuration.eslintFlags!.run({
             fix,
@@ -67,7 +67,7 @@ export function eslint() {
             format: 'codeframe',
             cache: true,
             cacheLocation: api.cachePath('eslint/'),
-            noErrorOnUnmatchedPattern: options.allowEmpty,
+            noErrorOnUnmatchedPattern: allowEmpty,
           }),
           {dasherize: true},
         );
@@ -84,9 +84,9 @@ export function eslint() {
             });
 
             throw new DiagnosticError({
-              title: 'eslint failed because no files were found to lint',
+              title: 'ESLint failed because no files were found to lint',
               suggestion: (fmt) =>
-                fmt`Add at least one file to lint, or add overrides to your eslint config to teach it about additional file types. Alternatively, you can remove the eslint plugin, or pass the {code --allow-empty} flag to the {code sewing-kit lint} command.`,
+                fmt`Add at least one file to lint, or add overrides to your ESLint config to teach it about additional file types. Alternatively, you can remove the eslint plugin, or pass the {code --allow-empty} flag to the {code sewing-kit lint} command.`,
             });
           }
 
