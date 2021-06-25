@@ -2,8 +2,15 @@
   "name": "@sewing-kit/plugin-rollup",
   "version": "0.2.3",
   "license": "MIT",
-  "description": "sewing-kit-next plugin for building with Rollup",
   "description": "A sewing-kit plugin that runs rollup as a build step",
+  "main": "build/cjs/index.js",
+  "typesVersions": {
+    ">=1": {
+      "*": [
+        "./build/ts/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -24,9 +31,7 @@
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-rollup/README.md",
   "files": [
     "build/*",
-    "!*.tsbuildinfo",
-    "index.js",
-    "index.d.ts"
+    "!*.tsbuildinfo"
   ],
   "dependencies": {
     "@sewing-kit/hooks": "^0.2.0",

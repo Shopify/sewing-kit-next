@@ -52,17 +52,6 @@ function pkg(greet) {
       );
       expect(esnextBuildContent).toContain(expectedFunctionOutput);
       expect(esnextBuildContent).toContain(`export { pkg }`);
-
-      // Entrypoints
-      expect(await workspace.contents('index.js')).toContain(
-        'module.exports = interopRequireDefault(require("./build/cjs/index.js"));',
-      );
-      expect(await workspace.contents('index.mjs')).toContain(
-        'export * from "./build/esm/index.mjs"',
-      );
-      expect(await workspace.contents('index.esnext')).toContain(
-        'export * from "./build/esnext/index.esnext"',
-      );
     });
   });
 
@@ -101,11 +90,6 @@ export function pkg(greet) {
       expect(await workspace.contains('build/cjs/index.js')).toBeTruthy();
       expect(await workspace.contains('build/esm')).toBeFalsy();
       expect(await workspace.contains('build/esnext')).toBeFalsy();
-
-      // Entrypoints
-      expect(await workspace.contains('index.js')).toBeTruthy();
-      expect(await workspace.contains('index.mjs')).toBeFalsy();
-      expect(await workspace.contains('index.esnext')).toBeFalsy();
     });
   });
 

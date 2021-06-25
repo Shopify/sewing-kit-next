@@ -1,5 +1,3 @@
-import {resolve, relative} from 'path';
-
 import {
   createProjectBuildPlugin,
   Package,
@@ -30,7 +28,7 @@ interface RollupConfigOptions {
 export function rollupConfig(options: RollupConfigOptions) {
   return createProjectBuildPlugin<Package>(
     'SewingKit.PackageFlexibleOutputs.RollupConfig',
-    ({api, hooks, project}) => {
+    ({hooks, project}) => {
       // Define additional build variant to build esnext output
       hooks.targets.hook((targets) => {
         return targets.map((target) => {
@@ -158,133 +156,7 @@ export function rollupConfig(options: RollupConfigOptions) {
             return outputs.concat(additionalOutputs);
           });
         });
-
-        // Create entries
-        hooks.steps.hook((steps) => [
-          ...steps,
-          api.createStep(
-            {id: 'Rollup.Entries', label: 'Adding entries for Rollup outputs'},
-            async () => {
-              const entryConfigs = [];
-
-              if (isDefaultBuild) {
-                if (options.commonjs) {
-                  entryConfigs.push({
-                    exportStyle: ExportStyle.CommonJs,
-                    outputPath: project.fs.buildPath('cjs'),
-                    extension: '.js',
-                  });
-                }
-
-                if (options.esmodules) {
-                  entryConfigs.push({
-                    exportStyle: ExportStyle.EsModules,
-                    outputPath: project.fs.buildPath('esm'),
-                    extension: '.mjs',
-                  });
-                }
-              } else if (isEsnextBuild) {
-                if (options.esnext) {
-                  entryConfigs.push({
-                    exportStyle: ExportStyle.EsModules,
-                    outputPath: project.fs.buildPath('esnext'),
-                    extension: '.esnext',
-                  });
-                }
-              }
-
-              await Promise.all(
-                entryConfigs.map((config) =>
-                  writeEntries({project, ...config}),
-                ),
-              );
-            },
-          ),
-        ]);
       });
     },
   );
-}
-
-enum ExportStyle {
-  EsModules,
-  CommonJs,
-}
-
-async function writeEntries({
-  project,
-  extension,
-  outputPath,
-  exportStyle,
-}: {
-  project: Package;
-  extension: string;
-  outputPath: string;
-  exportStyle: ExportStyle;
-}) {
-  const sourceRoot = resolve(project.root, 'src');
-
-  await Promise.all(
-    project.entries.map(async (entry) => {
-      const absoluteEntryPath = (await project.fs.hasFile(`${entry.root}.*`))
-        ? project.fs.resolvePath(entry.root)
-        : project.fs.resolvePath(entry.root, 'index');
-
-      const relativeFromSourceRoot = relative(sourceRoot, absoluteEntryPath);
-      const destinationInOutput = resolve(outputPath, relativeFromSourceRoot);
-      const relativeFromRoot = `${normalizedRelative(
-        project.root,
-        destinationInOutput,
-      )}${extension}`;
-
-      if (exportStyle === ExportStyle.CommonJs) {
-        // interopRequireDefault copied from https://github.com/babel/babel/blob/56044c7851d583d498f919e9546caddf8f80a72f/packages/babel-helpers/src/helpers.js#L558-L562
-        const linkPath = JSON.stringify(relativeFromRoot);
-        await project.fs.write(
-          `${entry.name || 'index'}${extension}`,
-          `function interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
-}
-module.exports = interopRequireDefault(require(${linkPath}));
-`,
-        );
-
-        return;
-      }
-
-      let hasDefault = true;
-      let content = '';
-
-      try {
-        content = await project.fs.read(
-          (await project.fs.glob(`${absoluteEntryPath}.*`))[0],
-        );
-
-        // export default ...
-        // export {Foo as default} from ...
-        // export {default} from ...
-        hasDefault =
-          /(?:export|as) default\b/.test(content) || /{default}/.test(content);
-      } catch {
-        // intentional no-op
-      }
-
-      const entryExtension = `${entry.name ?? 'index'}${extension}`;
-      const entryContents = [
-        `export * from ${JSON.stringify(relativeFromRoot)};`,
-        hasDefault
-          ? `export {default} from ${JSON.stringify(relativeFromRoot)};`
-          : false,
-      ]
-        .filter(Boolean)
-        .join('\n');
-
-      await project.fs.write(entryExtension, entryContents);
-    }),
-  );
-}
-
-function normalizedRelative(from: string, to: string) {
-  const rel = relative(from, to);
-  return rel.startsWith('.') ? rel : `./${rel}`;
 }

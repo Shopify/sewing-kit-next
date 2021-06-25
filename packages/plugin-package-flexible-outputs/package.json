@@ -3,6 +3,14 @@
   "license": "MIT",
   "description": "sewing-kit-next plugin for consuming esmodule and esnext output",
   "version": "0.2.2",
+  "main": "build/cjs/index.js",
+  "typesVersions": {
+    ">=1": {
+      "*": [
+        "./build/ts/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -23,9 +31,7 @@
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-package-flexible-outputs/README.md",
   "files": [
     "build/*",
-    "!*.tsbuildinfo",
-    "index.js",
-    "index.d.ts"
+    "!*.tsbuildinfo"
   ],
   "dependencies": {
     "@sewing-kit/plugin-javascript": "^0.4.2",

@@ -3,6 +3,23 @@
   "license": "MIT",
   "description": "Graphql transformers",
   "version": "0.3.0",
+  "main": "build/cjs/index.js",
+  "typesVersions": {
+    ">=1": {
+      "jest-simple": [
+        "./jest-simple.d.ts"
+      ],
+      "jest": [
+        "./jest.d.ts"
+      ],
+      "webpack": [
+        "./webpack.d.ts"
+      ],
+      "*": [
+        "./build/ts/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -24,8 +41,6 @@
   "files": [
     "build/*",
     "!*.tsbuildinfo",
-    "index.js",
-    "index.d.ts",
     "jest-simple.js",
     "jest-simple.d.ts",
     "jest.js",
