@@ -2,7 +2,7 @@
   "name": "@sewing-kit/plugin-package-flexible-outputs",
   "license": "MIT",
   "description": "sewing-kit-next plugin for consuming esmodule and esnext output",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",

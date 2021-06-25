@@ -2,7 +2,7 @@
   "name": "@sewing-kit/plugin-sass",
   "license": "MIT",
   "description": "sewing-kit-next technology plugin for sass",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",

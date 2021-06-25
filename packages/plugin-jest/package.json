@@ -2,7 +2,7 @@
   "name": "@sewing-kit/plugin-jest",
   "license": "MIT",
   "description": "sewing-kit-next plugin for testing with jest",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -28,9 +28,9 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "@sewing-kit/hooks": "^0.2.0",
-    "@sewing-kit/plugin-javascript": "^0.4.2",
-    "@sewing-kit/plugins": "^0.2.1",
+    "@sewing-kit/hooks": "^0.3.0",
+    "@sewing-kit/plugin-javascript": "^0.5.0",
+    "@sewing-kit/plugins": "^0.3.0",
     "@types/jest": "^26.0.23",
     "babel-jest": "^27.0.2",
     "jest": "^27.0.4",

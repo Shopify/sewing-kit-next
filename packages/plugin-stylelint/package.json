@@ -2,7 +2,7 @@
   "name": "@sewing-kit/plugin-stylelint",
   "license": "MIT",
   "description": "sewing-kit-next plugin for linting with stylelint",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -28,8 +28,8 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "@sewing-kit/hooks": "^0.2.0",
-    "@sewing-kit/plugins": "^0.2.1",
+    "@sewing-kit/hooks": "^0.3.0",
+    "@sewing-kit/plugins": "^0.3.0",
     "stylelint": "^13.4.0"
   }
 }

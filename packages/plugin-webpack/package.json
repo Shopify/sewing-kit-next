@@ -2,7 +2,7 @@
   "name": "@sewing-kit/plugin-webpack",
   "license": "MIT",
   "description": "sewing-kit-next plugin for building with webpack",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -30,8 +30,8 @@
     "noop.d.ts"
   ],
   "dependencies": {
-    "@sewing-kit/plugins": "^0.2.1",
-    "@sewing-kit/webpack-plugin-hash-output": "^0.1.0",
+    "@sewing-kit/plugins": "^0.3.0",
+    "@sewing-kit/webpack-plugin-hash-output": "^0.2.0",
     "@types/case-sensitive-paths-webpack-plugin": "^2.1.2",
     "@types/terser-webpack-plugin": "^2.2.0",
     "@types/webpack": "^4.41.12",
