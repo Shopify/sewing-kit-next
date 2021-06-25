@@ -129,8 +129,6 @@ export function workspaceTypeScript() {
       hooks.pre.hook((steps, {configuration}) => {
         const newSteps = [...steps];
 
-        newSteps.push(createWriteFallbackEntriesStep(context));
-
         if (options.cache) {
           newSteps.push(createLoadTypeScriptCacheStep(context));
         }
@@ -153,8 +151,6 @@ export function workspaceTypeScript() {
 
       hooks.pre.hook((steps) => {
         const newSteps = [...steps];
-
-        newSteps.push(createWriteFallbackEntriesStep(context));
 
         if (options.cache) {
           newSteps.push(createLoadTypeScriptCacheStep(context));
@@ -243,23 +239,6 @@ async function getTscOutputDirectory(project: string, workspace: Workspace) {
   );
 }
 
-function createWriteFallbackEntriesStep({
-  api,
-  workspace,
-}: WorkspacePluginContext) {
-  return api.createStep(
-    {
-      id: 'TypeScript.WriteEntries',
-      label: 'write typescript entries',
-    },
-    async () => {
-      await Promise.all(
-        workspace.packages.map((pkg) => writeTypeScriptEntriesSymlink(pkg)),
-      );
-    },
-  );
-}
-
 function createLoadTypeScriptCacheStep({
   workspace,
   api,
@@ -328,61 +307,6 @@ export function createRunTypeScriptStep(
       }
     },
   );
-}
-
-async function writeTypeScriptEntriesSymlink(pkg: Package) {
-  const outputPath = await getOutputPath(pkg);
-
-  const sourceRoot = pkg.fs.resolvePath('src');
-
-  for (const entry of pkg.entries) {
-    const absoluteEntryPath = (await pkg.fs.hasDirectory(entry.root))
-      ? pkg.fs.resolvePath(entry.root, 'index')
-      : pkg.fs.resolvePath(entry.root);
-    const relativeFromSourceRoot = relative(sourceRoot, absoluteEntryPath);
-    const destinationInOutput = resolve(outputPath, relativeFromSourceRoot);
-    const relativeFromRoot = normalizedRelative(pkg.root, destinationInOutput);
-
-    const symlinkFile = `${relativeFromRoot}.d.ts`;
-    if (!(await pkg.fs.hasFile(symlinkFile))) {
-      await pkg.fs.write(symlinkFile, '');
-      await utimes(pkg.fs.resolvePath(symlinkFile), 201001010000, 201001010000);
-    }
-
-    try {
-      await symlink(
-        symlinkFile,
-        pkg.fs.resolvePath(`${entry.name || 'index'}.d.ts`),
-      );
-    } catch (error) {
-      if (error.code !== 'EEXIST') {
-        throw error;
-      }
-    }
-  }
-}
-
-async function getOutputPath(pkg: Package) {
-  if (await pkg.fs.hasFile('tsconfig.json')) {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const tsconfig = require(pkg.fs.resolvePath('tsconfig.json'));
-      const relativePath =
-        (tsconfig.compilerOptions && tsconfig.compilerOptions.outDir) ||
-        'build/ts';
-
-      return pkg.fs.resolvePath(relativePath);
-    } catch {
-      // Fall through to the default below
-    }
-  }
-
-  return pkg.fs.resolvePath('build/ts');
-}
-
-function normalizedRelative(from: string, to: string) {
-  const rel = relative(from, to);
-  return rel.startsWith('.') ? rel : `./${rel}`;
 }
 
 function addTypeScriptExtensions(extensions: ReadonlyArray<string>) {
