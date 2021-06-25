@@ -10,19 +10,7 @@ const projectReferencesConfig = resolve(ROOT, 'tsconfig.json');
 // When deprecating packages, we temporarily remove package content and publish
 // an empty package before fully removing the folder. This list helps omit those
 // in that interim period
-const skiplist = [
-  'graphql',
-  'plugin-css',
-  'plugin-differential-serving',
-  'plugin-graphql',
-  'plugin-package-flexible-outputs',
-  'plugin-react',
-  'plugin-sass',
-  'plugin-service-base',
-  'plugin-vscode',
-  'plugin-web-app-base',
-  'plugin-webpack-builds',
-];
+const skiplist = [];
 
 describe('typescript project references', () => {
   const referencesConfig = readJSONSync(projectReferencesConfig);
