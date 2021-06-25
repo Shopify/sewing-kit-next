@@ -9,4 +9,4 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Added plugin-prettier
+- Added plugin-prettier [[#201](https://github.com/Shopify/sewing-kit-next/pull/201)]
