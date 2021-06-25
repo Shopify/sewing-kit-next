@@ -23,11 +23,7 @@ To get started, add the Sewing Kit CLI package to your app's `devDependencies`:
 yarn add @sewing-kit/cli --dev
 ```
 
-Depending on your project's needs, you'll want to install additional plugins as needed. For example, to compile [`sass`](https://sass-lang.com/):
-
-```sh
-yarn add @sewing-kit/plugin-sass --dev
-```
+Depending on your project's needs, you'll want to install additional plugins as needed.
 
 ## 👩🏻‍💻 Usage
 

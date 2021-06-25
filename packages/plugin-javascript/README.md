@@ -31,7 +31,7 @@ This plugin will automatically configure Webpack to process JavaScript files usi
 
 The `javascript()` plugin accepts the following options:
 
-- `babelConfig: Partial<BabelConfig>` (default: `undefined`). Sets a base Babel config to use for all tools relying on Babel. When set, this prevents `@sewing-kit/plugin-javascript/babel-preset` from automatically being added to your Babel config. Some other `sewing-kit` plugins, like [`@sewing-kit/plugin-differential-serving`](TODO), use this plugin to automatically configure the level of compilation during build, so be sure you know what you’re doing if you set this option.
+- `babelConfig: Partial<BabelConfig>` (default: `undefined`). Sets a base Babel config to use for all tools relying on Babel. When set, this prevents `@sewing-kit/plugin-javascript/babel-preset` from automatically being added to your Babel config. Some other `sewing-kit` plugins use this plugin to automatically configure the level of compilation during build, so be sure you know what you’re doing if you set this option.
 
   ```ts
   import {createWebApp} from '@sewing-kit/config';
