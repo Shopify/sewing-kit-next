@@ -10,23 +10,23 @@ yarn add @sewing-kit/plugin-prettier --dev
 
 ## `prettier()`
 
-The `pretttier` function returns a `sewing-kit` plugin. This plugin applies to the workspace, not an individual project.
+The `prettier` function returns a `sewing-kit` plugin. This plugin applies to the workspace, not an individual project.
 
 ```js
 import {createWorkspace} from '@sewing-kit/config';
-import {pretttier} from '@sewing-kit/plugin-prettier';
+import {prettier} from '@sewing-kit/plugin-prettier';
 
 export default createWorkspace((workspace) => {
-  workspace.use(pretttier());
+  workspace.use(prettier());
 });
 ```
 
-By default prettier runs over everything in the current folder. You can limit the files that are processed by passing in a `files` glob to the plugin's options. This is useful if you use `eslint-plugin-prettier` or `stylelint-prettier` to run prettier as part of `eslint` or `stylelint` as there is no point to running prettier over those files twice.
+By default prettier runs over everything in the current folder. You can modify the files that are processed by passing in a `files` glob to the plugin's options. This is useful if you use `eslint-plugin-prettier` or `stylelint-prettier` to run prettier as part of `eslint` or `stylelint` as there is no point to running prettier over those files twice.
 
 ```js
 export default createWorkspace((workspace) => {
-  // Only run prettier on md, json, yaml and yml files
-  workspace.use(pretttier({files: '**/*.{md,json,yaml,yml}'}));
+  // Run prettier on md, json, yaml and yml files
+  workspace.use(prettier({files: '**/*.{md,json,yaml,yml}'}));
 });
 ```
 

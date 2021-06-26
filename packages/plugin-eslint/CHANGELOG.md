@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Breaking Change
+
+- Added the ability to pass in a `files` option into the plugin. [[#208](https://github.com/Shopify/sewing-kit-next/pull/208)]
+- Removed the `ESLintFlags` and `ESLintHooks` exports. [[#208](https://github.com/Shopify/sewing-kit-next/pull/208)]
 
 ## 0.3.0 - 2021-06-25
 

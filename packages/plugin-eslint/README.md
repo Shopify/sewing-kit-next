@@ -23,6 +23,15 @@ export default createWorkspace((workspace) => {
 });
 ```
 
+By default ESLint runs over everything in the current folder. You can modify the files that are processed by passing in a `files` glob to the plugin's options.
+
+```js
+export default createWorkspace((workspace) => {
+  // Run eslint on a single subfolder
+  workspace.use(pretttier({files: 'some-subfolder/**/*'}));
+});
+```
+
 ### Hooks
 
 This plugin adds the following hooks to `LintWorkspaceConfigurationCustomHooks`:
@@ -34,10 +43,10 @@ This plugin adds the following hooks to `LintWorkspaceConfigurationCustomHooks`:
 
   const plugin = createWorkspaceLintPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {
-      // Allow the $ global
+      // Modify the maximum number of allowed warnings from the default of 0
       configure.eslintFlags!.hook((flags) => ({
         ...flags,
-        global: ['$'],
+        maxWarnings: 5,
       }));
     });
   });

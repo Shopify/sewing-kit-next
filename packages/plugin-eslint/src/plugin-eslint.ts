@@ -38,7 +38,7 @@ export interface ESLintFlags {
   [key: string]: unknown;
 }
 
-export interface ESLintHooks {
+interface ESLintHooks {
   readonly eslintFlags: WaterfallHook<ESLintFlags>;
 }
 
@@ -48,7 +48,7 @@ declare module '@sewing-kit/hooks' {
 
 const PLUGIN = 'SewingKit.ESLint';
 
-export function eslint() {
+export function eslint({files = '.'} = {}) {
   return createWorkspaceLintPlugin(PLUGIN, ({hooks, options, api}) => {
     hooks.configureHooks.hook(
       addHooks<ESLintHooks>(() => ({
@@ -73,7 +73,7 @@ export function eslint() {
         );
 
         try {
-          await step.exec('node_modules/.bin/eslint', ['.', ...args], {
+          await step.exec('node_modules/.bin/eslint', [files, ...args], {
             all: true,
             env: {FORCE_COLOR: '1'},
           });
