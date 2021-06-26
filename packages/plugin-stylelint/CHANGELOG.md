@@ -9,9 +9,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Breaking Change
 
-- Refactored the plugin so it mimics the behaviour of the eslint and prettier plugins. This plugin now only exposes the `stylelintFlags` hook for controling CLI flags, and configuration of the files glob is done through the `files` option when invoking the plugin.
-- Stylelint no longer runs with `--report-needless-disables` and `--report-invalid-scope-disables` options. These options should be configured [within your stylelint config file](https://stylelint.io/user-guide/configure#reportneedlessdisables) if they are desired.
-- Removed `stylelintExtensions`, `stylelintFlags` and `stylelintIgnorePatterns` exports.
+- Refactored the plugin so it mimics the behaviour of the eslint and prettier plugins. This plugin now only exposes the `stylelintFlags` hook for controling CLI flags, and configuration of the files glob is done through the `files` option when invoking the plugin. [[#208](https://github.com/Shopify/sewing-kit-next/pull/208)]
+- Stylelint no longer runs with `--report-needless-disables` and `--report-invalid-scope-disables` options. These options should be configured [within your stylelint config file](https://stylelint.io/user-guide/configure#reportneedlessdisables) if they are desired. [[#208](https://github.com/Shopify/sewing-kit-next/pull/208)]
+- Removed `stylelintExtensions`, `stylelintFlags` and `stylelintIgnorePatterns` exports. [[#208](https://github.com/Shopify/sewing-kit-next/pull/208)]
 
 ## 0.3.0 - 2021-06-25
 
