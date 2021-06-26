@@ -7,7 +7,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-### Changed
+### Breaking Change
 
 - Refactored the plugin so it mimics the behaviour of the eslint and prettier plugins. This plugin now only exposes the `stylelintFlags` hook for controling CLI flags, and configuration of the files glob is done through the `files` option when invoking the plugin.
 - Stylelint no longer runs with `--report-needless-disables` and `--report-invalid-scope-disables` options. These options should be configured [within your stylelint config file](https://stylelint.io/user-guide/configure#reportneedlessdisables) if they are desired.
