@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Changed
+
+- Refactored the plugin so it mimics the behaviour of the eslint and prettier plugins. This plugin now only exposes the `stylelintFlags` hook for controling CLI flags, and configuration of the files glob is done through the `files` option when invoking the plugin.
+- Stylelint no longer runs with `--report-needless-disables` and `--report-invalid-scope-disables` options. These options should be configured [within your stylelint config file](https://stylelint.io/user-guide/configure#reportneedlessdisables) if they are desired.
+- Removed `stylelintExtensions`, `stylelintFlags` and `stylelintIgnorePatterns` exports.
 
 ## 0.3.0 - 2021-06-25
 
