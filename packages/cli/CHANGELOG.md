@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Changed
+
+- Improved the exec command logger so arguments are quoted properly. [[#209](https://github.com/Shopify/sewing-kit-next/pull/209)]
 
 ## 0.5.0 - 2021-06-25
 
