@@ -374,13 +374,9 @@ export async function run(
           try {
             await step.run({
               exec: (...args) => {
+                const escapedCommand = escapeCommand(args[0], args[1]);
                 stepLog(
-                  (fmt) =>
-                    fmt`executing command: {subdued ${args[0]}${
-                      Array.isArray(args[1])
-                        ? ` ${(args[1] as any[]).join(' ')}`
-                        : ''
-                    }}`,
+                  (fmt) => fmt`executing command: {subdued ${escapedCommand}}`,
                 );
 
                 return exec(...(args as [any]));
@@ -417,12 +413,8 @@ export async function run(
 
       return {
         exec: (...args) => {
-          stepLog(
-            (fmt) =>
-              fmt`executing command: {subdued ${args[0]}${
-                Array.isArray(args[1]) ? ` ${(args[1] as any[]).join(' ')}` : ''
-              }}`,
-          );
+          const escapedCommand = escapeCommand(args[0], args[1]);
+          stepLog((fmt) => fmt`executing command: {subdued ${escapedCommand}}`);
 
           return exec(...(args as [any]));
         },
@@ -966,4 +958,21 @@ function hideCursor(stream: NodeJS.WriteStream) {
 
 function showCursor(stream: NodeJS.WriteStream) {
   stream.write(ControlCharacter.ShowCursor);
+}
+
+function escapeCommand(file: string, args?: string[] | unknown) {
+  // Logic extracted from execa's getEscapedCommand
+  // https://github.com/sindresorhus/execa/blob/9216ec8035f55a3ddcbf07de8667f9d9d5c40c84/lib/command.js#L25
+  const noEscapeRegexp = /^[\w.-]+$/;
+  const doubleQutoesRegexp = /"/g;
+
+  const normalizedArgs = Array.isArray(args) ? [file, ...args] : [file];
+
+  return normalizedArgs
+    .map((arg) =>
+      typeof arg !== 'string' || noEscapeRegexp.test(arg)
+        ? arg
+        : `"${arg.replace(doubleQutoesRegexp, '\\"')}"`,
+    )
+    .join(' ');
 }
