@@ -3,8 +3,6 @@ import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
 
 import {rollupConfig} from './plugin-rollup-config';
 import {buildBinaries} from './plugin-package-binaries';
-import {buildTypeScriptDefinitions} from './plugin-package-typescript';
-import type {BuildTypeScriptDefinitionsOptions} from './plugin-package-typescript';
 
 export interface PackageBuildOptions {
   readonly browserTargets: string;
@@ -13,7 +11,6 @@ export interface PackageBuildOptions {
   readonly commonjs?: boolean;
   readonly esmodules?: boolean;
   readonly esnext?: boolean;
-  readonly typescript?: boolean | BuildTypeScriptDefinitionsOptions;
 }
 
 export function packageBuild({
@@ -23,7 +20,6 @@ export function packageBuild({
   commonjs = true,
   esmodules = true,
   esnext = true,
-  typescript = true,
 }: PackageBuildOptions) {
   return createComposedProjectPlugin<Package>(
     'SewingKit.PackageBuild',
@@ -39,10 +35,6 @@ export function packageBuild({
           esnext,
         }),
         binaries && buildBinaries(),
-        typescript &&
-          buildTypeScriptDefinitions(
-            typeof typescript === 'boolean' ? {} : typescript,
-          ),
       );
     },
   );

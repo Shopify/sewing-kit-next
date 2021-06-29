@@ -26,7 +26,6 @@ for (const file of glob('packages/*/*.{js,mjs,node,esnext,ts}', {
 const CUSTOM_ENTRIES = new Map([
   ['config', ['index', 'load']],
   ['plugin-javascript', ['index', 'babel-preset']],
-  ['plugin-typescript', ['index']],
 ]);
 const NEEDS_FULL_BUILD = new Set([
   // Needs a full build so that the Babel configuration is available
@@ -36,7 +35,6 @@ const NEEDS_FULL_BUILD = new Set([
 ]);
 
 const COMMONJS_DIRECTORY = 'build/cjs';
-const TS_DEFINITIONS_DIRECTORY = 'build/ts';
 const SOURCE_DIRECTORY = 'src';
 
 const jsExport = (name = 'index', {compiled = false} = {}) =>
@@ -56,10 +54,6 @@ const jsExport = (name = 'index', {compiled = false} = {}) =>
             writeFile(
               resolve(pkg, `${entry}.js`),
               jsExport(entry, {compiled: compile}),
-            ),
-            symlink(
-              `./${TS_DEFINITIONS_DIRECTORY}/${entry}.d.ts`,
-              resolve(pkg, `${entry}.d.ts`),
             ),
           ]);
         }),
