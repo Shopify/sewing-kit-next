@@ -13,6 +13,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 - Stylelint no longer runs with `--report-needless-disables` and `--report-invalid-scope-disables` options. These options should be configured [within your stylelint config file](https://stylelint.io/user-guide/configure#reportneedlessdisables) if they are desired. [[#208](https://github.com/Shopify/sewing-kit-next/pull/208)]
 - Removed `stylelintExtensions`, `stylelintFlags` and `stylelintIgnorePatterns` exports. [[#208](https://github.com/Shopify/sewing-kit-next/pull/208)]
 
+### Changed
+
+- Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/sewing-kit-next/pull/210)]
+
 ## 0.3.0 - 2021-06-25
 
 ### Changed
