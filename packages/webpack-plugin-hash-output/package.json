@@ -3,6 +3,13 @@
   "license": "MIT",
   "description": "A webpack plugin for hash output",
   "version": "0.2.0",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./build/ts/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -24,8 +31,7 @@
   "files": [
     "build/*",
     "!*.tsbuildinfo",
-    "index.js",
-    "index.d.ts"
+    "index.js"
   ],
   "devDependencies": {
     "@types/webpack": "^4.41.12"

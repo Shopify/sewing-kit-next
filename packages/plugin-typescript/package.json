@@ -3,6 +3,13 @@
   "license": "MIT",
   "description": "sewing-kit-next technology plugin for typescript",
   "version": "0.4.0",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./build/ts/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -24,8 +31,7 @@
   "files": [
     "build/*",
     "!*.tsbuildinfo",
-    "index.js",
-    "index.d.ts"
+    "index.js"
   ],
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.14.5",

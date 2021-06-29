@@ -3,6 +3,16 @@
   "license": "MIT",
   "description": "sewing-kit-next technology plugin for javascript",
   "version": "0.5.0",
+  "typesVersions": {
+    "*": {
+      "babel-preset": [
+        "./build/ts/babel-preset.d.ts"
+      ],
+      "*": [
+        "./build/ts/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -25,9 +35,7 @@
     "build/*",
     "!*.tsbuildinfo",
     "index.js",
-    "index.d.ts",
-    "babel-preset.js",
-    "babel-preset.d.ts"
+    "babel-preset.js"
   ],
   "dependencies": {
     "@babel/core": "^7.14.6",

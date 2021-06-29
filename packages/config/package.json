@@ -3,6 +3,16 @@
   "license": "MIT",
   "description": "Configuration creation helpers for sewing-kit-next",
   "version": "0.3.0",
+  "typesVersions": {
+    "*": {
+      "load": [
+        "./build/ts/load.d.ts"
+      ],
+      "*": [
+        "./build/ts/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -25,9 +35,7 @@
     "build/*",
     "!*.tsbuildinfo",
     "index.js",
-    "index.d.ts",
-    "load.js",
-    "load.d.ts"
+    "load.js"
   ],
   "dependencies": {
     "@babel/preset-env": "^7.14.5",

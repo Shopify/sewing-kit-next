@@ -3,6 +3,13 @@
   "license": "MIT",
   "description": "sewing-kit-next plugin for linting with prettier",
   "version": "0.2.1",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./build/ts/index.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -24,8 +31,7 @@
   "files": [
     "build/*",
     "!*.tsbuildinfo",
-    "index.js",
-    "index.d.ts"
+    "index.js"
   ],
   "dependencies": {
     "@sewing-kit/hooks": "^0.3.0",
