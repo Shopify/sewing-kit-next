@@ -14,7 +14,7 @@
 import {resolve, basename} from 'path';
 
 import exec from 'execa';
-import {writeFile, removeSync, symlink} from 'fs-extra';
+import {writeFile, removeSync} from 'fs-extra';
 import {sync as glob} from 'glob';
 
 for (const file of glob('packages/*/*.{js,mjs,node,esnext,ts}', {
@@ -31,7 +31,6 @@ const NEEDS_FULL_BUILD = new Set([
   // Needs a full build so that the Babel configuration is available
   // for self builds (Babel can’t reference sewing-kit’s source).
   'plugin-javascript',
-  'plugin-typescript',
 ]);
 
 const COMMONJS_DIRECTORY = 'build/cjs';
