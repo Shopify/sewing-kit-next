@@ -12,6 +12,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 - Added the ability to pass in a `files` option into the plugin. [[#208](https://github.com/Shopify/sewing-kit-next/pull/208)]
 - Removed the `ESLintFlags` and `ESLintHooks` exports. [[#208](https://github.com/Shopify/sewing-kit-next/pull/208)]
 
+### Changed
+
+- Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/sewing-kit-next/pull/210)]
+
 ## 0.3.0 - 2021-06-25
 
 ### Changed

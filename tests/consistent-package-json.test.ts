@@ -16,6 +16,7 @@ const KNOWN_TEMPLATE_KEYS = [
   'publishConfig',
   'repository',
   'sideEffects',
+  'types',
   'version',
 ];
 
@@ -69,6 +70,10 @@ packages.forEach(
           expect(
             packageJSON.files.slice(0, expectedPackageJSON.files.length),
           ).toStrictEqual(expectedPackageJSON.files);
+        });
+
+        it('specifies types', () => {
+          expect(packageJSON.types).toBe(expectedPackageJSON.types);
         });
 
         it('specifies sewing-kit-next deep-link homepage', () => {

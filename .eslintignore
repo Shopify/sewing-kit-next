@@ -5,5 +5,4 @@
 /packages/*/bin
 /packages/*/*.js
 /packages/*/*.mjs
-/packages/*/*.d.ts
 /packages/*/*.esnext

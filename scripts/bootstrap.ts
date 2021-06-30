@@ -14,7 +14,7 @@
 import {resolve, basename} from 'path';
 
 import exec from 'execa';
-import {writeFile, removeSync, symlink} from 'fs-extra';
+import {writeFile, removeSync} from 'fs-extra';
 import {sync as glob} from 'glob';
 
 for (const file of glob('packages/*/*.{js,mjs,node,esnext,ts}', {
@@ -26,17 +26,14 @@ for (const file of glob('packages/*/*.{js,mjs,node,esnext,ts}', {
 const CUSTOM_ENTRIES = new Map([
   ['config', ['index', 'load']],
   ['plugin-javascript', ['index', 'babel-preset']],
-  ['plugin-typescript', ['index']],
 ]);
 const NEEDS_FULL_BUILD = new Set([
   // Needs a full build so that the Babel configuration is available
   // for self builds (Babel can’t reference sewing-kit’s source).
   'plugin-javascript',
-  'plugin-typescript',
 ]);
 
 const COMMONJS_DIRECTORY = 'build/cjs';
-const TS_DEFINITIONS_DIRECTORY = 'build/ts';
 const SOURCE_DIRECTORY = 'src';
 
 const jsExport = (name = 'index', {compiled = false} = {}) =>
@@ -56,10 +53,6 @@ const jsExport = (name = 'index', {compiled = false} = {}) =>
             writeFile(
               resolve(pkg, `${entry}.js`),
               jsExport(entry, {compiled: compile}),
-            ),
-            symlink(
-              `./${TS_DEFINITIONS_DIRECTORY}/${entry}.d.ts`,
-              resolve(pkg, `${entry}.d.ts`),
             ),
           ]);
         }),
