@@ -9,7 +9,11 @@ import {
   Runtime,
   unwrapPossibleGetter,
   ValueOrGetter,
-} from '@sewing-kit/plugins';
+} from '@sewing-kit/core';
+import type {
+  BuildProjectConfigurationHooks,
+  DevProjectConfigurationHooks,
+} from '@sewing-kit/core';
 
 import type {BabelConfig} from './types';
 import type {Options as BabelPresetOptions} from './babel-preset';
@@ -27,9 +31,7 @@ export async function createJavaScriptWebpackRuleSet({
   api: PluginApi;
   env: Env;
   target: Target<Project, any>;
-  configuration:
-    | import('@sewing-kit/hooks').BuildProjectConfigurationHooks
-    | import('@sewing-kit/hooks').DevProjectConfigurationHooks;
+  configuration: BuildProjectConfigurationHooks | DevProjectConfigurationHooks;
   cacheDirectory: string;
   cacheDependencies?: string[];
 }) {

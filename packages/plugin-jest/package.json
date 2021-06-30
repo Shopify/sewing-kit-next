@@ -28,9 +28,8 @@
     "index.js"
   ],
   "dependencies": {
-    "@sewing-kit/hooks": "^0.3.0",
+    "@sewing-kit/core": "^0.5.0",
     "@sewing-kit/plugin-javascript": "^0.5.0",
-    "@sewing-kit/plugins": "^0.3.0",
     "@types/jest": "^26.0.23",
     "babel-jest": "^27.0.2",
     "jest": "^27.0.4",

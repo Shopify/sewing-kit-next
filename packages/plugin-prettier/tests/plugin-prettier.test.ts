@@ -1,4 +1,4 @@
-import {createWorkspace} from '@sewing-kit/config';
+import {createWorkspace} from '@sewing-kit/core';
 
 import {prettier} from '../src/plugin-prettier';
 

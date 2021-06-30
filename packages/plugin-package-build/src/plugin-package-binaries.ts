@@ -4,7 +4,7 @@ import {
   Package,
   createProjectBuildPlugin,
   ProjectPluginContext,
-} from '@sewing-kit/plugins';
+} from '@sewing-kit/core';
 
 const PLUGIN = 'SewingKit.PackageBinaries';
 

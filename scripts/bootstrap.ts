@@ -24,7 +24,7 @@ for (const file of glob('packages/*/*.{js,mjs,node,esnext,ts}', {
 }
 
 const CUSTOM_ENTRIES = new Map([
-  ['config', ['index', 'load']],
+  ['core', ['index', 'config-load']],
   ['plugin-javascript', ['index', 'babel-preset']],
 ]);
 const NEEDS_FULL_BUILD = new Set([

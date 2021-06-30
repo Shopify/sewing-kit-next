@@ -18,8 +18,11 @@ The low-level functionality of this package is split into two parts.
 Add both plugins to your project, along with configuration of the hooks. This example configures the `rollupInputOptions` and `rollupOutputs` hooks.
 
 ```js
-import {createPackage, Runtime} from '@sewing-kit/config';
-import {createProjectBuildPlugin} from '@sewing-kit/plugins';
+import {
+  createPackage,
+  Runtime,
+  createProjectBuildPlugin,
+} from '@sewing-kit/core';
 import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
 
 export default createPackage((pkg) => {
@@ -55,8 +58,11 @@ The `rollupOutputs` hook is an array of Rollup's `OutputOptions` objects as docu
 This package exports a `rollupPlugins` sewing-kit plugin that provides a shorthand to add items to the `rollupPlugins` hook. Give this plugin either an array of rollup plugins, or a function that takes a sewing-kit `Target` and returns an array of rollup plugins. This allows you to control what plugins are added based upon the `Target`.
 
 ```js
-import {createPackage, Runtime} from '@sewing-kit/config';
-import {createProjectBuildPlugin} from '@sewing-kit/plugins';
+import {
+  createPackage,
+  Runtime,
+  createProjectBuildPlugin,
+} from '@sewing-kit/core';
 import {
   rollupHooks,
   rollupBuild,

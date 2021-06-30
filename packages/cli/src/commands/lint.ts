@@ -1,5 +1,11 @@
-import {SeriesHook, WaterfallHook} from '@sewing-kit/hooks';
-import {LintTaskOptions, LintWorkspaceTaskHooks} from '@sewing-kit/tasks';
+import {
+  // hooks
+  SeriesHook,
+  WaterfallHook,
+  // tasks
+  LintTaskOptions,
+  LintWorkspaceTaskHooks,
+} from '@sewing-kit/core';
 
 import {run} from '../runner';
 import {

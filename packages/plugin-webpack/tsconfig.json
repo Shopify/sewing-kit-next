@@ -7,8 +7,5 @@
   },
   "include": ["src/**/*.ts", "../../config/typescript/typings"],
   "exclude": ["src/**/*.test.ts"],
-  "references": [
-    {"path": "../plugins"},
-    {"path": "../webpack-plugin-hash-output"}
-  ]
+  "references": [{"path": "../core"}, {"path": "../webpack-plugin-hash-output"}]
 }

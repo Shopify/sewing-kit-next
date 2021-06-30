@@ -4,6 +4,13 @@
   "description": "The core data models for sewing-kit-next",
   "version": "0.5.0",
   "types": "./build/ts/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "config-load": [
+        "./build/ts/config-load.d.ts"
+      ]
+    }
+  },
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
@@ -29,8 +36,12 @@
     "index.d.ts"
   ],
   "dependencies": {
+    "@babel/preset-env": "^7.14.5",
+    "@babel/preset-typescript": "^7.14.5",
+    "@babel/register": "^7.14.5",
     "@types/fs-extra": "^9.0.0",
     "@types/glob": "^7.1.1",
+    "change-case": "^4.1.0",
     "fs-extra": "^9.0.0",
     "glob": "^7.1.6"
   }

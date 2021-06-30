@@ -1,4 +1,4 @@
-import {Package, createComposedProjectPlugin} from '@sewing-kit/plugins';
+import {Package, createComposedProjectPlugin} from '@sewing-kit/core';
 import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
 
 import {rollupConfig} from './plugin-rollup-config';

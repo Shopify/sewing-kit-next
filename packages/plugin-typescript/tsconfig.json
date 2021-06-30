@@ -8,7 +8,7 @@
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.test.ts"],
   "references": [
-    {"path": "../plugins"},
+    {"path": "../core"},
     {"path": "../plugin-webpack"},
     {"path": "../plugin-javascript"},
     {"path": "../plugin-jest"}

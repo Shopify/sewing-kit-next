@@ -1,11 +1,14 @@
 import {
+  // hooks
   SeriesHook,
   WaterfallHook,
   DevServiceHooks,
   DevWebAppHooks,
   DevPackageHooks,
-} from '@sewing-kit/hooks';
-import {DevTaskOptions, DevWorkspaceTaskHooks} from '@sewing-kit/tasks';
+  // tasks
+  DevTaskOptions,
+  DevWorkspaceTaskHooks,
+} from '@sewing-kit/core';
 
 import {LogLevel} from '../ui';
 import {run} from '../runner';

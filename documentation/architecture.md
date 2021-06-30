@@ -16,26 +16,26 @@ With this understanding in mind, we can translate these concepts into various Co
 
 The following packages work together to enables core sewing-kit orchestration. These packages do not include any tool specific knowledge. Tool specific functionalities are enabled entirely through [Sewing Kit Plugins](./plugins.md)
 
-### `@sewing-kit/core`
+### `@sewing-kit/core/core`
 
 The core package currently provides two key features:
 
 1. The definition of the core model of sewing-kit: `Workspace`, `WebApp`, `Package`, and `Service`
 2. The instructions for the different tasks sewing-kit can perform. Given a set of options, a root object, and (usually) a `Workspace`, sewing-kit provides a function that can create and run the appropriate hooks for completing tasks.
 
-### `@sewing-kit/tasks`
+### `@sewing-kit/core/tasks`
 
 This package provides a collection of interfaces that describe the different commands (eg. dev, build, lint, test, type-check) sewing-kit supports. This package is integrated closely with hooks to create the intersection between hooks and Project/Workspaces.
 
-### `@sewing-kit/plugins`
+### `@sewing-kit/core/plugins`
 
 This packages provides API for building Sewing Kit plugins. The APIs provided here are what enable Sewing Kit to have all its features entirely through plugins. They provide abstractions to provide functionality into whichever tasks a given plugin is concerned with.
 
-### `@sewing-kit/hooks`
+### `@sewing-kit/core/hooks`
 
 This package defines most of the core types for sewing-kit. Of particular note, many of the hook objects used as part of various sewing-kit tasks rely on this package to give them the object shape. This separation is done so that plugins can "augment" the hook typings, allowing them to add additional hooks in a type-safe way. The `@sewing-kit/hooks` package is special in that it produces its type definitions to the root of the project, which allows plugins to define augmentations against `@sewing-kit/hooks` directly, rather than needing to augment a built definition file deeper in the package (e.g., `@sewing-kit/hooks/build/ts/index`).
 
-### `@sewing-kit/config`
+### `@sewing-kit/core/config`
 
 The config package provides the utilities for loading and validating `sewing-kit.config` files. It also provides the APIs which config files use to declare configuration in a clean, type-safe way. Any single sewing kit config can be authored with one of the following provided functions: `createWorkspace`, `createPackage`, `createWebApp` or `createService`.
 

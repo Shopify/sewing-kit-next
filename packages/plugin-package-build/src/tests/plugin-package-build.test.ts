@@ -7,7 +7,7 @@ describe('@sewing-kit/plugin-package-build', () => {
   it('builds commmonjs, esmodules and esnext outputs by default', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@sewing-kit/config';
+        import {createPackage, Runtime} from '@sewing-kit/core';
         import {javascript} from '@sewing-kit/plugin-javascript';
         import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {
@@ -69,7 +69,7 @@ function pkg(greet) {
   it('builds only commmonjs outputs when esmodules/esnext are disabled', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@sewing-kit/config';
+        import {createPackage, Runtime} from '@sewing-kit/core';
         import {javascript} from '@sewing-kit/plugin-javascript';
         import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {
@@ -112,7 +112,7 @@ export function pkg(greet) {
   it('builds multiple entrypoints', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@sewing-kit/config';
+        import {createPackage, Runtime} from '@sewing-kit/core';
         import {javascript} from '@sewing-kit/plugin-javascript';
         import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {
@@ -150,7 +150,7 @@ export function pkg(greet) {
   it('generates binary files', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@sewing-kit/config';
+        import {createPackage, Runtime} from '@sewing-kit/core';
         import {javascript} from '@sewing-kit/plugin-javascript';
         import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {
@@ -196,7 +196,7 @@ export function pkg(greet) {
     async (runtimes, expectedOutput) => {
       await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@sewing-kit/config';
+        import {createPackage, Runtime} from '@sewing-kit/core';
         import {javascript} from '@sewing-kit/plugin-javascript';
         import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {

@@ -8,8 +8,7 @@
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.test.ts"],
   "references": [
-    {"path": "../hooks"},
-    {"path": "../plugins"},
+    {"path": "../core"},
     {"path": "../plugin-javascript"},
     {"path": "../plugin-rollup"}
   ]

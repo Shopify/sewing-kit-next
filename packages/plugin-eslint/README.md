@@ -15,7 +15,7 @@ yarn add @sewing-kit/plugin-eslint --dev
 The `eslint` function returns a `sewing-kit` plugin. This plugin applies to the workspace, not an individual project.
 
 ```ts
-import {createWorkspace} from '@sewing-kit/config';
+import {createWorkspace} from '@sewing-kit/core';
 import {eslint} from '@sewing-kit/plugin-eslint';
 
 export default createWorkspace((workspace) => {
@@ -39,7 +39,7 @@ This plugin adds the following hooks to `LintWorkspaceConfigurationCustomHooks`:
 - `eslintFlags`: an object of options to convert into command line flags for the `eslint` command. These options are camelcase versions of their [CLI counterparts](https://eslint.org/docs/user-guide/command-line-interface).
 
   ```tsx
-  import {createWorkspaceLintPlugin} from '@sewing-kit/config';
+  import {createWorkspaceLintPlugin} from '@sewing-kit/core';
 
   const plugin = createWorkspaceLintPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {

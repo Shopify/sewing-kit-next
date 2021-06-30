@@ -13,7 +13,7 @@ $ yarn add @sewing-kit/plugin-package-build
 Add `packageBuild` to your sewing-kit plugins.
 
 ```js
-import {createPackage, Runtime} from '@sewing-kit/config';
+import {createPackage, Runtime} from '@sewing-kit/core';
 import {javascript} from '@sewing-kit/plugin-javascript';
 import {packageBuild} from '@sewing-kit/plugin-package-build';
 export default createPackage((pkg) => {

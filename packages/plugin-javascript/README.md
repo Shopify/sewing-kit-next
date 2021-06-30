@@ -17,7 +17,7 @@ yarn add @sewing-kit/plugin-javascript --dev
 The `javascript` function returns a `sewing-kit` plugin. To use it, include it in the `sewing-kit` configuration file of any project (but not the workspace).
 
 ```ts
-import {createWebApp} from '@sewing-kit/config';
+import {createWebApp} from '@sewing-kit/core';
 import {javascript} from '@sewing-kit/plugin-javascript';
 
 export default createWebApp((app) => {
@@ -34,7 +34,7 @@ The `javascript()` plugin accepts the following options:
 - `babelConfig: Partial<BabelConfig>` (default: `undefined`). Sets a base Babel config to use for all tools relying on Babel. When set, this prevents `@sewing-kit/plugin-javascript/babel-preset` from automatically being added to your Babel config. Some other `sewing-kit` plugins use this plugin to automatically configure the level of compilation during build, so be sure you know what you’re doing if you set this option.
 
   ```ts
-  import {createWebApp} from '@sewing-kit/config';
+  import {createWebApp} from '@sewing-kit/core';
   import {javascript} from '@sewing-kit/plugin-javascript';
 
   export default createWebApp((app) => {
@@ -53,7 +53,7 @@ This plugin adds the following hooks to each of the `TestProjectConfigurationHoo
 - `babelConfig`: the configuration used when transpiling with Babel.
 
   ```tsx
-  import {createProjectBuildPlugin} from '@sewing-kit/config';
+  import {createProjectBuildPlugin} from '@sewing-kit/core';
 
   const plugin = createProjectBuildPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {
@@ -68,7 +68,7 @@ This plugin adds the following hooks to each of the `TestProjectConfigurationHoo
 - `babelExtensions`: extensions that will be processed when transpiling with Babel.
 
   ```tsx
-  import {createProjectBuildPlugin} from '@sewing-kit/config';
+  import {createProjectBuildPlugin} from '@sewing-kit/core';
 
   const plugin = createProjectBuildPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {
@@ -80,7 +80,7 @@ This plugin adds the following hooks to each of the `TestProjectConfigurationHoo
 - `babelIgnorePatterns`: glob patterns that will be ignored when transpiling with Babel.
 
   ```tsx
-  import {createProjectBuildPlugin} from '@sewing-kit/config';
+  import {createProjectBuildPlugin} from '@sewing-kit/core';
 
   const plugin = createProjectBuildPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {
@@ -95,7 +95,7 @@ This plugin adds the following hooks to each of the `TestProjectConfigurationHoo
 - `babelCacheDependencies`: the name of NPM dependencies that should be used when calculating a cache identifier for Babel. This should include any Babel plugins and presets you make use of, as changes in those dependencies should invalidate the Babel cache.
 
   ```ts
-  import {createProjectBuildPlugin} from '@sewing-kit/config';
+  import {createProjectBuildPlugin} from '@sewing-kit/core';
 
   const plugin = createProjectBuildPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {
@@ -113,7 +113,7 @@ This plugin adds the following hooks to each of the `TestProjectConfigurationHoo
 The `babelPlugins` function returns a `sewing-kit` plugin that applies to a project. To include this plugin, you **must** include the `babelHooks()` plugin as well. You pass this function a plugin name or plugin name/ options tuple that you would like to include in the project’s Babel config. You can also pass this plugin an array of Babel plugins, or a function that returns any number of Babel plugins (this function can also be asynchronous, which can be useful if you infer a Babel configuration from some other details in the project). These plugins are also automatically registered with `babelCacheDependencies`.
 
 ```ts
-import {createWebApp} from '@sewing-kit/config';
+import {createWebApp} from '@sewing-kit/core';
 import {babelHooks, babelPlugins} from '@sewing-kit/plugin-javascript';
 
 export default createWebApp((app) => {
@@ -142,7 +142,7 @@ More complex customizations of the Babel config can be done with the [`babelConf
 The `babelPresets` function returns a `sewing-kit` plugin that applies to a project. To include this plugin, you **must** include the `babelHooks()` plugin as well. It has an identical set of accepted arguments as `babelPlugins()`, except that any values passed to this plugin will become Babel _presets_ in your final Babel config.
 
 ```ts
-import {createWebApp} from '@sewing-kit/config';
+import {createWebApp} from '@sewing-kit/core';
 import {babelHooks, babelPresets} from '@sewing-kit/plugin-javascript';
 
 export default createWebApp((app) => {
@@ -171,7 +171,7 @@ These utilities are primarily targeted at developers writing plugins for `sewing
 The `createJavaScriptWebpackRuleSet` returns a promise for a [webpack `UseEntry`](https://webpack.js.org/configuration/module/#ruleuse). This entry will use [`babel-loader`](TODO) that is configured to use the results of calling the [Babel-related hooks provided by the `javascript()` plugin](#hooks). This includes an optimized configuration for the [`babel-loader` `cacheDirectory` option](TODO).
 
 ```ts
-import {createPackageBuildPlugin} from '@sewing-kit/config';
+import {createPackageBuildPlugin} from '@sewing-kit/core';
 import {createJavaScriptWebpackRuleSet} from '@sewing-kit/plugin-javascript';
 
 const plugin = createPackageBuildPlugin('MyPlugin', ({api, options, hooks}) => {
@@ -217,7 +217,7 @@ The `updateBabelPreset` function returns a function intended for use in the [`ba
 The first argument to this function is one or more preset names (as a string or array of strings). Any matching preset will have its configuration updated according to the second argument. This argument can be an options object directly, or a function that accepts the current options for the plugin, and returns the new options to use, or a function that returns a promise for such an object.
 
 ```ts
-import {createPackageBuildPlugin} from '@sewing-kit/config';
+import {createPackageBuildPlugin} from '@sewing-kit/core';
 import {updateBabelPreset} from '@sewing-kit/plugin-javascript';
 
 const plugin = createPackageBuildPlugin(
@@ -258,7 +258,7 @@ const plugin = createPackageBuildPlugin(
 You may also pass an additional options argument to the `updateBabelPreset` function. There is currently one option, `addIfMissing`, which is a `boolean` indicating whether the preset should be added if it is not already present in the configuration.
 
 ```ts
-import {createPackageBuildPlugin} from '@sewing-kit/config';
+import {createPackageBuildPlugin} from '@sewing-kit/core';
 import {updateBabelPreset} from '@sewing-kit/plugin-javascript';
 
 const plugin = createPackageBuildPlugin(
@@ -308,7 +308,7 @@ const plugin = createPackageBuildPlugin(
 The `updateBabelPlugin` is identical to `updateBabelPreset`, but updates `plugins` in the `babelConfig` hook instead of `presets`.
 
 ```ts
-import {createPackageBuildPlugin} from '@sewing-kit/config';
+import {createPackageBuildPlugin} from '@sewing-kit/core';
 import {updateBabelPlugin} from '@sewing-kit/plugin-javascript';
 
 // A function that creates a `sewing-kit` plugin. This plugin will
@@ -342,7 +342,7 @@ export function debugMyFeature() {
 The `updateSewingKitBabelPreset` works identically to the `updateBabelPreset` hook, except that it does not accept a list of presets to target. Instead, it will target the default `sewing-kit` Babel preset, and update its options instead.
 
 ```ts
-import {createPackageBuildPlugin} from '@sewing-kit/config';
+import {createPackageBuildPlugin} from '@sewing-kit/core';
 import {updateSewingKitBabelPreset} from '@sewing-kit/plugin-javascript';
 
 const plugin = createPackageBuildPlugin(

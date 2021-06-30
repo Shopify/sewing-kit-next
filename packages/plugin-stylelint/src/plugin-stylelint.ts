@@ -5,7 +5,7 @@ import {
   createWorkspaceLintPlugin,
   DiagnosticError,
   LogLevel,
-} from '@sewing-kit/plugins';
+} from '@sewing-kit/core';
 
 export interface StylelintFlags {
   readonly fix?: boolean;
@@ -22,7 +22,7 @@ interface StylelintHooks {
   readonly stylelintFlags: WaterfallHook<StylelintFlags>;
 }
 
-declare module '@sewing-kit/hooks' {
+declare module '@sewing-kit/core' {
   interface LintWorkspaceConfigurationCustomHooks extends StylelintHooks {}
 }
 

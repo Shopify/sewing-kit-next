@@ -1,11 +1,18 @@
 import {Readable, Writable} from 'stream';
 
 import arg, {Result, Spec} from 'arg';
-import {loadWorkspace, LoadedWorkspace} from '@sewing-kit/config/load';
-import {AnyPlugin, PluginApi} from '@sewing-kit/plugins';
-import {WaterfallHook, SeriesHook} from '@sewing-kit/hooks';
-import {WorkspaceTasks, ProjectTasks} from '@sewing-kit/tasks';
+import {loadWorkspace, LoadedWorkspace} from '@sewing-kit/core/config-load';
 import {
+  // plugins
+  AnyPlugin,
+  PluginApi,
+  // hooks
+  WaterfallHook,
+  SeriesHook,
+  // tasks
+  WorkspaceTasks,
+  ProjectTasks,
+  // core
   Step,
   isDiagnosticError,
   Log,

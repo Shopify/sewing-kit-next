@@ -1,4 +1,5 @@
 import {
+  // hooks
   WaterfallHook,
   SeriesHook,
   BuildServiceHooks,
@@ -10,13 +11,11 @@ import {
   BuildWebAppTargetOptions,
   BuildServiceTargetOptions,
   BuildPackageTargetOptions,
-} from '@sewing-kit/hooks';
-import {
+  // tasks
   Env,
   BuildTaskOptions,
   BuildWorkspaceTaskHooks,
-} from '@sewing-kit/tasks';
-import {
+  // core
   TargetBuilder,
   Target,
   Step,
