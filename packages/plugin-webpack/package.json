@@ -3,13 +3,11 @@
   "license": "MIT",
   "description": "sewing-kit-next plugin for building with webpack",
   "version": "0.3.0",
+  "types": "./build/ts/index.d.ts",
   "typesVersions": {
     "*": {
       "noop": [
         "./build/ts/noop.d.ts"
-      ],
-      "*": [
-        "./build/ts/index.d.ts"
       ]
     }
   },

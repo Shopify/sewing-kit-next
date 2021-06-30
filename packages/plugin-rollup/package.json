@@ -3,13 +3,7 @@
   "version": "0.3.0",
   "license": "MIT",
   "description": "A sewing-kit plugin that runs rollup as a build step",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./build/ts/index.d.ts"
-      ]
-    }
-  },
+  "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",

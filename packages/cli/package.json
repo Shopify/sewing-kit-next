@@ -3,13 +3,7 @@
   "license": "MIT",
   "description": "The CLI for sewing-kit-next",
   "version": "0.5.0",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./build/ts/index.d.ts"
-      ]
-    }
-  },
+  "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
     "access": "public",

@@ -3,13 +3,11 @@
   "license": "MIT",
   "description": "Configuration creation helpers for sewing-kit-next",
   "version": "0.3.0",
+  "types": "./build/ts/index.d.ts",
   "typesVersions": {
     "*": {
       "load": [
         "./build/ts/load.d.ts"
-      ],
-      "*": [
-        "./build/ts/index.d.ts"
       ]
     }
   },
