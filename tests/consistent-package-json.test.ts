@@ -16,7 +16,7 @@ const KNOWN_TEMPLATE_KEYS = [
   'publishConfig',
   'repository',
   'sideEffects',
-  'typesVersions',
+  'types',
   'version',
 ];
 
@@ -72,13 +72,8 @@ packages.forEach(
           ).toStrictEqual(expectedPackageJSON.files);
         });
 
-        it('specifies typesVersions', () => {
-          expect(packageJSON.typesVersions).toHaveProperty('*');
-          expect(packageJSON.typesVersions['*']).toHaveProperty('*');
-
-          expect(packageJSON.typesVersions['*']['*']).toStrictEqual(
-            expect.arrayContaining(expectedPackageJSON.typesVersions['*']['*']),
-          );
+        it('specifies types', () => {
+          expect(packageJSON.types).toBe(expectedPackageJSON.types);
         });
 
         it('specifies sewing-kit-next deep-link homepage', () => {
