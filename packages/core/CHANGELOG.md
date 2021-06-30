@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Breaking Change
+
+- Moved the contents of `@sewing-kit/config`, `@sewing-kit/hooks`, `@sewing-kit/plugins` and `@sewing-kit/tasks` into `@sewing-kit/core`. This single package now provides most of the functionality for consuming and writing SK plugins. [[#211](https://github.com/Shopify/sewing-kit-next/pull/211)]
+
 ### Changed
 
 - Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/sewing-kit-next/pull/210)]
