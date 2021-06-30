@@ -21,7 +21,7 @@ import {eslint} from '@sewing-kit/plugin-eslint';
 import {jest} from '@sewing-kit/plugin-jest';
 import {workspaceTypeScript} from '@sewing-kit/plugin-typescript';
 
-import {createWorkspaceTestPlugin} from '@sewing-kit/plugins';
+import {createWorkspaceTestPlugin} from '@sewing-kit/core';
 
 export default createWorkspace((workspace) => {
   workspace.use(
@@ -50,7 +50,7 @@ For more examples on how to write your own plugins, check out the source code fo
 
 ### Plugin creation
 
-The following functions are provided by `@sewing-kit/plugins` to help make writing your own plugins easier:
+The following functions are provided to help make writing your own plugins easier:
 
 **For composing several plugins into one:**
 
