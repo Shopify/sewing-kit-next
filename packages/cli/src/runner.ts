@@ -739,7 +739,7 @@ class StepQueue {
       filteredDependencies.length > 0 ||
       (this.availableRunners.length === 0 && !this.isUnderinitialized)
     ) {
-      return new Promise((resolve, reject) => {
+      return new Promise<void>((resolve, reject) => {
         this.queue.push({
           perform: async () => {
             try {
