@@ -27,11 +27,11 @@ Depending on your project's needs, you'll want to install additional plugins as 
 
 ## 👩🏻‍💻 Usage
 
-Please see the following packages for usage instructions:
+Please see the following directories for usage instructions:
 
-- [`@sewing-kit/cli`](packages/cli) provides the commands you'll use to interact with sewing-kit.
-- [`@sewing-kit/config`](packages/config) provides the configuration interface you'll use to configure sewing-kit and associated development tools.
-- [`@sewing-kit/plugins`](packages/plugins) is the starting point for sewing-kit plugin development.
+- [`@sewing-kit/cli`](./packages/cli) provides the commands you'll use to interact with sewing-kit.
+- [`@sewing-kit/core/config`](./packages/core/src/config) provides the configuration interface you'll use to configure sewing-kit and associated development tools.
+- [`@sewing-kit/core/plugins`](./packages/core/src/plugins) is the starting point for sewing-kit plugin development.
 
 ## 📝 Documentation
 

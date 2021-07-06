@@ -1,4 +1,4 @@
-import type {WaterfallHook} from '@sewing-kit/plugins';
+import type {WaterfallHook} from '@sewing-kit/core';
 
 export interface BabelConfig {
   presets: (string | [string, {[key: string]: unknown}?])[];

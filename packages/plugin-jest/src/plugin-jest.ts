@@ -8,7 +8,8 @@ import {
   toArgs,
   addHooks,
   MissingPluginError,
-} from '@sewing-kit/plugins';
+} from '@sewing-kit/core';
+import type {TestProjectConfigurationHooks} from '@sewing-kit/core';
 import {updateSewingKitBabelPreset} from '@sewing-kit/plugin-javascript';
 
 // Brings in the Babel hook augmentations
@@ -52,7 +53,7 @@ interface JestWorkspaceHooks {
   readonly jestFlags: WaterfallHook<JestFlags>;
 }
 
-declare module '@sewing-kit/hooks' {
+declare module '@sewing-kit/core' {
   interface TestProjectConfigurationCustomHooks extends JestProjectHooks {}
   interface TestWorkspaceConfigurationCustomHooks extends JestWorkspaceHooks {}
 
@@ -87,7 +88,7 @@ export function jest() {
     ({workspace, hooks, options, api}) => {
       const projectConfigurations = new Map<
         Project,
-        import('@sewing-kit/hooks').TestProjectConfigurationHooks
+        TestProjectConfigurationHooks
       >();
       const rootConfigPath = api.configPath('jest/root.config.js');
 

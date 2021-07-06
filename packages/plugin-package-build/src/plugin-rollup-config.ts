@@ -5,7 +5,7 @@ import {
   Package,
   Runtime,
   DiagnosticError,
-} from '@sewing-kit/plugins';
+} from '@sewing-kit/core';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
@@ -13,7 +13,7 @@ import externals from 'rollup-plugin-node-externals';
 
 import type {} from '@sewing-kit/plugin-javascript';
 
-declare module '@sewing-kit/hooks' {
+declare module '@sewing-kit/core' {
   interface BuildPackageTargetOptions {
     rollupEsnext?: boolean;
   }

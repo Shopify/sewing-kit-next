@@ -19,12 +19,16 @@ import {
   createProjectBuildPlugin,
   projectTypeSwitch,
   Runtime,
-} from '@sewing-kit/plugins';
+} from '@sewing-kit/core';
 import type {
   BuildWebAppTargetOptions,
   BuildServiceTargetOptions,
   BuildPackageTargetOptions,
-} from '@sewing-kit/hooks';
+  BuildWebAppConfigurationHooks,
+  BuildServiceConfigurationHooks,
+  DevWebAppConfigurationHooks,
+  DevServiceConfigurationHooks,
+} from '@sewing-kit/core';
 
 interface WebpackHooks {
   readonly webpackCachePath: WaterfallHook<string>;
@@ -102,7 +106,7 @@ interface WebpackProjectContext<TType extends Project = Project> {
   readonly webpackStats: WebpackStatsMap<TType>;
 }
 
-declare module '@sewing-kit/hooks' {
+declare module '@sewing-kit/core' {
   interface BuildProjectConfigurationCustomHooks extends WebpackHooks {}
   interface DevProjectConfigurationCustomHooks extends WebpackHooks {}
 
@@ -729,10 +733,10 @@ function createWebpackConfigurationChangePlugin(
   }: WebpackConfigurationChangePluginOptions & {id: string},
   run: (
     hooks:
-      | import('@sewing-kit/hooks').BuildWebAppConfigurationHooks
-      | import('@sewing-kit/hooks').BuildServiceConfigurationHooks
-      | import('@sewing-kit/hooks').DevWebAppConfigurationHooks
-      | import('@sewing-kit/hooks').DevServiceConfigurationHooks,
+      | BuildWebAppConfigurationHooks
+      | BuildServiceConfigurationHooks
+      | DevWebAppConfigurationHooks
+      | DevServiceConfigurationHooks,
   ) => void,
 ) {
   return createProjectPlugin<WebApp | Service>(id, ({tasks: {build, dev}}) => {

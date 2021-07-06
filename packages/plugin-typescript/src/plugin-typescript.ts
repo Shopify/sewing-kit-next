@@ -10,7 +10,7 @@ import {
   createWorkspacePlugin,
   WorkspacePluginContext,
   TargetRuntime,
-} from '@sewing-kit/plugins';
+} from '@sewing-kit/core';
 import {createJavaScriptWebpackRuleSet} from '@sewing-kit/plugin-javascript';
 import type {BabelConfig} from '@sewing-kit/plugin-javascript';
 
@@ -21,7 +21,7 @@ interface TypeScriptTypeCheckingHooks {
   readonly typescriptHeap: WaterfallHook<number>;
 }
 
-declare module '@sewing-kit/hooks' {
+declare module '@sewing-kit/core' {
   interface TypeCheckWorkspaceConfigurationCustomHooks
     extends TypeScriptTypeCheckingHooks {}
   interface BuildWorkspaceConfigurationCustomHooks

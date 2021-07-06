@@ -7,9 +7,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-### Changed
+### Breaking Change
 
-- Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/sewing-kit-next/pull/210)]
+- Removed package. The contents of this package is now provided by `@sewing-kit/core`. [[#211](https://github.com/Shopify/sewing-kit-next/pull/211)]
 
 ## 0.3.0 - 2021-06-25
 

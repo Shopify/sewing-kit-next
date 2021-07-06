@@ -1,6 +1,6 @@
 import {statSync as stat} from 'fs';
 
-import {Package} from '@sewing-kit/plugins';
+import {Package} from '@sewing-kit/core';
 
 import {Workspace, generateUniqueWorkspaceID} from '../../../tests/utilities';
 

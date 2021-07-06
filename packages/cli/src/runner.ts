@@ -14,6 +14,7 @@ import {
   StepResources,
   StepRunner as NestedStepRunner,
 } from '@sewing-kit/core';
+import type {Project} from '@sewing-kit/core';
 
 import {TaskContext, logError, StepInclusionFlag} from './common';
 import {Ui} from './ui';
@@ -80,9 +81,7 @@ class PersistentSection {
   }
 }
 
-export type StepTarget =
-  | import('@sewing-kit/core').Project
-  | import('@sewing-kit/core').Workspace;
+export type StepTarget = Project | Workspace;
 
 export interface StepDetails {
   readonly step: Step;

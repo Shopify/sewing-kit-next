@@ -5,7 +5,7 @@ import {
   createWorkspaceLintPlugin,
   DiagnosticError,
   LogLevel,
-} from '@sewing-kit/plugins';
+} from '@sewing-kit/core';
 
 export interface ESLintFlags {
   readonly eslintrc?: false;
@@ -42,7 +42,7 @@ interface ESLintHooks {
   readonly eslintFlags: WaterfallHook<ESLintFlags>;
 }
 
-declare module '@sewing-kit/hooks' {
+declare module '@sewing-kit/core' {
   interface LintWorkspaceConfigurationCustomHooks extends ESLintHooks {}
 }
 

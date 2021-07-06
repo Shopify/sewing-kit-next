@@ -7,14 +7,14 @@ import {
   ValueOrGetter,
   ValueOrArray,
   TargetRuntime,
-} from '@sewing-kit/plugins';
+} from '@sewing-kit/core';
 
 import type {} from '@sewing-kit/plugin-webpack';
 
 import type {BabelHooks, BabelConfig} from './types';
 import {createJavaScriptWebpackRuleSet} from './utilities';
 
-declare module '@sewing-kit/hooks' {
+declare module '@sewing-kit/core' {
   interface TestProjectConfigurationCustomHooks extends BabelHooks {}
   interface BuildProjectConfigurationCustomHooks extends BabelHooks {}
   interface DevProjectConfigurationCustomHooks extends BabelHooks {}

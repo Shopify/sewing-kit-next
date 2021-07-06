@@ -2,7 +2,7 @@ import {
   Package,
   createComposedProjectPlugin,
   createProjectTestPlugin,
-} from '@sewing-kit/plugins';
+} from '@sewing-kit/core';
 import {javascript} from '@sewing-kit/plugin-javascript';
 import {typescript} from '@sewing-kit/plugin-typescript';
 import {packageBuild} from '@sewing-kit/plugin-package-build';

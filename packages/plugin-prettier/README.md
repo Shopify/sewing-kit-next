@@ -13,7 +13,7 @@ yarn add @sewing-kit/plugin-prettier --dev
 The `prettier` function returns a `sewing-kit` plugin. This plugin applies to the workspace, not an individual project.
 
 ```js
-import {createWorkspace} from '@sewing-kit/config';
+import {createWorkspace} from '@sewing-kit/core';
 import {prettier} from '@sewing-kit/plugin-prettier';
 
 export default createWorkspace((workspace) => {
@@ -37,7 +37,7 @@ This plugin adds the following hooks to `LintWorkspaceConfigurationCustomHooks`:
 - `prettierFlags`: an object of options to convert into command line flags for the `prettier` command. These options are camelcase versions of their [CLI counterparts](https://prettier.io/docs/en/cli.html).
 
   ```tsx
-  import {createWorkspaceLintPlugin} from '@sewing-kit/config';
+  import {createWorkspaceLintPlugin} from '@sewing-kit/core';
 
   const plugin = createWorkspaceLintPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {

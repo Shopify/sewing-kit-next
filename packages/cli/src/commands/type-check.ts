@@ -1,5 +1,11 @@
-import {WaterfallHook, SeriesHook} from '@sewing-kit/hooks';
-import {TypeCheckOptions, TypeCheckWorkspaceTaskHooks} from '@sewing-kit/tasks';
+import {
+  // hooks
+  WaterfallHook,
+  SeriesHook,
+  // tasks
+  TypeCheckOptions,
+  TypeCheckWorkspaceTaskHooks,
+} from '@sewing-kit/core';
 
 import {run} from '../runner';
 import {

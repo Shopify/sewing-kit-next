@@ -3,9 +3,7 @@
   "include": [],
   "references": [
     {"path": "./packages/cli"},
-    {"path": "./packages/config"},
     {"path": "./packages/core"},
-    {"path": "./packages/hooks"},
     {"path": "./packages/plugin-eslint"},
     {"path": "./packages/plugin-javascript"},
     {"path": "./packages/plugin-jest"},
@@ -15,8 +13,6 @@
     {"path": "./packages/plugin-stylelint"},
     {"path": "./packages/plugin-typescript"},
     {"path": "./packages/plugin-webpack"},
-    {"path": "./packages/plugins"},
-    {"path": "./packages/tasks"},
     {"path": "./packages/webpack-plugin-hash-output"}
   ]
 }
