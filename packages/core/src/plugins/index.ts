@@ -1,20 +1,3 @@
-export {DiagnosticError, LogLevel, TargetBuilder, TargetRuntime} from '../core';
-export type {Loggable, Step, StepResources, StepStdio, Target} from '../core';
-export {Task, Env} from '../tasks';
-export type {WorkspaceTasks, ProjectTasks} from '../tasks';
-export {SeriesHook, WaterfallHook} from '../hooks';
-export {
-  ProjectKind,
-  Package,
-  PackageBinary,
-  PackageEntry,
-  Service,
-  WebApp,
-  Workspace,
-  Runtime,
-} from '../core';
-export type {Project} from '../core';
-
 export type {PluginApi} from './api';
 export {
   PLUGIN_MARKER,

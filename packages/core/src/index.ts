@@ -1,7 +1,111 @@
-export * from './config';
-export * from './core';
-export * from './plugins';
-export * from './tasks';
+export {
+  createPackage,
+  createService,
+  createWebApp,
+  createWorkspace,
+} from './config';
+
+export {
+  Runtime,
+  ProjectKind,
+  Package,
+  PackageBinary,
+  PackageEntry,
+  WebApp,
+  ServiceWorker,
+  Service,
+  Workspace,
+  LogLevel,
+  DiagnosticError,
+  isDiagnosticError,
+  TargetBuilder,
+  TargetRuntime,
+} from './core';
+export type {
+  PackageBinaryOptions,
+  PackageEntryOptions,
+  PackageOptions,
+  WebAppOptions,
+  ServiceWorkerOptions,
+  ServiceOptions,
+  WorkspaceOptions,
+  Project,
+  FileSystem,
+  Log,
+  LogFormatter,
+  LogOptions,
+  Loggable,
+  Step,
+  StepResources,
+  StepRunner,
+  StepStdio,
+  Target,
+} from './core';
+
+export {
+  PLUGIN_MARKER,
+  PluginTarget,
+  createComposedProjectPlugin,
+  createComposedWorkspacePlugin,
+  createProjectBuildPlugin,
+  createProjectDevPlugin,
+  createProjectPlugin,
+  createProjectTestPlugin,
+  createWorkspaceBuildPlugin,
+  createWorkspaceDevPlugin,
+  createWorkspaceLintPlugin,
+  createWorkspacePlugin,
+  createWorkspaceTestPlugin,
+  createWorkspaceTypeCheckPlugin,
+  toArgs,
+  addHooks,
+  projectTypeSwitch,
+  unwrapPossibleGetter,
+  unwrapPossibleArrayGetter,
+  MissingPluginError,
+} from './plugins';
+export type {
+  PluginApi,
+  AnyPlugin,
+  PluginComposer,
+  ProjectPlugin,
+  ProjectPluginContext,
+  WorkspacePlugin,
+  WorkspacePluginContext,
+  ValueOrArray,
+  ValueOrGetter,
+} from './plugins';
+
+export {Env, Task} from './tasks';
+export type {
+  WorkspaceTasks,
+  ProjectTasks,
+  TypeCheckOptions,
+  TypeCheckWorkspaceTaskHooks,
+  TypeCheckWorkspaceTask,
+  LintTaskOptions,
+  LintWorkspaceTaskHooks,
+  LintWorkspaceTask,
+  TestTaskOptions,
+  TestWorkspaceTaskHooks,
+  TestProjectTaskHooks,
+  TestWorkspaceTask,
+  TestProjectTask,
+  TestWorkspaceProjectDetails,
+  BuildTaskOptions,
+  BuildWorkspaceTaskHooks,
+  BuildProjectTaskHooks,
+  BuildWorkspaceTask,
+  BuildProjectTask,
+  BuildWorkspaceProjectDetails,
+  DevReloadStyle,
+  DevTaskOptions,
+  DevWorkspaceTaskHooks,
+  DevProjectTaskHooks,
+  DevWorkspaceTask,
+  DevProjectTask,
+  DevWorkspaceProjectDetails,
+} from './tasks';
 
 // Content from hooks may be augmented from external packages
 // A bug in typescript however does not allow augmentation when reexporting with
