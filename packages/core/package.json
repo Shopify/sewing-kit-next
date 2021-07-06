@@ -33,7 +33,7 @@
     "build/*",
     "!*.tsbuildinfo",
     "index.js",
-    "index.d.ts"
+    "config-load.js"
   ],
   "dependencies": {
     "@babel/preset-env": "^7.14.5",
