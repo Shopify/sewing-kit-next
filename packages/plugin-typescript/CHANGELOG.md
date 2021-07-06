@@ -13,6 +13,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Updated typescript dependency to `^4.3.5` [[#212](https://github.com/Shopify/sewing-kit-next/pull/212)]
 - Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/sewing-kit-next/pull/210)]
 
 ## 0.4.0 - 2021-06-25
