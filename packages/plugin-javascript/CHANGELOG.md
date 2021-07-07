@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Breaking Change
+
+- Remove webpack configuration and `createJavaScriptWebpackRuleSet` helper. Consuming apps should configure webpack's `babel-loader` themselves.
+
 ### Changed
 
 - Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/sewing-kit-next/pull/210)]

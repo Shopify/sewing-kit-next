@@ -25,8 +25,6 @@ export default createWebApp((app) => {
 });
 ```
 
-This plugin will automatically configure Webpack to process JavaScript files using [`babel-loader`](TODO). Unless you set the `babelConfig` options for this plugin, the Webpack compilation will use this plugin’s Babel preset, [`@sewing-kit/plugin-javascript/babel-preset`](TODO), to compile JavaScript files. This preset includes [`@babel/preset-env`](TODO), and a few additional plugins that make up what we consider to be a good baseline for JavaScript development.
-
 #### Options
 
 The `javascript()` plugin accepts the following options:
@@ -165,50 +163,6 @@ More complex customizations of the Babel config can be done with the [`babelConf
 ## Utilities
 
 These utilities are primarily targeted at developers writing plugins for `sewing-kit`. You don’t need to worry too much about these if that doesn’t describe you.
-
-### `createJavaScriptWebpackRuleSet()`
-
-The `createJavaScriptWebpackRuleSet` returns a promise for a [webpack `UseEntry`](https://webpack.js.org/configuration/module/#ruleuse). This entry will use [`babel-loader`](TODO) that is configured to use the results of calling the [Babel-related hooks provided by the `javascript()` plugin](#hooks). This includes an optimized configuration for the [`babel-loader` `cacheDirectory` option](TODO).
-
-```ts
-import {createPackageBuildPlugin} from '@sewing-kit/core';
-import {createJavaScriptWebpackRuleSet} from '@sewing-kit/plugin-javascript';
-
-const plugin = createPackageBuildPlugin('MyPlugin', ({api, options, hooks}) => {
-  hooks.target.hook(({target, hooks}) => {
-    hooks.configure.hook((configuration) => {
-      // This assumes the @sewing-kit/plugin-webpack webpackHooks() plugin
-      // was also included.
-      configuration.webpackRules?.hook(async (rules) => {
-        // A new webpack rule that will process .esnext files using the Babel
-        // configuration provided by this plugin’s javascript() hooks.
-        const esnextRule = {
-          test: /\.esnext$/,
-          exclude: /node_modules/,
-          use: await createJavaScriptWebpackRuleSet({
-            api,
-            target,
-            // The environment to build for, typically best to pass
-            // through the options.simulateEnv for the build in question.
-            env: options.simulateEnv,
-            configuration,
-            // At least one level of directory. The Babel cache will be scoped
-            // under this directory so it does not conflict with other
-            // file types being processed using Babel.
-            cacheDirectory: 'esnext',
-            // Additional packages to consider in the Babel cache key (optional,
-            // defaults to an empty array. These dependencies will be used as the
-            // initial value for the `babelCacheDependencies` hook)
-            cacheDependencies: [],
-          }),
-        };
-
-        return [...rules, esnextRule];
-      });
-    });
-  });
-});
-```
 
 ### `updateBabelPreset()`
 

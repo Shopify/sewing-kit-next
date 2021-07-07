@@ -36,7 +36,6 @@
     "babel-preset.js"
   ],
   "dependencies": {
-    "@babel/core": "^7.14.6",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.14.5",
     "@babel/plugin-proposal-numeric-separator": "^7.14.5",
@@ -44,19 +43,13 @@
     "@babel/preset-env": "^7.14.5",
     "@sewing-kit/core": "^0.5.0",
     "@types/babel__core": "^7.1.7",
-    "babel-loader": "^8.1.0",
-    "core-js": "^3.14.0",
-    "node-object-hash": "^2.0.0"
+    "core-js": "^3.14.0"
   },
   "peerDependencies": {
-    "@sewing-kit/plugin-webpack": "^0.1.12",
-    "webpack": ">=4 <5"
+    "@babel/core": "^7.14.6"
   },
   "peerDependenciesMeta": {
-    "@sewing-kit/plugin-webpack": {
-      "optional": true
-    },
-    "webpack": {
+    "@babel/core": {
       "optional": true
     }
   }
