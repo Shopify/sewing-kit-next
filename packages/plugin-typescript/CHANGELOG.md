@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Changed
+
+- Typescript output is no longer cached in the `.sewing-kit` folder and restored on each run. Cachable output still occurs in `packages/*/build/*.tsbuildinfo` and `packages/*/build/ts`. Those two locations should be addded to any CI cache storage step. [[#217](https://github.com/Shopify/sewing-kit-next/pull/217)]
+- Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/sewing-kit-next/pull/217)]
 
 ## 0.5.0 - 2021-07-07
 

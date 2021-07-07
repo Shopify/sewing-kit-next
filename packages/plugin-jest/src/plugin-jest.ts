@@ -12,9 +12,6 @@ import {
 import type {TestProjectConfigurationHooks} from '@sewing-kit/core';
 import {updateSewingKitBabelPreset} from '@sewing-kit/plugin-javascript';
 
-// Brings in the Babel hook augmentations
-import type {} from 'jest';
-
 const PLUGIN = 'SewingKit.Jest';
 
 type DeepReadonly<T> = Readonly<
