@@ -5,7 +5,7 @@
     "baseUrl": "src",
     "rootDir": "src"
   },
-  "include": ["src/**/*.ts", "../../config/typescript/typings"],
+  "include": ["src/**/*", "../../config/typescript/typings"],
   "exclude": ["src/**/*.test.ts"],
   "references": [{"path": "../core"}, {"path": "../webpack-plugin-hash-output"}]
 }

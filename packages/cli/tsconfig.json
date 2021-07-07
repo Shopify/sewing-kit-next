@@ -11,7 +11,7 @@
     ],
     "types": ["supports-hyperlinks"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*"],
   "exclude": ["src/**/*.test.ts"],
   "references": [{"path": "../core"}]
 }
