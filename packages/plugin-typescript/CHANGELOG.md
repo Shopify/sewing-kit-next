@@ -11,6 +11,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Removed generation of `.d.ts` entrpoint files. You should add a `types` or `typesVersions` key to your package.json to ensure types are referenced correctly. [[#210](https://github.com/Shopify/sewing-kit-next/pull/210)]
 - Remove webpack configuration. Consuming apps should configure webpack's `babel-loader` themselves, and enable `isolatedModules: true` in their `tsconfig.json` to identify and fix missing type reexports. [[#213](https://github.com/Shopify/sewing-kit-next/pull/213)]
+- Remove configuring `babelExtensions` and `babelIgnorePatterns` as these hooks have been removed from `plugin-javascript`.
 
 ### Changed
 

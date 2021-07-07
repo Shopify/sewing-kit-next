@@ -25,9 +25,6 @@ export function javascript({babelConfig}: Options = {}) {
   return createProjectPlugin(PLUGIN, ({tasks: {dev, build, test}}) => {
     const addBabelHooks = addHooks<BabelHooks>(() => ({
       babelConfig: new WaterfallHook(),
-      babelIgnorePatterns: new WaterfallHook(),
-      babelExtensions: new WaterfallHook(),
-      babelCacheDependencies: new WaterfallHook(),
     }));
 
     const explicitBabelConfig =

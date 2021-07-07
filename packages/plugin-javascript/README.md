@@ -63,52 +63,9 @@ This plugin adds the following hooks to each of the `TestProjectConfigurationHoo
   });
   ```
 
-- `babelExtensions`: extensions that will be processed when transpiling with Babel.
-
-  ```tsx
-  import {createProjectBuildPlugin} from '@sewing-kit/core';
-
-  const plugin = createProjectBuildPlugin(({hooks}) => {
-    hooks.configure.hook((configure) => {
-      configure.babelExtensions!.hook((extensions) => [...extensions, '.ts']);
-    });
-  });
-  ```
-
-- `babelIgnorePatterns`: glob patterns that will be ignored when transpiling with Babel.
-
-  ```tsx
-  import {createProjectBuildPlugin} from '@sewing-kit/core';
-
-  const plugin = createProjectBuildPlugin(({hooks}) => {
-    hooks.configure.hook((configure) => {
-      configure.babelIgnorePatterns!.hook((ignorePatterns) => [
-        ...ignorePatterns,
-        '**/*.test.js',
-      ]);
-    });
-  });
-  ```
-
-- `babelCacheDependencies`: the name of NPM dependencies that should be used when calculating a cache identifier for Babel. This should include any Babel plugins and presets you make use of, as changes in those dependencies should invalidate the Babel cache.
-
-  ```ts
-  import {createProjectBuildPlugin} from '@sewing-kit/core';
-
-  const plugin = createProjectBuildPlugin(({hooks}) => {
-    hooks.configure.hook((configure) => {
-      configure.babelCacheDependencies!.hook((cacheDependencies) => [
-        ...cacheDependencies,
-        'babel-preset-my-company',
-        'babel-plugin-custom',
-      ]);
-    });
-  });
-  ```
-
 ### `babelPlugins()`
 
-The `babelPlugins` function returns a `sewing-kit` plugin that applies to a project. To include this plugin, you **must** include the `babelHooks()` plugin as well. You pass this function a plugin name or plugin name/ options tuple that you would like to include in the project’s Babel config. You can also pass this plugin an array of Babel plugins, or a function that returns any number of Babel plugins (this function can also be asynchronous, which can be useful if you infer a Babel configuration from some other details in the project). These plugins are also automatically registered with `babelCacheDependencies`.
+The `babelPlugins` function returns a `sewing-kit` plugin that applies to a project. To include this plugin, you **must** include the `babelHooks()` plugin as well. You pass this function a plugin name or plugin name/ options tuple that you would like to include in the project’s Babel config. You can also pass this plugin an array of Babel plugins, or a function that returns any number of Babel plugins (this function can also be asynchronous, which can be useful if you infer a Babel configuration from some other details in the project).
 
 ```ts
 import {createWebApp} from '@sewing-kit/core';
