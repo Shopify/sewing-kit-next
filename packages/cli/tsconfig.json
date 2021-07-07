@@ -3,15 +3,9 @@
   "compilerOptions": {
     "outDir": "build/ts",
     "baseUrl": "src",
-    "rootDir": "src",
-    "typeRoots": [
-      "./node_modules/@types",
-      "../../node_modules/@types",
-      "./config/typescript/typings"
-    ],
-    "types": ["supports-hyperlinks"]
+    "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "./config/typescript"],
   "exclude": ["src/**/*.test.ts"],
   "references": [{"path": "../core"}]
 }
