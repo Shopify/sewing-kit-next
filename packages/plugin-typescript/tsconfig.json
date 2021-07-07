@@ -9,7 +9,6 @@
   "exclude": ["src/**/*.test.ts"],
   "references": [
     {"path": "../core"},
-    {"path": "../plugin-webpack"},
     {"path": "../plugin-javascript"},
     {"path": "../plugin-jest"}
   ]

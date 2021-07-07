@@ -7,7 +7,9 @@ import {javascript} from '@sewing-kit/plugin-javascript';
 import {typescript} from '@sewing-kit/plugin-typescript';
 import {packageBuild} from '@sewing-kit/plugin-package-build';
 
-export const createSewingKitPackagePlugin = ({typesAtRoot = false} = {}) =>
+import type {} from '@sewing-kit/plugin-jest';
+
+export const createSewingKitPackagePlugin = () =>
   createComposedProjectPlugin<Package>('SewingKit.InternalPackage', [
     javascript(),
     typescript(),
@@ -18,7 +20,6 @@ export const createSewingKitPackagePlugin = ({typesAtRoot = false} = {}) =>
       esnext: false,
       commonjs: true,
       binaries: true,
-      typescript: {typesAtRoot},
     }),
     removeBabelPresetJestModuleMapper(),
   ]);

@@ -2,20 +2,16 @@ import {join, resolve} from 'path';
 
 import {copy} from 'fs-extra';
 import {
-  Env,
   Workspace,
   WaterfallHook,
   DiagnosticError,
   createProjectPlugin,
   createWorkspacePlugin,
   WorkspacePluginContext,
-  TargetRuntime,
 } from '@sewing-kit/core';
-import {createJavaScriptWebpackRuleSet} from '@sewing-kit/plugin-javascript';
-import type {BabelConfig} from '@sewing-kit/plugin-javascript';
 
+import type {} from '@sewing-kit/plugin-javascript';
 import type {} from '@sewing-kit/plugin-jest';
-import type {} from '@sewing-kit/plugin-webpack';
 
 interface TypeScriptTypeCheckingHooks {
   readonly typescriptHeap: WaterfallHook<number>;
@@ -31,76 +27,35 @@ declare module '@sewing-kit/core' {
 const PLUGIN = 'SewingKit.TypeScript';
 
 export function typescript() {
-  return createProjectPlugin(
-    PLUGIN,
-    ({api, project, tasks: {dev, build, test}}) => {
-      test.hook(({hooks}) => {
-        hooks.configure.hook((hooks) => {
-          hooks.jestExtensions?.hook(addTypeScriptExtensions);
-          hooks.jestTransforms?.hook((transforms, {babelTransform}) => ({
-            ...transforms,
-            '^.+\\.tsx?$': babelTransform,
-          }));
+  return createProjectPlugin(PLUGIN, ({tasks: {dev, build, test}}) => {
+    test.hook(({hooks}) => {
+      hooks.configure.hook((hooks) => {
+        hooks.jestExtensions?.hook(addTypeScriptExtensions);
+        hooks.jestTransforms?.hook((transforms, {babelTransform}) => ({
+          ...transforms,
+          '^.+\\.tsx?$': babelTransform,
+        }));
 
-          hooks.babelConfig?.hook(addTypeScriptBabelConfig);
-        });
+        hooks.babelConfig?.hook(addTypeScriptBabelConfig);
       });
+    });
 
-      build.hook(({hooks, options}) => {
-        hooks.target.hook(({target, hooks}) => {
-          hooks.configure.hook((configure) => {
-            configure.babelConfig?.hook(addTypeScriptBabelConfig);
-            configure.babelExtensions?.hook(addTypeScriptExtensions);
-            configure.babelIgnorePatterns?.hook(addTypeScriptTestIgnorePattern);
-            configure.webpackExtensions?.hook(addTypeScriptExtensions);
-            configure.webpackPlugins?.hook(addWebpackPlugins);
-            configure.webpackRules?.hook(async (rules) => [
-              ...rules,
-              {
-                test: /\.tsx?/,
-                exclude: /node_modules/,
-                use: await createJavaScriptWebpackRuleSet({
-                  api,
-                  target,
-                  env: options.simulateEnv,
-                  configuration: configure,
-                  cacheDirectory: 'ts',
-                  cacheDependencies: [],
-                }),
-              },
-            ]);
-          });
-        });
-      });
-
-      dev.hook(({hooks}) => {
+    build.hook(({hooks}) => {
+      hooks.target.hook(({hooks}) => {
         hooks.configure.hook((configure) => {
           configure.babelConfig?.hook(addTypeScriptBabelConfig);
-          configure.webpackExtensions?.hook(addTypeScriptExtensions);
-          configure.webpackPlugins?.hook(addWebpackPlugins);
-          configure.webpackRules?.hook(async (rules) => [
-            ...rules,
-            {
-              test: /\.tsx?/,
-              exclude: /node_modules/,
-              use: await createJavaScriptWebpackRuleSet({
-                api,
-                target: {
-                  project,
-                  options: {},
-                  runtime: TargetRuntime.fromProject(project),
-                },
-                env: Env.Development,
-                configuration: configure,
-                cacheDirectory: 'ts',
-                cacheDependencies: [],
-              }),
-            },
-          ]);
+          configure.babelExtensions?.hook(addTypeScriptExtensions);
+          configure.babelIgnorePatterns?.hook(addTypeScriptTestIgnorePattern);
         });
       });
-    },
-  );
+    });
+
+    dev.hook(({hooks}) => {
+      hooks.configure.hook((configure) => {
+        configure.babelConfig?.hook(addTypeScriptBabelConfig);
+      });
+    });
+  });
 }
 
 export function workspaceTypeScript() {
@@ -322,22 +277,9 @@ function addTypeScriptTestIgnorePattern(patterns: ReadonlyArray<string>) {
   ];
 }
 
-async function addWebpackPlugins(
-  plugins: ReadonlyArray<import('webpack').Plugin>,
-) {
-  const [
-    {IgnoreMissingTypeExportWarningsPlugin},
-    {WatchIgnorePlugin},
-  ] = await Promise.all([
-    import('./webpack-parts'),
-    import('webpack'),
-  ] as const);
-
-  return [
-    ...plugins,
-    new IgnoreMissingTypeExportWarningsPlugin(),
-    new WatchIgnorePlugin([/\.d\.ts$/]),
-  ];
+interface BabelConfig {
+  presets: (string | [string, {[key: string]: unknown}?])[];
+  plugins: (string | [string, {[key: string]: unknown}?])[];
 }
 
 function addTypeScriptBabelConfig(config: BabelConfig): BabelConfig {

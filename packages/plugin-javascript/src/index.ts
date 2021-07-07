@@ -1,6 +1,5 @@
 export {javascript, babelPlugins, babelPresets} from './plugin-javascript';
 export {
-  createJavaScriptWebpackRuleSet,
   updateSewingKitBabelPreset,
   updateBabelPlugin,
   updateBabelPreset,
