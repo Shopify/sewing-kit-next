@@ -28,7 +28,7 @@ By default stylelint runs over css files. You can modify the files that are proc
 ```js
 export default createWorkspace((workspace) => {
   // Run stylelint on css and scss files
-  workspace.use(pretttier({files: '**/*.{css,scss}'}));
+  workspace.use(stylelint({files: '**/*.{css,scss}'}));
 });
 ```
 
