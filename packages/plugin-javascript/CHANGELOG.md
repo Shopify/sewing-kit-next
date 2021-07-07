@@ -9,7 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Breaking Change
 
-- Remove webpack configuration and `createJavaScriptWebpackRuleSet` helper. Consuming apps should configure webpack's `babel-loader` themselves.
+- Remove webpack configuration and `createJavaScriptWebpackRuleSet` helper. Consuming apps should configure webpack's `babel-loader` themselves. [[#213](https://github.com/Shopify/sewing-kit-next/pull/213)]
 
 ### Changed
 
