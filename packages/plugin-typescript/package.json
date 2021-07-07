@@ -2,7 +2,7 @@
   "name": "@sewing-kit/plugin-typescript",
   "license": "MIT",
   "description": "sewing-kit-next technology plugin for typescript",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
@@ -31,7 +31,7 @@
     "@babel/plugin-proposal-class-properties": "^7.14.5",
     "@babel/plugin-proposal-decorators": "^7.14.5",
     "@babel/preset-typescript": "^7.14.5",
-    "@sewing-kit/core": "^0.5.0",
+    "@sewing-kit/core": "^0.6.0",
     "fs-extra": "^9.0.0",
     "typescript": "^4.3.5"
   },

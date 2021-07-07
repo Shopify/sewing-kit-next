@@ -2,7 +2,7 @@
   "name": "@sewing-kit/plugins",
   "license": "MIT",
   "description": "APIs for building sewing-kit-next plugins",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
