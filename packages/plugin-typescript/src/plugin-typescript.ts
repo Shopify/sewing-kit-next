@@ -29,11 +29,12 @@ export function typescript() {
       hooks.configure.hook((hooks) => {
         hooks.babelConfig?.hook(addTypeScriptBabelConfig);
 
-        hooks.jestExtensions?.hook(addTypeScriptExtensions);
-        hooks.jestTransforms?.hook((transforms, {babelTransform}) => ({
-          ...transforms,
-          '^.+\\.tsx?$': babelTransform,
-        }));
+        hooks.jestExtensions?.hook((extensions) => {
+          return ['.ts', '.tsx', ...extensions];
+        });
+        hooks.jestTransforms?.hook((transforms, {babelTransform}) => {
+          return {...transforms, '^.+\\.tsx?$': babelTransform};
+        });
       });
     });
 
@@ -108,11 +109,10 @@ export function createRunTypeScriptStep(
       const heap = await configuration.typescriptHeap!.run(0);
       const heapArguments = heap ? [`--max-old-space-size=${heap}`] : [];
 
-      // emit = true;
       try {
         await step.exec(
           'node_modules/.bin/tsc',
-          [...heapArguments, '--build'],
+          ['--build', ...heapArguments],
           {all: true, env: {FORCE_COLOR: '1'}},
         );
       } catch (error) {
@@ -123,10 +123,6 @@ export function createRunTypeScriptStep(
       }
     },
   );
-}
-
-function addTypeScriptExtensions(extensions: ReadonlyArray<string>) {
-  return ['.ts', '.tsx', ...extensions];
 }
 
 interface BabelConfig {
