@@ -7,7 +7,4 @@ export interface BabelConfig {
 
 export interface BabelHooks {
   readonly babelConfig: WaterfallHook<BabelConfig>;
-  readonly babelExtensions: WaterfallHook<ReadonlyArray<string>>;
-  readonly babelIgnorePatterns: WaterfallHook<ReadonlyArray<string>>;
-  readonly babelCacheDependencies: WaterfallHook<ReadonlyArray<string>>;
 }

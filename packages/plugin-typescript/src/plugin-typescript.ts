@@ -30,13 +30,13 @@ export function typescript() {
   return createProjectPlugin(PLUGIN, ({tasks: {dev, build, test}}) => {
     test.hook(({hooks}) => {
       hooks.configure.hook((hooks) => {
+        hooks.babelConfig?.hook(addTypeScriptBabelConfig);
+
         hooks.jestExtensions?.hook(addTypeScriptExtensions);
         hooks.jestTransforms?.hook((transforms, {babelTransform}) => ({
           ...transforms,
           '^.+\\.tsx?$': babelTransform,
         }));
-
-        hooks.babelConfig?.hook(addTypeScriptBabelConfig);
       });
     });
 
@@ -44,8 +44,6 @@ export function typescript() {
       hooks.target.hook(({hooks}) => {
         hooks.configure.hook((configure) => {
           configure.babelConfig?.hook(addTypeScriptBabelConfig);
-          configure.babelExtensions?.hook(addTypeScriptExtensions);
-          configure.babelIgnorePatterns?.hook(addTypeScriptTestIgnorePattern);
         });
       });
     });
@@ -265,16 +263,6 @@ export function createRunTypeScriptStep(
 
 function addTypeScriptExtensions(extensions: ReadonlyArray<string>) {
   return ['.ts', '.tsx', ...extensions];
-}
-
-function addTypeScriptTestIgnorePattern(patterns: ReadonlyArray<string>) {
-  return [
-    '**/*.test.ts',
-    '**/*.test.tsx',
-    '**/tests/**/*.ts',
-    '**/tests/**/*.tsx',
-    ...patterns,
-  ];
 }
 
 interface BabelConfig {

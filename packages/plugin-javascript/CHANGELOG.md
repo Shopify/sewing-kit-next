@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Breaking Change
 
 - Remove webpack configuration and `createJavaScriptWebpackRuleSet` helper. Consuming apps should configure webpack's `babel-loader` themselves. [[#213](https://github.com/Shopify/sewing-kit-next/pull/213)]
+- Remove `babelExtensions`, `babelIgnorePatterns` and `babelCacheDependencies` hooks. `babelExtensions` and `babelIgnorePatterns` were only used when compiling with the babel CLI, which is no longer supported. `babelCacheDependencies` was only used when configuring webpack's `babel-loader`, which is now the responsibility of consuming apps.
 
 ### Changed
 
