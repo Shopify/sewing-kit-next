@@ -9,6 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Support typescript files (`ts`/`tsx`) by default.
 - Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/sewing-kit-next/pull/217)]
 
 ## 0.4.1 - 2021-07-07

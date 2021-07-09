@@ -36,17 +36,13 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.13.16",
-    "@sewing-kit/plugin-javascript": "^0.5.0",
-    "@sewing-kit/plugin-jest": "^0.1.24"
+    "@sewing-kit/plugin-javascript": "^0.5.0"
   },
   "peerDependenciesMeta": {
     "@babel/core": {
       "optional": true
     },
     "@sewing-kit/plugin-javascript": {
-      "optional": true
-    },
-    "@sewing-kit/plugin-jest": {
       "optional": true
     }
   }

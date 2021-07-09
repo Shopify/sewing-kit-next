@@ -8,7 +8,6 @@ import {
 } from '@sewing-kit/core';
 
 import type {} from '@sewing-kit/plugin-javascript';
-import type {} from '@sewing-kit/plugin-jest';
 
 interface TypeScriptTypeCheckingHooks {
   readonly typescriptHeap: WaterfallHook<number>;
@@ -28,13 +27,6 @@ export function typescript() {
     test.hook(({hooks}) => {
       hooks.configure.hook((hooks) => {
         hooks.babelConfig?.hook(addTypeScriptBabelConfig);
-
-        hooks.jestExtensions?.hook((extensions) => {
-          return ['.ts', '.tsx', ...extensions];
-        });
-        hooks.jestTransforms?.hook((transforms, {babelTransform}) => {
-          return {...transforms, '^.+\\.tsx?$': babelTransform};
-        });
       });
     });
 

@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Breaking Change
+
+- The `typescript()` project plugin, no longer adds `ts`/`tsx` files to Jest configuration as `plugin-jest` v0.4.2 configures typescript out of the box.
+
 ### Changed
 
 - Typescript output is no longer cached in the `.sewing-kit` folder and restored on each run. Cachable output still occurs in `packages/*/build/*.tsbuildinfo` and `packages/*/build/ts`. Those two locations should be addded to any CI cache storage step. [[#217](https://github.com/Shopify/sewing-kit-next/pull/217)]

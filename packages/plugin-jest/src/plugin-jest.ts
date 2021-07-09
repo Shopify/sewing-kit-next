@@ -230,13 +230,19 @@ export function jest() {
                       plugins: [],
                     }),
                     hooks.jestTransforms!.run(
-                      {'^.+\\.m?js$': babelTransform},
+                      {'^.+\\.(m?js|tsx?)$': babelTransform},
                       {babelTransform},
                     ),
                     // Unfortunately, some packages (like `graphql`) use `.mjs` for esmodule
                     // versions of the file, which Jest can't parse. To avoid transforming
                     // those otherwise-fine files, we prefer .js for tests only.
-                    hooks.jestExtensions!.run(['.js', '.mjs', '.json']),
+                    hooks.jestExtensions!.run([
+                      '.js',
+                      '.mjs',
+                      '.ts',
+                      '.tsx',
+                      '.json',
+                    ]),
                     hooks.jestModuleMapper!.run(internalModuleMap),
                     hooks.jestSetupEnv!.run([
                       ...rootSetupEnvironmentFiles,
