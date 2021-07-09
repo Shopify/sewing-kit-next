@@ -1,13 +1,10 @@
 import {
   WaterfallHook,
   DiagnosticError,
-  createProjectPlugin,
   createWorkspacePlugin,
   WorkspacePluginContext,
   addHooks,
 } from '@sewing-kit/core';
-
-import type {} from '@sewing-kit/plugin-javascript';
 
 interface TypeScriptTypeCheckingHooks {
   readonly typescriptHeap: WaterfallHook<number>;
@@ -21,30 +18,6 @@ declare module '@sewing-kit/core' {
 }
 
 const PLUGIN = 'SewingKit.TypeScript';
-
-export function typescript() {
-  return createProjectPlugin(PLUGIN, ({tasks: {dev, build, test}}) => {
-    test.hook(({hooks}) => {
-      hooks.configure.hook((hooks) => {
-        hooks.babelConfig?.hook(addTypeScriptBabelConfig);
-      });
-    });
-
-    build.hook(({hooks}) => {
-      hooks.target.hook(({hooks}) => {
-        hooks.configure.hook((configure) => {
-          configure.babelConfig?.hook(addTypeScriptBabelConfig);
-        });
-      });
-    });
-
-    dev.hook(({hooks}) => {
-      hooks.configure.hook((configure) => {
-        configure.babelConfig?.hook(addTypeScriptBabelConfig);
-      });
-    });
-  });
-}
 
 export function workspaceTypeScript() {
   return createWorkspacePlugin(PLUGIN, (context) => {
@@ -115,24 +88,4 @@ export function createRunTypeScriptStep(
       }
     },
   );
-}
-
-interface BabelConfig {
-  presets: (string | [string, {[key: string]: unknown}?])[];
-  plugins: (string | [string, {[key: string]: unknown}?])[];
-}
-
-function addTypeScriptBabelConfig(config: BabelConfig): BabelConfig {
-  return {
-    ...config,
-    plugins: [
-      ...config.plugins,
-      [
-        require.resolve('@babel/plugin-proposal-decorators'),
-        {decoratorsBeforeExport: true},
-      ],
-      '@babel/plugin-proposal-class-properties',
-    ],
-    presets: [...config.presets, require.resolve('@babel/preset-typescript')],
-  };
 }

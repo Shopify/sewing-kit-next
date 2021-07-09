@@ -19,9 +19,10 @@ const PLUGIN = 'SewingKit.JavaScript';
 
 interface Options {
   readonly babelConfig?: Partial<BabelConfig>;
+  typescript?: boolean;
 }
 
-export function javascript({babelConfig}: Options = {}) {
+export function javascript({babelConfig, typescript = false}: Options = {}) {
   return createProjectPlugin(PLUGIN, ({tasks: {dev, build, test}}) => {
     const addBabelHooks = addHooks<BabelHooks>(() => ({
       babelConfig: new WaterfallHook(),
@@ -38,6 +39,10 @@ export function javascript({babelConfig}: Options = {}) {
         if (explicitBabelConfig) {
           configure.babelConfig?.hook(explicitBabelConfig);
         }
+
+        if (typescript) {
+          configure.babelConfig?.hook(addTypeScriptBabelConfig);
+        }
       });
     });
 
@@ -49,6 +54,10 @@ export function javascript({babelConfig}: Options = {}) {
           if (explicitBabelConfig) {
             configure.babelConfig?.hook(explicitBabelConfig);
           }
+
+          if (typescript) {
+            configure.babelConfig?.hook(addTypeScriptBabelConfig);
+          }
         });
       });
     });
@@ -59,6 +68,10 @@ export function javascript({babelConfig}: Options = {}) {
       hooks.configure.hook((configure) => {
         if (explicitBabelConfig) {
           configure.babelConfig?.hook(explicitBabelConfig);
+        }
+
+        if (typescript) {
+          configure.babelConfig?.hook(addTypeScriptBabelConfig);
         }
       });
     });
@@ -144,4 +157,19 @@ export function babelPlugins(
       });
     },
   );
+}
+
+function addTypeScriptBabelConfig(config: BabelConfig): BabelConfig {
+  return {
+    ...config,
+    plugins: [
+      ...config.plugins,
+      [
+        require.resolve('@babel/plugin-proposal-decorators'),
+        {decoratorsBeforeExport: true},
+      ],
+      '@babel/plugin-proposal-class-properties',
+    ],
+    presets: [...config.presets, require.resolve('@babel/preset-typescript')],
+  };
 }

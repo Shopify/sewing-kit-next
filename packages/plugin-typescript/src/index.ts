@@ -1,1 +1,1 @@
-export {typescript, workspaceTypeScript} from './plugin-typescript';
+export {workspaceTypeScript} from './plugin-typescript';
