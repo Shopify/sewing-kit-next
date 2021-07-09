@@ -13,7 +13,6 @@
 
 import {resolve, basename} from 'path';
 
-import exec from 'execa';
 import {writeFile, removeSync} from 'fs-extra';
 import {sync as glob} from 'glob';
 
@@ -23,50 +22,17 @@ for (const file of glob('packages/*/*.{js,mjs,node,esnext,ts}', {
   removeSync(file);
 }
 
-const CUSTOM_ENTRIES = new Map([
-  ['core', ['index', 'config-load']],
-  ['plugin-javascript', ['index', 'babel-preset']],
-]);
-const NEEDS_FULL_BUILD = new Set([
-  // Needs a full build so that the Babel configuration is available
-  // for self builds (Babel can’t reference sewing-kit’s source).
-  'plugin-javascript',
-]);
+const CUSTOM_ENTRIES = new Map([['core', ['index', 'config-load']]]);
 
-const COMMONJS_DIRECTORY = 'build/cjs';
-const SOURCE_DIRECTORY = 'src';
-
-const jsExport = (name = 'index', {compiled = false} = {}) =>
-  `module.exports = require("./${
-    compiled ? COMMONJS_DIRECTORY : SOURCE_DIRECTORY
-  }/${name}");`;
+const jsExport = (name = 'index') =>
+  `module.exports = require("./src/${name}");`;
 
 (async () => {
   await Promise.all(
     glob('packages/*/').map(async (pkg) => {
-      const directory = basename(pkg);
-      const compile = NEEDS_FULL_BUILD.has(directory);
-      await Promise.all([
-        compile ? compileCommonJs(pkg) : Promise.resolve(),
-        ...(CUSTOM_ENTRIES.get(directory) ?? ['index']).map(async (entry) => {
-          await Promise.all([
-            writeFile(
-              resolve(pkg, `${entry}.js`),
-              jsExport(entry, {compiled: compile}),
-            ),
-          ]);
-        }),
-      ]);
+      return (CUSTOM_ENTRIES.get(basename(pkg)) ?? ['index']).map((entry) => {
+        return writeFile(resolve(pkg, `${entry}.js`), jsExport(entry));
+      });
     }),
   );
 })();
-
-async function compileCommonJs(pkg: string) {
-  await exec(resolve(__dirname, '../node_modules/.bin/babel'), [
-    resolve(pkg, SOURCE_DIRECTORY),
-    '--out-dir',
-    resolve(pkg, COMMONJS_DIRECTORY),
-    '--extensions',
-    '.ts,.js,.json',
-  ]);
-}

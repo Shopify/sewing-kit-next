@@ -13,7 +13,7 @@ describe('@sewing-kit/plugin-package-build', () => {
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
           pkg.use(
-            javascript(),
+            javascript({presets: ['@shopify/babel-preset']}),
             packageBuild({
               browserTargets: 'chrome 88',
               nodeTargets: 'node 12',
@@ -75,7 +75,7 @@ function pkg(greet) {
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
           pkg.use(
-            javascript(),
+            javascript({presets: ['@shopify/babel-preset']}),
             packageBuild({
               esmodules: false,
               esnext: false,
@@ -121,7 +121,7 @@ export function pkg(greet) {
           pkg.binary({name: 'cmd', root: './src/cmd'});
           pkg.runtime(Runtime.Node);
           pkg.use(
-            javascript(),
+            javascript({presets: ['@shopify/babel-preset']}),
             packageBuild({
               esmodules: false,
               esnext: false,
@@ -157,7 +157,7 @@ export function pkg(greet) {
           pkg.binary({name: 'cmd', root: './src/index'});
           pkg.runtime(Runtime.Node);
           pkg.use(
-            javascript(),
+            javascript({presets: ['@shopify/babel-preset']}),
             packageBuild({
               esmodules: false,
               esnext: false,
@@ -202,7 +202,7 @@ export function pkg(greet) {
         export default createPackage((pkg) => {
           pkg.runtimes(${runtimes});
           pkg.use(
-            javascript(),
+            javascript({presets: ['@shopify/babel-preset']}),
             packageBuild({
               // Needs to transpile exponentiation
               browserTargets: 'chrome 10',

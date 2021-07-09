@@ -66,15 +66,7 @@ export function rollupConfig(options: RollupConfigOptions) {
           });
 
           configuration.rollupPlugins?.hook(async (plugins) => {
-            const babelConfig = (await configuration.babelConfig?.run({
-              presets: [
-                [
-                  '@sewing-kit/plugin-javascript/babel-preset',
-                  {modules: 'auto'},
-                ],
-              ],
-              plugins: [],
-            })) || {presets: [], plugins: []};
+            const babelConfig = await configuration.babelConfig?.run({});
 
             const babelTargets: string[] = [];
 

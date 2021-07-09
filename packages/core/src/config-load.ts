@@ -302,9 +302,10 @@ function loadInlineTranspiler(file: string) {
     require('@babel/register')({
       extensions: ['.mjs', '.js', '.ts', '.tsx'],
       ignore: [ignoreFromCompilation],
+      targets: 'current node',
       presets: [
+        require.resolve('@babel/preset-env'),
         require.resolve('@babel/preset-typescript'),
-        [require.resolve('@babel/preset-env'), {targets: 'current node'}],
       ],
     });
   }
@@ -314,9 +315,8 @@ function loadInlineTranspiler(file: string) {
     require('@babel/register')({
       extensions: ['.mjs', '.js'],
       ignore: [ignoreFromCompilation],
-      presets: [
-        [require.resolve('@babel/preset-env'), {targets: 'current node'}],
-      ],
+      targets: 'current node',
+      presets: [require.resolve('@babel/preset-env')],
     });
   }
 
