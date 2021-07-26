@@ -4,15 +4,13 @@ import {
   createProjectTestPlugin,
 } from '@sewing-kit/core';
 import {javascript} from '@sewing-kit/plugin-javascript';
-import {typescript} from '@sewing-kit/plugin-typescript';
 import {packageBuild} from '@sewing-kit/plugin-package-build';
 
 import type {} from '@sewing-kit/plugin-jest';
 
 export const createSewingKitPackagePlugin = () =>
   createComposedProjectPlugin<Package>('SewingKit.InternalPackage', [
-    javascript(),
-    typescript(),
+    javascript({typescript: true}),
     packageBuild({
       browserTargets: 'defaults',
       nodeTargets: 'node 12.14.0',
