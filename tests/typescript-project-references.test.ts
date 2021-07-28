@@ -10,7 +10,7 @@ const projectReferencesConfig = resolve(ROOT, 'tsconfig.json');
 // When deprecating packages, we temporarily remove package content and publish
 // an empty package before fully removing the folder. This list helps omit those
 // in that interim period
-const skiplist = ['plugin-javascript', 'webpack-plugin-hash-output'];
+const skiplist = [];
 
 describe('typescript project references', () => {
   const referencesConfig = readJSONSync(projectReferencesConfig);
