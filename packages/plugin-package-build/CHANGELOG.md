@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Breaking Change
+
+- Load babel config from `plugin-babel` instead of `plugin-javascript`. [[#218](https://github.com/Shopify/sewing-kit-next/pull/218)]
+
 ### Changed
 
 - Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/sewing-kit-next/pull/217)]
