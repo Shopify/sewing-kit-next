@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/sewing-kit-next/pull/217)]
+- Inline functionality of `webpack-plugin-hash-output` into this package [[#222](https://github.com/Shopify/sewing-kit-next/pull/222)]
 
 ## 0.3.1 - 2021-07-07
 

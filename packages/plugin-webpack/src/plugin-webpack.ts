@@ -294,7 +294,7 @@ export async function createWebpackConfig({
     {default: merge},
   ] = await Promise.all([
     import('webpack'),
-    import('@sewing-kit/webpack-plugin-hash-output'),
+    import('./webpack-plugins/HashOutputPlugin'),
     import('terser-webpack-plugin'),
     import('case-sensitive-paths-webpack-plugin'),
     import('webpack-merge'),

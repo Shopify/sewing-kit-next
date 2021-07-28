@@ -1,3 +1,3 @@
 # `@sewing-kit/webpack-plugin-hash-output`
 
-TODO finish moving over and modernizing from https://github.com/Shopify/webpack-plugin-hash-output
+This package has been deprecated. Its functionality is now part of `@sewing-kit/plugin-webpack`.
