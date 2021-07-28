@@ -102,13 +102,17 @@ export function rollupConfig(options: RollupConfigOptions) {
               }),
               commonjs(),
               babel({
+                ...babelConfig,
+                // Options specific to @rollup/plugin-babel, these can not be
+                // present on the `babelConfig` object
                 extensions: ['.js', '.jsx', '.ts', '.tsx'],
-                envName: 'production',
                 exclude: 'node_modules/**',
                 babelHelpers: 'bundled',
+                // Options that may be present on the `babelConfig` object but
+                // we want to override
+                envName: 'production',
                 // @ts-expect-error targets is a valid babel option but @types/babel__core doesn't know that yet
                 targets: babelTargets,
-                ...babelConfig,
               }),
             ]);
           });
