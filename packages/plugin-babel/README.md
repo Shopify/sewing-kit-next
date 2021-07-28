@@ -40,7 +40,7 @@ This plugin adds the following hooks to each of the `TestProjectConfigurationHoo
   const plugin = createProjectBuildPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {
       // Add an additional plugins when building
-      configure.babelConfig!.hook((config) => ({
+      configure.babelConfig?.hook((config) => ({
         ...config,
         plugins: [...config.plugins, require.resolve('my-babel-plugin')],
       }));
