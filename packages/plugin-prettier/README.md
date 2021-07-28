@@ -4,7 +4,7 @@ This package provides a `sewing-kit` plugin that runs [Prettier](https://prettie
 
 ## Installation
 
-```
+```sh
 yarn add @sewing-kit/plugin-prettier --dev
 ```
 
@@ -36,13 +36,13 @@ This plugin adds the following hooks to `LintWorkspaceConfigurationCustomHooks`:
 
 - `prettierFlags`: an object of options to convert into command line flags for the `prettier` command. These options are camelcase versions of their [CLI counterparts](https://prettier.io/docs/en/cli.html).
 
-  ```tsx
+  ```js
   import {createWorkspaceLintPlugin} from '@sewing-kit/core';
 
   const plugin = createWorkspaceLintPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {
       // Trigger error when encountering unknown files matched by patterns
-      configure.prettierFlags!.hook((flags) => ({
+      configure.prettierFlags?.hook((flags) => ({
         ...flags,
         ignoreUnknown: false,
       }));

@@ -30,6 +30,6 @@ This class is foundational to how sewing-kit generates build outputs for a given
 
 ## Installation
 
-```
+```sh
 yarn add @sewing-kit/core --dev
 ```

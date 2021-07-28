@@ -4,8 +4,8 @@ Exposes a build step for generating package output, in commonjs, esmodules, and 
 
 ## Installation
 
-```bash
-$ yarn add @sewing-kit/plugin-package-build
+```sh
+$ yarn add @sewing-kit/plugin-package-build --dev
 ```
 
 ## Usage

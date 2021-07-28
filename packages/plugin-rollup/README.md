@@ -4,8 +4,8 @@ Exposes hooks and build step to run [`rollup`](https://rollupjs.org/guide/en/).
 
 ## Installation
 
-```bash
-$ yarn add @sewing-kit/plugin-rollup
+```sh
+$ yarn add @sewing-kit/plugin-rollup --dev
 ```
 
 ## Usage

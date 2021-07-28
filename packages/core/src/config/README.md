@@ -12,7 +12,7 @@ The bulk of a sewing-kit config consists of configuring sewing-kit plugins. Defa
 
 Use `createWorkspace` in a `sewing-kit.config.ts` file to define a workspace. The following config file defines the sewing-kit workspace itself. A workspace that uses eslint, jest, and TypeScript.
 
-```ts
+```js
 // sewing-kit.config.ts
 
 import {createWorkspace} from '@sewing-kit/core';
@@ -30,7 +30,7 @@ export default createWorkspace((workspace) => {
 
 Use `createPackage` in a `sewing-kit.config.ts` file to define a package in the workspace. Sewing-kit itself uses this to define its own packages as follows:
 
-```ts
+```js
 // packages/some-package
 
 import {createPackage, Runtime} from '@sewing-kit/core';
@@ -49,7 +49,7 @@ export default createPackage((pkg) => {
 
 `createWebApp` is used to create a web application within a given `Workspace`. Generally speaking, this would be a React app.
 
-```ts
+```js
 // app/ui/sewing-kit.config.ts
 
 import {createWebApp} from '@sewing-kit/core';
@@ -69,7 +69,7 @@ export default createWebApp((app) => {
 
 Use `createService` in a `sewing-kit.config.ts` file to define a service in the workspace. In the context of sewing-kit, a service refers to a Node.js server.
 
-```ts
+```js
 // server/sewing-kit.config.ts
 
 import {createService} from '@sewing-kit/core';

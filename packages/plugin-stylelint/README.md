@@ -6,7 +6,7 @@ This package provides a `sewing-kit` plugin that runs [stylelint](https://stylel
 
 ## Installation
 
-```
+```sh
 yarn add @sewing-kit/plugin-stylelint --dev
 ```
 
@@ -14,7 +14,7 @@ yarn add @sewing-kit/plugin-stylelint --dev
 
 The `stylelint` function returns a `sewing-kit` plugin. This plugin applies to the workspace, not an individual project.
 
-```ts
+```js
 import {createWorkspace} from '@sewing-kit/core';
 import {stylelint} from '@sewing-kit/plugin-stylelint';
 
@@ -38,13 +38,13 @@ This plugin adds the following hooks to `LintWorkspaceConfigurationCustomHooks`:
 
 - `stylelintFlags`: an object of options to convert into command line flags for the `eslint` command. These options are camelcase versions of their [CLI counterparts](https://stylelint.io/user-guide/usage/cli/).
 
-  ```tsx
+  ```js
   import {createWorkspaceLintPlugin} from '@sewing-kit/core';
 
   const plugin = createWorkspaceLintPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {
       // Modify the maximum number of allowed warnings from the default of 0
-      configure.stylelintFlags!.hook((flags) => ({
+      configure.stylelintFlags?.hook((flags) => ({
         ...flags,
         maxWarnings: 5,
       }));

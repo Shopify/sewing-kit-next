@@ -6,15 +6,15 @@ These commands trigger the functionality imparted to your project by the plugins
 
 ## Installation
 
-```
+```sh
 yarn add @sewing-kit/cli --dev
 ```
 
 ## Usage
 
-```ts
+```sh
 yarn sewing-kit-next <command> <options>
-// or...
+# or...
 yarn sk <command> <options>
 ```
 

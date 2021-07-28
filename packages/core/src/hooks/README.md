@@ -10,7 +10,7 @@ Hooks, along with [plugins](../plugins), form the functional heart of `sewing-ki
 
 The two types of hooks provided are a `SeriesHook` and a `WaterfallHook`. Both of these clases provide a `hook` and `run` method
 
-```tsx
+```ts
 import {SeriesHook} from '@sewing-kit/core';
 
 const dog = {

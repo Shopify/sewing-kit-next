@@ -1,12 +1,10 @@
 # `@sewing-kit/plugin-eslint`
 
-> New to `sewing-kit`? [This guide](TODO) explains what `sewing-kit` is, how it’s organized, and how to use it in a project. Read through that overview if you haven’t already — it should help to clarify how to use the tools documented below.
-
 This package provides a `sewing-kit` plugin that runs [ESLint](https://eslint.org) as part of the [`sewing-kit lint` command](TODO).
 
 ## Installation
 
-```
+```sh
 yarn add @sewing-kit/plugin-eslint --dev
 ```
 
@@ -14,7 +12,7 @@ yarn add @sewing-kit/plugin-eslint --dev
 
 The `eslint` function returns a `sewing-kit` plugin. This plugin applies to the workspace, not an individual project.
 
-```ts
+```js
 import {createWorkspace} from '@sewing-kit/core';
 import {eslint} from '@sewing-kit/plugin-eslint';
 
@@ -38,13 +36,13 @@ This plugin adds the following hooks to `LintWorkspaceConfigurationCustomHooks`:
 
 - `eslintFlags`: an object of options to convert into command line flags for the `eslint` command. These options are camelcase versions of their [CLI counterparts](https://eslint.org/docs/user-guide/command-line-interface).
 
-  ```tsx
+  ```js
   import {createWorkspaceLintPlugin} from '@sewing-kit/core';
 
   const plugin = createWorkspaceLintPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {
       // Modify the maximum number of allowed warnings from the default of 0
-      configure.eslintFlags!.hook((flags) => ({
+      configure.eslintFlags?.hook((flags) => ({
         ...flags,
         maxWarnings: 5,
       }));
