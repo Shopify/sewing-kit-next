@@ -11,12 +11,12 @@
 // is basically the same way we build type definitions for packages in `sewing-kit build`,
 // but outside of sewing-kit.
 
-import {resolve, basename} from 'path';
+const {resolve, basename} = require('path');
 
-import {writeFile, removeSync} from 'fs-extra';
-import {sync as glob} from 'glob';
+const {writeFile, removeSync} = require('fs-extra');
+const glob = require('glob');
 
-for (const file of glob('packages/*/*.{js,mjs,node,esnext,ts}', {
+for (const file of glob.sync('packages/*/*.{js,mjs,node,esnext,ts}', {
   ignore: '**/sewing-kit.config.*',
 })) {
   removeSync(file);
@@ -29,8 +29,8 @@ const jsExport = (name = 'index') =>
 
 (async () => {
   await Promise.all(
-    glob('packages/*/').map(async (pkg) => {
-      return (CUSTOM_ENTRIES.get(basename(pkg)) ?? ['index']).map((entry) => {
+    glob.sync('packages/*/').map((pkg) => {
+      return (CUSTOM_ENTRIES.get(basename(pkg)) || ['index']).map((entry) => {
         return writeFile(resolve(pkg, `${entry}.js`), jsExport(entry));
       });
     }),
