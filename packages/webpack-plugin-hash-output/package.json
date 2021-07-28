@@ -2,7 +2,7 @@
   "name": "@sewing-kit/webpack-plugin-hash-output",
   "license": "MIT",
   "description": "A webpack plugin for hash output",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
