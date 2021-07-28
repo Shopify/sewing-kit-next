@@ -9,7 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Breaking Change
 
-- Removed the `typescript()` project plugin, it no longer has any value. `plugin-javascript` v0.6.1's lets you add typescript babel presets and `plugin-jest` v0.4.2 enables typescript out of the box.
+- Removed the `typescript()` project plugin, it no longer has any value. `plugin-babel` lets you add typescript babel presets and `plugin-jest` v0.4.2 enables typescript out of the box.
 
 ### Changed
 

@@ -7,10 +7,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-### Changed
+### Breaking Change
 
-- Added `typescript` option when calling `javascript()` which when set to true will add typescript babel presets. This replaces plugin-typescript's `typescript` project plugin.
-- Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/sewing-kit-next/pull/217)]
+- `plugin-javascript` has been removed and deprecated. Use `plugin-babel` instead, which configures babel in a similar way, but forces you to specify an exect babel configuration instead of providing a build-in one. We recommend `@shopify/babel-preset` as a base babel preset, that supports typescript transpilation.
 
 ## 0.6.0 - 2021-07-07
 

@@ -11,7 +11,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import externals from 'rollup-plugin-node-externals';
 
-import type {} from '@sewing-kit/plugin-javascript';
+import type {} from '@sewing-kit/plugin-babel';
 
 declare module '@sewing-kit/core' {
   interface BuildPackageTargetOptions {

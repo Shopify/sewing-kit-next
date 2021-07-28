@@ -1,7 +1,5 @@
 import {addHooks, WaterfallHook, createProjectPlugin} from '@sewing-kit/core';
-import type {TransformOptions} from '@babel/core';
-
-export type BabelConfig = Pick<TransformOptions, 'presets' | 'plugins'>;
+import type {TransformOptions as BabelConfig} from '@babel/core';
 
 interface BabelHooks {
   readonly babelConfig: WaterfallHook<BabelConfig>;
@@ -13,26 +11,25 @@ declare module '@sewing-kit/core' {
   interface DevProjectConfigurationCustomHooks extends BabelHooks {}
 }
 
-const PLUGIN = 'SewingKit.JavaScript';
+const PLUGIN = 'SewingKit.Babel';
 
 interface Options {
-  presets?: BabelConfig['presets'];
-  plugins?: BabelConfig['plugins'];
+  config?: BabelConfig;
 }
 
-export function javascript({plugins = [], presets = []}: Options = {}) {
+export function babel({config = {}}: Options = {}) {
   return createProjectPlugin(PLUGIN, ({tasks: {dev, build, test}}) => {
     const addBabelHooks = addHooks<BabelHooks>(() => ({
       babelConfig: new WaterfallHook(),
     }));
 
-    const explicitBabelConfig = (): BabelConfig => ({plugins, presets});
+    const addBabelConfig = () => config;
 
     test.hook(({hooks}) => {
       hooks.configureHooks.hook(addBabelHooks);
 
       hooks.configure.hook((configure) => {
-        configure.babelConfig?.hook(explicitBabelConfig);
+        configure.babelConfig?.hook(addBabelConfig);
       });
     });
 
@@ -41,7 +38,7 @@ export function javascript({plugins = [], presets = []}: Options = {}) {
 
       hooks.target.hook(({hooks}) => {
         hooks.configure.hook((configure) => {
-          configure.babelConfig?.hook(explicitBabelConfig);
+          configure.babelConfig?.hook(addBabelConfig);
         });
       });
     });
@@ -50,7 +47,7 @@ export function javascript({plugins = [], presets = []}: Options = {}) {
       hooks.configureHooks.hook(addBabelHooks);
 
       hooks.configure.hook((configure) => {
-        configure.babelConfig?.hook(explicitBabelConfig);
+        configure.babelConfig?.hook(addBabelConfig);
       });
     });
   });

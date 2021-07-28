@@ -1,8 +1,8 @@
 {
-  "name": "@sewing-kit/plugin-javascript",
+  "name": "@sewing-kit/plugin-babel",
   "license": "MIT",
-  "description": "sewing-kit-next technology plugin for javascript",
-  "version": "0.6.0",
+  "description": "sewing-kit-next technology plugin for babel",
+  "version": "0.0.1",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
@@ -16,12 +16,12 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Shopify/sewing-kit-next.git",
-    "directory": "packages/plugin-javascript"
+    "directory": "packages/plugin-babel"
   },
   "bugs": {
     "url": "https://github.com/Shopify/sewing-kit-next/issues"
   },
-  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-javascript/README.md",
+  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-babel/README.md",
   "files": [
     "build/*",
     "!*.tsbuildinfo",

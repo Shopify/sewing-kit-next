@@ -11,7 +11,7 @@ import {
 } from '@sewing-kit/core';
 import type {TestProjectConfigurationHooks} from '@sewing-kit/core';
 
-import type {} from '@sewing-kit/plugin-javascript';
+import type {} from '@sewing-kit/plugin-babel';
 
 const PLUGIN = 'SewingKit.Jest';
 
@@ -174,9 +174,7 @@ export function jest() {
               [...projectConfigurations.entries()].map(
                 async ([project, hooks]) => {
                   if (hooks.babelConfig == null) {
-                    throw new MissingPluginError(
-                      '@sewing-kit/plugin-javascript',
-                    );
+                    throw new MissingPluginError('@sewing-kit/plugin-babel');
                   }
 
                   const babelTransform = api.configPath(

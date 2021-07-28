@@ -1,13 +1,15 @@
 import {Package, createComposedProjectPlugin} from '@sewing-kit/core';
-import {javascript} from '@sewing-kit/plugin-javascript';
+import {babel} from '@sewing-kit/plugin-babel';
 import {packageBuild} from '@sewing-kit/plugin-package-build';
 
 import type {} from '@sewing-kit/plugin-jest';
 
 export const createSewingKitPackagePlugin = () =>
   createComposedProjectPlugin<Package>('SewingKit.InternalPackage', [
-    javascript({
-      presets: [['@shopify/babel-preset', {typescript: true}]],
+    babel({
+      config: {
+        presets: [['@shopify/babel-preset', {typescript: true}]],
+      },
     }),
     packageBuild({
       browserTargets: 'defaults',

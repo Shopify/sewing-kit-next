@@ -14,12 +14,12 @@ Add `packageBuild` to your sewing-kit plugins.
 
 ```js
 import {createPackage, Runtime} from '@sewing-kit/core';
-import {javascript} from '@sewing-kit/plugin-javascript';
+import {babel} from '@sewing-kit/plugin-babel';
 import {packageBuild} from '@sewing-kit/plugin-package-build';
 export default createPackage((pkg) => {
   pkg.runtime(Runtime.Node);
   pkg.use(
-    javascript(),
+    babel(),
     packageBuild({
       // Required. A browserslist string that shall be targeted when your runtime includes `Runtime.Browser`
       browserTargets: 'defaults',

@@ -8,12 +8,12 @@ describe('@sewing-kit/plugin-package-build', () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/core';
-        import {javascript} from '@sewing-kit/plugin-javascript';
+        import {babel} from '@sewing-kit/plugin-babel';
         import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
           pkg.use(
-            javascript({presets: ['@shopify/babel-preset']}),
+            babel(config: {{presets: ['@shopify/babel-preset']}}),
             packageBuild({
               browserTargets: 'chrome 88',
               nodeTargets: 'node 12',
@@ -70,12 +70,12 @@ function pkg(greet) {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/core';
-        import {javascript} from '@sewing-kit/plugin-javascript';
+        import {babel} from '@sewing-kit/plugin-babel';
         import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
           pkg.use(
-            javascript({presets: ['@shopify/babel-preset']}),
+            babel(config: {{presets: ['@shopify/babel-preset']}}),
             packageBuild({
               esmodules: false,
               esnext: false,
@@ -113,7 +113,7 @@ export function pkg(greet) {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/core';
-        import {javascript} from '@sewing-kit/plugin-javascript';
+        import {babel} from '@sewing-kit/plugin-babel';
         import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {
           pkg.entry({root: './src/index'});
@@ -121,7 +121,7 @@ export function pkg(greet) {
           pkg.binary({name: 'cmd', root: './src/cmd'});
           pkg.runtime(Runtime.Node);
           pkg.use(
-            javascript({presets: ['@shopify/babel-preset']}),
+            babel(config: {{presets: ['@shopify/babel-preset']}}),
             packageBuild({
               esmodules: false,
               esnext: false,
@@ -151,13 +151,13 @@ export function pkg(greet) {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/core';
-        import {javascript} from '@sewing-kit/plugin-javascript';
+        import {babel} from '@sewing-kit/plugin-babel';
         import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {
           pkg.binary({name: 'cmd', root: './src/index'});
           pkg.runtime(Runtime.Node);
           pkg.use(
-            javascript({presets: ['@shopify/babel-preset']}),
+            babel(config: {{presets: ['@shopify/babel-preset']}}),
             packageBuild({
               esmodules: false,
               esnext: false,
@@ -197,12 +197,12 @@ export function pkg(greet) {
       await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         await workspace.writeConfig(`
         import {createPackage, Runtime} from '@sewing-kit/core';
-        import {javascript} from '@sewing-kit/plugin-javascript';
+        import {babel} from '@sewing-kit/plugin-babel';
         import {packageBuild} from '@sewing-kit/plugin-package-build';
         export default createPackage((pkg) => {
           pkg.runtimes(${runtimes});
           pkg.use(
-            javascript({presets: ['@shopify/babel-preset']}),
+            babel(config: {{presets: ['@shopify/babel-preset']}}),
             packageBuild({
               // Needs to transpile exponentiation
               browserTargets: 'chrome 10',
