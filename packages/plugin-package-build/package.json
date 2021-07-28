@@ -36,7 +36,7 @@
     "rollup-plugin-node-externals": "^2.2.0"
   },
   "peerDependencies": {
-    "@sewing-kit/plugin-babel": "^0.4.2"
+    "@sewing-kit/plugin-babel": "^0.0.1"
   },
   "peerDependenciesMeta": {
     "@sewing-kit/plugin-babel": {
