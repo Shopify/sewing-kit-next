@@ -11,7 +11,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import externals from 'rollup-plugin-node-externals';
 
-import type {} from '@sewing-kit/plugin-javascript';
+import type {} from '@sewing-kit/plugin-babel';
 
 declare module '@sewing-kit/core' {
   interface BuildPackageTargetOptions {
@@ -66,15 +66,7 @@ export function rollupConfig(options: RollupConfigOptions) {
           });
 
           configuration.rollupPlugins?.hook(async (plugins) => {
-            const babelConfig = (await configuration.babelConfig?.run({
-              presets: [
-                [
-                  '@sewing-kit/plugin-javascript/babel-preset',
-                  {modules: 'auto'},
-                ],
-              ],
-              plugins: [],
-            })) || {presets: [], plugins: []};
+            const babelConfig = await configuration.babelConfig?.run({});
 
             const babelTargets: string[] = [];
 
@@ -110,14 +102,17 @@ export function rollupConfig(options: RollupConfigOptions) {
               }),
               commonjs(),
               babel({
+                ...babelConfig,
+                // Options specific to @rollup/plugin-babel, these can not be
+                // present on the `babelConfig` object
                 extensions: ['.js', '.jsx', '.ts', '.tsx'],
-                envName: 'production',
                 exclude: 'node_modules/**',
                 babelHelpers: 'bundled',
-                configFile: false,
+                // Options that may be present on the `babelConfig` object but
+                // we want to override
+                envName: 'production',
                 // @ts-expect-error targets is a valid babel option but @types/babel__core doesn't know that yet
                 targets: babelTargets,
-                ...babelConfig,
               }),
             ]);
           });

@@ -29,17 +29,20 @@
   ],
   "dependencies": {
     "@sewing-kit/core": "^0.6.0",
-    "@sewing-kit/plugin-javascript": "^0.6.0",
     "@types/jest": "^26.0.23",
     "babel-jest": "^27.0.2",
     "jest": "^27.0.4",
     "jest-watch-typeahead": "^0.6.4"
   },
   "peerDependencies": {
-    "@babel/core": "^7.0.0"
+    "@babel/core": "^7.0.0",
+    "@sewing-kit/plugin-babel": "^0.0.1"
   },
   "peerDependenciesMeta": {
     "@babel/core": {
+      "optional": true
+    },
+    "@sewing-kit/plugin-babel": {
       "optional": true
     }
   }

@@ -4,8 +4,8 @@
   "references": [
     {"path": "./packages/cli"},
     {"path": "./packages/core"},
+    {"path": "./packages/plugin-babel"},
     {"path": "./packages/plugin-eslint"},
-    {"path": "./packages/plugin-javascript"},
     {"path": "./packages/plugin-jest"},
     {"path": "./packages/plugin-package-build"},
     {"path": "./packages/plugin-prettier"},

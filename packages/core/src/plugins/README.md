@@ -8,7 +8,7 @@ _For a more in-depth explanation of plugins and the philosophy behind them, chec
 
 In `sewing-kit`, plugins are the things that actually "do" stuff. They piggyback off the architecture provided by `sewing-kit`'s core (i.e. [hooks](../hooks)) to inject actual actions into your workspace's tasks.
 
-The `@sewing-kit` monorepo provides a suite of ready-made plugins for common use cases, like [type-checking with TypeScript](../../../plugin-typescript), [transpiling with Babel](../../../plugin-javascript), and [testing with Jest](../../../plugin-jest). However, using `sewing-kit`'s API you're able (and encouraged) to write your own to fit your specific needs.
+The `@sewing-kit` monorepo provides a suite of ready-made plugins for common use cases, like [type-checking with TypeScript](../../../plugin-typescript), [transpiling with Babel](../../../plugin-babel), and [testing with Jest](../../../plugin-jest). However, using `sewing-kit`'s API you're able (and encouraged) to write your own to fit your specific needs.
 
 ## Example
 

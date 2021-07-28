@@ -3,8 +3,5 @@
 // actually result in valid code for Node to run.
 module.exports = {
   targets: 'current node',
-  presets: [
-    ['@babel/preset-env', {modules: 'commonjs'}],
-    '@babel/preset-typescript',
-  ],
+  presets: [['@shopify/babel-preset', {typescript: true}]],
 };

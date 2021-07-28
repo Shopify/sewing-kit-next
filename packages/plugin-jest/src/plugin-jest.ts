@@ -10,7 +10,8 @@ import {
   MissingPluginError,
 } from '@sewing-kit/core';
 import type {TestProjectConfigurationHooks} from '@sewing-kit/core';
-import {updateSewingKitBabelPreset} from '@sewing-kit/plugin-javascript';
+
+import type {} from '@sewing-kit/plugin-babel';
 
 const PLUGIN = 'SewingKit.Jest';
 
@@ -121,13 +122,6 @@ export function jest() {
         );
 
         hooks.configure.hook((configuration) => {
-          configuration.babelConfig?.hook(
-            updateSewingKitBabelPreset(
-              {modules: 'commonjs', target: 'node'},
-              {addIfMissing: false},
-            ),
-          );
-
           context.jestProjectConfigurations!.set(project, configuration);
         });
       });
@@ -180,9 +174,7 @@ export function jest() {
               [...projectConfigurations.entries()].map(
                 async ([project, hooks]) => {
                   if (hooks.babelConfig == null) {
-                    throw new MissingPluginError(
-                      '@sewing-kit/plugin-javascript',
-                    );
+                    throw new MissingPluginError('@sewing-kit/plugin-babel');
                   }
 
                   const babelTransform = api.configPath(
@@ -220,15 +212,7 @@ export function jest() {
                       project.fs.buildPath(),
                       project.fs.resolvePath('node_modules/'),
                     ]),
-                    hooks.babelConfig.run({
-                      presets: [
-                        [
-                          '@sewing-kit/plugin-javascript/babel-preset',
-                          {target: 'node', modules: 'commonjs'},
-                        ],
-                      ],
-                      plugins: [],
-                    }),
+                    hooks.babelConfig.run({}),
                     hooks.jestTransforms!.run(
                       {'^.+\\.(m?js|tsx?)$': babelTransform},
                       {babelTransform},
@@ -259,7 +243,7 @@ export function jest() {
                   await api.write(
                     babelTransform,
                     `const {createTransformer} = require('babel-jest').default; module.exports = createTransformer(${JSON.stringify(
-                      babelConfig,
+                      {...babelConfig, targets: 'current node'},
                     )});`,
                   );
 
