@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Breaking Change
+
+- `webpack-plugin-hash-ouput` has been removed and deprecated. Its functionality has been moved into `plugin-webpack`.
+
 ### Changed
 
 - Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/sewing-kit-next/pull/217)]

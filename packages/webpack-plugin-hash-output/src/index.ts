@@ -1,1 +1,0 @@
-export {HashOutputPlugin} from './HashOutputPlugin';
