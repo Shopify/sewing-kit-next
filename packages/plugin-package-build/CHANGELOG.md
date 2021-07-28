@@ -10,6 +10,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Breaking Change
 
 - Load babel config from `plugin-babel` instead of `plugin-javascript`. [[#218](https://github.com/Shopify/sewing-kit-next/pull/218)]
+- The hardcoded `configFile: false` option passed to `@rollup/babel` has been removed. This means that Babel can look at `babel.config.js` files for config. If you wish to disable this, set `configFile: false` explicitly when configuring the sewing-kit's `babel()` plugin. [[#218](https://github.com/Shopify/sewing-kit-next/pull/218)]
 
 ### Changed
 

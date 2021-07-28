@@ -8,6 +8,7 @@ export const createSewingKitPackagePlugin = () =>
   createComposedProjectPlugin<Package>('SewingKit.InternalPackage', [
     babel({
       config: {
+        configFile: false,
         presets: [['@shopify/babel-preset', {typescript: true}]],
       },
     }),

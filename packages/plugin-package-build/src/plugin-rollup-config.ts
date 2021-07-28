@@ -106,7 +106,6 @@ export function rollupConfig(options: RollupConfigOptions) {
                 envName: 'production',
                 exclude: 'node_modules/**',
                 babelHelpers: 'bundled',
-                configFile: false,
                 // @ts-expect-error targets is a valid babel option but @types/babel__core doesn't know that yet
                 targets: babelTargets,
                 ...babelConfig,

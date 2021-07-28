@@ -1,5 +1,10 @@
 import {addHooks, WaterfallHook, createProjectPlugin} from '@sewing-kit/core';
-import type {TransformOptions as BabelConfig} from '@babel/core';
+import type {TransformOptions} from '@babel/core';
+
+// Babel config that is provided by the hook is the same set of options as
+// defined on https://babeljs.io/docs/en/options, except the include and exclude
+// options may not be present
+interface BabelConfig extends Omit<TransformOptions, 'include' | 'exclude'> {}
 
 interface BabelHooks {
   readonly babelConfig: WaterfallHook<BabelConfig>;

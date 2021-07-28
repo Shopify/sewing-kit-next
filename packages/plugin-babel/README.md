@@ -12,7 +12,7 @@ yarn add @sewing-kit/plugin-babel --dev
 
 `babel()` is a plugin that exposes hooks to configure babel at the project level and sets default values for that configuration based on what the user provides.
 
-Add the plugin to your project and specify any defaults that you wish to set using the `config` option, which is an object containing all the options described on [Babel's options page](https://babeljs.io/docs/en/options). This example defines a `config` that uses the `@shopify/babel-preset` preset.
+Add the plugin to your project and specify any defaults that you wish to set using the `config` option, which is an object containing all the options described on [Babel's options page](https://babeljs.io/docs/en/options) with the exception of `include` and `exclude`. This example defines a `config` that uses the `@shopify/babel-preset` preset.
 
 ```js
 import {createPackage, Runtime} from '@sewing-kit/core';
