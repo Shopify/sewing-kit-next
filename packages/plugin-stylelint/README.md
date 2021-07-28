@@ -1,7 +1,5 @@
 # `@sewing-kit/plugin-stylelint`
 
-> New to `sewing-kit`? [This guide](TODO) explains what `sewing-kit` is, how it’s organized, and how to use it in a project. Read through that overview if you haven’t already — it should help to clarify how to use the tools documented below.
-
 This package provides a `sewing-kit` plugin that runs [stylelint](https://stylelint.io) as part of the [`sewing-kit lint` command](TODO).
 
 ## Installation
