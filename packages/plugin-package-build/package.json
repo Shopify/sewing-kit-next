@@ -2,7 +2,7 @@
   "name": "@sewing-kit/plugin-package-build",
   "license": "MIT",
   "description": "sewing-kit-next plugin for package building",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
@@ -31,8 +31,8 @@
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
-    "@sewing-kit/core": "^0.6.1",
-    "@sewing-kit/plugin-rollup": "^0.3.2",
+    "@sewing-kit/core": "^0.6.2",
+    "@sewing-kit/plugin-rollup": "^0.3.3",
     "rollup-plugin-node-externals": "^2.2.0"
   },
   "peerDependencies": {
