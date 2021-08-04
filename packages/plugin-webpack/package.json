@@ -31,7 +31,7 @@
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-webpack/README.md",
   "files": [
     "build/*",
-    "!*.tsbuildinfo",
+    "!build/*.tsbuildinfo",
     "index.js",
     "noop.js"
   ],

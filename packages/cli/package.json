@@ -29,7 +29,7 @@
   "files": [
     "bin/*",
     "build/*",
-    "!*.tsbuildinfo",
+    "!build/*.tsbuildinfo",
     "index.js"
   ],
   "dependencies": {
