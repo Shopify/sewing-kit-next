@@ -14,7 +14,7 @@ import {
 
 import {PluginApi} from './api';
 
-export const PLUGIN_MARKER = Symbol('SewingKit.Plugin');
+export const PLUGIN_MARKER = Symbol.for('SewingKit.Plugin');
 
 export enum PluginTarget {
   Project,

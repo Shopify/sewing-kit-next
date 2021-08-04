@@ -19,7 +19,7 @@ export enum ConfigurationKind {
   Package = 'Package',
 }
 
-export const BUILDER_RESULT_MARKER = Symbol('SewingKit.BuilderResult');
+export const BUILDER_RESULT_MARKER = Symbol.for('SewingKit.BuilderResult');
 
 export interface ConfigurationBuilderResult<
   T extends {readonly name: string; readonly root: string} = {
