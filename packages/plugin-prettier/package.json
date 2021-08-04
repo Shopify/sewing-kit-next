@@ -24,7 +24,7 @@
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-prettier/README.md",
   "files": [
     "build/*",
-    "!*.tsbuildinfo",
+    "!build/*.tsbuildinfo",
     "index.js"
   ],
   "dependencies": {
