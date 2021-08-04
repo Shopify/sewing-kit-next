@@ -77,7 +77,7 @@ export function createRunTypeScriptStep(
       try {
         await step.exec(
           'node_modules/.bin/tsc',
-          ['--build', ...heapArguments],
+          ['--build', '--pretty', ...heapArguments],
           {all: true, env: {FORCE_COLOR: '1'}},
         );
       } catch (error) {
