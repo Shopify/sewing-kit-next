@@ -26,7 +26,7 @@ export default createPackage((pkg) => {
       // Required. A browserslist string that shall be targeted when your runtime includes `Runtime.Node`
       nodeTargets: 'node 12.13',
       // Optional. Defaults to true. Defines if commonjs outputs should be generated.
-      commonjs: true
+      commonjs: true,
       // Optional. Defaults to true. Defines if esmodules outputs should be generated.
       esmodules: true,
       // Optional. Defaults to true. Defines if esnext outputs should be generated.
