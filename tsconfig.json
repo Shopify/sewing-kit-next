@@ -5,6 +5,7 @@
     {"path": "./packages/cli"},
     {"path": "./packages/core"},
     {"path": "./packages/plugin-babel"},
+    {"path": "./packages/plugin-build-library"},
     {"path": "./packages/plugin-eslint"},
     {"path": "./packages/plugin-jest"},
     {"path": "./packages/plugin-package-build"},
