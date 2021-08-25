@@ -1,0 +1,70 @@
+{
+  "name": "@sewing-kit/plugin-build-library",
+  "license": "MIT",
+  "description": "sewing-kit-next technology plugin for building libraries",
+  "version": "0.0.0",
+  "types": "./build/ts/index.d.ts",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "@sewing-kit:registry": "https://registry.npmjs.org"
+  },
+  "engines": {
+    "node": ">=12.14.0"
+  },
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/sewing-kit-next.git",
+    "directory": "packages/plugin-build-library"
+  },
+  "bugs": {
+    "url": "https://github.com/Shopify/sewing-kit-next/issues"
+  },
+  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-build-library/README.md",
+  "files": [
+    "build/*",
+    "!build/*.tsbuildinfo",
+    "index.js"
+  ],
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.13.15",
+    "@rollup/plugin-graphql": "^1.0.0",
+    "@rollup/plugin-image": "^2.1.1",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/pluginutils": "^4.1.0",
+    "@sewing-kit/cli": "^0.6.2",
+    "@sewing-kit/core": "^0.6.2",
+    "@sewing-kit/plugin-babel": "^0.1.1",
+    "@sewing-kit/plugin-eslint": "^0.4.2",
+    "@sewing-kit/plugin-jest": "^0.5.1",
+    "@sewing-kit/plugin-package-build": "^0.5.1",
+    "@sewing-kit/plugin-prettier": "^0.1.2",
+    "@sewing-kit/plugin-rollup": "^0.3.3",
+    "@sewing-kit/plugin-stylelint": "^0.4.2",
+    "@sewing-kit/plugin-typescript": "^0.6.1",
+    "@shopify/postcss-plugin": "^3.0.1",
+    "@svgr/rollup": "^4.3.3",
+    "cpy": "^8.1.0",
+    "glob": "^7.1.6",
+    "graphql-typescript-definitions": "^2.0.4",
+    "node-sass": "^4.12.0",
+    "postcss": "^7.0.36",
+    "postcss-modules": "^3.0.0",
+    "svgo": "^2.3.1",
+    "yargs": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node-sass": "^4.11.2",
+    "@types/svgr__rollup": "^4.3.1"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.14.6"
+  },
+  "peerDependenciesMeta": {
+    "@babel/core": {
+      "optional": true
+    }
+  }
+}

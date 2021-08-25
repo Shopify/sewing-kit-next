@@ -1,0 +1,21 @@
+{
+  "extends": "../../config/typescript/tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "build/ts",
+    "baseUrl": "src",
+    "rootDir": "src"
+  },
+  "include": ["config/typescript/*", "src/**/*"],
+  "exclude": ["src/**/*.test.ts"],
+  "references": [
+    {"path": "../core"},
+    {"path": "../plugin-babel"},
+    {"path": "../plugin-rollup"},
+    {"path": "../plugin-package-build"},
+    {"path": "../plugin-jest"},
+    {"path": "../plugin-prettier"},
+    {"path": "../plugin-stylelint"},
+    {"path": "../plugin-eslint"},
+    {"path": "../plugin-typescript"}
+  ]
+}
