@@ -1,0 +1,17 @@
+{
+  "extends": "../../config/typescript/tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "build/ts",
+    "baseUrl": "src",
+    "rootDir": "src"
+  },
+  "include": ["config/typescript/*", "src/**/*"],
+  "references": [
+    {"path": "../core"},
+    {"path": "../plugin-babel"},
+    {"path": "../plugin-rollup"},
+    {"path": "../plugin-package-build"},
+    {"path": "../plugin-jest"},
+    {"path": "../plugin-typescript"}
+  ]
+}
