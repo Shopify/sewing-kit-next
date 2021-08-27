@@ -10,6 +10,7 @@ import {packageBuild} from '@sewing-kit/plugin-package-build';
 
 import {pluginRollupConfig} from './plugin-rollup-config';
 import {pluginGraphqlGraphqlTypes} from './plugin-generate-graphql-types';
+import {pluginCopyTranslations} from './plugin-copy-translations';
 
 export interface LibaryPackageOptions {
   readonly hasGraphql?: boolean;
@@ -37,6 +38,7 @@ export function libaryPackagePlugin({
             {typescript: true, react: true},
           ],
         ],
+        plugins: [require.resolve('@shopify/react-i18n/babel')],
         configFile: false,
       },
     }),
@@ -73,5 +75,6 @@ export function libaryWorkspacePlugin({
     jest(),
     hasGraphql && pluginGraphqlGraphqlTypes(),
     workspaceTypeScript(),
+    pluginCopyTranslations(),
   ]);
 }
