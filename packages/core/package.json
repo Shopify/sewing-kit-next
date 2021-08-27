@@ -2,7 +2,7 @@
   "name": "@sewing-kit/core",
   "license": "MIT",
   "description": "The core data models for sewing-kit-next",
-  "version": "0.6.2-plugin-build-library-beta.0",
+  "version": "0.6.2-plugin-build-library-beta.1",
   "types": "./build/ts/index.d.ts",
   "typesVersions": {
     "*": {
