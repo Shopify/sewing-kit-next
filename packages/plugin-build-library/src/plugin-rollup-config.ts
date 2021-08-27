@@ -5,9 +5,13 @@ import json from '@rollup/plugin-json';
 import image from '@rollup/plugin-image';
 import svgr from '@svgr/rollup';
 
-import {styles} from './rollup-plugin-styles';
+import {styles} from './rollup/rollup-plugin-styles';
 
-export function packageBuildEnhanced() {
+interface Options {
+  readonly hasGraphql: boolean;
+}
+
+export function pluginRollupConfig({hasGraphql = false}: Options) {
   return rollupPlugins((target) => {
     const stylesConfig = target.options.rollupEsnext
       ? {
@@ -22,7 +26,7 @@ export function packageBuildEnhanced() {
 
     return [
       json(),
-      graphql(),
+      hasGraphql && graphql(),
       // TODO fix the svgr plugin casting as any when Plugin signature is compatible with rollup Plugin signature
       svgr({include: '**/icons/*.svg', exclude: '', babel: true}) as any,
       image({exclude: '**/icons/*.svg'}),

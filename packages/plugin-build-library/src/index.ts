@@ -1,4 +1,9 @@
 export {
   libaryPackagePlugin,
   libaryWorkspacePlugin,
-} from './plugin-sewing-kit-library-builder';
+} from './plugin-build-library';
+
+export type {
+  LibaryPackageOptions,
+  LibaryWorkspaceOptions,
+} from './plugin-build-library';

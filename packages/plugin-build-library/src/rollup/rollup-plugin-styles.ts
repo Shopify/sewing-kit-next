@@ -6,7 +6,7 @@ import {createFilter} from '@rollup/pluginutils';
 import nodeSass from 'node-sass';
 import postcss from 'postcss';
 import cssModules from 'postcss-modules';
-import type {PluginContext, Plugin, OutputBundle} from 'rollup';
+import type {PluginContext, Plugin, OutputBundle, GetModuleInfo} from 'rollup';
 
 interface Options {
   output?: string;
@@ -115,9 +115,14 @@ export function styles({
     // The contents of the emitted css file should use the order in which the
     // files were referenced in the compiled javascript, which can be obtained
     // by looking at bundles[].modules.
-    const bundleModuleIds: string[] = flatMap(
-      Object.values(bundle),
-      (fileInfo: {[key: string]: any}) => Object.keys(fileInfo.modules),
+    const entrypointBundles = Object.entries(bundle)
+      .filter(([filename]) => pluginContext?.getModuleInfo(filename)?.isEntry)
+      .map(([, bundleInfo]) => bundleInfo);
+    const bundleModuleIds = flatMap(entrypointBundles, (bundleInfo) =>
+      getRecursiveImportOrder(
+        bundleInfo.facadeModuleId,
+        pluginContext.getModuleInfo,
+      ),
     );
 
     const missingReferences = Object.keys(cssByFile).filter(
@@ -250,4 +255,31 @@ function hoistCharsetDeclaration(css: string) {
   }
 
   return `${standaloneCssFileCharset}${result}`;
+}
+
+/**
+ * Recursivly get the correct import order from rollup
+ * We only process a file once
+ *
+ * @param {string} id
+ * @param {Function} getModuleInfo
+ * @param {Set<string>} seen
+ */
+function getRecursiveImportOrder(
+  id: string,
+  getModuleInfo: GetModuleInfo,
+  seen = new Set(),
+) {
+  if (seen.has(id)) {
+    return [];
+  }
+
+  seen.add(id);
+
+  const result = [id];
+  getModuleInfo(id)?.importedIds.forEach((importFile) => {
+    result.push(...getRecursiveImportOrder(importFile, getModuleInfo, seen));
+  });
+
+  return result;
 }
