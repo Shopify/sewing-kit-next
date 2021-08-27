@@ -6,8 +6,31 @@ import {Builder, EnumFormat} from 'graphql-typescript-definitions';
 export function pluginGraphqlGraphqlTypes() {
   return createWorkspacePlugin(
     'Sewing-kit.Library.Workspace.GenerateGraphqlTypes',
-    ({api, tasks: {build}}) => {
+    ({api, tasks: {build, typeCheck}}) => {
       build.hook(({hooks}) => {
+        hooks.pre.hook((steps) => {
+          return [
+            ...steps,
+            api.createStep(
+              {
+                id: 'Sewing-kit.Library.Workspace.PreBuild.TypeGeneration',
+                label: 'generating graphql type definitions',
+              },
+              async () => {
+                try {
+                  await generateGraphqlTypeDefinitions();
+                } catch (error) {
+                  throw new DiagnosticError({
+                    title: 'Could not generate graphql type definitions',
+                    content: error.all,
+                  });
+                }
+              },
+            ),
+          ];
+        });
+      });
+      typeCheck.hook(({hooks}) => {
         hooks.pre.hook((steps) => {
           return [
             ...steps,
