@@ -1,58 +1,52 @@
 import {resolve as resolvePath} from 'path';
 
-import {createWorkspacePlugin, DiagnosticError} from '@sewing-kit/core';
+import {
+  createWorkspacePlugin,
+  DiagnosticError,
+  WorkspacePluginContext,
+} from '@sewing-kit/core';
 import {Builder, EnumFormat} from 'graphql-typescript-definitions';
 
-export function pluginGraphqlGraphqlTypes() {
+export function generateGraphqlTypes() {
   return createWorkspacePlugin(
-    'Sewing-kit.Library.Workspace.GenerateGraphqlTypes',
-    ({api, tasks: {build, typeCheck}}) => {
+    'SewingKit.BuildLibraryWorkspace.GenerateGraphqlTypes',
+    (context) => {
+      const {
+        tasks: {build, typeCheck},
+      } = context;
+
       build.hook(({hooks}) => {
         hooks.pre.hook((steps) => {
-          return [
-            ...steps,
-            api.createStep(
-              {
-                id: 'Sewing-kit.Library.Workspace.PreBuild.TypeGeneration',
-                label: 'generating graphql type definitions',
-              },
-              async () => {
-                try {
-                  await generateGraphqlTypeDefinitions();
-                } catch (error) {
-                  throw new DiagnosticError({
-                    title: 'Could not generate graphql type definitions',
-                    content: error.all,
-                  });
-                }
-              },
-            ),
-          ];
+          return [...steps, createRunGraphqlTypeDefinitionsStep(context)];
         });
       });
+
       typeCheck.hook(({hooks}) => {
         hooks.pre.hook((steps) => {
-          return [
-            ...steps,
-            api.createStep(
-              {
-                id: 'Sewing-kit.Library.Workspace.PreBuild.TypeGeneration',
-                label: 'generating graphql type definitions',
-              },
-              async () => {
-                try {
-                  await generateGraphqlTypeDefinitions();
-                } catch (error) {
-                  throw new DiagnosticError({
-                    title: 'Could not generate graphql type definitions',
-                    content: error.all,
-                  });
-                }
-              },
-            ),
-          ];
+          return [...steps, createRunGraphqlTypeDefinitionsStep(context)];
         });
       });
+    },
+  );
+}
+
+export function createRunGraphqlTypeDefinitionsStep(
+  context: WorkspacePluginContext,
+) {
+  return context.api.createStep(
+    {
+      id: 'BuildLibraryWorkspace.GenerateGraphqlTypes',
+      label: 'generating GraphQL type definitions',
+    },
+    async () => {
+      try {
+        await generateGraphqlTypeDefinitions();
+      } catch (error) {
+        throw new DiagnosticError({
+          title: 'Could not generate GraphQL type definitions',
+          content: error.all,
+        });
+      }
     },
   );
 }

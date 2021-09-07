@@ -1,33 +1,36 @@
 import {
   createComposedWorkspacePlugin,
   createComposedProjectPlugin,
-  createProjectPlugin,
 } from '@sewing-kit/core';
 import {babel} from '@sewing-kit/plugin-babel';
 import {workspaceTypeScript} from '@sewing-kit/plugin-typescript';
 import {jest} from '@sewing-kit/plugin-jest';
 import {packageBuild} from '@sewing-kit/plugin-package-build';
 
-import {pluginRollupConfig} from './plugin-rollup-config';
-import {pluginGraphqlGraphqlTypes} from './plugin-generate-graphql-types';
+import {rollupConfig} from './plugin-rollup-config';
+import {jestConfig} from './plugin-jest-config';
+import {generateGraphqlTypes} from './plugin-generate-graphql-types';
 
-export interface LibaryPackageOptions {
+interface BuildLibraryOptions {
+  browserTargets: string;
+  nodeTargets: string;
   readonly hasGraphql?: boolean;
-  readonly jestEnvironment?: 'node' | 'jsdom';
+  readonly jestEnvironment?: Parameters<
+    typeof jestConfig
+  >[0]['jestEnvironment'];
+  readonly packageBuildOptions?: Parameters<typeof packageBuild>[0];
+  readonly babelOptions?: Parameters<typeof babel>[0];
 }
 
-export interface LibaryWorkspaceOptions {
-  readonly hasGraphql?: boolean;
-}
-
-const TRANSFORM_STYLES = '@sewing-kit/plugin-build-library/transform-style.js';
-const TRANSFORM_SVG = '@sewing-kit/plugin-build-library/transform-svg.js';
-
-export function libaryPackagePlugin({
+export function buildLibrary({
+  browserTargets,
+  nodeTargets,
   hasGraphql = false,
   jestEnvironment = 'node',
-}: LibaryPackageOptions) {
-  return createComposedProjectPlugin('Sewing-kit.Library.Package.Plugin', [
+  babelOptions = {},
+  packageBuildOptions = {browserTargets, nodeTargets},
+}: BuildLibraryOptions) {
+  return createComposedProjectPlugin('SewingKit.BuildLibrary', [
     // this needs to be set/ find the babel.config.js file at the root of the proje here as'the't
     babel({
       config: {
@@ -39,39 +42,24 @@ export function libaryPackagePlugin({
         ],
         configFile: false,
       },
+      ...babelOptions,
     }),
-    createProjectPlugin(
-      'Sewing-kit.Library.Package.Test',
-      ({tasks: {test}}) => {
-        test.hook(({hooks}) => {
-          hooks.configure.hook((configuration) => {
-            configuration.jestEnvironment?.hook(() => jestEnvironment);
-            configuration.jestTransforms?.hook((transforms) => ({
-              ...transforms,
-              '\\.graphql': require.resolve('graphql-mini-transforms/jest'),
-              '\\.svg': require.resolve(TRANSFORM_SVG),
-              '\\.s?css$': require.resolve(TRANSFORM_STYLES),
-            }));
-          });
-        });
-      },
-    ),
-    packageBuild({
-      // Required. A browserslist string that shall be targeted when your runtime includes `Runtime.Browser`
-      browserTargets: 'extends @shopify/browserslist-config, ios >= 12',
-      // Required. A browserslist string that shall be targeted when your runtime includes `Runtime.Node`
-      nodeTargets: 'node 12.13',
-    }),
-    pluginRollupConfig({hasGraphql}),
+    packageBuild(packageBuildOptions),
+    rollupConfig({hasGraphql}),
+    jestConfig({jestEnvironment}),
   ]);
 }
 
-export function libaryWorkspacePlugin({
+interface BuildLibraryWorkspaceOptions {
+  readonly hasGraphql?: boolean;
+}
+
+export function buildLibraryWorkspace({
   hasGraphql = false,
-}: LibaryWorkspaceOptions) {
-  return createComposedWorkspacePlugin('Sewing-kit.Library.Workspace.Plugin', [
-    jest(),
-    hasGraphql && pluginGraphqlGraphqlTypes(),
+}: BuildLibraryWorkspaceOptions) {
+  return createComposedWorkspacePlugin('SewingKit.BuildLibraryWorkspace', [
     workspaceTypeScript(),
+    jest(),
+    hasGraphql && generateGraphqlTypes(),
   ]);
 }

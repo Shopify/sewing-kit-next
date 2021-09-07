@@ -1,9 +1,11 @@
-const {basename} = require('path');
+import {basename} from 'path';
+
+import type {Transformer} from '@jest/transform';
 
 const ICON_REGEX = /icons\/.*\.svg$/;
 
-module.exports = {
-  process(src, filename) {
+const transformer: Transformer = {
+  process(_, filename) {
     if (ICON_REGEX.test(filename)) {
       return `const React = require('react');
       module.exports = () => React.createElement("svg", {"data-src": ${JSON.stringify(
@@ -14,3 +16,5 @@ module.exports = {
     return `module.exports = ${JSON.stringify(basename(filename))};`;
   },
 };
+
+export default transformer;

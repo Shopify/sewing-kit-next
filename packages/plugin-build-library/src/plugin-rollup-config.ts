@@ -1,4 +1,4 @@
-import {rollupPlugins} from '@sewing-kit/plugin-rollup';
+import {rollupPlugins} from '@sewing-kit/plugin-package-build';
 import postcssShopify from '@shopify/postcss-plugin';
 import graphql from '@rollup/plugin-graphql';
 import json from '@rollup/plugin-json';
@@ -7,11 +7,11 @@ import svgr from '@svgr/rollup';
 
 import {styles} from './rollup/rollup-plugin-styles';
 
-interface Options {
+interface RollupConfigOptions {
   readonly hasGraphql?: boolean;
 }
 
-export function pluginRollupConfig({hasGraphql = false}: Options) {
+export function rollupConfig({hasGraphql = false}: RollupConfigOptions) {
   return rollupPlugins((target) => {
     const stylesConfig = target.options.rollupEsnext
       ? {
