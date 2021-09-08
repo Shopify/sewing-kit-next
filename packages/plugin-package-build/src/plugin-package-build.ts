@@ -2,7 +2,7 @@ import {Package, createComposedProjectPlugin} from '@sewing-kit/core';
 import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
 
 import {rollupConfig} from './plugin-rollup-config';
-import {buildBinaries} from './plugin-package-binaries';
+import {writeBinaries} from './plugin-write-binaries';
 import {writeEntrypoints} from './plugin-write-entrypoints';
 
 export interface PackageBuildOptions {
@@ -37,7 +37,7 @@ export function packageBuild({
           esmodules,
           esnext,
         }),
-        binaries && buildBinaries(),
+        binaries && writeBinaries(),
         rootEntrypoints && writeEntrypoints({commonjs, esmodules, esnext}),
       );
     },

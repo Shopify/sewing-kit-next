@@ -6,16 +6,17 @@ import {
   ProjectPluginContext,
 } from '@sewing-kit/core';
 
-const PLUGIN = 'SewingKit.PackageBinaries';
-
-export function buildBinaries() {
-  return createProjectBuildPlugin<Package>(PLUGIN, ({hooks, project, api}) => {
-    hooks.steps.hook((steps) =>
-      project.binaries.length > 0
-        ? [...steps, createWriteBinariesStep({project, api})]
-        : steps,
-    );
-  });
+export function writeBinaries() {
+  return createProjectBuildPlugin<Package>(
+    'SewingKit.PackageBuild.Binaries',
+    ({hooks, project, api}) => {
+      hooks.steps.hook((steps) =>
+        project.binaries.length > 0
+          ? [...steps, createWriteBinariesStep({project, api})]
+          : steps,
+      );
+    },
+  );
 }
 
 function createWriteBinariesStep({
@@ -28,7 +29,7 @@ function createWriteBinariesStep({
 
   return api.createStep(
     {
-      id: 'PackageBinaries.WriteBinaries',
+      id: 'PackageBuild.Binaries',
       label:
         binaryCount === 1 ? 'write binary' : `write ${binaryCount} binaries`,
     },

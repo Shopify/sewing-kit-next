@@ -27,7 +27,7 @@ interface RollupConfigOptions {
 
 export function rollupConfig(options: RollupConfigOptions) {
   return createProjectBuildPlugin<Package>(
-    'SewingKit.PackageFlexibleOutputs.RollupConfig',
+    'SewingKit.PackageBuild.RollupConfig',
     ({hooks, project}) => {
       // Define additional build variant to build esnext output
       hooks.targets.hook((targets) => {
