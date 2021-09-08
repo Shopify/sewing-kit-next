@@ -69,9 +69,15 @@ const BUILD_FROM_SOURCE_FILTER_RE = /^@sewing-kit\/(core|cli)/;
     ],
   });
 
-  // Execute the generated file
-  execSync(['node', outFile, ...process.argv.slice(2)].join(' '), {
-    stdio: 'inherit',
-    env: {...process.env, SEWING_KIT_FROM_SOURCE: '1'},
-  });
+  // Execute the generated file.
+  // Errors must trigger a non-zero exit code otherwise CI won't mark erroring
+  // test/lint runs as failing.
+  try {
+    execSync(['node', outFile, ...process.argv.slice(2)].join(' '), {
+      stdio: 'inherit',
+      env: {...process.env, SEWING_KIT_FROM_SOURCE: '1'},
+    });
+  } catch (error) {
+    process.exitCode = 1;
+  }
 })();
