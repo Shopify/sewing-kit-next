@@ -14,21 +14,21 @@ import {generateGraphqlTypes} from './plugin-generate-graphql-types';
 interface BuildLibraryOptions {
   browserTargets: string;
   nodeTargets: string;
-  readonly hasGraphql?: boolean;
+  readonly graphql?: boolean;
   readonly jestEnvironment?: Parameters<
     typeof jestConfig
   >[0]['jestEnvironment'];
-  readonly packageBuildOptions?: Parameters<typeof packageBuild>[0];
+  readonly packageBuildOptions?: Partial<Parameters<typeof packageBuild>[0]>;
   readonly babelOptions?: Parameters<typeof babel>[0];
 }
 
 export function buildLibrary({
   browserTargets,
   nodeTargets,
-  hasGraphql = false,
+  graphql = false,
   jestEnvironment = 'node',
   babelOptions = {},
-  packageBuildOptions = {browserTargets, nodeTargets},
+  packageBuildOptions = {},
 }: BuildLibraryOptions) {
   return createComposedProjectPlugin('SewingKit.BuildLibrary', [
     // this needs to be set/ find the babel.config.js file at the root of the proje here as'the't
@@ -44,22 +44,22 @@ export function buildLibrary({
       },
       ...babelOptions,
     }),
-    packageBuild(packageBuildOptions),
-    rollupConfig({hasGraphql}),
+    packageBuild({browserTargets, nodeTargets, ...packageBuildOptions}),
+    rollupConfig({graphql}),
     jestConfig({jestEnvironment}),
   ]);
 }
 
 interface BuildLibraryWorkspaceOptions {
-  readonly hasGraphql?: boolean;
+  readonly graphql?: boolean;
 }
 
 export function buildLibraryWorkspace({
-  hasGraphql = false,
+  graphql = false,
 }: BuildLibraryWorkspaceOptions) {
   return createComposedWorkspacePlugin('SewingKit.BuildLibraryWorkspace', [
     workspaceTypeScript(),
     jest(),
-    hasGraphql && generateGraphqlTypes(),
+    graphql && generateGraphqlTypes(),
   ]);
 }
