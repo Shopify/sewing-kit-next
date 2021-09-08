@@ -19,10 +19,10 @@ export function packageBuild({
   browserTargets,
   nodeTargets,
   binaries = true,
+  rootEntrypoints = true,
   commonjs = true,
   esmodules = true,
   esnext = true,
-  rootEntrypoints = true,
 }: PackageBuildOptions) {
   return createComposedProjectPlugin<Package>(
     'SewingKit.PackageBuild',
