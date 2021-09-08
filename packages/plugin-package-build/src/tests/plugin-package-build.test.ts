@@ -144,6 +144,11 @@ export function pkg(greet) {
       expect(await workspace.contains('build/cjs/index.js')).toBeTruthy();
       expect(await workspace.contains('build/cjs/second.js')).toBeTruthy();
       expect(await workspace.contains('build/cjs/cmd.js')).toBeTruthy();
+
+      // Entrypoints
+      expect(await workspace.contains('index.js')).toBeTruthy();
+      expect(await workspace.contains('second.js')).toBeTruthy();
+      expect(await workspace.contains('cmd.js')).toBeFalsy();
     });
   });
 
@@ -171,7 +176,7 @@ export function pkg(greet) {
       // defined in pkg.binary
       await workspace.writeFile('src/index.js', `export const x = 'cmd';`);
 
-      const result = await workspace.run('build');
+      await workspace.run('build');
 
       // Build content
       expect(await workspace.contains('build/cjs/index.js')).toBeTruthy();
@@ -181,6 +186,36 @@ export function pkg(greet) {
       expect(await workspace.contents('bin/cmd')).toContain(
         `#!/usr/bin/env node\nrequire("../build/cjs/index")`,
       );
+    });
+  });
+
+  it('can disable generation of root entrypoints', async () => {
+    await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+      await workspace.writeConfig(`
+          import {createPackage, Runtime} from '@sewing-kit/core';
+          import {babel} from '@sewing-kit/plugin-babel';
+          import {packageBuild} from '@sewing-kit/plugin-package-build';
+          export default createPackage((pkg) => {
+            pkg.runtime(Runtime.Node);
+            pkg.use(
+              babel({config: {presets: ['@shopify/babel-preset']}}),
+              packageBuild({
+                browserTargets: 'chrome 88',
+                nodeTargets: 'node 12',
+                rootEntrypoints: false,
+              }),
+            );
+          });
+        `);
+
+      await workspace.writeFile('src/index.js', `export const x = 'index';`);
+
+      await workspace.run('build');
+
+      // Entrypoints
+      expect(await workspace.contains('index.js')).toBeFalsy();
+      expect(await workspace.contains('index.mjs')).toBeFalsy();
+      expect(await workspace.contains('index.esnext')).toBeFalsy();
     });
   });
 
