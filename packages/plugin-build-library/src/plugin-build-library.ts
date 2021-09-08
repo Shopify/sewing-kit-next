@@ -19,7 +19,6 @@ interface BuildLibraryOptions {
     typeof jestConfig
   >[0]['jestEnvironment'];
   readonly packageBuildOptions?: Partial<Parameters<typeof packageBuild>[0]>;
-  readonly babelOptions?: Parameters<typeof babel>[0];
 }
 
 export function buildLibrary({
@@ -27,7 +26,6 @@ export function buildLibrary({
   nodeTargets,
   graphql = false,
   jestEnvironment = 'node',
-  babelOptions = {},
   packageBuildOptions = {},
 }: BuildLibraryOptions) {
   return createComposedProjectPlugin('SewingKit.BuildLibrary', [
@@ -42,7 +40,6 @@ export function buildLibrary({
         ],
         configFile: false,
       },
-      ...babelOptions,
     }),
     packageBuild({browserTargets, nodeTargets, ...packageBuildOptions}),
     rollupConfig({graphql}),

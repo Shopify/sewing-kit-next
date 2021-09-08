@@ -18,17 +18,19 @@ declare module '@sewing-kit/core' {
 
 const PLUGIN = 'SewingKit.Babel';
 
+type BabelConfigBuilder = (babelConfig: BabelConfig) => BabelConfig;
+
 interface Options {
-  config?: BabelConfig;
+  config?: BabelConfig | BabelConfigBuilder;
 }
 
-export function babel({config = {}}: Options = {}) {
+export function babel({config}: Options = {}) {
   return createProjectPlugin(PLUGIN, ({tasks: {dev, build, test}}) => {
     const addBabelHooks = addHooks<BabelHooks>(() => ({
       babelConfig: new WaterfallHook(),
     }));
 
-    const addBabelConfig = () => config;
+    const addBabelConfig = hookFromConfig(config);
 
     test.hook(({hooks}) => {
       hooks.configureHooks.hook(addBabelHooks);
@@ -56,4 +58,17 @@ export function babel({config = {}}: Options = {}) {
       });
     });
   });
+}
+
+function hookFromConfig(config: Options['config']): BabelConfigBuilder {
+  if (!config) {
+    // if config is absent then don't modify the existing hook value
+    return (arg) => arg;
+  } else if (typeof config === 'function') {
+    // if config is function then modify the existing hook value
+    return config;
+  } else {
+    // if config is an object then override the existing hook value
+    return () => config;
+  }
 }
