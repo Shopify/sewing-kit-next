@@ -10,7 +10,6 @@
   "references": [
     {"path": "../core"},
     {"path": "../plugin-babel"},
-    {"path": "../plugin-rollup"},
     {"path": "../plugin-package-build"},
     {"path": "../plugin-jest"},
     {"path": "../plugin-typescript"}
