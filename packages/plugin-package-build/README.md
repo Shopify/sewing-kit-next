@@ -76,7 +76,7 @@ export default createPackage((pkg) => {
 
 In the `package.json` add the following `main` (for commonjs output), `module` (for esmodules output), `esnext` (for esnext output) and `types`(for TypeScript types) keys. You can omit a given key if you are not generating a particular output type.
 
-```json
+```js
 {
   "main": "build/cjs/index.js" /* commonjs output */,
   "module": "build/esm/index.mjs" /* esmodules output */,
@@ -115,7 +115,7 @@ Then this shall write sets of outputs for each entrypoint at the root of your pa
 
 In the `package.json` add the following `main` (for commonjs output), `module` (for esmodules output), `esnext` (for esnext output) and `types`(for TypeScript types) keys. You can omit a given key if you are not generating a particular output type.
 
-```json
+```js
 {
   "main": "index.js" /* commonjs output */,
   "module": "index.mjs" /* esmodules output */,
