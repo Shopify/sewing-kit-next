@@ -1,6 +1,6 @@
 import {rollupPlugins} from '@sewing-kit/plugin-package-build';
 import postcssShopify from '@shopify/postcss-plugin';
-import graphql from '@rollup/plugin-graphql';
+import pluginGraphql from '@rollup/plugin-graphql';
 import json from '@rollup/plugin-json';
 import image from '@rollup/plugin-image';
 import svgr from '@svgr/rollup';
@@ -8,10 +8,10 @@ import svgr from '@svgr/rollup';
 import {styles} from './rollup/rollup-plugin-styles';
 
 interface RollupConfigOptions {
-  readonly hasGraphql?: boolean;
+  readonly graphql?: boolean;
 }
 
-export function rollupConfig({hasGraphql = false}: RollupConfigOptions) {
+export function rollupConfig({graphql = false}: RollupConfigOptions) {
   return rollupPlugins((target) => {
     const stylesConfig = target.options.rollupEsnext
       ? {
@@ -26,7 +26,7 @@ export function rollupConfig({hasGraphql = false}: RollupConfigOptions) {
 
     return [
       json(),
-      hasGraphql && graphql(),
+      graphql && pluginGraphql(),
       // TODO fix the svgr plugin casting as any when Plugin signature is compatible with rollup Plugin signature
       svgr({include: '**/icons/*.svg', exclude: '', babel: true}) as any,
       image({exclude: '**/icons/*.svg'}),

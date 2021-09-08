@@ -29,7 +29,7 @@ export default createPackage((pkg) => {
       // Required. A browserslist string that shall be targeted when your runtime includes `Runtime.Node`
       nodeTargets: 'node 12.13',
       // Optional. Defaults to false. Defines if graphql files should be processed.
-      hasGraphql: false,
+      graphql: false,
       // Optional. Defaults to 'node'. Defines if the jest environment should be 'node' or 'jsdom'.
       jestEnvironment = 'node',
       // Optional. Defaults to empty object. Defines any additional config to pass to plugin-babel
@@ -39,7 +39,7 @@ export default createPackage((pkg) => {
     }),
     buildLibraryWorkspace({
       // Optional. Defaults to false. Defines if d.ts files should be generated for graphql files.
-      hasGraphql: false,
+      graphql: false,
     }),
   );
 });
