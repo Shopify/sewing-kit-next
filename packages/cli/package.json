@@ -27,9 +27,10 @@
     "skn": "./bin/skn"
   },
   "files": [
-    "bin/*",
-    "build/*",
+    "bin/",
+    "build/",
     "!build/*.tsbuildinfo",
+    "!build/ts/**/tests/",
     "index.js"
   ],
   "dependencies": {

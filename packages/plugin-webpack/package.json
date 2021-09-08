@@ -30,8 +30,9 @@
   },
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-webpack/README.md",
   "files": [
-    "build/*",
+    "build/",
     "!build/*.tsbuildinfo",
+    "!build/ts/**/tests/",
     "index.js",
     "noop.js"
   ],

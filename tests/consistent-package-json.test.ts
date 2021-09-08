@@ -64,7 +64,7 @@ packages.forEach(
           // after `build/*`.
           /* eslint-disable jest/no-if */
           if (packageJSON?.bin) {
-            expectedPackageJSON.files.unshift('bin/*');
+            expectedPackageJSON.files.unshift('bin/');
           }
           /* eslint-enable */
           expect(
