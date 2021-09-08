@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+- Add `rootEntrypoints` config option, to configure if the root entrypoint files should be generated. It defaults to true, this can be set to false if you have a single entrypoint. [[#237](https://github.com/Shopify/sewing-kit-next/pull/237)]
 
 ## 0.5.1 - 2021-07-29
 

@@ -2,7 +2,8 @@ import {Package, createComposedProjectPlugin} from '@sewing-kit/core';
 import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
 
 import {rollupConfig} from './plugin-rollup-config';
-import {buildBinaries} from './plugin-package-binaries';
+import {writeBinaries} from './plugin-write-binaries';
+import {writeEntrypoints} from './plugin-write-entrypoints';
 
 export interface PackageBuildOptions {
   readonly browserTargets: string;
@@ -11,12 +12,14 @@ export interface PackageBuildOptions {
   readonly commonjs?: boolean;
   readonly esmodules?: boolean;
   readonly esnext?: boolean;
+  readonly rootEntrypoints?: boolean;
 }
 
 export function packageBuild({
   browserTargets,
   nodeTargets,
   binaries = true,
+  rootEntrypoints = true,
   commonjs = true,
   esmodules = true,
   esnext = true,
@@ -34,7 +37,8 @@ export function packageBuild({
           esmodules,
           esnext,
         }),
-        binaries && buildBinaries(),
+        binaries && writeBinaries(),
+        rootEntrypoints && writeEntrypoints({commonjs, esmodules, esnext}),
       );
     },
   );
