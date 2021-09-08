@@ -113,7 +113,7 @@ Then this shall write sets of outputs for each entrypoint at the root of your pa
 - `second-entry.mjs` that reexports content from `build/esm/second-entry.mjs`
 - `second-entry.esnext` that reexports content from `build/esnext/second-entry.esnext`
 
-In the `package.json` add the following `main` (for commonjs output), `module` (for esmodules output), `esnext` (for esnext output) and `types`(for TypeScript types) keys. You can omit a given key if you are not generating a particular output type.
+In the `package.json` add the following `main` (for commonjs output), `module` (for esmodules output), `esnext` (for esnext output) and `types`(for TypeScript types) keys. You can omit a given key if you are not generating a particular output type. If you specify a `files` array, remember to add these root entrypoints to it.
 
 ```js
 {
