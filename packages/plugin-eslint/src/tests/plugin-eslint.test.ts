@@ -1,8 +1,8 @@
 import {createWorkspace} from '@sewing-kit/core';
 
-import {eslint} from '../src/plugin-eslint';
+import {eslint} from '../plugin-eslint';
 
-describe('@sewing-kit/eslint', () => {
+describe('@sewing-kit/plugin-eslint', () => {
   describe('eslint()', () => {
     it('applies the eslint plugin', async () => {
       const workspaceBuilder = createWorkspace((workspace) => {

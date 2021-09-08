@@ -1,9 +1,8 @@
 import {
   withWorkspace,
   generateUniqueWorkspaceID,
-} from '../../../tests/utilities';
-
-import {loadWorkspace} from './config-load';
+} from '../../../../tests/utilities';
+import {loadWorkspace} from '../config-load';
 
 const configs = [
   'sewing-kit.config.js',

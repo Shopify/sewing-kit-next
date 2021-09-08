@@ -1,8 +1,8 @@
 import {createWorkspace} from '@sewing-kit/core';
 
-import {prettier} from '../src/plugin-prettier';
+import {prettier} from '../plugin-prettier';
 
-describe('@sewing-kit/prettier', () => {
+describe('@sewing-kit/plugin-prettier', () => {
   describe('prettier()', () => {
     it('applies the prettier plugin', async () => {
       const workspaceBuilder = createWorkspace((workspace) => {
