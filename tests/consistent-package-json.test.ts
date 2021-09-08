@@ -154,6 +154,6 @@ function readPackages() {
     });
 }
 
-function compileTemplate({name}) {
+function compileTemplate({name}: {name: string}) {
   return JSON.parse(rawPackageJSONTemplate.replace(/{{name}}/g, name));
 }

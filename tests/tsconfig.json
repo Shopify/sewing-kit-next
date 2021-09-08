@@ -1,0 +1,11 @@
+{
+  "extends": "../config/typescript/tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../.sewing-kit/internal/ts/test",
+    "baseUrl": ".",
+    "rootDir": "."
+  },
+
+  "include": ["../config/typescript/*", "./**/*"],
+  "references": [{"path": "../packages/cli"}]
+}

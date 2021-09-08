@@ -97,7 +97,7 @@ const allowedHeaders = [
   /^####/,
 ];
 
-function headerIsAllowed(headerLine) {
+function headerIsAllowed(headerLine: string) {
   return allowedHeaders.some((allowedHeader) => {
     if (allowedHeader instanceof RegExp) {
       return allowedHeader.test(headerLine);
@@ -127,7 +127,10 @@ function readChangelogs() {
     });
 }
 
-function safeReadSync(path, options) {
+function safeReadSync(
+  path: Parameters<typeof readFileSync>[0],
+  options: Parameters<typeof readFileSync>[1],
+) {
   try {
     return readFileSync(path, options);
   } catch {
@@ -135,7 +138,7 @@ function safeReadSync(path, options) {
   }
 }
 
-function hasPackageJSON(packageDir) {
+function hasPackageJSON(packageDir: string) {
   const packageJSONPath = join(packageDir, 'package.json');
   const packageJSON = safeReadSync(packageJSONPath, {
     encoding: 'utf8',

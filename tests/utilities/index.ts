@@ -74,7 +74,7 @@ export class Workspace {
     await writeFile(path, contents);
   }
 
-  async removeFile(file) {
+  async removeFile(file: string) {
     await remove(this.resolvePath(file));
   }
 
