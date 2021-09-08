@@ -6,6 +6,6 @@
     "rootDir": "src"
   },
   "include": ["src/**/*"],
-  "exclude": ["src/**/*.test.ts"],
+  "exclude": ["src/tests/config-load.test.ts"],
   "references": []
 }
