@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- ## Unreleased -->
 
+## 0.6.1 - 2021-09-09
+
+- No updates. Transitive dependency bump.
+
 ## 0.6.0 - 2021-09-08
 
 - Add `rootEntrypoints` config option, to configure if the root entrypoint files should be generated. It defaults to true, this can be set to false if you have a single entrypoint. [[#237](https://github.com/Shopify/sewing-kit-next/pull/237)]

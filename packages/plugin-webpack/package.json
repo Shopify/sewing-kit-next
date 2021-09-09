@@ -2,7 +2,7 @@
   "name": "@sewing-kit/plugin-webpack",
   "license": "MIT",
   "description": "sewing-kit-next plugin for building with webpack",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "types": "./build/ts/index.d.ts",
   "typesVersions": {
     "*": {
@@ -37,7 +37,7 @@
     "noop.js"
   ],
   "dependencies": {
-    "@sewing-kit/core": "^0.6.3",
+    "@sewing-kit/core": "^0.6.4",
     "@types/case-sensitive-paths-webpack-plugin": "^2.1.2",
     "@types/terser-webpack-plugin": "^2.2.0",
     "@types/webpack": "^4.41.12",
