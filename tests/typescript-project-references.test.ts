@@ -16,9 +16,9 @@ describe('typescript project references', () => {
   const referencesConfig: {
     references: {path: string}[];
   } = readJSONSync(projectReferencesConfig);
-  const references = referencesConfig.references.map(({path}) =>
-    path.replace('./packages/', ''),
-  );
+  const references = referencesConfig.references
+    .filter(({path}) => path !== './tests')
+    .map(({path}) => path.replace('./packages/', ''));
   const quiltReferences = references.map(prefixPackageName);
 
   it('includes all the packages', () => {
@@ -47,6 +47,7 @@ describe('typescript project references', () => {
         const internalReferences = tsconfigJson.references || [];
 
         const internalPackages = internalReferences
+          .filter(({path}) => path !== '../../tests')
           .map((internalReference) =>
             extractPackagesFromInternalReference(internalReference),
           )
