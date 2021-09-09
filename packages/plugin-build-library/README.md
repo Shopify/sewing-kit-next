@@ -67,14 +67,14 @@ export default createPackage((pkg) => {
       // Optional. Defaults to false. Defines if d.ts files should be generated for graphql files.
       graphql: false,
     }),
+    // Override initial babel options.
+    // Return a new object, instead of mutating the argument object.
     babel({
       config(babelConfig) {
-        // the plugins array may not be set initially
-        if (!babelConfig.plugins) {
-          babelConfig.plugins = [];
-        }
-        babelConfig.plugins.push('my-custom-babel-plugin');
-        return babelConfig;
+        return {
+          ...babelConfig,
+          plugins: [...(babelConfig.plugins || []), 'my-custom-babel-plugin'],
+        };
       },
     }),
   );

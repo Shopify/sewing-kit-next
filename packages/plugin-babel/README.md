@@ -36,15 +36,14 @@ import {babel} from '@sewing-kit/plugin-babel';
 export default createPackage((pkg) => {
   pkg.runtime(Runtime.Node);
   pkg.use(
+    // Override initial babel options.
+    // Return a new object, instead of mutating the argument object.
     babel({
-      // Modifies any current config that has been set by other sewing-kit plugins
       config(babelConfig) {
-        // the plugins array may not be set initially
-        if (!babelConfig.plugins) {
-          babelConfig.plugins = [];
-        }
-        babelConfig.plugins.push('my-custom-babel-plugin');
-        return babelConfig;
+        return {
+          ...babelConfig,
+          plugins: [...(babelConfig.plugins || []), 'my-custom-babel-plugin'],
+        };
       },
     }),
   );
