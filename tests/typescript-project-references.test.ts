@@ -10,13 +10,15 @@ const projectReferencesConfig = resolve(ROOT, 'tsconfig.json');
 // When deprecating packages, we temporarily remove package content and publish
 // an empty package before fully removing the folder. This list helps omit those
 // in that interim period
-const skiplist = [];
+const skiplist: string[] = [];
 
 describe('typescript project references', () => {
-  const referencesConfig = readJSONSync(projectReferencesConfig);
-  const references = referencesConfig.references.map(({path}) =>
-    path.replace('./packages/', ''),
-  );
+  const referencesConfig: {
+    references: {path: string}[];
+  } = readJSONSync(projectReferencesConfig);
+  const references = referencesConfig.references
+    .filter(({path}) => path !== './tests')
+    .map(({path}) => path.replace('./packages/', ''));
   const quiltReferences = references.map(prefixPackageName);
 
   it('includes all the packages', () => {
@@ -26,7 +28,7 @@ describe('typescript project references', () => {
         (packageJsonPath) =>
           /sewing-kit-next\/packages\/(?<packageName>[\w._-]+)\/package\.json$/i.exec(
             packageJsonPath,
-          ).groups.packageName,
+          )!.groups!.packageName,
       )
       .filter((packageName) => !skiplist.includes(packageName));
 
@@ -39,13 +41,13 @@ describe('typescript project references', () => {
     describe(`${displayedName}`, () => {
       it(`includes internal packages used as references`, () => {
         const packageJson = resolvePackageJSONFile(packageName, 'package.json');
-        const tsconfigJson = resolvePackageJSONFile(
-          packageName,
-          'tsconfig.json',
-        );
+        const tsconfigJson: {
+          references: {path: string}[];
+        } = resolvePackageJSONFile(packageName, 'tsconfig.json');
         const internalReferences = tsconfigJson.references || [];
 
         const internalPackages = internalReferences
+          .filter(({path}) => path !== '../../tests')
           .map((internalReference) =>
             extractPackagesFromInternalReference(internalReference),
           )
@@ -81,6 +83,6 @@ function extractPackagesFromInternalReference(internalReference: {
   path: string;
 }) {
   return prefixPackageName(
-    internalReferenceRegex.exec(internalReference.path).groups.packageName,
+    internalReferenceRegex.exec(internalReference.path)!.groups!.packageName,
   );
 }

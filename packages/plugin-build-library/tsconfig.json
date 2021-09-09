@@ -6,8 +6,8 @@
     "rootDir": "src"
   },
   "include": ["config/typescript/*", "src/**/*"],
-  "exclude": ["src/**/*.test.ts"],
   "references": [
+    {"path": "../../tests"},
     {"path": "../core"},
     {"path": "../plugin-babel"},
     {"path": "../plugin-package-build"},

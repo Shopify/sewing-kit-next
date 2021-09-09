@@ -13,6 +13,7 @@
     {"path": "./packages/plugin-rollup"},
     {"path": "./packages/plugin-stylelint"},
     {"path": "./packages/plugin-typescript"},
-    {"path": "./packages/plugin-webpack"}
+    {"path": "./packages/plugin-webpack"},
+    {"path": "./tests"}
   ]
 }
