@@ -23,8 +23,9 @@
   },
   "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/plugin-build-library/README.md",
   "files": [
-    "build/*",
+    "build/",
     "!build/*.tsbuildinfo",
+    "!build/ts/**/tests/",
     "index.js",
     "transform-style.js",
     "transform-svg.js"
