@@ -1,10 +1,9 @@
-import {resolve as resolvePath} from 'path';
-
 import {
   createWorkspacePlugin,
   DiagnosticError,
   WorkspacePluginContext,
 } from '@sewing-kit/core';
+import type {PluginApi} from '@sewing-kit/core';
 import {Builder, EnumFormat} from 'graphql-typescript-definitions';
 
 export function generateGraphqlTypes() {
@@ -40,7 +39,7 @@ export function createRunGraphqlTypeDefinitionsStep(
     },
     async () => {
       try {
-        await generateGraphqlTypeDefinitions();
+        await generateGraphqlTypeDefinitions(context.api);
       } catch (error) {
         throw new DiagnosticError({
           title: 'Could not generate GraphQL type definitions',
@@ -51,10 +50,10 @@ export function createRunGraphqlTypeDefinitionsStep(
   );
 }
 
-async function generateGraphqlTypeDefinitions() {
+async function generateGraphqlTypeDefinitions(api: PluginApi) {
   const builder = new Builder({
-    cwd: resolvePath(__dirname, '..'),
-    schemaTypesPath: resolvePath(__dirname, '../src/types/graphql'),
+    cwd: api.resolvePath('..'),
+    schemaTypesPath: api.resolvePath('../src/types/graphql'),
     enumFormat: EnumFormat.PascalCase,
     addTypename: true,
   });
