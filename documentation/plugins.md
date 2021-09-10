@@ -1,6 +1,6 @@
 # Plugins
 
-Almost everything that sewing-kit does is actually done by plugins. The core part of sewing-kit only provides the scaffolding for tasks, a set of primitives for generating UI, and a collection of "hooks" to which plugins can bind. Understanding what hooks are available is key to developing plugins and, as a result, to building features into sewing-kit.
+Almost everything that loom does is actually done by plugins. The core part of loom only provides the scaffolding for tasks, a set of primitives for generating UI, and a collection of "hooks" to which plugins can bind. Understanding what hooks are available is key to developing plugins and, as a result, to building features into loom.
 
 ## Design Goals
 
@@ -17,18 +17,18 @@ Plugins can have only one target. A target is the point in a task where the plug
 
 ## Hooks
 
-Once plugins are called, they should make use of the many hooks provided by the core of sewing-kit, and by other plugins. These hooks use a very simplified re-implementation of `tapable`, a flexible library for defining custom behavior.
+Once plugins are called, they should make use of the many hooks provided by the core of loom, and by other plugins. These hooks use a very simplified re-implementation of `tapable`, a flexible library for defining custom behavior.
 
 ## Tools
 
 The `@sewing-kit/core` library provides:
 
 - The `plugins` directory containing the helpers you’ll need to create a plugin. Most notably, this directory exports the `createPlugin` and `PluginTarget` values, which are needed to define a valid plugin.
-- The `hooks` directory provides most of the hooks used in the various sewing-kit tasks. These types are generally unnecessary, but if you are adding additional hooks (for example, `@sewing-kit/plugin-webpack` adds additional hooks to some parts of the build task), you will need to [augment the `@sewing-kit/core` module](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation).
+- The `hooks` directory provides most of the hooks used in the various loom tasks. These types are generally unnecessary, but if you are adding additional hooks (for example, `@sewing-kit/plugin-webpack` adds additional hooks to some parts of the build task), you will need to [augment the `@sewing-kit/core` module](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation).
 
 ## Styleguide
 
-- Plugins provided by sewing-kit itself should have an `id` prefixed with `SewingKit.`.
+- Plugins provided by loom itself should have an `id` prefixed with `Loom.`.
 - Plugins that define meaningful behavior for more than one task should split the task handling into files, and use the `lazy` helper to asynchronously load code for each task (see `@sewing-kit/plugin-typescript` for an example).
 - Plugins are generally one of the following categories: tool (often adds hooks), language (often adds configuration for those custom hooks), discovery (finds projects and outlines the rough handling), and others. They should typically be composed in that order also, as it ensures that the necessary custom hooks are available at the right time.
 - Functions that are plugins should end in `Plugin` (e.g., `jsonPlugin`). Functions that create plugins should be prefixed with `create` and postfixed with `Plugin` (e.g., `createJavaScriptPlugin`). Plugins that target anything other than root should include the name of the target immediately before the postfixed `Plugin` (e.g., `createSassIncludesBuildProjectPlugin`).

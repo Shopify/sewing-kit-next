@@ -20,7 +20,7 @@ interface BuildEntrypointsOptions {
 
 export function writeEntrypoints(options: BuildEntrypointsOptions) {
   return createProjectBuildPlugin<Package>(
-    'SewingKit.PackageBuild.Entrypoints',
+    'Loom.PackageBuild.Entrypoints',
     ({hooks, project, api}) => {
       hooks.steps.hook((steps) => [
         ...steps,

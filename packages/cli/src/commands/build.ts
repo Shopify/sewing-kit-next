@@ -164,7 +164,7 @@ export async function runBuild(
         const steps = targets.map((target) => {
           return createStep(
             {
-              id: 'SewingKit.BuildWebAppTarget',
+              id: 'Loom.BuildWebAppTarget',
               label: (fmt) =>
                 fmt`build web app {emphasis ${
                   webApp.name
@@ -209,7 +209,7 @@ export async function runBuild(
 
         const step = createStep(
           {
-            id: 'SewingKit.BuildWebApp',
+            id: 'Loom.BuildWebApp',
             label: (fmt) => fmt`build web app {emphasis ${webApp.name}}`,
           },
           async (step) => {
@@ -301,7 +301,7 @@ export async function runBuild(
         const steps = targets.map((target) => {
           return createStep(
             {
-              id: 'SewingKit.BuildServiceTarget',
+              id: 'Loom.BuildServiceTarget',
               label: (fmt) =>
                 fmt`build service {emphasis ${
                   service.name
@@ -346,7 +346,7 @@ export async function runBuild(
 
         const step = createStep(
           {
-            id: 'SewingKit.BuildWebApp',
+            id: 'Loom.BuildWebApp',
             label: (fmt) => fmt`build service {emphasis ${service.name}}`,
           },
           async (step) => {
@@ -435,7 +435,7 @@ export async function runBuild(
         const steps = targets.map((target) => {
           return createStep(
             {
-              id: 'SewingKit.BuildPackageTarget',
+              id: 'Loom.BuildPackageTarget',
               label: (fmt) =>
                 fmt`build package {emphasis ${
                   pkg.name
@@ -480,7 +480,7 @@ export async function runBuild(
 
         const step = createStep(
           {
-            id: 'SewingKit.BuildPackage',
+            id: 'Loom.BuildPackage',
             label: (fmt) => fmt`build package {emphasis ${pkg.name}}`,
           },
           async (step) => {

@@ -1,7 +1,7 @@
 {
   "extends": "../config/typescript/tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../.sewing-kit/internal/ts/test",
+    "outDir": "../.loom/internal/ts/test",
     "baseUrl": ".",
     "rootDir": "."
   },

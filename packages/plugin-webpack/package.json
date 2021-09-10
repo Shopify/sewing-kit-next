@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/plugin-webpack",
   "license": "MIT",
-  "description": "sewing-kit-next plugin for building with webpack",
+  "description": "loom plugin for building with webpack",
   "version": "0.3.5",
   "types": "./build/ts/index.d.ts",
   "typesVersions": {

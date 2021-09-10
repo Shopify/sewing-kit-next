@@ -23,16 +23,16 @@ jobs:
           cache: 'yarn'
 
       - uses: actions/cache@v2
-        id: sewing-kit-cache
-        name: Restore sewing-kit cache
+        id: loom-cache
+        name: Restore loom cache
         with:
           path: |
-            .sewing-kit
+            .loom
             packages/*/build/ts
             packages/*/build/*.tsbuildinfo
-          key: ${{ runner.os }}-sewing-kit-${{ github.sha }}
+          key: ${{ runner.os }}-loom-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-sewing-kit-
+            ${{ runner.os }}-loom-
 
       - name: Yarn install
         run: yarn install --frozen-lockfile

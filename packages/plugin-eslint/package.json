@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/plugin-eslint",
   "license": "MIT",
-  "description": "sewing-kit-next plugin for linting with eslint",
+  "description": "loom plugin for linting with eslint",
   "version": "0.4.4",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,

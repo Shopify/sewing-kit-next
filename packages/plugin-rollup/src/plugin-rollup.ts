@@ -43,7 +43,7 @@ declare module '@sewing-kit/core' {
  * documented at https://rollupjs.org/guide/en/#outputoptions-object.
  */
 export function rollupHooks() {
-  return createProjectPlugin('SewingKit.Rollup', ({tasks: {dev, build}}) => {
+  return createProjectPlugin('Loom.Rollup', ({tasks: {dev, build}}) => {
     const addRollupHooks = addHooks<RollupHooks>(() => ({
       rollupInput: new WaterfallHook(),
       rollupPlugins: new WaterfallHook(),
@@ -67,7 +67,7 @@ export function rollupHooks() {
  */
 export function rollupBuild() {
   return createProjectBuildPlugin(
-    'SewingKit.Rollup.Build',
+    'Loom.Rollup.Build',
     ({api, hooks, project}) => {
       hooks.target.hook(({target, hooks}) => {
         // Add build steps
@@ -133,24 +133,21 @@ export function rollupPlugins(
     | ((target: Target<Project, {[key: string]: unknown}>) => RollupPlugin[])
     | RollupPlugin[],
 ) {
-  return createProjectBuildPlugin(
-    'SewingKit.Rollup.CustomPlugins',
-    ({hooks}) => {
-      hooks.target.hook(({hooks, target}) => {
-        hooks.configure.hook((configuration) => {
-          configuration.rollupPlugins?.hook((rollupPlugins) => {
-            // plugins may be either an array of plugins or a builder function
-            // that returns the plugins for a given target
-            const pluginsArray = Array.isArray(plugins)
-              ? plugins
-              : plugins(target);
+  return createProjectBuildPlugin('Loom.Rollup.CustomPlugins', ({hooks}) => {
+    hooks.target.hook(({hooks, target}) => {
+      hooks.configure.hook((configuration) => {
+        configuration.rollupPlugins?.hook((rollupPlugins) => {
+          // plugins may be either an array of plugins or a builder function
+          // that returns the plugins for a given target
+          const pluginsArray = Array.isArray(plugins)
+            ? plugins
+            : plugins(target);
 
-            return rollupPlugins.concat(pluginsArray);
-          });
+          return rollupPlugins.concat(pluginsArray);
         });
       });
-    },
-  );
+    });
+  });
 }
 
 async function build(

@@ -25,7 +25,7 @@ export function packageBuild({
   esnext = true,
 }: PackageBuildOptions) {
   return createComposedProjectPlugin<Package>(
-    'SewingKit.PackageBuild',
+    'Loom.PackageBuild',
     async (composer) => {
       composer.use(
         rollupHooks(),

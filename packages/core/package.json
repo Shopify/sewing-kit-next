@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/core",
   "license": "MIT",
-  "description": "The core data models for sewing-kit-next",
+  "description": "The core data models for loom",
   "version": "0.6.4",
   "types": "./build/ts/index.d.ts",
   "typesVersions": {

@@ -1,6 +1,6 @@
 # `@sewing-kit/plugin-eslint`
 
-This package provides a `sewing-kit` plugin that runs [ESLint](https://eslint.org) as part of the [`sewing-kit lint` command](TODO).
+This package provides a `loom` plugin that runs [ESLint](https://eslint.org) as part of the [`loom lint` command](TODO).
 
 ## Installation
 
@@ -10,7 +10,7 @@ yarn add @sewing-kit/plugin-eslint --dev
 
 ## `eslint()`
 
-The `eslint` function returns a `sewing-kit` plugin. This plugin applies to the workspace, not an individual project.
+The `eslint` function returns a `loom` plugin. This plugin applies to the workspace, not an individual project.
 
 ```js
 import {createWorkspace} from '@sewing-kit/core';

@@ -26,7 +26,7 @@ declare module '@sewing-kit/core' {
   interface LintWorkspaceConfigurationCustomHooks extends StylelintHooks {}
 }
 
-const PLUGIN = 'SewingKit.Stylelint';
+const PLUGIN = 'Loom.Stylelint';
 
 export function stylelint({files = '**/*.css'} = {}) {
   return createWorkspaceLintPlugin(PLUGIN, ({hooks, options, api}) => {
@@ -67,7 +67,7 @@ export function stylelint({files = '**/*.css'} = {}) {
               throw new DiagnosticError({
                 title: 'stylelint failed because no files were found to lint',
                 suggestion: (fmt) =>
-                  fmt`Add at least one file to lint. Alternatively, you can remove the stylelint plugin, or pass the {code --allow-empty} flag to the {code sewing-kit lint} command.`,
+                  fmt`Add at least one file to lint. Alternatively, you can remove the stylelint plugin, or pass the {code --allow-empty} flag to the {code loom lint} command.`,
               });
             }
 

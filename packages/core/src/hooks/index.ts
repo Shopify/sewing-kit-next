@@ -12,7 +12,7 @@ import type {
 // PRIMITIVES
 // ==================================================================
 
-export const UNSET = Symbol.for('SewingKit.Hooks.Unset');
+export const UNSET = Symbol.for('Loom.Hooks.Unset');
 type Unset = typeof UNSET;
 
 export type SeriesHookArguments<

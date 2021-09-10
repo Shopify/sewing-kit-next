@@ -2,7 +2,7 @@
   "name": "@sewing-kit/plugin-rollup",
   "version": "0.3.5",
   "license": "MIT",
-  "description": "A sewing-kit plugin that runs rollup as a build step",
+  "description": "A loom plugin that runs rollup as a build step",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {

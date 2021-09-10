@@ -2,7 +2,7 @@
 
 ## Modeling
 
-Sewing-kit parses the shape of a codebase by modeling it into concepts it understands. At a high-level these these concepts are a `Workspace` and `Project`.
+Loom parses the shape of a codebase by modeling it into concepts it understands. At a high-level these these concepts are a `Workspace` and `Project`.
 
 ### Project
 
@@ -18,7 +18,7 @@ A `Workspace` is a composition of `Project`s. It includes all the `WebApp`, `Pac
 
 ## Core
 
-Important classes to highlight here are `TargetRuntime` and `TargetBuilder`. In the context of sewing-kit, a _target_ refers to the build output for a given [`Project`](#project).
+Important classes to highlight here are `TargetRuntime` and `TargetBuilder`. In the context of loom, a _target_ refers to the build output for a given [`Project`](#project).
 
 ### TargetRuntime
 
@@ -26,7 +26,7 @@ The `TargetRuntime` class contains information about the runtime for a build tar
 
 ### TargetBuilder
 
-This class is foundational to how sewing-kit generates build outputs for a given project. It's heavily used by the `sewing-kit build` CLI command. This class can also be used to plugin authors to generate custom build outputs (eg. multi-browser and multi-locale builds).
+This class is foundational to how loom generates build outputs for a given project. It's heavily used by the `loom build` CLI command. This class can also be used to plugin authors to generate custom build outputs (eg. multi-browser and multi-locale builds).
 
 ## Installation
 

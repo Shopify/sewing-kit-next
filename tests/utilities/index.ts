@@ -61,7 +61,7 @@ export class Workspace {
     };
   }
 
-  async writeConfig(contents: string, config = 'sewing-kit.config.js') {
+  async writeConfig(contents: string, config = 'loom.config.js') {
     const configPath = resolve(this.root, config);
 
     await mkdirp(dirname(configPath));

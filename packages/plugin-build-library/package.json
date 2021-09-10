@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/plugin-build-library",
   "license": "MIT",
-  "description": "sewing-kit-next technology plugin for building libraries",
+  "description": "loom technology plugin for building libraries",
   "version": "0.2.0",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,

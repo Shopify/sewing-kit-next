@@ -7,12 +7,12 @@ bin
 tmp
 ~
 yarn-error.log
-.sewing-kit
+.loom
 packages/*/*.js
 !packages/*/.eslintrc.js
 packages/*/*.esnext
 packages/*/*.node
 packages/*/*.ts
 packages/*/*.mjs
-!packages/*/sewing-kit.config.ts
+!packages/*/loom.config.ts
 .DS_Store

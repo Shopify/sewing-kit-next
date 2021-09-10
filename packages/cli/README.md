@@ -1,8 +1,8 @@
 # `@sewing-kit/cli`
 
-The CLI for working with `sewing-kit-next`.
+The CLI for working with `loom`.
 
-These commands trigger the functionality imparted to your project by the plugins consumed in your `sewing-kit.config`s. The options will be passed to the plugins.
+These commands trigger the functionality imparted to your project by the plugins consumed in your `loom.config`s. The options will be passed to the plugins.
 
 ## Installation
 
@@ -13,9 +13,7 @@ yarn add @sewing-kit/cli --dev
 ## Usage
 
 ```sh
-yarn sewing-kit-next <command> <options>
-# or...
-yarn sk <command> <options>
+yarn loom <command> <options>
 ```
 
 ## Commands

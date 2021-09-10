@@ -46,7 +46,7 @@ const legacySewingKitPlugins = [
 const IS_TSX = /.tsx?$/;
 const IS_MJS = /.mjs$/;
 
-const IGNORE_FOLDERS = ['node_modules', '.sewing-kit'];
+const IGNORE_FOLDERS = ['node_modules', '.loom'];
 
 export interface LoadedWorkspace {
   readonly workspace: Workspace;
@@ -71,7 +71,7 @@ export async function loadWorkspace(root: string): Promise<LoadedWorkspace> {
   >();
   const pluginParents = new WeakMap<AnyPlugin, AnyPlugin>();
 
-  const configFiles = glob('**/sewing-{kit,kit-next}.config.*', {
+  const configFiles = glob('**/loom.config.*', {
     cwd: root as string,
     ignore: ['**/node_modules/**', `${root}/**/build/**`],
     absolute: true,
@@ -97,7 +97,7 @@ export async function loadWorkspace(root: string): Promise<LoadedWorkspace> {
     // needs a better error, showing files/ what workspace plugins exist
     throw new DiagnosticError({
       title: `Multiple workspace configurations found`,
-      content: `Found ${workspaceConfigs.length} workspace configurations. Only one sewing-kit config can declare workspace plugins and/ or use the createWorkspace() utility from @sewing-kit/core`,
+      content: `Found ${workspaceConfigs.length} workspace configurations. Only one loom config can declare workspace plugins and/ or use the createWorkspace() utility from @sewing-kit/core`,
     });
   }
 
@@ -112,7 +112,7 @@ export async function loadWorkspace(root: string): Promise<LoadedWorkspace> {
     throw new DiagnosticError({
       title: `Invalid workspace plugins in project configuration`,
       content: `You declared workspace plugins in a project, but this is only supported for workspace with a single project.`,
-      suggestion: `Move the workspace plugins to a root sewing-kit config file, and include them using the createWorkspace() function from @sewing-kit/core`,
+      suggestion: `Move the workspace plugins to a root loom config file, and include them using the createWorkspace() function from @sewing-kit/core`,
     });
   }
 
@@ -219,7 +219,7 @@ async function loadConfigFile<T extends {name: string; root: string}>(
     );
 
     if (parsingLegacyPlugin) {
-      // we hit a legacy sewing-kit config
+      // we hit a legacy loom config
       return null;
     }
   }

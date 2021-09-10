@@ -55,7 +55,7 @@ The `rollupOutputs` hook is an array of Rollup's `OutputOptions` objects as docu
 
 ### `rollupPlugins` Helper
 
-This package exports a `rollupPlugins` sewing-kit plugin that provides a shorthand to add items to the `rollupPlugins` hook. Give this plugin either an array of rollup plugins, or a function that takes a sewing-kit `Target` and returns an array of rollup plugins. This allows you to control what plugins are added based upon the `Target`.
+This package exports a `rollupPlugins` loom plugin that provides a shorthand to add items to the `rollupPlugins` hook. Give this plugin either an array of rollup plugins, or a function that takes a loom `Target` and returns an array of rollup plugins. This allows you to control what plugins are added based upon the `Target`.
 
 ```js
 import {

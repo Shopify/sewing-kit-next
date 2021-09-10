@@ -30,11 +30,7 @@ module.exports = {
       },
     },
     {
-      files: [
-        'sewing-kit.config.ts',
-        'config/sewing-kit/**/*',
-        'templates/**/*.ts',
-      ],
+      files: ['loom.config.ts', 'config/loom/**/*', 'templates/**/*.ts'],
       rules: {
         'import/no-extraneous-dependencies': 'off',
       },

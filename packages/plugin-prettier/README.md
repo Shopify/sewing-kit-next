@@ -1,6 +1,6 @@
 # `@sewing-kit/plugin-prettier`
 
-This package provides a `sewing-kit` plugin that runs [Prettier](https://prettier.io) as part of the [`sewing-kit lint` command](TODO).
+This package provides a `loom` plugin that runs [Prettier](https://prettier.io) as part of the [`loom lint` command](TODO).
 
 ## Installation
 
@@ -10,7 +10,7 @@ yarn add @sewing-kit/plugin-prettier --dev
 
 ## `prettier()`
 
-The `prettier` function returns a `sewing-kit` plugin. This plugin applies to the workspace, not an individual project.
+The `prettier` function returns a `loom` plugin. This plugin applies to the workspace, not an individual project.
 
 ```js
 import {createWorkspace} from '@sewing-kit/core';

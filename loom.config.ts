@@ -15,7 +15,7 @@ export default createWorkspace((workspace) => {
 });
 
 function runWorkspaceTests() {
-  return createWorkspaceTestPlugin('SK.WorkspaceTests', ({hooks}) => {
+  return createWorkspaceTestPlugin('Loom.WorkspaceTests', ({hooks}) => {
     hooks.configure.hook((hooks) => {
       hooks.jestConfig?.hook((config) => {
         if (Array.isArray(config.projects)) {

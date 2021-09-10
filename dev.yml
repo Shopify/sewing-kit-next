@@ -1,4 +1,4 @@
-name: sewing-kit
+name: loom
 type: node
 up:
   - node:
@@ -11,7 +11,6 @@ commands:
   check: yarnpkg check
   lint: yarnpkg lint
   format: yarnpkg format
-  start: echo "To run sewing-kit, add it to a project using 'yarnpkg add @shopify/sewing-kit && yarnpkg sewing-kit --help'"
   test:
     desc: 'Runs tests for all projects.  Add test patterns to limit the number of tests executed.  e.g., {{bold:dev test externals resolve}}.'
     syntax:

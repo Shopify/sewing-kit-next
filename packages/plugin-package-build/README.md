@@ -1,6 +1,6 @@
 # `@sewing-kit/plugin-package-build`
 
-Exposes a build step for generating package output, in commonjs, esmodules, and esnext formats. This is the build configuration used to build sewing-kit-next itself and provides a solid base for creating JS-only packages.
+Exposes a build step for generating package output, in commonjs, esmodules, and esnext formats. This is the build configuration used to build loom itself and provides a solid base for creating JS-only packages.
 
 ## Installation
 
@@ -10,7 +10,7 @@ $ yarn add @sewing-kit/plugin-package-build --dev
 
 ## Usage
 
-Add `packageBuild` to your sewing-kit plugins.
+Add `packageBuild` to your loom plugins.
 
 ```js
 import {createPackage, Runtime} from '@sewing-kit/core';
@@ -60,7 +60,7 @@ By default, entrypoint files are written to the root of your package that corres
 
 When creating a package with a single entrypoint, you can set `rootEntrypoints: true` to not write any root entrypoints, and point fields in your package.json to the contents of the build folder.
 
-Given a `sewing-kit.config.js` file that contains:
+Given a `loom.config.js` file that contains:
 
 ```js
 export default createPackage((pkg) => {
@@ -89,7 +89,7 @@ In the `package.json` add the following `main` (for commonjs output), `module` (
 
 If you have multiple entrypoints then you should leave `rootEntrypoints: true` to generate entrypoints at the root. This is a slightly flawed approach as only commonjs content for the additional entrypoints is supported, but is the best that we can do give current support.
 
-Given a `sewing-kit.config.js` file that contains:
+Given a `loom.config.js` file that contains:
 
 ```js
 export default createPackage((pkg) => {

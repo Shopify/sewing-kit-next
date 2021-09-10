@@ -46,7 +46,7 @@ declare module '@sewing-kit/core' {
   interface LintWorkspaceConfigurationCustomHooks extends ESLintHooks {}
 }
 
-const PLUGIN = 'SewingKit.ESLint';
+const PLUGIN = 'Loom.ESLint';
 
 export function eslint({files = '.'} = {}) {
   return createWorkspaceLintPlugin(PLUGIN, ({hooks, options, api}) => {
@@ -86,7 +86,7 @@ export function eslint({files = '.'} = {}) {
             throw new DiagnosticError({
               title: 'ESLint failed because no files were found to lint',
               suggestion: (fmt) =>
-                fmt`Add at least one file to lint, or add overrides to your ESLint config to teach it about additional file types. Alternatively, you can remove the eslint plugin, or pass the {code --allow-empty} flag to the {code sewing-kit lint} command.`,
+                fmt`Add at least one file to lint, or add overrides to your ESLint config to teach it about additional file types. Alternatively, you can remove the eslint plugin, or pass the {code --allow-empty} flag to the {code loom lint} command.`,
             });
           }
 
