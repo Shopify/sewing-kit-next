@@ -23,20 +23,20 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/sewing-kit-next/pull/217)]
+- Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/loom/pull/217)]
 
 ## 0.6.0 - 2021-07-07
 
 ### Changed
 
-- Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/sewing-kit-next/pull/210)]
-- Improved the exec command logger so arguments are quoted properly. [[#209](https://github.com/Shopify/sewing-kit-next/pull/209)]
+- Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/loom/pull/210)]
+- Improved the exec command logger so arguments are quoted properly. [[#209](https://github.com/Shopify/loom/pull/209)]
 
 ## 0.5.0 - 2021-06-25
 
 ### Changed
 
-- Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]
+- Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/loom/pull/177)]
 
 ## 0.4.2 - 2021-06-18
 
@@ -46,13 +46,13 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Removed dependency on core-js as we no longer need the polyfills it provides [[#174](https://github.com/Shopify/sewing-kit-next/pull/174)]
+- Removed dependency on core-js as we no longer need the polyfills it provides [[#174](https://github.com/Shopify/loom/pull/174)]
 
 ## 0.4.0 - 2021-05-20
 
 ### Breaking Change
 
-- Update minimum supported node version to 12.14.0. Add engines field to help enforce usage of this version. [[#170](https://github.com/Shopify/sewing-kit-next/pull/170)]
+- Update minimum supported node version to 12.14.0. Add engines field to help enforce usage of this version. [[#170](https://github.com/Shopify/loom/pull/170)]
 
 ## 0.3.4 - 2021-04-16
 
@@ -76,7 +76,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Breaking Change
 
-- Renamed `sewing-kit` binary to `sewing-kit-next` [[#117](https://github.com/Shopify/sewing-kit-next/pull/117)]
+- Renamed `sewing-kit` binary to `sewing-kit-next` [[#117](https://github.com/Shopify/loom/pull/117)]
 
 ## 0.2.1
 

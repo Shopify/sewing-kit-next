@@ -22,13 +22,13 @@
   "author": "Shopify Inc.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Shopify/sewing-kit-next.git",
+    "url": "git+https://github.com/Shopify/loom.git",
     "directory": "packages/core"
   },
   "bugs": {
-    "url": "https://github.com/Shopify/sewing-kit-next/issues"
+    "url": "https://github.com/Shopify/loom/issues"
   },
-  "homepage": "https://github.com/Shopify/sewing-kit-next/blob/main/packages/core/README.md",
+  "homepage": "https://github.com/Shopify/loom/blob/main/packages/core/README.md",
   "files": [
     "build/",
     "!build/*.tsbuildinfo",

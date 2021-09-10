@@ -49,7 +49,7 @@ packages.forEach(
           expect(packageJSON.author).toBe(expectedPackageJSON.author);
         });
 
-        it('specifies sewing-kit-next issues as bugs URL', () => {
+        it('specifies loom issues as bugs URL', () => {
           expect(packageJSON.bugs).toStrictEqual(expectedPackageJSON.bugs);
         });
 
@@ -76,7 +76,7 @@ packages.forEach(
           expect(packageJSON.types).toBe(expectedPackageJSON.types);
         });
 
-        it('specifies sewing-kit-next deep-link homepage', () => {
+        it('specifies loom deep-link homepage', () => {
           expect(packageJSON.homepage).toBe(expectedPackageJSON.homepage);
         });
 
@@ -94,7 +94,7 @@ packages.forEach(
           );
         });
 
-        it('specifies a repository deep-linking into the sewing-kit-next monorepo', () => {
+        it('specifies a repository deep-linking into the loom monorepo', () => {
           expect(packageJSON.repository).toStrictEqual(
             expectedPackageJSON.repository,
           );

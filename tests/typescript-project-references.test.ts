@@ -26,7 +26,7 @@ describe('typescript project references', () => {
       .sync(resolve(basePackagePath, '*/package.json'))
       .map(
         (packageJsonPath) =>
-          /sewing-kit-next\/packages\/(?<packageName>[\w._-]+)\/package\.json$/i.exec(
+          /loom\/packages\/(?<packageName>[\w._-]+)\/package\.json$/i.exec(
             packageJsonPath,
           )!.groups!.packageName,
       )
