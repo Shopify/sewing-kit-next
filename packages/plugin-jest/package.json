@@ -1,5 +1,5 @@
 {
-  "name": "@sewing-kit/plugin-jest",
+  "name": "@shopify/loom-plugin-jest",
   "license": "MIT",
   "description": "loom plugin for testing with jest",
   "version": "0.5.3",
@@ -7,7 +7,7 @@
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
-    "@sewing-kit:registry": "https://registry.npmjs.org"
+    "@shopify:registry": "https://registry.npmjs.org"
   },
   "engines": {
     "node": ">=12.14.0"
@@ -29,7 +29,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@sewing-kit/core": "^0.6.4",
+    "@shopify/loom": "^0.6.4",
     "@types/jest": "^26.0.23",
     "babel-jest": "^27.0.2",
     "jest": "^27.0.4",
@@ -37,13 +37,13 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.0.0",
-    "@sewing-kit/plugin-babel": "^0.0.1"
+    "@shopify/loom-plugin-babel": "^0.0.1"
   },
   "peerDependenciesMeta": {
     "@babel/core": {
       "optional": true
     },
-    "@sewing-kit/plugin-babel": {
+    "@shopify/loom-plugin-babel": {
       "optional": true
     }
   }

@@ -1,4 +1,4 @@
-import {createPackage, Runtime} from '@sewing-kit/core';
+import {createPackage, Runtime} from '@shopify/loom';
 
 import {createLoomPackagePlugin} from '../../config/loom';
 

@@ -9,7 +9,7 @@ interface DiagnosticErrorOptions {
 const ID = Symbol.for('Loom.DiagnosticError');
 
 // We could use instanceof to detect this, but this convenience protects
-// against potentially nested versions of @sewing-kit/core
+// against potentially nested versions of @shopify/loom
 export function isDiagnosticError(value: unknown) {
   return Boolean((value as any)?.[ID]);
 }

@@ -1,4 +1,4 @@
-# `@sewing-kit/cli`
+# `@shopify/loom-cli`
 
 The CLI for working with `loom`.
 
@@ -7,7 +7,7 @@ These commands trigger the functionality imparted to your project by the plugins
 ## Installation
 
 ```sh
-yarn add @sewing-kit/cli --dev
+yarn add @shopify/loom-cli --dev
 ```
 
 ## Usage

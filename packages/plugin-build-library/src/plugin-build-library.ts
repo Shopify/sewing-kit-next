@@ -1,11 +1,11 @@
 import {
   createComposedWorkspacePlugin,
   createComposedProjectPlugin,
-} from '@sewing-kit/core';
-import {babel} from '@sewing-kit/plugin-babel';
-import {workspaceTypeScript} from '@sewing-kit/plugin-typescript';
-import {jest} from '@sewing-kit/plugin-jest';
-import {packageBuild} from '@sewing-kit/plugin-package-build';
+} from '@shopify/loom';
+import {babel} from '@shopify/loom-plugin-babel';
+import {workspaceTypeScript} from '@shopify/loom-plugin-typescript';
+import {jest} from '@shopify/loom-plugin-jest';
+import {packageBuild} from '@shopify/loom-plugin-package-build';
 
 import {rollupConfig} from './plugin-rollup-config';
 import {jestConfig} from './plugin-jest-config';

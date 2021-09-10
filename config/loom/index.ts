@@ -1,8 +1,8 @@
-import {Package, createComposedProjectPlugin} from '@sewing-kit/core';
-import {babel} from '@sewing-kit/plugin-babel';
-import {packageBuild} from '@sewing-kit/plugin-package-build';
+import {Package, createComposedProjectPlugin} from '@shopify/loom';
+import {babel} from '@shopify/loom-plugin-babel';
+import {packageBuild} from '@shopify/loom-plugin-package-build';
 
-import type {} from '@sewing-kit/plugin-jest';
+import type {} from '@shopify/loom-plugin-jest';
 
 export const createLoomPackagePlugin = () =>
   createComposedProjectPlugin<Package>('Loom.InternalPackage', [

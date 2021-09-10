@@ -1,11 +1,11 @@
-# `@sewing-kit/plugin-package-build`
+# `@shopify/loom-plugin-package-build`
 
 Exposes a build step for generating package output, in commonjs, esmodules, and esnext formats. This is the build configuration used to build loom itself and provides a solid base for creating JS-only packages.
 
 ## Installation
 
 ```sh
-$ yarn add @sewing-kit/plugin-package-build --dev
+$ yarn add @shopify/loom-plugin-package-build --dev
 ```
 
 ## Usage
@@ -13,9 +13,9 @@ $ yarn add @sewing-kit/plugin-package-build --dev
 Add `packageBuild` to your loom plugins.
 
 ```js
-import {createPackage, Runtime} from '@sewing-kit/core';
-import {babel} from '@sewing-kit/plugin-babel';
-import {packageBuild} from '@sewing-kit/plugin-package-build';
+import {createPackage, Runtime} from '@shopify/loom';
+import {babel} from '@shopify/loom-plugin-babel';
+import {packageBuild} from '@shopify/loom-plugin-package-build';
 export default createPackage((pkg) => {
   pkg.runtime(Runtime.Node);
   pkg.entry({root: './src/index'});

@@ -1,11 +1,11 @@
-# `@sewing-kit/plugin-eslint`
+# `@shopify/loom-plugin-eslint`
 
 This package provides a `loom` plugin that runs [ESLint](https://eslint.org) as part of the [`loom lint` command](TODO).
 
 ## Installation
 
 ```sh
-yarn add @sewing-kit/plugin-eslint --dev
+yarn add @shopify/loom-plugin-eslint --dev
 ```
 
 ## `eslint()`
@@ -13,8 +13,8 @@ yarn add @sewing-kit/plugin-eslint --dev
 The `eslint` function returns a `loom` plugin. This plugin applies to the workspace, not an individual project.
 
 ```js
-import {createWorkspace} from '@sewing-kit/core';
-import {eslint} from '@sewing-kit/plugin-eslint';
+import {createWorkspace} from '@shopify/loom';
+import {eslint} from '@shopify/loom-plugin-eslint';
 
 export default createWorkspace((workspace) => {
   workspace.use(eslint());
@@ -37,7 +37,7 @@ This plugin adds the following hooks to `LintWorkspaceConfigurationCustomHooks`:
 - `eslintFlags`: an object of options to convert into command line flags for the `eslint` command. These options are camelcase versions of their [CLI counterparts](https://eslint.org/docs/user-guide/command-line-interface).
 
   ```js
-  import {createWorkspaceLintPlugin} from '@sewing-kit/core';
+  import {createWorkspaceLintPlugin} from '@shopify/loom';
 
   const plugin = createWorkspaceLintPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {

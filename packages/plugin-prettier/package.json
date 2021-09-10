@@ -1,5 +1,5 @@
 {
-  "name": "@sewing-kit/plugin-prettier",
+  "name": "@shopify/loom-plugin-prettier",
   "license": "MIT",
   "description": "loom plugin for linting with prettier",
   "version": "0.1.4",
@@ -7,7 +7,7 @@
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
-    "@sewing-kit:registry": "https://registry.npmjs.org"
+    "@shopify:registry": "https://registry.npmjs.org"
   },
   "engines": {
     "node": ">=12.14.0"
@@ -29,7 +29,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@sewing-kit/core": "^0.6.4",
+    "@shopify/loom": "^0.6.4",
     "prettier": "^2.0.0"
   }
 }

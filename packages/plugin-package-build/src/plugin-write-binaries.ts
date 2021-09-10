@@ -4,7 +4,7 @@ import {
   Package,
   createProjectBuildPlugin,
   ProjectPluginContext,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 
 export function writeBinaries() {
   return createProjectBuildPlugin<Package>(

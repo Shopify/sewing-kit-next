@@ -1,8 +1,8 @@
-import {createWorkspace} from '@sewing-kit/core';
+import {createWorkspace} from '@shopify/loom';
 
 import {prettier} from '../plugin-prettier';
 
-describe('@sewing-kit/plugin-prettier', () => {
+describe('@shopify/loom-plugin-prettier', () => {
   describe('prettier()', () => {
     it('applies the prettier plugin', async () => {
       const workspaceBuilder = createWorkspace((workspace) => {

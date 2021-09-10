@@ -2,8 +2,8 @@ import {
   createWorkspacePlugin,
   DiagnosticError,
   WorkspacePluginContext,
-} from '@sewing-kit/core';
-import type {PluginApi} from '@sewing-kit/core';
+} from '@shopify/loom';
+import type {PluginApi} from '@shopify/loom';
 import {Builder, EnumFormat} from 'graphql-typescript-definitions';
 
 export function generateGraphqlTypes() {

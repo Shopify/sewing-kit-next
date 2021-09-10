@@ -1,11 +1,11 @@
-# `@sewing-kit/plugin-rollup`
+# `@shopify/loom-plugin-rollup`
 
 Exposes hooks and build step to run [`rollup`](https://rollupjs.org/guide/en/).
 
 ## Installation
 
 ```sh
-$ yarn add @sewing-kit/plugin-rollup --dev
+$ yarn add @shopify/loom-plugin-rollup --dev
 ```
 
 ## Usage
@@ -18,12 +18,8 @@ The low-level functionality of this package is split into two parts.
 Add both plugins to your project, along with configuration of the hooks. This example configures the `rollupInputOptions` and `rollupOutputs` hooks.
 
 ```js
-import {
-  createPackage,
-  Runtime,
-  createProjectBuildPlugin,
-} from '@sewing-kit/core';
-import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
+import {createPackage, Runtime, createProjectBuildPlugin} from '@shopify/loom';
+import {rollupHooks, rollupBuild} from '@shopify/loom-plugin-rollup';
 
 export default createPackage((pkg) => {
   pkg.use(rollupHooks(), rollupBuild(), rollupConfig());
@@ -58,16 +54,12 @@ The `rollupOutputs` hook is an array of Rollup's `OutputOptions` objects as docu
 This package exports a `rollupPlugins` loom plugin that provides a shorthand to add items to the `rollupPlugins` hook. Give this plugin either an array of rollup plugins, or a function that takes a loom `Target` and returns an array of rollup plugins. This allows you to control what plugins are added based upon the `Target`.
 
 ```js
-import {
-  createPackage,
-  Runtime,
-  createProjectBuildPlugin,
-} from '@sewing-kit/core';
+import {createPackage, Runtime, createProjectBuildPlugin} from '@shopify/loom';
 import {
   rollupHooks,
   rollupBuild,
   rollupPlugins,
-} from '@sewing-kit/plugin-rollup';
+} from '@shopify/loom-plugin-rollup';
 
 export default createPackage((pkg) => {
   pkg.use(

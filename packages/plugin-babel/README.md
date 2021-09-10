@@ -1,11 +1,11 @@
-# `@sewing-kit/plugin-babel`
+# `@shopify/loom-plugin-babel`
 
 Exposes hooks to configure [Babel](https://babeljs.io), which may then be used by other build and test plugins.
 
 ## Installation
 
 ```sh
-yarn add @sewing-kit/plugin-babel --dev
+yarn add @shopify/loom-plugin-babel --dev
 ```
 
 ## Usage
@@ -15,8 +15,8 @@ yarn add @sewing-kit/plugin-babel --dev
 Add the plugin to your project and specify any defaults that you wish to set using the `config` option, which is either an object containing all the options described on [Babel's options page](https://babeljs.io/docs/en/options) with the exception of `include` and `exclude`, or a function that accepts the existing babel options and expects the new babel options object to be returned. This example defines a `config` that uses the `@shopify/babel-preset` preset.
 
 ```js
-import {createPackage, Runtime} from '@sewing-kit/core';
-import {babel} from '@sewing-kit/plugin-babel';
+import {createPackage, Runtime} from '@shopify/loom';
+import {babel} from '@shopify/loom-plugin-babel';
 
 export default createPackage((pkg) => {
   pkg.runtime(Runtime.Node);
@@ -30,8 +30,8 @@ export default createPackage((pkg) => {
 ```
 
 ```js
-import {createPackage, Runtime} from '@sewing-kit/core';
-import {babel} from '@sewing-kit/plugin-babel';
+import {createPackage, Runtime} from '@shopify/loom';
+import {babel} from '@shopify/loom-plugin-babel';
 
 export default createPackage((pkg) => {
   pkg.runtime(Runtime.Node);
@@ -57,7 +57,7 @@ This plugin adds the following hooks to each of the `TestProjectConfigurationHoo
 - `babelConfig`: the configuration used when transpiling with Babel.
 
   ```js
-  import {createProjectBuildPlugin} from '@sewing-kit/core';
+  import {createProjectBuildPlugin} from '@shopify/loom';
 
   const plugin = createProjectBuildPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {

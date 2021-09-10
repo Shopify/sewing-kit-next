@@ -13,8 +13,8 @@ import {
   LogOptions,
   StepResources,
   StepRunner as NestedStepRunner,
-} from '@sewing-kit/core';
-import type {Project} from '@sewing-kit/core';
+} from '@shopify/loom';
+import type {Project} from '@shopify/loom';
 
 import {TaskContext, logError, StepInclusionFlag} from './common';
 import {Ui} from './ui';

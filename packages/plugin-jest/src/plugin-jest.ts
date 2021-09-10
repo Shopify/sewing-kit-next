@@ -8,10 +8,10 @@ import {
   toArgs,
   addHooks,
   MissingPluginError,
-} from '@sewing-kit/core';
-import type {TestProjectConfigurationHooks} from '@sewing-kit/core';
+} from '@shopify/loom';
+import type {TestProjectConfigurationHooks} from '@shopify/loom';
 
-import type {} from '@sewing-kit/plugin-babel';
+import type {} from '@shopify/loom-plugin-babel';
 
 const PLUGIN = 'Loom.Jest';
 
@@ -51,7 +51,7 @@ interface JestWorkspaceHooks {
   readonly jestFlags: WaterfallHook<JestFlags>;
 }
 
-declare module '@sewing-kit/core' {
+declare module '@shopify/loom' {
   interface TestProjectConfigurationCustomHooks extends JestProjectHooks {}
   interface TestWorkspaceConfigurationCustomHooks extends JestWorkspaceHooks {}
 
@@ -174,7 +174,7 @@ export function jest() {
               [...projectConfigurations.entries()].map(
                 async ([project, hooks]) => {
                   if (hooks.babelConfig == null) {
-                    throw new MissingPluginError('@sewing-kit/plugin-babel');
+                    throw new MissingPluginError('@shopify/loom-plugin-babel');
                   }
 
                   const babelTransform = api.configPath(

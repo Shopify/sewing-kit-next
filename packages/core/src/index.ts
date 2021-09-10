@@ -113,7 +113,7 @@ export type {
 // So we have to explicitly reexport every named reexport from hooks if we want
 // people to be able to do the following and have it work:
 //   interface MyExtraHooks { someNewkey: string; }
-//   declare module '@sewing-kit/core' {
+//   declare module '@shopify/loom' {
 //    interface BuildProjectConfigurationCustomHooks extends MyExtraHooks {}
 //   }
 //

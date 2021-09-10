@@ -3,15 +3,15 @@ import {
   Package,
   Runtime,
   DiagnosticError,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import externals from 'rollup-plugin-node-externals';
 
-import type {} from '@sewing-kit/plugin-babel';
+import type {} from '@shopify/loom-plugin-babel';
 
-declare module '@sewing-kit/core' {
+declare module '@shopify/loom' {
   interface BuildPackageTargetOptions {
     rollupEsnext?: boolean;
   }

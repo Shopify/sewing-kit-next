@@ -1,5 +1,5 @@
 {
-  "name": "@sewing-kit/plugin-build-library",
+  "name": "@shopify/loom-plugin-build-library",
   "license": "MIT",
   "description": "loom technology plugin for building libraries",
   "version": "0.2.0",
@@ -7,7 +7,7 @@
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
-    "@sewing-kit:registry": "https://registry.npmjs.org"
+    "@shopify:registry": "https://registry.npmjs.org"
   },
   "engines": {
     "node": ">=12.14.0"
@@ -36,11 +36,11 @@
     "@rollup/plugin-image": "^2.1.1",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/pluginutils": "^4.1.0",
-    "@sewing-kit/core": "^0.6.4",
-    "@sewing-kit/plugin-babel": "^0.2.0",
-    "@sewing-kit/plugin-jest": "^0.5.3",
-    "@sewing-kit/plugin-package-build": "^0.6.1",
-    "@sewing-kit/plugin-typescript": "^0.7.1",
+    "@shopify/loom": "^0.6.4",
+    "@shopify/loom-plugin-babel": "^0.2.0",
+    "@shopify/loom-plugin-jest": "^0.5.3",
+    "@shopify/loom-plugin-package-build": "^0.6.1",
+    "@shopify/loom-plugin-typescript": "^0.7.1",
     "@shopify/postcss-plugin": "^3.0.1",
     "@svgr/rollup": "^4.3.3",
     "graphql-typescript-definitions": "^2.0.4",

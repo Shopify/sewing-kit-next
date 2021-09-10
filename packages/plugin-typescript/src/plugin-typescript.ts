@@ -4,13 +4,13 @@ import {
   createWorkspacePlugin,
   WorkspacePluginContext,
   addHooks,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 
 interface TypeScriptTypeCheckingHooks {
   readonly typescriptHeap: WaterfallHook<number>;
 }
 
-declare module '@sewing-kit/core' {
+declare module '@shopify/loom' {
   interface TypeCheckWorkspaceConfigurationCustomHooks
     extends TypeScriptTypeCheckingHooks {}
   interface BuildWorkspaceConfigurationCustomHooks

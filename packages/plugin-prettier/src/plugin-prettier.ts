@@ -5,7 +5,7 @@ import {
   createWorkspaceLintPlugin,
   DiagnosticError,
   LogLevel,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 
 interface PrettierFlags {
   check?: boolean;
@@ -19,7 +19,7 @@ interface PrettierHooks {
   readonly prettierFlags: WaterfallHook<PrettierFlags>;
 }
 
-declare module '@sewing-kit/core' {
+declare module '@shopify/loom' {
   interface LintWorkspaceConfigurationCustomHooks extends PrettierHooks {}
 }
 

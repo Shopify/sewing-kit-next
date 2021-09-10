@@ -5,7 +5,7 @@ import {
   // tasks
   TypeCheckOptions,
   TypeCheckWorkspaceTaskHooks,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 
 import {run} from '../runner';
 import {

@@ -1,11 +1,12 @@
-import {createProjectTestPlugin} from '@sewing-kit/core';
+import {createProjectTestPlugin} from '@shopify/loom';
 
 interface JestConfigOptions {
   jestEnvironment: 'node' | 'jsdom';
 }
 
-const TRANSFORM_STYLES = '@sewing-kit/plugin-build-library/transform-style.js';
-const TRANSFORM_SVG = '@sewing-kit/plugin-build-library/transform-svg.js';
+const TRANSFORM_STYLES =
+  '@shopify/loom-plugin-build-library/transform-style.js';
+const TRANSFORM_SVG = '@shopify/loom-plugin-build-library/transform-svg.js';
 
 export function jestConfig({jestEnvironment}: JestConfigOptions) {
   return createProjectTestPlugin('Loom.BuildLibrary.JestConfig', ({hooks}) => {

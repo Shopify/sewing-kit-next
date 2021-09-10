@@ -22,7 +22,7 @@ import {
   WebApp,
   Service,
   Package,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 
 import {LogLevel} from '../ui';
 import {run, StepDetails} from '../runner';

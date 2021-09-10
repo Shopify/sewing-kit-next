@@ -15,11 +15,11 @@ Use `createWorkspace` in a `loom.config.ts` file to define a workspace. The foll
 ```js
 // loom.config.ts
 
-import {createWorkspace} from '@sewing-kit/core';
+import {createWorkspace} from '@shopify/loom';
 
-import {eslint} from '@sewing-kit/plugin-eslint';
-import {jest} from '@sewing-kit/plugin-jest';
-import {workspaceTypeScript} from '@sewing-kit/plugin-typescript';
+import {eslint} from '@shopify/loom-plugin-eslint';
+import {jest} from '@shopify/loom-plugin-jest';
+import {workspaceTypeScript} from '@shopify/loom-plugin-typescript';
 
 export default createWorkspace((workspace) => {
   workspace.use(eslint(), jest(), workspaceTypeScript());
@@ -33,7 +33,7 @@ Use `createPackage` in a `loom.config.ts` file to define a package in the worksp
 ```js
 // packages/some-package
 
-import {createPackage, Runtime} from '@sewing-kit/core';
+import {createPackage, Runtime} from '@shopify/loom';
 import {createLoomPackagePlugin} from '../../config/loom';
 
 export default createPackage((pkg) => {
@@ -52,7 +52,7 @@ export default createPackage((pkg) => {
 ```js
 // app/ui/loom.config.ts
 
-import {createWebApp} from '@sewing-kit/core';
+import {createWebApp} from '@shopify/loom';
 import {myPlugins} from '../../config/my-plugins';
 
 export default createWebApp((app) => {
@@ -72,7 +72,7 @@ Use `createService` in a `loom.config.ts` file to define a service in the worksp
 ```js
 // server/loom.config.ts
 
-import {createService} from '@sewing-kit/core';
+import {createService} from '@shopify/loom';
 
 export default createWebApp((app) => {
   // tell loom the entry into the server

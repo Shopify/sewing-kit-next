@@ -4,7 +4,7 @@ import {
   Package,
   createProjectBuildPlugin,
   ProjectPluginContext,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 
 interface EntryConfig {
   extension: string;

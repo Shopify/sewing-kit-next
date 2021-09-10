@@ -1,4 +1,4 @@
-# `@sewing-kit/core`
+# `@shopify/loom`
 
 ## Modeling
 
@@ -31,5 +31,5 @@ This class is foundational to how loom generates build outputs for a given proje
 ## Installation
 
 ```sh
-yarn add @sewing-kit/core --dev
+yarn add @shopify/loom --dev
 ```

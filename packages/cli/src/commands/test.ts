@@ -11,7 +11,7 @@ import {
   Package,
   WebApp,
   Service,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 
 import {run} from '../runner';
 import {

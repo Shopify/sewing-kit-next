@@ -1,5 +1,5 @@
 {
-  "name": "@sewing-kit/cli",
+  "name": "@shopify/loom-cli",
   "license": "MIT",
   "description": "The CLI for loom",
   "version": "0.6.4",
@@ -7,7 +7,7 @@
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
-    "@sewing-kit:registry": "https://registry.npmjs.org"
+    "@shopify:registry": "https://registry.npmjs.org"
   },
   "engines": {
     "node": ">=12.14.0"
@@ -33,7 +33,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@sewing-kit/core": "^0.6.4",
+    "@shopify/loom": "^0.6.4",
     "@types/signal-exit": "^3.0.0",
     "ansi-escapes": "^4.3.1",
     "arg": "^4.1.3",

@@ -97,7 +97,7 @@ export async function loadWorkspace(root: string): Promise<LoadedWorkspace> {
     // needs a better error, showing files/ what workspace plugins exist
     throw new DiagnosticError({
       title: `Multiple workspace configurations found`,
-      content: `Found ${workspaceConfigs.length} workspace configurations. Only one loom config can declare workspace plugins and/ or use the createWorkspace() utility from @sewing-kit/core`,
+      content: `Found ${workspaceConfigs.length} workspace configurations. Only one loom config can declare workspace plugins and/ or use the createWorkspace() utility from @shopify/loom`,
     });
   }
 
@@ -112,7 +112,7 @@ export async function loadWorkspace(root: string): Promise<LoadedWorkspace> {
     throw new DiagnosticError({
       title: `Invalid workspace plugins in project configuration`,
       content: `You declared workspace plugins in a project, but this is only supported for workspace with a single project.`,
-      suggestion: `Move the workspace plugins to a root loom config file, and include them using the createWorkspace() function from @sewing-kit/core`,
+      suggestion: `Move the workspace plugins to a root loom config file, and include them using the createWorkspace() function from @shopify/loom`,
     });
   }
 
@@ -199,14 +199,14 @@ async function loadConfigFile<T extends {name: string; root: string}>(
       title: 'Invalid configuration file',
       content: `The configuration file ${file} did not export any configuration`,
       suggestion: file.endsWith('.ts')
-        ? `Ensure that you are exporting the result of calling a function from @sewing-kit/core as the default export, then run your command again.`
-        : `Ensure that you are setting the result of calling a function from @sewing-kit/core to module.exports, then run your command again.`,
+        ? `Ensure that you are exporting the result of calling a function from @shopify/loom as the default export, then run your command again.`
+        : `Ensure that you are setting the result of calling a function from @shopify/loom to module.exports, then run your command again.`,
     });
   } else if (typeof normalized !== 'function') {
     throw new DiagnosticError({
       title: 'Invalid configuration file',
       content: `The configuration file ${file} did not export a function`,
-      suggestion: `Ensure that you are exporting the result of calling a function from @sewing-kit/core, then run your command again.`,
+      suggestion: `Ensure that you are exporting the result of calling a function from @shopify/loom, then run your command again.`,
     });
   }
 
@@ -228,7 +228,7 @@ async function loadConfigFile<T extends {name: string; root: string}>(
     throw new DiagnosticError({
       title: 'Invalid configuration file',
       content: `The configuration file ${file} did not export a function that creates a configuration object`,
-      suggestion: `Ensure that you are exporting the result of calling a function from @sewing-kit/core, then run your command again.`,
+      suggestion: `Ensure that you are exporting the result of calling a function from @shopify/loom, then run your command again.`,
     });
   }
 

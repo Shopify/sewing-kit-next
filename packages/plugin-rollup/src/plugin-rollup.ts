@@ -6,7 +6,7 @@ import {
   LogLevel,
   Target,
   Project,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 import type {
   rollup as rollupFnType,
   Plugin as RollupPlugin,
@@ -22,7 +22,7 @@ interface RollupHooks {
   readonly rollupOutputs: WaterfallHook<OutputOptions[]>;
 }
 
-declare module '@sewing-kit/core' {
+declare module '@shopify/loom' {
   interface BuildProjectConfigurationCustomHooks extends RollupHooks {}
   interface DevProjectConfigurationCustomHooks extends RollupHooks {}
 }

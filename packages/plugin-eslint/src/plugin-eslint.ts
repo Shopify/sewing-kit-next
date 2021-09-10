@@ -5,7 +5,7 @@ import {
   createWorkspaceLintPlugin,
   DiagnosticError,
   LogLevel,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 
 export interface ESLintFlags {
   readonly eslintrc?: false;
@@ -42,7 +42,7 @@ interface ESLintHooks {
   readonly eslintFlags: WaterfallHook<ESLintFlags>;
 }
 
-declare module '@sewing-kit/core' {
+declare module '@shopify/loom' {
   interface LintWorkspaceConfigurationCustomHooks extends ESLintHooks {}
 }
 

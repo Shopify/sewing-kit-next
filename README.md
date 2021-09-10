@@ -20,7 +20,7 @@ Loom (previously sewing-kit-next) is a front-end toolchain that aims to facilita
 To get started, add the Loom CLI package to your app's `devDependencies`:
 
 ```sh
-yarn add @sewing-kit/cli --dev
+yarn add @shopify/loom-cli --dev
 ```
 
 Depending on your project's needs, you'll want to install additional plugins as needed.
@@ -29,9 +29,9 @@ Depending on your project's needs, you'll want to install additional plugins as 
 
 Please see the following directories for usage instructions:
 
-- [`@sewing-kit/cli`](./packages/cli) provides the commands you'll use to interact with loom.
-- [`@sewing-kit/core/config`](./packages/core/src/config) provides the configuration interface you'll use to configure loom and associated development tools.
-- [`@sewing-kit/core/plugins`](./packages/core/src/plugins) is the starting point for loom plugin development.
+- [`@shopify/loom-cli`](./packages/cli) provides the commands you'll use to interact with loom.
+- [`@shopify/loom/config`](./packages/core/src/config) provides the configuration interface you'll use to configure loom and associated development tools.
+- [`@shopify/loom/plugins`](./packages/core/src/plugins) is the starting point for loom plugin development.
 
 ## 📝 Documentation
 

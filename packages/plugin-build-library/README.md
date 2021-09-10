@@ -1,11 +1,11 @@
-# `@sewing-kit/plugin-build-library`
+# `@shopify/loom-plugin-build-library`
 
 Exposes two plugins (`buildLibrary`, `buildLibraryWorkspace`) for off-the-shelf library building within `loom`.
 
 ## Installation
 
 ```sh
-$ yarn add @sewing-kit/plugin-build-library --dev
+$ yarn add @shopify/loom-plugin-build-library --dev
 ```
 
 ## Usage
@@ -13,11 +13,11 @@ $ yarn add @sewing-kit/plugin-build-library --dev
 Add `buildLibrary` and `buildLibraryWorkspace` to your loom plugins.
 
 ```js
-import {createPackage, Runtime} from '@sewing-kit/core';
+import {createPackage, Runtime} from '@shopify/loom';
 import {
   buildLibrary,
   buildLibraryWorkspace,
-} from '@sewing-kit/plugin-build-library';
+} from '@shopify/loom-plugin-build-library';
 
 export default createPackage((pkg) => {
   pkg.runtimes(Runtime.Node, Runtime.Browser);
@@ -48,12 +48,12 @@ export default createPackage((pkg) => {
 We provide an initial babel config that supports typescript and react, using `@shopify/babel-plugin`. If you need to adjust this config, you can call the `babel()` plugin after `buildLibrary` to override the defaults.
 
 ```js
-import {createPackage, Runtime} from '@sewing-kit/core';
+import {createPackage, Runtime} from '@shopify/loom';
 import {
   buildLibrary,
   buildLibraryWorkspace,
   babel,
-} from '@sewing-kit/plugin-build-library';
+} from '@shopify/loom-plugin-build-library';
 
 export default createPackage((pkg) => {
   pkg.runtimes(Runtime.Node, Runtime.Browser);

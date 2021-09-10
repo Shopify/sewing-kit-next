@@ -1,11 +1,11 @@
-# `@sewing-kit/plugin-prettier`
+# `@shopify/loom-plugin-prettier`
 
 This package provides a `loom` plugin that runs [Prettier](https://prettier.io) as part of the [`loom lint` command](TODO).
 
 ## Installation
 
 ```sh
-yarn add @sewing-kit/plugin-prettier --dev
+yarn add @shopify/loom-plugin-prettier --dev
 ```
 
 ## `prettier()`
@@ -13,8 +13,8 @@ yarn add @sewing-kit/plugin-prettier --dev
 The `prettier` function returns a `loom` plugin. This plugin applies to the workspace, not an individual project.
 
 ```js
-import {createWorkspace} from '@sewing-kit/core';
-import {prettier} from '@sewing-kit/plugin-prettier';
+import {createWorkspace} from '@shopify/loom';
+import {prettier} from '@shopify/loom-plugin-prettier';
 
 export default createWorkspace((workspace) => {
   workspace.use(prettier());
@@ -37,7 +37,7 @@ This plugin adds the following hooks to `LintWorkspaceConfigurationCustomHooks`:
 - `prettierFlags`: an object of options to convert into command line flags for the `prettier` command. These options are camelcase versions of their [CLI counterparts](https://prettier.io/docs/en/cli.html).
 
   ```js
-  import {createWorkspaceLintPlugin} from '@sewing-kit/core';
+  import {createWorkspaceLintPlugin} from '@shopify/loom';
 
   const plugin = createWorkspaceLintPlugin(({hooks}) => {
     hooks.configure.hook((configure) => {

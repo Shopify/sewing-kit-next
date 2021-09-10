@@ -11,7 +11,7 @@ Hooks, along with [plugins](../plugins), form the functional heart of `loom`. In
 The two types of hooks provided are a `SeriesHook` and a `WaterfallHook`. Both of these clases provide a `hook` and `run` method
 
 ```ts
-import {SeriesHook} from '@sewing-kit/core';
+import {SeriesHook} from '@shopify/loom';
 
 const dog = {
   breed: new SeriesHook<string>(),
@@ -36,7 +36,7 @@ When `run` is called on a `SeriesHook` all the conainted hooks are resolved in s
 A lot of your use cases can probably covered by the hooks provided by core `loom`, but you can always add your own hooks via plugins and a task's `configureHooks` hook (adding hooks with hooks). For example, if you add, say, a plugin that [introduces Jest](../../../plugin-jest) to your workspace's testing setup, that plugin can also add a hook to let other plugins hook into its Jest configuration.
 
 ```ts
-// Code from @sewing-kit/plugin-jest
+// Code from @shopify/loom-plugin-jest
 
 hooks.configureHooks.hook(
   addHooks<JestWorkspaceHooks>(() => ({

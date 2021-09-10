@@ -1,7 +1,7 @@
 import {link} from 'ansi-escapes';
 import chalk from 'chalk';
 import {supportsHyperlink} from 'supports-hyperlinks';
-import {LogLevel, LogOptions, Loggable, LogFormatter} from '@sewing-kit/core';
+import {LogLevel, LogOptions, Loggable, LogFormatter} from '@shopify/loom';
 
 export {LogLevel};
 export type {LogOptions, Loggable, LogFormatter};

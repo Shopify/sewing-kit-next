@@ -1,5 +1,5 @@
 {
-  "name": "@sewing-kit/core",
+  "name": "@shopify/loom",
   "license": "MIT",
   "description": "The core data models for loom",
   "version": "0.6.4",
@@ -14,7 +14,7 @@
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
-    "@sewing-kit:registry": "https://registry.npmjs.org"
+    "@shopify:registry": "https://registry.npmjs.org"
   },
   "engines": {
     "node": ">=12.14.0"

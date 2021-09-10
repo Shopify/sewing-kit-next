@@ -1,4 +1,4 @@
-import {addHooks, WaterfallHook, createProjectPlugin} from '@sewing-kit/core';
+import {addHooks, WaterfallHook, createProjectPlugin} from '@shopify/loom';
 import type {TransformOptions} from '@babel/core';
 
 // Babel config that is provided by the hook is the same set of options as
@@ -10,7 +10,7 @@ interface BabelHooks {
   readonly babelConfig: WaterfallHook<BabelConfig>;
 }
 
-declare module '@sewing-kit/core' {
+declare module '@shopify/loom' {
   interface TestProjectConfigurationCustomHooks extends BabelHooks {}
   interface BuildProjectConfigurationCustomHooks extends BabelHooks {}
   interface DevProjectConfigurationCustomHooks extends BabelHooks {}

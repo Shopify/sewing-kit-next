@@ -3,13 +3,13 @@ import {
   generateUniqueWorkspaceID,
 } from '../../../../tests/utilities';
 
-describe('@sewing-kit/plugin-package-build', () => {
+describe('@shopify/loom-plugin-package-build', () => {
   it('builds commmonjs, esmodules and esnext outputs by default', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@sewing-kit/core';
-        import {babel} from '@sewing-kit/plugin-babel';
-        import {packageBuild} from '@sewing-kit/plugin-package-build';
+        import {createPackage, Runtime} from '@shopify/loom';
+        import {babel} from '@shopify/loom-plugin-babel';
+        import {packageBuild} from '@shopify/loom-plugin-package-build';
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
           pkg.use(
@@ -69,9 +69,9 @@ function pkg(greet) {
   it('builds only commmonjs outputs when esmodules/esnext are disabled', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@sewing-kit/core';
-        import {babel} from '@sewing-kit/plugin-babel';
-        import {packageBuild} from '@sewing-kit/plugin-package-build';
+        import {createPackage, Runtime} from '@shopify/loom';
+        import {babel} from '@shopify/loom-plugin-babel';
+        import {packageBuild} from '@shopify/loom-plugin-package-build';
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
           pkg.use(
@@ -112,9 +112,9 @@ export function pkg(greet) {
   it('builds multiple entrypoints', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@sewing-kit/core';
-        import {babel} from '@sewing-kit/plugin-babel';
-        import {packageBuild} from '@sewing-kit/plugin-package-build';
+        import {createPackage, Runtime} from '@shopify/loom';
+        import {babel} from '@shopify/loom-plugin-babel';
+        import {packageBuild} from '@shopify/loom-plugin-package-build';
         export default createPackage((pkg) => {
           pkg.entry({root: './src/index'});
           pkg.entry({name: 'second', root: './src/second'});
@@ -155,9 +155,9 @@ export function pkg(greet) {
   it('generates binary files', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@sewing-kit/core';
-        import {babel} from '@sewing-kit/plugin-babel';
-        import {packageBuild} from '@sewing-kit/plugin-package-build';
+        import {createPackage, Runtime} from '@shopify/loom';
+        import {babel} from '@shopify/loom-plugin-babel';
+        import {packageBuild} from '@shopify/loom-plugin-package-build';
         export default createPackage((pkg) => {
           pkg.binary({name: 'cmd', root: './src/index'});
           pkg.runtime(Runtime.Node);
@@ -192,9 +192,9 @@ export function pkg(greet) {
   it('can disable generation of root entrypoints', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-          import {createPackage, Runtime} from '@sewing-kit/core';
-          import {babel} from '@sewing-kit/plugin-babel';
-          import {packageBuild} from '@sewing-kit/plugin-package-build';
+          import {createPackage, Runtime} from '@shopify/loom';
+          import {babel} from '@shopify/loom-plugin-babel';
+          import {packageBuild} from '@shopify/loom-plugin-package-build';
           export default createPackage((pkg) => {
             pkg.runtime(Runtime.Node);
             pkg.use(
@@ -231,9 +231,9 @@ export function pkg(greet) {
     async (runtimes, expectedOutput) => {
       await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@sewing-kit/core';
-        import {babel} from '@sewing-kit/plugin-babel';
-        import {packageBuild} from '@sewing-kit/plugin-package-build';
+        import {createPackage, Runtime} from '@shopify/loom';
+        import {babel} from '@shopify/loom-plugin-babel';
+        import {packageBuild} from '@shopify/loom-plugin-package-build';
         export default createPackage((pkg) => {
           pkg.runtimes(${runtimes});
           pkg.use(

@@ -19,7 +19,7 @@ import {
   createProjectBuildPlugin,
   projectTypeSwitch,
   Runtime,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 import type {
   BuildWebAppTargetOptions,
   BuildServiceTargetOptions,
@@ -28,7 +28,7 @@ import type {
   BuildServiceConfigurationHooks,
   DevWebAppConfigurationHooks,
   DevServiceConfigurationHooks,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 
 interface WebpackHooks {
   readonly webpackCachePath: WaterfallHook<string>;
@@ -106,7 +106,7 @@ interface WebpackProjectContext<TType extends Project = Project> {
   readonly webpackStats: WebpackStatsMap<TType>;
 }
 
-declare module '@sewing-kit/core' {
+declare module '@shopify/loom' {
   interface BuildProjectConfigurationCustomHooks extends WebpackHooks {}
   interface DevProjectConfigurationCustomHooks extends WebpackHooks {}
 
@@ -281,7 +281,7 @@ export async function createWebpackConfig({
   'env' | 'api' | 'hooks' | 'target' | 'workspace' | 'sourceMaps' | 'config'
 >) {
   if (hooks.webpackConfig == null) {
-    throw new MissingPluginError('@sewing-kit/plugin-webpack');
+    throw new MissingPluginError('@shopify/loom-plugin-webpack');
   }
 
   const [

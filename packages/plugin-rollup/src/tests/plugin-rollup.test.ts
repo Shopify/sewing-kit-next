@@ -3,12 +3,12 @@ import {
   generateUniqueWorkspaceID,
 } from '../../../../tests/utilities';
 
-describe('@sewing-kit/plugin-rollup', () => {
+describe('@shopify/loom-plugin-rollup', () => {
   it('does nothing if no rollupInputOptions / rollupOuputOptions are configured', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime, createProjectBuildPlugin} from '@sewing-kit/core';
-        import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
+        import {createPackage, Runtime, createProjectBuildPlugin} from '@shopify/loom';
+        import {rollupHooks, rollupBuild} from '@shopify/loom-plugin-rollup';
         export default createPackage((pkg) => {
           pkg.use(rollupHooks(), rollupBuild());
         });
@@ -28,8 +28,8 @@ describe('@sewing-kit/plugin-rollup', () => {
   it('can configure input options through the rollupInputOptions hook', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime, createProjectBuildPlugin} from '@sewing-kit/core';
-        import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
+        import {createPackage, Runtime, createProjectBuildPlugin} from '@shopify/loom';
+        import {rollupHooks, rollupBuild} from '@shopify/loom-plugin-rollup';
         export default createPackage((pkg) => {
           pkg.use(rollupHooks(), rollupBuild(), rollupConfig());
         });
@@ -74,8 +74,8 @@ function pkg(greet) {
   it('can configure input options through the rollupInput, rollupExternal and rollupPlugins hooks', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime, createProjectBuildPlugin} from '@sewing-kit/core';
-        import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
+        import {createPackage, Runtime, createProjectBuildPlugin} from '@shopify/loom';
+        import {rollupHooks, rollupBuild} from '@shopify/loom-plugin-rollup';
         export default createPackage((pkg) => {
           pkg.use(rollupHooks(), rollupBuild(), rollupConfig());
         });
@@ -151,8 +151,8 @@ function pkg(greet) {
   it('can configure rollup plugins using the rollupPlugins helper plugin', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime, createProjectBuildPlugin} from '@sewing-kit/core';
-        import {rollupHooks, rollupBuild, rollupPlugins} from '@sewing-kit/plugin-rollup';
+        import {createPackage, Runtime, createProjectBuildPlugin} from '@shopify/loom';
+        import {rollupHooks, rollupBuild, rollupPlugins} from '@shopify/loom-plugin-rollup';
         export default createPackage((pkg) => {
           pkg.use(
             rollupHooks(),

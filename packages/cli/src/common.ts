@@ -1,7 +1,7 @@
 import {Readable, Writable} from 'stream';
 
 import arg, {Result, Spec} from 'arg';
-import {loadWorkspace, LoadedWorkspace} from '@sewing-kit/core/config-load';
+import {loadWorkspace, LoadedWorkspace} from '@shopify/loom/config-load';
 import {
   // plugins
   AnyPlugin,
@@ -20,7 +20,7 @@ import {
   Package,
   Service,
   WebApp,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 
 import {Ui} from './ui';
 

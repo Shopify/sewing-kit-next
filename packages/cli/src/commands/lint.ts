@@ -5,7 +5,7 @@ import {
   // tasks
   LintTaskOptions,
   LintWorkspaceTaskHooks,
-} from '@sewing-kit/core';
+} from '@shopify/loom';
 
 import {run} from '../runner';
 import {

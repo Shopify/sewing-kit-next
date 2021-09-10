@@ -3,12 +3,12 @@ import {
   generateUniqueWorkspaceID,
 } from '../../../../tests/utilities';
 
-describe('@sewing-kit/plugin-build-library buildLibrary', () => {
+describe('@shopify/loom-plugin-build-library buildLibrary', () => {
   it('builds commmonjs, esmodules and esnext outputs by default', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@sewing-kit/core';
-        import {buildLibrary} from '@sewing-kit/plugin-build-library';
+        import {createPackage, Runtime} from '@shopify/loom';
+        import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
           pkg.use(
@@ -67,8 +67,8 @@ function pkg(greet) {
   it('builds tsx files', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@sewing-kit/core';
-        import {buildLibrary} from '@sewing-kit/plugin-build-library';
+        import {createPackage, Runtime} from '@shopify/loom';
+        import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
           pkg.runtime(Runtime.Node);
           pkg.use(

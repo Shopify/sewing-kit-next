@@ -1,5 +1,5 @@
-import {Package, createComposedProjectPlugin} from '@sewing-kit/core';
-import {rollupHooks, rollupBuild} from '@sewing-kit/plugin-rollup';
+import {Package, createComposedProjectPlugin} from '@shopify/loom';
+import {rollupHooks, rollupBuild} from '@shopify/loom-plugin-rollup';
 
 import {rollupConfig} from './plugin-rollup-config';
 import {writeBinaries} from './plugin-write-binaries';

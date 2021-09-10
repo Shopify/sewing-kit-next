@@ -15,13 +15,13 @@ The `@sewing-kit` monorepo provides a suite of ready-made plugins for common use
 Below is an example `loom.config.ts` that sets up a `loom` workspace to lint with ESLint, test with Jest, and type-check with TypeScript. It also includes a custom plugin made with `createWorkspaceTestPlugin` that taps into the `jestConfig` hook introduced by the `jest` plugin to specify a coverage directory.
 
 ```js
-import {createWorkspace} from '@sewing-kit/core';
+import {createWorkspace} from '@shopify/loom';
 
-import {eslint} from '@sewing-kit/plugin-eslint';
-import {jest} from '@sewing-kit/plugin-jest';
-import {workspaceTypeScript} from '@sewing-kit/plugin-typescript';
+import {eslint} from '@shopify/loom-plugin-eslint';
+import {jest} from '@shopify/loom-plugin-jest';
+import {workspaceTypeScript} from '@shopify/loom-plugin-typescript';
 
-import {createWorkspaceTestPlugin} from '@sewing-kit/core';
+import {createWorkspaceTestPlugin} from '@shopify/loom';
 
 export default createWorkspace((workspace) => {
   workspace.use(
@@ -44,7 +44,7 @@ export default createWorkspace((workspace) => {
 
 Plugins can do anything from configuring hooks, adding steps to tasks, or introducing hooks for other plugins to hook into. Note that `JestCoveragePlugin` makes use of the `jestConfig` hook, which isn't provided by core `loom` but is introduced to the workspace by `jest`.
 
-For more examples on how to write your own plugins, check out the source code for [`@sewing-kit/plugin-jest`](../../../plugin-jest), [`@sewing-kit/plugin-eslint`](../../../plugin-eslint), [`@sewing-kit/plugin-typescript`](../../../plugin-typescript), among others.
+For more examples on how to write your own plugins, check out the source code for [`@shopify/loom-plugin-jest`](../../../plugin-jest), [`@shopify/loom-plugin-eslint`](../../../plugin-eslint), [`@shopify/loom-plugin-typescript`](../../../plugin-typescript), among others.
 
 ## Usage
 

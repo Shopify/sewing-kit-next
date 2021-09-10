@@ -1,8 +1,8 @@
-import {createWorkspace} from '@sewing-kit/core';
+import {createWorkspace} from '@shopify/loom';
 
 import {eslint} from '../plugin-eslint';
 
-describe('@sewing-kit/plugin-eslint', () => {
+describe('@shopify/loom-plugin-eslint', () => {
   describe('eslint()', () => {
     it('applies the eslint plugin', async () => {
       const workspaceBuilder = createWorkspace((workspace) => {

@@ -22,12 +22,12 @@ const echoConfigFunctionString = `function echoConfig() {
   });
 }`;
 
-describe('@sewing-kit/plugin-babel', () => {
+describe('@shopify/loom-plugin-babel', () => {
   it('starts with an empty config', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, createProjectBuildPlugin, LogLevel} from '@sewing-kit/core';
-        import {babel} from '@sewing-kit/plugin-babel';
+        import {createPackage, createProjectBuildPlugin, LogLevel} from '@shopify/loom';
+        import {babel} from '@shopify/loom-plugin-babel';
         export default createPackage((pkg) => {
           pkg.use(
             babel(),
@@ -46,8 +46,8 @@ describe('@sewing-kit/plugin-babel', () => {
   it('sets config with an object', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, createProjectBuildPlugin, LogLevel} from '@sewing-kit/core';
-        import {babel} from '@sewing-kit/plugin-babel';
+        import {createPackage, createProjectBuildPlugin, LogLevel} from '@shopify/loom';
+        import {babel} from '@shopify/loom-plugin-babel';
         export default createPackage((pkg) => {
           pkg.use(
             babel({config: {presets: ['my-plugin']}}),
@@ -68,8 +68,8 @@ describe('@sewing-kit/plugin-babel', () => {
   it('sets config with a builder function', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, createProjectBuildPlugin, LogLevel} from '@sewing-kit/core';
-        import {babel} from '@sewing-kit/plugin-babel';
+        import {createPackage, createProjectBuildPlugin, LogLevel} from '@shopify/loom';
+        import {babel} from '@shopify/loom-plugin-babel';
         export default createPackage((pkg) => {
           pkg.use(
             babel({
@@ -94,8 +94,8 @@ describe('@sewing-kit/plugin-babel', () => {
   it('setting config with an object overides prior config', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, createProjectBuildPlugin, LogLevel} from '@sewing-kit/core';
-        import {babel} from '@sewing-kit/plugin-babel';
+        import {createPackage, createProjectBuildPlugin, LogLevel} from '@shopify/loom';
+        import {babel} from '@shopify/loom-plugin-babel';
         export default createPackage((pkg) => {
           pkg.use(
             babel({
@@ -121,8 +121,8 @@ describe('@sewing-kit/plugin-babel', () => {
   it('setting config with a builder function augments prior config', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, createProjectBuildPlugin, LogLevel} from '@sewing-kit/core';
-        import {babel} from '@sewing-kit/plugin-babel';
+        import {createPackage, createProjectBuildPlugin, LogLevel} from '@shopify/loom';
+        import {babel} from '@shopify/loom-plugin-babel';
         export default createPackage((pkg) => {
           pkg.use(
             babel({

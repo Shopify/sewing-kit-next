@@ -12,7 +12,7 @@ const configs = [
 ];
 
 const packageConfig = `
-import {createPackage} from '@sewing-kit/core';
+import {createPackage} from '@shopify/loom';
 
 export default createPackage((pkg) => {
   pkg.entry({root: '/src/index'});

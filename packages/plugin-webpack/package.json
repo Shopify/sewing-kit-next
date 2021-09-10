@@ -1,5 +1,5 @@
 {
-  "name": "@sewing-kit/plugin-webpack",
+  "name": "@shopify/loom-plugin-webpack",
   "license": "MIT",
   "description": "loom plugin for building with webpack",
   "version": "0.3.5",
@@ -14,7 +14,7 @@
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
-    "@sewing-kit:registry": "https://registry.npmjs.org"
+    "@shopify:registry": "https://registry.npmjs.org"
   },
   "engines": {
     "node": ">=12.14.0"
@@ -37,7 +37,7 @@
     "noop.js"
   ],
   "dependencies": {
-    "@sewing-kit/core": "^0.6.4",
+    "@shopify/loom": "^0.6.4",
     "@types/case-sensitive-paths-webpack-plugin": "^2.1.2",
     "@types/terser-webpack-plugin": "^2.2.0",
     "@types/webpack": "^4.41.12",

@@ -1,5 +1,5 @@
 {
-  "name": "@sewing-kit/plugin-babel",
+  "name": "@shopify/loom-plugin-babel",
   "license": "MIT",
   "description": "loom technology plugin for babel",
   "version": "0.2.0",
@@ -7,7 +7,7 @@
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
-    "@sewing-kit:registry": "https://registry.npmjs.org"
+    "@shopify:registry": "https://registry.npmjs.org"
   },
   "engines": {
     "node": ">=12.14.0"
@@ -29,7 +29,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@sewing-kit/core": "^0.6.4",
+    "@shopify/loom": "^0.6.4",
     "@types/babel__core": "^7.1.7",
     "core-js": "^3.14.0"
   },
