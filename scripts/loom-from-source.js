@@ -75,7 +75,7 @@ const BUILD_FROM_SOURCE_FILTER_RE = /^@sewing-kit\/(core|cli)/;
   try {
     execSync(['node', outFile, ...process.argv.slice(2)].join(' '), {
       stdio: 'inherit',
-      env: {...process.env, SEWING_KIT_FROM_SOURCE: '1'},
+      env: {...process.env, LOOM_FROM_SOURCE: '1'},
     });
   } catch (error) {
     process.exitCode = 1;

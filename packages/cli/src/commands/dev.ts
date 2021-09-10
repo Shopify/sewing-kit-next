@@ -111,7 +111,7 @@ export async function runDev(
 
       const step = createStep(
         {
-          id: 'SewingKit.DevWebApp',
+          id: 'Loom.DevWebApp',
           label: (fmt) => fmt`start dev mode for {emphasis ${webApp.name}}`,
         },
         async (step) => {
@@ -168,7 +168,7 @@ export async function runDev(
 
       const step = createStep(
         {
-          id: 'SewingKit.DevService',
+          id: 'Loom.DevService',
           label: (fmt) => fmt`start dev mode for {emphasis ${service.name}}`,
         },
         async (step) => {
@@ -219,7 +219,7 @@ export async function runDev(
 
       const step = createStep(
         {
-          id: 'SewingKit.DevPackage',
+          id: 'Loom.DevPackage',
           label: (fmt) => fmt`start dev mode for {emphasis ${pkg.name}}`,
         },
         async (step) => {

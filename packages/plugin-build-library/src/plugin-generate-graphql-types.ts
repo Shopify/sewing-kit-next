@@ -8,7 +8,7 @@ import {Builder, EnumFormat} from 'graphql-typescript-definitions';
 
 export function generateGraphqlTypes() {
   return createWorkspacePlugin(
-    'SewingKit.BuildLibraryWorkspace.GenerateGraphqlTypes',
+    'Loom.BuildLibraryWorkspace.GenerateGraphqlTypes',
     (context) => {
       const {
         tasks: {build, typeCheck},

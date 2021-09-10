@@ -17,7 +17,7 @@ declare module '@sewing-kit/core' {
     extends TypeScriptTypeCheckingHooks {}
 }
 
-const PLUGIN = 'SewingKit.TypeScript';
+const PLUGIN = 'Loom.TypeScript';
 
 export function workspaceTypeScript() {
   return createWorkspacePlugin(PLUGIN, (context) => {

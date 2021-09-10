@@ -11,7 +11,7 @@ describe('@sewing-kit/plugin-prettier', () => {
       const workspace = await workspaceBuilder();
       const workspacePlugins = workspace.workspacePlugins;
       const prettierPlugin = workspacePlugins[0];
-      expect(prettierPlugin.id).toBe('SewingKit.Prettier');
+      expect(prettierPlugin.id).toBe('Loom.Prettier');
     });
   });
 });

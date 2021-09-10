@@ -16,7 +16,7 @@ declare module '@sewing-kit/core' {
   interface DevProjectConfigurationCustomHooks extends BabelHooks {}
 }
 
-const PLUGIN = 'SewingKit.Babel';
+const PLUGIN = 'Loom.Babel';
 
 type BabelConfigBuilder = (babelConfig: BabelConfig) => BabelConfig;
 

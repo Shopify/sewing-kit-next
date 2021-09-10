@@ -8,7 +8,7 @@ import {
 
 export function writeBinaries() {
   return createProjectBuildPlugin<Package>(
-    'SewingKit.PackageBuild.Binaries',
+    'Loom.PackageBuild.Binaries',
     ({hooks, project, api}) => {
       hooks.steps.hook((steps) =>
         project.binaries.length > 0

@@ -13,7 +13,7 @@ import type {TestProjectConfigurationHooks} from '@sewing-kit/core';
 
 import type {} from '@sewing-kit/plugin-babel';
 
-const PLUGIN = 'SewingKit.Jest';
+const PLUGIN = 'Loom.Jest';
 
 type DeepReadonly<T> = Readonly<
   {

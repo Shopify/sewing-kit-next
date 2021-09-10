@@ -28,7 +28,7 @@ export function buildLibrary({
   jestEnvironment = 'node',
   packageBuildOptions = {},
 }: BuildLibraryOptions) {
-  return createComposedProjectPlugin('SewingKit.BuildLibrary', [
+  return createComposedProjectPlugin('Loom.BuildLibrary', [
     // this needs to be set/ find the babel.config.js file at the root of the proje here as'the't
     babel({
       config: {
@@ -54,7 +54,7 @@ interface BuildLibraryWorkspaceOptions {
 export function buildLibraryWorkspace({
   graphql = false,
 }: BuildLibraryWorkspaceOptions) {
-  return createComposedWorkspacePlugin('SewingKit.BuildLibraryWorkspace', [
+  return createComposedWorkspacePlugin('Loom.BuildLibraryWorkspace', [
     workspaceTypeScript(),
     jest(),
     graphql && generateGraphqlTypes(),

@@ -11,7 +11,7 @@ describe('@sewing-kit/plugin-eslint', () => {
       const workspace = await workspaceBuilder();
       const workspacePlugins = workspace.workspacePlugins;
       const eslintPlugin = workspacePlugins[0];
-      expect(eslintPlugin.id).toBe('SewingKit.ESLint');
+      expect(eslintPlugin.id).toBe('Loom.ESLint');
     });
   });
 });

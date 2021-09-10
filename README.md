@@ -1,4 +1,4 @@
-# 🧵 Sewing Kit
+# 🧵 Loom
 
 > An opinionated orchestrator of web development tools
 
@@ -6,7 +6,7 @@
 
 **🚧 Currently under active development 🚧**
 
-Sewing Kit is a front-end toolchain that aims to facilitate common front-end tasks that are shared across various front-end projects. This repository is home to the next generation of sewing-kit related packages, whereas the previous generation lives in [Shopify/sewing-kit](https://github.com/shopify/sewing-kit).
+Loom (previously sewing-kit-next) is a front-end toolchain that aims to facilitate common front-end tasks that are shared across various front-end projects. This repository is home to the next generation of loom related packages, whereas the previous generation lives in [Shopify/sewing-kit](https://github.com/shopify/sewing-kit).
 
 ### ✨ Features
 
@@ -17,7 +17,7 @@ Sewing Kit is a front-end toolchain that aims to facilitate common front-end tas
 
 ## 💻 Installation
 
-To get started, add the Sewing Kit CLI package to your app's `devDependencies`:
+To get started, add the Loom CLI package to your app's `devDependencies`:
 
 ```sh
 yarn add @sewing-kit/cli --dev
@@ -29,9 +29,9 @@ Depending on your project's needs, you'll want to install additional plugins as 
 
 Please see the following directories for usage instructions:
 
-- [`@sewing-kit/cli`](./packages/cli) provides the commands you'll use to interact with sewing-kit.
-- [`@sewing-kit/core/config`](./packages/core/src/config) provides the configuration interface you'll use to configure sewing-kit and associated development tools.
-- [`@sewing-kit/core/plugins`](./packages/core/src/plugins) is the starting point for sewing-kit plugin development.
+- [`@sewing-kit/cli`](./packages/cli) provides the commands you'll use to interact with loom.
+- [`@sewing-kit/core/config`](./packages/core/src/config) provides the configuration interface you'll use to configure loom and associated development tools.
+- [`@sewing-kit/core/plugins`](./packages/core/src/plugins) is the starting point for loom plugin development.
 
 ## 📝 Documentation
 

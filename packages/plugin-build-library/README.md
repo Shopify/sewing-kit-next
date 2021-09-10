@@ -10,7 +10,7 @@ $ yarn add @sewing-kit/plugin-build-library --dev
 
 ## Usage
 
-Add `buildLibrary` and `buildLibraryWorkspace` to your sewing-kit plugins.
+Add `buildLibrary` and `buildLibraryWorkspace` to your loom plugins.
 
 ```js
 import {createPackage, Runtime} from '@sewing-kit/core';

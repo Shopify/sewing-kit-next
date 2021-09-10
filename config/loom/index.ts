@@ -5,7 +5,7 @@ import {packageBuild} from '@sewing-kit/plugin-package-build';
 import type {} from '@sewing-kit/plugin-jest';
 
 export const createLoomPackagePlugin = () =>
-  createComposedProjectPlugin<Package>('SewingKit.InternalPackage', [
+  createComposedProjectPlugin<Package>('Loom.InternalPackage', [
     babel({
       config: {
         configFile: false,

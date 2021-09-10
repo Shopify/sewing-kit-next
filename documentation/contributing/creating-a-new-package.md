@@ -1,4 +1,4 @@
-# Creating a new package in Sewing Kit
+# Creating a new package in Loom
 
 To generate a new package in this codebase, simply run:
 

@@ -480,7 +480,7 @@ export async function run(
         // Something like:
 
         //   project: web (web-app:web if needs specificity)
-        //   steps: SewingKit.BuildPackage > _Webpack.BuildWebApp_
+        //   steps: Loom.BuildPackage > _Webpack.BuildWebApp_
         //   from plugins: Quilt.WebApp > _Webpack.WebApp_
 
         focusedSteps.add(focusedStep);
@@ -592,7 +592,7 @@ export async function run(
 
     ui.stdout.write(
       (fmt) =>
-        fmt`🧵 {title sewing-kit ${
+        fmt`🧵 {title loom ${
           isInteractive ? 'interactive mode\n' : ''
         }}{subdued ${
           isInteractive ? '(press a number to see that step’s output)\n' : ''
@@ -643,7 +643,7 @@ export async function run(
           activeController.foreground();
           ui.stdout.write(
             (fmt) =>
-              fmt`\n\n🧵 {emphasis note:} sewing-kit has restored the output for {info ${task.step.label}}.\n{subdued press <escape> to return to the list of all active steps}\n\n`,
+              fmt`\n\n🧵 {emphasis note:} loom has restored the output for {info ${task.step.label}}.\n{subdued press <escape> to return to the list of all active steps}\n\n`,
           );
         }
       },
@@ -907,7 +907,7 @@ function createStepDebugLog(
 }
 
 function isCoreId(id: string) {
-  return id.startsWith('SewingKit.');
+  return id.startsWith('Loom.');
 }
 
 function label(text: string): Loggable {
@@ -921,7 +921,7 @@ function createStepDebugSourceLog(
   const source = steps.getSource(step);
 
   if (source == null)
-    return (fmt) => fmt`created by Sewing Kit {subdued (can’t be skipped)}`;
+    return (fmt) => fmt`created by Loom {subdued (can’t be skipped)}`;
 
   const stack = [
     source.id,

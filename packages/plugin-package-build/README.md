@@ -10,7 +10,7 @@ $ yarn add @sewing-kit/plugin-package-build --dev
 
 ## Usage
 
-Add `packageBuild` to your sewing-kit plugins.
+Add `packageBuild` to your loom plugins.
 
 ```js
 import {createPackage, Runtime} from '@sewing-kit/core';

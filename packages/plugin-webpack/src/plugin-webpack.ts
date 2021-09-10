@@ -115,7 +115,7 @@ declare module '@sewing-kit/core' {
   interface BuildServiceCustomContext extends WebpackProjectContext<Service> {}
 }
 
-const PLUGIN = 'SewingKit.Webpack';
+const PLUGIN = 'Loom.Webpack';
 
 const addWebpackHooks = addHooks<WebpackHooks>(() => ({
   webpackCachePath: new WaterfallHook(),

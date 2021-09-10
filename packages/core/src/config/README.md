@@ -1,16 +1,16 @@
 # `config`
 
-This folder provides a number functions to create sewing-kit configs. These functions can be used to create a config for a given `Project` or `Workspace`.
+This folder provides a number functions to create loom configs. These functions can be used to create a config for a given `Project` or `Workspace`.
 
-A sewing-kit config (`loom.config.ts`) file is required in the root folder of each `Project` or `Workspace`.
+A loom config (`loom.config.ts`) file is required in the root folder of each `Project` or `Workspace`.
 
 ## API
 
-The bulk of a sewing-kit config consists of configuring sewing-kit plugins. Default plugins are provided within the `@sewing-kit/*` ecosystem, or consumers can create their own plugin to define their custom configuration.
+The bulk of a loom config consists of configuring loom plugins. Default plugins are provided within the `@sewing-kit/*` ecosystem, or consumers can create their own plugin to define their custom configuration.
 
 ### `createWorkspace`
 
-Use `createWorkspace` in a `loom.config.ts` file to define a workspace. The following config file defines the sewing-kit workspace itself. A workspace that uses eslint, jest, and TypeScript.
+Use `createWorkspace` in a `loom.config.ts` file to define a workspace. The following config file defines the loom workspace itself. A workspace that uses eslint, jest, and TypeScript.
 
 ```js
 // loom.config.ts
@@ -28,7 +28,7 @@ export default createWorkspace((workspace) => {
 
 ### `createPackage`
 
-Use `createPackage` in a `loom.config.ts` file to define a package in the workspace. Sewing-kit itself uses this to define its own packages as follows:
+Use `createPackage` in a `loom.config.ts` file to define a package in the workspace. Loom itself uses this to define its own packages as follows:
 
 ```js
 // packages/some-package
@@ -56,7 +56,7 @@ import {createWebApp} from '@sewing-kit/core';
 import {myPlugins} from '../../config/my-plugins';
 
 export default createWebApp((app) => {
-  // tell sewing-kit the entry into the app
+  // tell loom the entry into the app
   app.entry('./index');
 
   // apply your preferred plugins for your app
@@ -67,7 +67,7 @@ export default createWebApp((app) => {
 
 ### `createService`
 
-Use `createService` in a `loom.config.ts` file to define a service in the workspace. In the context of sewing-kit, a service refers to a Node.js server.
+Use `createService` in a `loom.config.ts` file to define a service in the workspace. In the context of loom, a service refers to a Node.js server.
 
 ```js
 // server/loom.config.ts
@@ -75,7 +75,7 @@ Use `createService` in a `loom.config.ts` file to define a service in the worksp
 import {createService} from '@sewing-kit/core';
 
 export default createWebApp((app) => {
-  // tell sewing-kit the entry into the server
+  // tell loom the entry into the server
   app.entry('./server');
 });
 ```

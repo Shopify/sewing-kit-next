@@ -23,7 +23,7 @@ declare module '@sewing-kit/core' {
   interface LintWorkspaceConfigurationCustomHooks extends PrettierHooks {}
 }
 
-const PLUGIN = 'SewingKit.Prettier';
+const PLUGIN = 'Loom.Prettier';
 
 export function prettier({files = '.'} = {}) {
   return createWorkspaceLintPlugin(PLUGIN, ({hooks, options, api}) => {
@@ -63,7 +63,7 @@ export function prettier({files = '.'} = {}) {
               throw new DiagnosticError({
                 title: 'Prettier failed because no files were found to lint',
                 suggestion: (fmt) =>
-                  fmt`Add at least one file to lint. Alternatively, you can remove the prettier plugin, or pass the {code --allow-empty} flag to the {code sewing-kit lint} command.`,
+                  fmt`Add at least one file to lint. Alternatively, you can remove the prettier plugin, or pass the {code --allow-empty} flag to the {code loom lint} command.`,
               });
             }
 
