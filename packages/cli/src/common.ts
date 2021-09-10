@@ -301,7 +301,7 @@ export function logError(error: any, log: Log) {
   } else {
     log(
       (fmt) =>
-        fmt`🧵 The following unexpected error occurred. We want to provide more useful suggestions when errors occur, so please open an issue on {link the sewing-kit repo https://github.com/Shopify/sewing-kit} so that we can improve this message.`,
+        fmt`🧵 The following unexpected error occurred. We want to provide more useful suggestions when errors occur, so please open an issue on {link the sewing-kit repo https://github.com/Shopify/loom} so that we can improve this message.`,
     );
 
     if (error.all != null) {
