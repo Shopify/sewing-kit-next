@@ -9,6 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Breaking Change
 
+- Renamed package from `@sewing-kit/cli` to `@shopify/loom-cli`. [[#247](https://github.com/Shopify/loom/pull/247)]
 - The excutable for using the package has been renamed. The `sewing-kit` and `skn` binaries have been removed and replaced with `loom`. [[#246](https://github.com/Shopify/loom/pull/246)]
 
 ## 0.6.4 - 2021-09-09

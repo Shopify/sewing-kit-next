@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Breaking Change
+
+- Renamed package from `@sewing-kit/plugin-build-library` to `@shopify/loom-plugin-build-library`. [[#247](https://github.com/Shopify/loom/pull/247)]
 
 ## 0.2.0 - 2021-09-09
 

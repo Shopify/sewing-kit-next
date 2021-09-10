@@ -9,8 +9,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Breaking Change
 
-- The config file name has been renamed. The `sewing-kit.config.*` has been removed replaced with reading config from `loom.config.*`. You must rename your config files. [[#246](https://github.com/Shopify/loom/pull/246)]
-- The metadata directory has been renamed. The `.sewing-kit` directory has been replaced with `.loom`. You must update any .gitignore etc files. [[#246](https://github.com/Shopify/loom/pull/246)]
+- Renamed package from `@sewing-kit/core` to `@shopify/loom`. [[#247](https://github.com/Shopify/loom/pull/247)]
+- The config file name has been renamed. Loading config from `sewing-kit.config.*` has been removed and replaced with reading config from `loom.config.*`. You must rename your config files. [[#246](https://github.com/Shopify/loom/pull/246)]
+- The metadata directory has been renamed. The `.sewing-kit` directory has been replaced with `.loom`. You must update any `.gitignore` etc files. [[#246](https://github.com/Shopify/loom/pull/246)]
 
 ## 0.6.4 - 2021-09-09
 
