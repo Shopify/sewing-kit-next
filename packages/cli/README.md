@@ -1,6 +1,6 @@
 # `@sewing-kit/cli`
 
-The CLI for working with `sewing-kit-next`.
+The CLI for working with `loom`.
 
 These commands trigger the functionality imparted to your project by the plugins consumed in your `sewing-kit.config`s. The options will be passed to the plugins.
 

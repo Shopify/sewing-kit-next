@@ -1,7 +1,7 @@
 {
   "name": "@sewing-kit/cli",
   "license": "MIT",
-  "description": "The CLI for sewing-kit-next",
+  "description": "The CLI for loom",
   "version": "0.6.4",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,

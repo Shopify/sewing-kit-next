@@ -1,6 +1,6 @@
 # `@sewing-kit/plugin-build-library`
 
-Exposes two plugins (`buildLibrary`, `buildLibraryWorkspace`) for off-the-shelf library building within `sewing-kit-next`.
+Exposes two plugins (`buildLibrary`, `buildLibraryWorkspace`) for off-the-shelf library building within `loom`.
 
 ## Installation
 

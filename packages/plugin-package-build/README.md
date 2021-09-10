@@ -1,6 +1,6 @@
 # `@sewing-kit/plugin-package-build`
 
-Exposes a build step for generating package output, in commonjs, esmodules, and esnext formats. This is the build configuration used to build sewing-kit-next itself and provides a solid base for creating JS-only packages.
+Exposes a build step for generating package output, in commonjs, esmodules, and esnext formats. This is the build configuration used to build loom itself and provides a solid base for creating JS-only packages.
 
 ## Installation
 
