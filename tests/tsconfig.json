@@ -7,5 +7,5 @@
   },
 
   "include": ["../config/typescript/*", "./**/*"],
-  "references": [{"path": "../packages/cli"}]
+  "references": [{"path": "../packages/loom-cli"}]
 }

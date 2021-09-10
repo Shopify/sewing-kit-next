@@ -31,7 +31,7 @@ const BUILD_FROM_SOURCE_FILTER_RE = /^@shopify\/(loom|loom-cli)/;
 
   // Run esbuild and generate the CLI, which we shall then run
   await esbuild.build({
-    entryPoints: [resolve(root, 'packages/cli/src/cli.ts')],
+    entryPoints: [resolve(root, 'packages/loom-cli/src/cli.ts')],
     outfile: outFile,
     bundle: true,
     platform: 'node',

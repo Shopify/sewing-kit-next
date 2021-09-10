@@ -1,0 +1,49 @@
+{
+  "name": "@shopify/loom",
+  "license": "MIT",
+  "description": "The core data models for loom",
+  "version": "0.6.4",
+  "types": "./build/ts/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "config-load": [
+        "./build/ts/config-load.d.ts"
+      ]
+    }
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "@shopify:registry": "https://registry.npmjs.org"
+  },
+  "engines": {
+    "node": ">=12.14.0"
+  },
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/loom.git",
+    "directory": "packages/loom"
+  },
+  "bugs": {
+    "url": "https://github.com/Shopify/loom/issues"
+  },
+  "homepage": "https://github.com/Shopify/loom/blob/main/packages/loom/README.md",
+  "files": [
+    "build/",
+    "!build/*.tsbuildinfo",
+    "!build/ts/**/tests/",
+    "index.js",
+    "config-load.js"
+  ],
+  "dependencies": {
+    "@babel/preset-env": "^7.14.5",
+    "@babel/preset-typescript": "^7.14.5",
+    "@babel/register": "^7.14.5",
+    "@types/fs-extra": "^9.0.0",
+    "@types/glob": "^7.1.1",
+    "change-case": "^4.1.0",
+    "fs-extra": "^9.0.0",
+    "glob": "^7.1.6"
+  }
+}

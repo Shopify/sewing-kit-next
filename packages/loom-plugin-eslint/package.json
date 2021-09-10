@@ -1,0 +1,35 @@
+{
+  "name": "@shopify/loom-plugin-eslint",
+  "license": "MIT",
+  "description": "loom plugin for linting with eslint",
+  "version": "0.4.4",
+  "types": "./build/ts/index.d.ts",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "@shopify:registry": "https://registry.npmjs.org"
+  },
+  "engines": {
+    "node": ">=12.14.0"
+  },
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/loom.git",
+    "directory": "packages/loom-plugin-eslint"
+  },
+  "bugs": {
+    "url": "https://github.com/Shopify/loom/issues"
+  },
+  "homepage": "https://github.com/Shopify/loom/blob/main/packages/loom-plugin-eslint/README.md",
+  "files": [
+    "build/",
+    "!build/*.tsbuildinfo",
+    "!build/ts/**/tests/",
+    "index.js"
+  ],
+  "dependencies": {
+    "@shopify/loom": "^0.6.4",
+    "eslint": "^7.0.0"
+  }
+}
