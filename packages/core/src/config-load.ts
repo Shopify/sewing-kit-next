@@ -71,7 +71,7 @@ export async function loadWorkspace(root: string): Promise<LoadedWorkspace> {
   >();
   const pluginParents = new WeakMap<AnyPlugin, AnyPlugin>();
 
-  const configFiles = glob('**/sewing-{kit,kit-next}.config.*', {
+  const configFiles = glob('**/loom.config.*', {
     cwd: root as string,
     ignore: ['**/node_modules/**', `${root}/**/build/**`],
     absolute: true,

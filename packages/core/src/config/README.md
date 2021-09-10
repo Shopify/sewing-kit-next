@@ -2,7 +2,7 @@
 
 This folder provides a number functions to create sewing-kit configs. These functions can be used to create a config for a given `Project` or `Workspace`.
 
-A sewing-kit config (`sewing-kit.config.ts`) file is required in the root folder of each `Project` or `Workspace`.
+A sewing-kit config (`loom.config.ts`) file is required in the root folder of each `Project` or `Workspace`.
 
 ## API
 
@@ -10,10 +10,10 @@ The bulk of a sewing-kit config consists of configuring sewing-kit plugins. Defa
 
 ### `createWorkspace`
 
-Use `createWorkspace` in a `sewing-kit.config.ts` file to define a workspace. The following config file defines the sewing-kit workspace itself. A workspace that uses eslint, jest, and TypeScript.
+Use `createWorkspace` in a `loom.config.ts` file to define a workspace. The following config file defines the sewing-kit workspace itself. A workspace that uses eslint, jest, and TypeScript.
 
 ```js
-// sewing-kit.config.ts
+// loom.config.ts
 
 import {createWorkspace} from '@sewing-kit/core';
 
@@ -28,20 +28,20 @@ export default createWorkspace((workspace) => {
 
 ### `createPackage`
 
-Use `createPackage` in a `sewing-kit.config.ts` file to define a package in the workspace. Sewing-kit itself uses this to define its own packages as follows:
+Use `createPackage` in a `loom.config.ts` file to define a package in the workspace. Sewing-kit itself uses this to define its own packages as follows:
 
 ```js
 // packages/some-package
 
 import {createPackage, Runtime} from '@sewing-kit/core';
-import {createSewingKitPackagePlugin} from '../../config/sewing-kit';
+import {createLoomPackagePlugin} from '../../config/loom';
 
 export default createPackage((pkg) => {
-  // tells sewing-kit that we're building a Node.js package
+  // tells loom that we're building a Node.js package
   pkg.runtime(Runtime.Node);
 
-  // tell sewing-kit what kind of build outputs you want available
-  pkg.use(createSewingKitPackagePlugin());
+  // tell loom what kind of build outputs you want available
+  pkg.use(createLoomPackagePlugin());
 });
 ```
 
@@ -50,7 +50,7 @@ export default createPackage((pkg) => {
 `createWebApp` is used to create a web application within a given `Workspace`. Generally speaking, this would be a React app.
 
 ```js
-// app/ui/sewing-kit.config.ts
+// app/ui/loom.config.ts
 
 import {createWebApp} from '@sewing-kit/core';
 import {myPlugins} from '../../config/my-plugins';
@@ -67,10 +67,10 @@ export default createWebApp((app) => {
 
 ### `createService`
 
-Use `createService` in a `sewing-kit.config.ts` file to define a service in the workspace. In the context of sewing-kit, a service refers to a Node.js server.
+Use `createService` in a `loom.config.ts` file to define a service in the workspace. In the context of sewing-kit, a service refers to a Node.js server.
 
 ```js
-// server/sewing-kit.config.ts
+// server/loom.config.ts
 
 import {createService} from '@sewing-kit/core';
 

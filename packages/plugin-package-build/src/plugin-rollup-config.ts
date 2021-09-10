@@ -56,7 +56,7 @@ export function rollupConfig(options: RollupConfigOptions) {
             if (inputEntries.length === 0) {
               throw new DiagnosticError({
                 title: `No inputs found for "${project.name}".`,
-                suggestion: `Set a pkg.entry() in your sewing-kit.config. Use 'pkg.entry({root: './src/index'})" to use the index file`,
+                suggestion: `Set a pkg.entry() in your loom.config. Use 'pkg.entry({root: './src/index'})" to use the index file`,
               });
             }
 
@@ -82,7 +82,7 @@ export function rollupConfig(options: RollupConfigOptions) {
             if (babelTargets.length === 0) {
               throw new DiagnosticError({
                 title: `No targets found for "${project.name}".`,
-                suggestion: `Set a pkg.runtime() in your sewing-kit.config. Use "pkg.runtime(Runtime.Node)" for a node-only package. Use "pkg.runtime(Runtime.Node, Runtime.Browser)" for an isomorphic package that can be ran in node and the browser`,
+                suggestion: `Set a pkg.runtime() in your loom.config. Use "pkg.runtime(Runtime.Node)" for a node-only package. Use "pkg.runtime(Runtime.Node, Runtime.Browser)" for an isomorphic package that can be ran in node and the browser`,
               });
             }
 

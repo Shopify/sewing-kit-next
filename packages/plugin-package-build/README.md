@@ -60,7 +60,7 @@ By default, entrypoint files are written to the root of your package that corres
 
 When creating a package with a single entrypoint, you can set `rootEntrypoints: true` to not write any root entrypoints, and point fields in your package.json to the contents of the build folder.
 
-Given a `sewing-kit.config.js` file that contains:
+Given a `loom.config.js` file that contains:
 
 ```js
 export default createPackage((pkg) => {
@@ -89,7 +89,7 @@ In the `package.json` add the following `main` (for commonjs output), `module` (
 
 If you have multiple entrypoints then you should leave `rootEntrypoints: true` to generate entrypoints at the root. This is a slightly flawed approach as only commonjs content for the additional entrypoints is supported, but is the best that we can do give current support.
 
-Given a `sewing-kit.config.js` file that contains:
+Given a `loom.config.js` file that contains:
 
 ```js
 export default createPackage((pkg) => {

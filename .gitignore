@@ -14,5 +14,5 @@ packages/*/*.esnext
 packages/*/*.node
 packages/*/*.ts
 packages/*/*.mjs
-!packages/*/sewing-kit.config.ts
+!packages/*/loom.config.ts
 .DS_Store

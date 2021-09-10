@@ -12,7 +12,7 @@ The `@sewing-kit` monorepo provides a suite of ready-made plugins for common use
 
 ## Example
 
-Below is an example `sewing-kit.config.ts` that sets up a `sewing-kit` workspace to lint with ESLint, test with Jest, and type-check with TypeScript. It also includes a custom plugin made with `createWorkspaceTestPlugin` that taps into the `jestConfig` hook introduced by the `jest` plugin to specify a coverage directory.
+Below is an example `loom.config.ts` that sets up a `sewing-kit` workspace to lint with ESLint, test with Jest, and type-check with TypeScript. It also includes a custom plugin made with `createWorkspaceTestPlugin` that taps into the `jestConfig` hook introduced by the `jest` plugin to specify a coverage directory.
 
 ```js
 import {createWorkspace} from '@sewing-kit/core';

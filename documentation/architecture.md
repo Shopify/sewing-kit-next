@@ -39,7 +39,7 @@ This directory defines most of the core types for sewing-kit. Of particular note
 
 ### `config`
 
-The config directory provides the utilities for loading and validating `sewing-kit.config` files. It also provides the APIs which config files use to declare configuration in a clean, type-safe way. Any single sewing kit config can be authored with one of the following provided functions: `createWorkspace`, `createPackage`, `createWebApp` or `createService`.
+The config directory provides the utilities for loading and validating `loom.config` files. It also provides the APIs which config files use to declare configuration in a clean, type-safe way. Any single sewing kit config can be authored with one of the following provided functions: `createWorkspace`, `createPackage`, `createWebApp` or `createService`.
 
 ## `@sewing-kit/cli`
 
