@@ -7,7 +7,7 @@ bin
 tmp
 ~
 yarn-error.log
-.sewing-kit
+.loom
 packages/*/*.js
 !packages/*/.eslintrc.js
 packages/*/*.esnext

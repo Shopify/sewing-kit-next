@@ -163,7 +163,7 @@ function createPluginApi(
   {steps, workspace}: TaskContext,
 ): PluginApi {
   const resolvePath: PluginApi['resolvePath'] = (...parts) =>
-    workspace.fs.resolvePath('.sewing-kit', ...parts);
+    workspace.fs.resolvePath('.loom', ...parts);
 
   return {
     createStep,

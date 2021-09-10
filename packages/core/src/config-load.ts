@@ -46,7 +46,7 @@ const legacySewingKitPlugins = [
 const IS_TSX = /.tsx?$/;
 const IS_MJS = /.mjs$/;
 
-const IGNORE_FOLDERS = ['node_modules', '.sewing-kit'];
+const IGNORE_FOLDERS = ['node_modules', '.loom'];
 
 export interface LoadedWorkspace {
   readonly workspace: Workspace;

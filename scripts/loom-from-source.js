@@ -7,7 +7,7 @@ const esbuild = require('esbuild');
 const jsResolve = require('resolve');
 
 const root = resolve(__dirname, '..');
-const outFile = resolve(root, '.sewing-kit/internal/cli.js');
+const outFile = resolve(root, '.loom/internal/cli.js');
 
 const CUSTOM_ENTRIES = new Map([['core', ['index', 'config-load']]]);
 
