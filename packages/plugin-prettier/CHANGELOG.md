@@ -23,10 +23,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/sewing-kit-next/pull/217)]
+- Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/loom/pull/217)]
 
 ## 0.1.0 - 2021-07-07
 
 ### Changed
 
-- Added plugin-prettier [[#201](https://github.com/Shopify/sewing-kit-next/pull/201)]
+- Added plugin-prettier [[#201](https://github.com/Shopify/loom/pull/201)]

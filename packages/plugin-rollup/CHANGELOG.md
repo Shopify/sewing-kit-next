@@ -23,19 +23,19 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/sewing-kit-next/pull/217)]
+- Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/loom/pull/217)]
 
 ## 0.3.1 - 2021-07-07
 
 ### Changed
 
-- Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/sewing-kit-next/pull/210)]
+- Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/loom/pull/210)]
 
 ## 0.3.0 - 2021-06-25
 
 ### Changed
 
-- Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]
+- Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/loom/pull/177)]
 
 ## 0.2.3 - 2021-06-18
 
@@ -49,7 +49,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- `rollupHooks()` now adds hooks to the `dev` task in addition to `build` [[#171](https://github.com/Shopify/sewing-kit-next/pull/171)]
+- `rollupHooks()` now adds hooks to the `dev` task in addition to `build` [[#171](https://github.com/Shopify/loom/pull/171)]
 
 ## 0.2.0 - 2021-05-20
 

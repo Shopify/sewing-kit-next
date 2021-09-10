@@ -23,32 +23,32 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Breaking Change
 
-- Load babel config from `plugin-babel` instead of `plugin-javascript`. [[#218](https://github.com/Shopify/sewing-kit-next/pull/218)]
+- Load babel config from `plugin-babel` instead of `plugin-javascript`. [[#218](https://github.com/Shopify/loom/pull/218)]
 
 ### Changed
 
 - Support typescript files (`ts`/`tsx`) by default.
-- Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/sewing-kit-next/pull/217)]
+- Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/loom/pull/217)]
 
 ## 0.4.1 - 2021-07-07
 
 ### Changed
 
-- Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/sewing-kit-next/pull/210)]
+- Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/loom/pull/210)]
 
 ## 0.4.0 - 2021-06-25
 
 ### Changed
 
-- Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]
-- Add `jestTestRunner` hook to allow for easily overriding Jest's [`testRunner`](https://jestjs.io/docs/configuration#testrunner-string) option [[#198](https://github.com/Shopify/sewing-kit-next/pull/198)]
+- Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/loom/pull/177)]
+- Add `jestTestRunner` hook to allow for easily overriding Jest's [`testRunner`](https://jestjs.io/docs/configuration#testrunner-string) option [[#198](https://github.com/Shopify/loom/pull/198)]
 
 ## 0.3.0 - 2021-06-18
 
 ### Changed
 
-- Update `jest` to version `27` [[#193](https://github.com/Shopify/sewing-kit-next/pull/193/)]
-- Add `@sewing-kit/hooks` as a dependency [[#187](https://github.com/Shopify/sewing-kit-next/pull/187)]
+- Update `jest` to version `27` [[#193](https://github.com/Shopify/loom/pull/193/)]
+- Add `@sewing-kit/hooks` as a dependency [[#187](https://github.com/Shopify/loom/pull/187)]
 
 ## 0.2.1 - 2021-05-28
 
@@ -58,17 +58,17 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Breaking Change
 
-- Update minimum supported node version to 12.14.0. Add engines field to help enforce usage of this version. [[#170](https://github.com/Shopify/sewing-kit-next/pull/170)]
+- Update minimum supported node version to 12.14.0. Add engines field to help enforce usage of this version. [[#170](https://github.com/Shopify/loom/pull/170)]
 
 ### Changed
 
-- Updated Jest dependency to latest - v26.6.3 [[#152](https://github.com/Shopify/sewing-kit-next/pull/152)]
+- Updated Jest dependency to latest - v26.6.3 [[#152](https://github.com/Shopify/loom/pull/152)]
 
 ## 0.1.27 - 2021-04-21
 
 ### Fixed
 
-- Use explicit type imports for configuration hooks [[#144](https://github.com/Shopify/sewing-kit-next/pull/144/files)
+- Use explicit type imports for configuration hooks [[#144](https://github.com/Shopify/loom/pull/144/files)
 
 ## 0.1.26 - 2021-04-14
 
@@ -78,7 +78,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Change `optionalDependencies` to `peerDependencies [[#125](https://github.com/Shopify/sewing-kit-next/pull/125/files)]
+- Change `optionalDependencies` to `peerDependencies [[#125](https://github.com/Shopify/loom/pull/125/files)]
 
 ## 0.1.24 - 2021-04-06
 

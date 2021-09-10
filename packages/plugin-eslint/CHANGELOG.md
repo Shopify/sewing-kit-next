@@ -23,37 +23,37 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/sewing-kit-next/pull/217)]
+- Removed js output from `build/ts` folder. [[#217](https://github.com/Shopify/loom/pull/217)]
 
 ## 0.4.0 - 2021-07-07
 
 ### Breaking Change
 
-- Added the ability to pass in a `files` option into the plugin. [[#208](https://github.com/Shopify/sewing-kit-next/pull/208)]
-- Removed the `ESLintFlags` and `ESLintHooks` exports. [[#208](https://github.com/Shopify/sewing-kit-next/pull/208)]
+- Added the ability to pass in a `files` option into the plugin. [[#208](https://github.com/Shopify/loom/pull/208)]
+- Removed the `ESLintFlags` and `ESLintHooks` exports. [[#208](https://github.com/Shopify/loom/pull/208)]
 
 ### Changed
 
-- Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/sewing-kit-next/pull/210)]
+- Reworked how types are exposed to avoid root-level `.d.ts` files. [[#210](https://github.com/Shopify/loom/pull/210)]
 
 ## 0.3.0 - 2021-06-25
 
 ### Changed
 
-- Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/sewing-kit-next/pull/177)]
-- Removed `eslintExtensions` hook. ESLint lints files with extensions other than `.js` if they are specified in the lint configs's `overrides` section, so we don't need to control the list of extensions on the command line. [[#199](https://github.com/Shopify/sewing-kit-next/pull/199)]
+- Added package metadata and limit files included in packages. Ensure `*.tsbuildinfo` files are absent to greatly shink package size. [[#177](https://github.com/Shopify/loom/pull/177)]
+- Removed `eslintExtensions` hook. ESLint lints files with extensions other than `.js` if they are specified in the lint configs's `overrides` section, so we don't need to control the list of extensions on the command line. [[#199](https://github.com/Shopify/loom/pull/199)]
 
 ## 0.2.1 - 2021-06-18
 
 ### Changed
 
-- Removed dependency on `@sewing-kit/config` as it is not used [[#187](https://github.com/Shopify/sewing-kit-next/pull/187)]
+- Removed dependency on `@sewing-kit/config` as it is not used [[#187](https://github.com/Shopify/loom/pull/187)]
 
 ## 0.2.0 - 2021-05-20
 
 ### Breaking Change
 
-- Update minimum supported node version to 12.14.0. Add engines field to help enforce usage of this version. [[#170](https://github.com/Shopify/sewing-kit-next/pull/170)]
+- Update minimum supported node version to 12.14.0. Add engines field to help enforce usage of this version. [[#170](https://github.com/Shopify/loom/pull/170)]
 
 ## 0.1.11 - 2021-04-14
 
