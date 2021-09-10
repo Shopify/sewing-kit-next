@@ -5,10 +5,6 @@ import {createSewingKitPackagePlugin} from '../../config/sewing-kit';
 export default createPackage((pkg) => {
   pkg.runtime(Runtime.Node);
   pkg.entry({root: './src/index'});
-  pkg.binary({
-    name: 'sewing-kit-next',
-    root: './src/cli',
-    aliases: ['skn'],
-  });
+  pkg.binary({name: 'loom', root: './src/cli'});
   pkg.use(createSewingKitPackagePlugin());
 });

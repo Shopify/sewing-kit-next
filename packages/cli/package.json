@@ -23,8 +23,7 @@
   },
   "homepage": "https://github.com/Shopify/loom/blob/main/packages/cli/README.md",
   "bin": {
-    "sewing-kit-next": "./bin/sewing-kit-next",
-    "skn": "./bin/skn"
+    "loom": "./bin/loom"
   },
   "files": [
     "bin/",

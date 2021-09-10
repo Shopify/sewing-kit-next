@@ -69,4 +69,4 @@ createWorkspaceTestPlugin('CustomPlugin', ({hooks}) => {
 });
 ```
 
-When you run `sk test`, `sewing-kit` will pick up your configs and plugins and run Jest with your specified option/config values.
+When you run `loom test`, `loom` will pick up your configs and plugins and run Jest with your specified option/config values.

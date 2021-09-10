@@ -13,9 +13,7 @@ yarn add @sewing-kit/cli --dev
 ## Usage
 
 ```sh
-yarn sewing-kit-next <command> <options>
-# or...
-yarn sk <command> <options>
+yarn loom <command> <options>
 ```
 
 ## Commands
