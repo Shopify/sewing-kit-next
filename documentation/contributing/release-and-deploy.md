@@ -33,7 +33,7 @@ dev open pr
 
 5. Get your PR reviewed, approved, and merged
 
-6. After merging your release open the [Shipit stack](https://shipit.shopify.io/shopify/sewing-kit-next/production) and click "Deploy" on the previous merged "Publish release" PR.
+6. After merging your release open the [Shipit stack](https://shipit.shopify.io/shopify/loom/production) and click "Deploy" on the previous merged "Publish release" PR.
 
 ## Running a beta release for 🎩ing
 
