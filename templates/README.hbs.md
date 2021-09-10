@@ -1,11 +1,11 @@
-# `@sewing-kit/{{name}}`
+# `@shopify/{{name}}`
 
 {{{description}}}.
 
 ## Installation
 
 ```bash
-$ yarn add @sewing-kit/{{name}}
+$ yarn add @shopify/{{name}}
 ```
 
 ## Usage

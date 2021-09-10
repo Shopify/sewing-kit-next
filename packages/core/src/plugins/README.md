@@ -8,7 +8,7 @@ _For a more in-depth explanation of plugins and the philosophy behind them, chec
 
 In `loom`, plugins are the things that actually "do" stuff. They piggyback off the architecture provided by `loom`'s core (i.e. [hooks](../hooks)) to inject actual actions into your workspace's tasks.
 
-The `@sewing-kit` monorepo provides a suite of ready-made plugins for common use cases, like [type-checking with TypeScript](../../../plugin-typescript), [transpiling with Babel](../../../plugin-babel), and [testing with Jest](../../../plugin-jest). However, using `loom`'s API you're able (and encouraged) to write your own to fit your specific needs.
+The Loom monorepo provides a suite of ready-made plugins for common use cases, like [type-checking with TypeScript](../../../plugin-typescript), [transpiling with Babel](../../../plugin-babel), and [testing with Jest](../../../plugin-jest). However, using `loom`'s API you're able (and encouraged) to write your own to fit your specific needs.
 
 ## Example
 

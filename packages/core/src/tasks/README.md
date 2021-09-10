@@ -19,4 +19,4 @@ Tasks are what `loom` runs against your codebase to perform a variety of things,
   - Running a develoment server (`DevProjectTask`)
   - Testing (`TestProjectTask`)
 
-A task (e.g. `build`, `dev`, `test`) is made up of options and [hooks](../hooks/README.md). Options exist to configure the task, and can be passed in through [`loom`'s CLI](../../../cli/README.md) and propagated through the hooks to relevant plugins. Tasks' hooks expose a way for plugins (either `@sewing-kit`'s or your own) to tap into and customize and define `loom`'s behaviour.
+A task (e.g. `build`, `dev`, `test`) is made up of options and [hooks](../hooks/README.md). Options exist to configure the task, and can be passed in through [`loom`'s CLI](../../../cli/README.md) and propagated through the hooks to relevant plugins. Tasks' hooks expose a way for plugins (either from within this repo or your own) to tap into and customize and define `loom`'s behaviour.

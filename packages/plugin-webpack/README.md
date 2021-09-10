@@ -1,4 +1,4 @@
-# `@sewing-kit/plugin-webpack`
+# `@shopify/loom-plugin-webpack`
 
 ## Notes from porting sewing-kit
 

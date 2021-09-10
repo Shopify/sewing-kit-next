@@ -6,7 +6,7 @@ A loom config (`loom.config.ts`) file is required in the root folder of each `Pr
 
 ## API
 
-The bulk of a loom config consists of configuring loom plugins. Default plugins are provided within the `@sewing-kit/*` ecosystem, or consumers can create their own plugin to define their custom configuration.
+The bulk of a loom config consists of configuring loom plugins. Default plugins are provided within the `@shopify/loom-plugin-*` ecosystem, or consumers can create their own plugin to define their custom configuration.
 
 ### `createWorkspace`
 

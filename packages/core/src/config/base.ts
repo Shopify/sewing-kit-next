@@ -73,7 +73,7 @@ export class BaseBuilder<
         throw new DiagnosticError({
           title: 'Invalid configuration file',
           content: 'The configuration contains invalid plugins',
-          suggestion: `Make sure that all plugins included in the configuration file were generated using the utilities from @sewing-kit/plugin. If this is the case, you may have duplicate versions of some @sewing-kit dependencies. Resolve any duplicate versions and try your command again.`,
+          suggestion: `Make sure that all plugins included in the configuration file were generated using the utilities from @shopify/loom. If this is the case, you may have duplicate versions of some loom dependencies. Resolve any duplicate versions and try your command again.`,
         });
       }
 
