@@ -1,5 +1,5 @@
 {
-  "name": "@sewing-kit/{{name}}",
+  "name": "@shopify/{{name}}",
   "version": "0.0.0",
   "license": "MIT",
   "description": "{{description}}",
@@ -7,7 +7,7 @@
   "sideEffects": false,
   "publishConfig": {
     "access": "public",
-    "@sewing-kit:registry": "https://registry.npmjs.org"
+    "@shopify:registry": "https://registry.npmjs.org"
   },
   "engines": {
     "node": ">=12.14.0"

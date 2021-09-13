@@ -139,7 +139,7 @@ function getPackages() {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       const {name, description} = require(packageJSONPath);
 
-      acc.push({name: name.replace('@sewing-kit/', ''), description});
+      acc.push({name: name.replace('@shopify/', ''), description});
     }
 
     return acc;
@@ -149,9 +149,8 @@ function getPackages() {
 function validatePackageName(name) {
   return (
     /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/g.test(
-      `@sewing-kit/${name}`,
-    ) ||
-    `Your package name (@sewing-kit/${name}) does not confirm to npm rules!`
+      `@shopify/${name}`,
+    ) || `Your package name (@shopify/${name}) does not confirm to npm rules!`
   );
 }
 

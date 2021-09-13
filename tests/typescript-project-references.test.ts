@@ -70,7 +70,7 @@ describe('typescript project references', () => {
 });
 
 function prefixPackageName(packageName: string) {
-  return `@sewing-kit/${packageName}`;
+  return `@shopify/${packageName}`;
 }
 
 function resolvePackageJSONFile(packageName: string, file: string) {

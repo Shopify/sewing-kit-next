@@ -12,7 +12,7 @@ const outFile = resolve(root, '.loom/internal/cli.js');
 const CUSTOM_ENTRIES = new Map([['core', ['index', 'config-load']]]);
 
 const NON_RELATIVE_IMPORTS_FILTER_RE = /^[^./]|^\.[^./]|^\.\.[^/]/;
-const BUILD_FROM_SOURCE_FILTER_RE = /^@sewing-kit\/(core|cli)/;
+const BUILD_FROM_SOURCE_FILTER_RE = /^@shopify\/(loom|loom-cli)/;
 
 (async () => {
   // Replace entrypoints with custom file that points to the src folder
@@ -31,7 +31,7 @@ const BUILD_FROM_SOURCE_FILTER_RE = /^@sewing-kit\/(core|cli)/;
 
   // Run esbuild and generate the CLI, which we shall then run
   await esbuild.build({
-    entryPoints: [resolve(root, 'packages/cli/src/cli.ts')],
+    entryPoints: [resolve(root, 'packages/loom-cli/src/cli.ts')],
     outfile: outFile,
     bundle: true,
     platform: 'node',

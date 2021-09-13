@@ -1,8 +1,8 @@
-import {createWorkspace, createWorkspaceTestPlugin} from '@sewing-kit/core';
-import {eslint} from '@sewing-kit/plugin-eslint';
-import {prettier} from '@sewing-kit/plugin-prettier';
-import {jest} from '@sewing-kit/plugin-jest';
-import {workspaceTypeScript} from '@sewing-kit/plugin-typescript';
+import {createWorkspace, createWorkspaceTestPlugin} from '@shopify/loom';
+import {eslint} from '@shopify/loom-plugin-eslint';
+import {prettier} from '@shopify/loom-plugin-prettier';
+import {jest} from '@shopify/loom-plugin-jest';
+import {workspaceTypeScript} from '@shopify/loom-plugin-typescript';
 
 export default createWorkspace((workspace) => {
   workspace.use(

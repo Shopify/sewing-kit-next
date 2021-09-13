@@ -1,0 +1,44 @@
+{
+  "name": "@shopify/loom-plugin-babel",
+  "license": "MIT",
+  "description": "loom technology plugin for babel",
+  "version": "0.2.0",
+  "types": "./build/ts/index.d.ts",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "@shopify:registry": "https://registry.npmjs.org"
+  },
+  "engines": {
+    "node": ">=12.14.0"
+  },
+  "author": "Shopify Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shopify/loom.git",
+    "directory": "packages/loom-plugin-babel"
+  },
+  "bugs": {
+    "url": "https://github.com/Shopify/loom/issues"
+  },
+  "homepage": "https://github.com/Shopify/loom/blob/main/packages/loom-plugin-babel/README.md",
+  "files": [
+    "build/",
+    "!build/*.tsbuildinfo",
+    "!build/ts/**/tests/",
+    "index.js"
+  ],
+  "dependencies": {
+    "@shopify/loom": "^0.6.4",
+    "@types/babel__core": "^7.1.7",
+    "core-js": "^3.14.0"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.14.6"
+  },
+  "peerDependenciesMeta": {
+    "@babel/core": {
+      "optional": true
+    }
+  }
+}

@@ -21,7 +21,7 @@
     "packages/*"
   ],
   "tophat": {
-    "namespace": "@sewing-kit",
+    "namespace": "@shopify",
     "buildDirectory": "build"
   },
   "devDependencies": {

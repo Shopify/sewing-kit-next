@@ -15,7 +15,9 @@ import toTree from 'tree-node-cli';
 
 const commandMap = {
   build: () =>
-    import('../../packages/cli/src/commands/build').then(({build}) => build),
+    import('../../packages/loom-cli/src/commands/build').then(
+      ({build}) => build,
+    ),
 };
 
 type CommandMap = typeof commandMap;

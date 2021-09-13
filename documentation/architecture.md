@@ -14,9 +14,9 @@ With this understanding in mind, we can translate these concepts into various Co
 
 ## Loom Core
 
-The contents of the `@sewing-kit/core` pacakge enables core loom orchestration. This package does not include any tool specific knowledge. Tool specific functionalities are enabled entirely through [Loom Plugins](./plugins.md)
+The contents of the `@shopify/loom` pacakge enables core loom orchestration. This package does not include any tool specific knowledge. Tool specific functionalities are enabled entirely through [Loom Plugins](./plugins.md)
 
-`@sewing-kit/core`'s source is split into 5 subdirectories:
+`@shopify/loom`'s source is split into 5 subdirectories:
 
 ### `core`
 
@@ -41,9 +41,9 @@ This directory defines most of the core types for loom. Of particular note, many
 
 The config directory provides the utilities for loading and validating `loom.config` files. It also provides the APIs which config files use to declare configuration in a clean, type-safe way. Any single Loom config can be authored with one of the following provided functions: `createWorkspace`, `createPackage`, `createWebApp` or `createService`.
 
-## `@sewing-kit/cli`
+## `@shopify/loom-cli`
 
-The CLI takes the task functions from `@sewing-kit/core` and embeds them in a CLI. Because `@sewing-kit/core` does most of the heavy lifting, this package is just a fairly simple layer that translates CLI arguments into options for the task functions to run.
+The CLI takes the task functions from `@shopify/loom` and embeds them in a CLI. Because `@shopify/loom` does most of the heavy lifting, this package is just a fairly simple layer that translates CLI arguments into options for the task functions to run.
 
 TODO (this was recently moved, `core` needs to change too):
 

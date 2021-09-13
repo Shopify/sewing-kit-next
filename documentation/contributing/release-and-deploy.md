@@ -46,7 +46,7 @@ dev open pr
 
 **Step 2 - consume the beta:**
 
-- Consume your package with `yarn add --dev @sewing-kit/{cli,core,<any-other-relevant-packages>}@0.0.10-my-feature-beta.1`
+- Consume your package with `yarn add --dev @shopify/{loom,loom-cli,<any-other-relevant-packages>}@0.0.10-my-feature-beta.1`
 - Run through commands that exercise your feature
 
 **Step 3 - delete your beta stack once you're done tophatting**
