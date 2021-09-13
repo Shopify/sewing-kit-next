@@ -2,7 +2,7 @@
   "name": "@shopify/loom",
   "license": "MIT",
   "description": "The core data models for loom",
-  "version": "0.6.4",
+  "version": "0.7.0",
   "types": "./build/ts/index.d.ts",
   "typesVersions": {
     "*": {

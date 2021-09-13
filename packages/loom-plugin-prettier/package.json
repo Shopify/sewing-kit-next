@@ -2,7 +2,7 @@
   "name": "@shopify/loom-plugin-prettier",
   "license": "MIT",
   "description": "loom plugin for linting with prettier",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
@@ -29,7 +29,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@shopify/loom": "^0.6.4",
+    "@shopify/loom": "^0.7.0",
     "prettier": "^2.0.0"
   }
 }

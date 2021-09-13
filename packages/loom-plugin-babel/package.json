@@ -2,7 +2,7 @@
   "name": "@shopify/loom-plugin-babel",
   "license": "MIT",
   "description": "loom technology plugin for babel",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
@@ -29,7 +29,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@shopify/loom": "^0.6.4",
+    "@shopify/loom": "^0.7.0",
     "@types/babel__core": "^7.1.7",
     "core-js": "^3.14.0"
   },

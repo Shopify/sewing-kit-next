@@ -2,7 +2,7 @@
   "name": "@shopify/loom-cli",
   "license": "MIT",
   "description": "The CLI for loom",
-  "version": "0.6.4",
+  "version": "0.7.0",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
@@ -33,7 +33,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@shopify/loom": "^0.6.4",
+    "@shopify/loom": "^0.7.0",
     "@types/signal-exit": "^3.0.0",
     "ansi-escapes": "^4.3.1",
     "arg": "^4.1.3",

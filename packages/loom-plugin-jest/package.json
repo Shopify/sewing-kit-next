@@ -2,7 +2,7 @@
   "name": "@shopify/loom-plugin-jest",
   "license": "MIT",
   "description": "loom plugin for testing with jest",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
@@ -29,7 +29,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@shopify/loom": "^0.6.4",
+    "@shopify/loom": "^0.7.0",
     "@types/jest": "^26.0.23",
     "babel-jest": "^27.0.2",
     "jest": "^27.0.4",

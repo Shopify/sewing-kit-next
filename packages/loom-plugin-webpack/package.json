@@ -2,7 +2,7 @@
   "name": "@shopify/loom-plugin-webpack",
   "license": "MIT",
   "description": "loom plugin for building with webpack",
-  "version": "0.3.5",
+  "version": "0.4.0",
   "types": "./build/ts/index.d.ts",
   "typesVersions": {
     "*": {
@@ -37,7 +37,7 @@
     "noop.js"
   ],
   "dependencies": {
-    "@shopify/loom": "^0.6.4",
+    "@shopify/loom": "^0.7.0",
     "@types/case-sensitive-paths-webpack-plugin": "^2.1.2",
     "@types/terser-webpack-plugin": "^2.2.0",
     "@types/webpack": "^4.41.12",

@@ -2,7 +2,7 @@
   "name": "@shopify/loom-plugin-typescript",
   "license": "MIT",
   "description": "loom technology plugin for typescript",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
@@ -29,7 +29,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@shopify/loom": "^0.6.4",
+    "@shopify/loom": "^0.7.0",
     "typescript": "^4.3.5"
   }
 }

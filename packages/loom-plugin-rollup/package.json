@@ -1,6 +1,6 @@
 {
   "name": "@shopify/loom-plugin-rollup",
-  "version": "0.3.5",
+  "version": "0.4.0",
   "license": "MIT",
   "description": "A loom plugin that runs rollup as a build step",
   "types": "./build/ts/index.d.ts",
@@ -29,7 +29,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@shopify/loom": "^0.6.4",
+    "@shopify/loom": "^0.7.0",
     "rollup": "^2.48.0"
   }
 }
