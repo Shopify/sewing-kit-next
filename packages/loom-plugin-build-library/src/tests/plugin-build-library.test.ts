@@ -64,6 +64,49 @@ function pkg(greet) {
     });
   });
 
+  it('builds only commmonjs outputs when esmodules/esnext are disabled', async () => {
+    await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+      await workspace.writeConfig(`
+        import {createPackage, Runtime} from '@shopify/loom';
+        import {babel} from '@shopify/loom-plugin-babel';
+        import {buildLibrary} from '@shopify/loom-plugin-build-library';
+        export default createPackage((pkg) => {
+          pkg.runtime(Runtime.Node);
+          pkg.use(
+            babel({config: {presets: ['@shopify/babel-preset']}}),
+            buildLibrary({
+              esmodules: false,
+              esnext: false,
+              browserTargets: 'chrome 88',
+              nodeTargets: 'node 12',
+            }),
+          );
+        });
+      `);
+
+      await workspace.writeFile(
+        'src/index.js',
+        `
+export function pkg(greet) {
+  console.log(\`Hello, \${greet}!\`);
+}
+        `,
+      );
+
+      await workspace.run('build');
+
+      // Build content
+      expect(await workspace.contains('build/cjs/index.js')).toBeTruthy();
+      expect(await workspace.contains('build/esm')).toBeFalsy();
+      expect(await workspace.contains('build/esnext')).toBeFalsy();
+
+      // Entrypoints
+      expect(await workspace.contains('index.js')).toBeTruthy();
+      expect(await workspace.contains('index.mjs')).toBeFalsy();
+      expect(await workspace.contains('index.esnext')).toBeFalsy();
+    });
+  });
+
   it('builds tsx files', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`

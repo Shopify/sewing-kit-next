@@ -11,25 +11,21 @@ import {rollupConfig} from './plugin-rollup-config';
 import {jestConfig} from './plugin-jest-config';
 import {generateGraphqlTypes} from './plugin-generate-graphql-types';
 
-interface BuildLibraryOptions {
-  browserTargets: string;
-  nodeTargets: string;
+type PackageBuildOptions = Parameters<typeof packageBuild>[0];
+
+type JestEnvironment = Parameters<typeof jestConfig>[0]['jestEnvironment'];
+
+interface BuildLibraryOptions extends PackageBuildOptions {
   readonly graphql?: boolean;
-  readonly jestEnvironment?: Parameters<
-    typeof jestConfig
-  >[0]['jestEnvironment'];
-  readonly packageBuildOptions?: Partial<Parameters<typeof packageBuild>[0]>;
+  readonly jestEnvironment?: JestEnvironment;
 }
 
 export function buildLibrary({
-  browserTargets,
-  nodeTargets,
   graphql = false,
   jestEnvironment = 'node',
-  packageBuildOptions = {},
+  ...packageBuildOptions
 }: BuildLibraryOptions) {
   return createComposedProjectPlugin('Loom.BuildLibrary', [
-    // this needs to be set/ find the babel.config.js file at the root of the proje here as'the't
     babel({
       config: {
         presets: [
@@ -38,10 +34,11 @@ export function buildLibrary({
             {typescript: true, react: true},
           ],
         ],
+        // Disable loading content from babel.config.js
         configFile: false,
       },
     }),
-    packageBuild({browserTargets, nodeTargets, ...packageBuildOptions}),
+    packageBuild(packageBuildOptions),
     rollupConfig({graphql}),
     jestConfig({jestEnvironment}),
   ]);
