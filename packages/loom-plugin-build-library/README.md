@@ -27,13 +27,21 @@ export default createPackage((pkg) => {
       // Required. A browserslist string that shall be targeted when your runtime includes `Runtime.Browser`
       browserTargets: 'defaults',
       // Required. A browserslist string that shall be targeted when your runtime includes `Runtime.Node`
-      nodeTargets: 'node 12.13',
+      nodeTargets: 'node 12.20',
+      // Optional. Defaults to true. Defines if commonjs outputs should be generated.
+      commonjs: true,
+      // Optional. Defaults to true. Defines if esmodules outputs should be generated.
+      esmodules: true,
+      // Optional. Defaults to true. Defines if esnext outputs should be generated.
+      esnext: true,
+      // Optional. Defaults to true. Defines if entrypoints should be written at
+      // the root of the repository. You can disable this if you have a single
+      // entrypoint or if your package uses the `exports` key in package.json
+      rootEntrypoints: true,
       // Optional. Defaults to false. Defines if graphql files should be processed.
       graphql: false,
       // Optional. Defaults to 'node'. Defines if the jest environment should be 'node' or 'jsdom'.
-      jestEnvironment = 'node',
-      // Optional. Defaults to empty object. Defines any additional config to pass to plugin-package-build
-      packageBuildOptions: {}
+      jestEnvironment: 'node',
     }),
     buildLibraryWorkspace({
       // Optional. Defaults to false. Defines if d.ts files should be generated for graphql files.
