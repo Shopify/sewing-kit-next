@@ -1,0 +1,19 @@
+@import './helpers';
+
+.Nav {
+  .Ul {
+    margin: rem(23.7px);
+    padding: 0;
+    list-style: none;
+  }
+
+  .Li {
+    display: inline-block;
+  }
+
+  .Link {
+    display: block;
+    padding: 6px 12px;
+    text-decoration: none;
+  }
+}
