@@ -1,10 +1,11 @@
-import {resolve, relative} from 'path';
+import {relative, dirname, join} from 'path';
 
 import {
   Package,
   createProjectBuildPlugin,
   ProjectPluginContext,
 } from '@shopify/loom';
+import findCommonAncestorPath from 'common-ancestor-path';
 
 interface EntryConfig {
   extension: string;
@@ -77,26 +78,39 @@ async function writeEntries(
   project: Package,
   {extension, outputPath, exportStyle}: EntryConfig,
 ) {
-  const sourceRoot = resolve(project.root, 'src');
+  const commonEntryRoot = findCommonAncestorPath(
+    ...(await Promise.all(
+      [...project.entries, ...project.binaries].map(async (entry) =>
+        dirname(require.resolve(entry.root, {paths: [project.root]})),
+      ),
+    )),
+  );
+
+  // This is present as a typeguard that should never trigger as
+  // findCommonAncestorPath will only return null if you're on windows and you
+  // feed it files that are on different drives - which should never occur if
+  // you're building a project that is contained within a single folder
+  if (commonEntryRoot === null) {
+    throw new Error(
+      'Could not find a common ancestor folder for all your entrypoints',
+    );
+  }
 
   await Promise.all(
-    project.entries.map(async (entry) => {
-      const absoluteEntryPath = (await project.fs.hasFile(`${entry.root}.*`))
-        ? project.fs.resolvePath(entry.root)
-        : project.fs.resolvePath(entry.root, 'index');
+    project.entries.map(async ({name, root}) => {
+      const entryPath = require.resolve(root, {paths: [project.root]});
+      const entryRelativeToCommonRoot = relative(commonEntryRoot, entryPath);
 
-      const relativeFromSourceRoot = relative(sourceRoot, absoluteEntryPath);
-      const destinationInOutput = resolve(outputPath, relativeFromSourceRoot);
-      const relativeFromRoot = `${normalizedRelative(
+      const pathToBuiltEntry = `./${relative(
         project.root,
-        destinationInOutput,
-      )}${extension}`;
+        join(outputPath, entryRelativeToCommonRoot.replace(/\..+$/, extension)),
+      )}`;
 
       if (exportStyle === 'commonjs') {
         // interopRequireDefault copied from https://github.com/babel/babel/blob/56044c7851d583d498f919e9546caddf8f80a72f/packages/babel-helpers/src/helpers.js#L558-L562
-        const linkPath = JSON.stringify(relativeFromRoot);
+        const linkPath = JSON.stringify(pathToBuiltEntry);
         await project.fs.write(
-          `${entry.name || 'index'}${extension}`,
+          `${name || 'index'}${extension}`,
           `function interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : {default: obj};
 }
@@ -111,9 +125,7 @@ module.exports = interopRequireDefault(require(${linkPath}));
       let content = '';
 
       try {
-        content = await project.fs.read(
-          (await project.fs.glob(`${absoluteEntryPath}.*`))[0],
-        );
+        content = await project.fs.read(entryPath);
 
         // export default ...
         // export {Foo as default} from ...
@@ -124,11 +136,11 @@ module.exports = interopRequireDefault(require(${linkPath}));
         // intentional no-op
       }
 
-      const entryExtension = `${entry.name ?? 'index'}${extension}`;
+      const entryExtension = `${name ?? 'index'}${extension}`;
       const entryContents = [
-        `export * from ${JSON.stringify(relativeFromRoot)};`,
+        `export * from ${JSON.stringify(pathToBuiltEntry)};`,
         hasDefault
-          ? `export {default} from ${JSON.stringify(relativeFromRoot)};`
+          ? `export {default} from ${JSON.stringify(pathToBuiltEntry)};`
           : false,
       ]
         .filter(Boolean)
@@ -137,9 +149,4 @@ module.exports = interopRequireDefault(require(${linkPath}));
       await project.fs.write(entryExtension, entryContents);
     }),
   );
-}
-
-function normalizedRelative(from: string, to: string) {
-  const rel = relative(from, to);
-  return rel.startsWith('.') ? rel : `./${rel}`;
 }

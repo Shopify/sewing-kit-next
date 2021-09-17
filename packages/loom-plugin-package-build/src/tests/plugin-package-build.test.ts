@@ -184,7 +184,7 @@ export function pkg(greet) {
       // Bin file
       expect(await workspace.contains('bin/cmd')).toBeTruthy();
       expect(await workspace.contents('bin/cmd')).toContain(
-        `#!/usr/bin/env node\nrequire("../build/cjs/index")`,
+        `#!/usr/bin/env node\nrequire("./../build/cjs/index.js")`,
       );
     });
   });
@@ -265,4 +265,130 @@ export function pkg(greet) {
       });
     },
   );
+
+  it('builds entries and binaries when the source is not in the src directory', async () => {
+    await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+      await workspace.writeConfig(`
+        import {createPackage, Runtime} from '@shopify/loom';
+        import {babel} from '@shopify/loom-plugin-babel';
+        import {packageBuild} from '@shopify/loom-plugin-package-build';
+        export default createPackage((pkg) => {
+          pkg.entry({root: './js/index'});
+          pkg.runtime(Runtime.Node);
+          pkg.use(
+            babel({config: {presets: ['@shopify/babel-preset']}}),
+            packageBuild({
+              browserTargets: 'chrome 88',
+              nodeTargets: 'node 12',
+
+            }),
+          );
+        });
+      `);
+
+      await workspace.writeFile('js/index.js', `export const x = 'index';`);
+      await workspace.writeFile('src/index.js', `export const x = 'nope';`);
+
+      await workspace.run('build');
+
+      workspace.debug();
+
+      expect(await workspace.contains('build/cjs/index.js')).toBeTruthy();
+      expect(await workspace.contains('build/esm/index.mjs')).toBeTruthy();
+      expect(
+        await workspace.contains('build/esnext/index.esnext'),
+      ).toBeTruthy();
+
+      // Entrypoints
+      expect(await workspace.contents('index.js')).toContain(
+        'module.exports = interopRequireDefault(require("./build/cjs/index.js"));',
+      );
+      expect(await workspace.contents('index.mjs')).toContain(
+        'export * from "./build/esm/index.mjs"',
+      );
+      expect(await workspace.contents('index.esnext')).toContain(
+        'export * from "./build/esnext/index.esnext"',
+      );
+    });
+  });
+
+  it('builds entries and binaries when the source is spread across multiple folders', async () => {
+    await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+      await workspace.writeConfig(`
+        import {createPackage, Runtime} from '@shopify/loom';
+        import {babel} from '@shopify/loom-plugin-babel';
+        import {packageBuild} from '@shopify/loom-plugin-package-build';
+        export default createPackage((pkg) => {
+          pkg.entry({root: './src/index'});
+          pkg.entry({name: 'second', root: './js/second'});
+          pkg.binary({name: 'cmd', root: './cmd/cmd'});
+          pkg.runtime(Runtime.Node);
+          pkg.use(
+            babel({config: {presets: ['@shopify/babel-preset']}}),
+            packageBuild({
+              browserTargets: 'chrome 88',
+              nodeTargets: 'node 12',
+            }),
+          );
+        });
+      `);
+
+      await workspace.writeFile('src/index.js', `export const x = 'index';`);
+      await workspace.writeFile(
+        'js/second/index.js',
+        `export const x = 'second';`,
+      );
+      await workspace.writeFile('cmd/cmd.js', `export const x = 'cmd';`);
+
+      await workspace.run('build');
+
+      expect(await workspace.contains('build/cjs/src/index.js')).toBeTruthy();
+      expect(await workspace.contains('build/esm/src/index.mjs')).toBeTruthy();
+      expect(
+        await workspace.contains('build/esnext/src/index.esnext'),
+      ).toBeTruthy();
+
+      expect(
+        await workspace.contains('build/cjs/js/second/index.js'),
+      ).toBeTruthy();
+      expect(
+        await workspace.contains('build/esm/js/second/index.mjs'),
+      ).toBeTruthy();
+      expect(
+        await workspace.contains('build/esnext/js/second/index.esnext'),
+      ).toBeTruthy();
+
+      expect(await workspace.contains('build/cjs/cmd/cmd.js')).toBeTruthy();
+      expect(await workspace.contains('build/esm/cmd/cmd.mjs')).toBeTruthy();
+      expect(
+        await workspace.contains('build/esnext/cmd/cmd.esnext'),
+      ).toBeTruthy();
+
+      // Entrypoints
+      expect(await workspace.contents('index.js')).toContain(
+        'module.exports = interopRequireDefault(require("./build/cjs/src/index.js"));',
+      );
+
+      expect(await workspace.contents('index.mjs')).toContain(
+        'export * from "./build/esm/src/index.mjs"',
+      );
+      expect(await workspace.contents('index.esnext')).toContain(
+        'export * from "./build/esnext/src/index.esnext"',
+      );
+
+      expect(await workspace.contents('second.js')).toContain(
+        'module.exports = interopRequireDefault(require("./build/cjs/js/second/index.js"));',
+      );
+      expect(await workspace.contents('second.mjs')).toContain(
+        'export * from "./build/esm/js/second/index.mjs"',
+      );
+      expect(await workspace.contents('second.esnext')).toContain(
+        'export * from "./build/esnext/js/second/index.esnext"',
+      );
+
+      expect(await workspace.contents('bin/cmd')).toContain(
+        '#!/usr/bin/env node\nrequire("./../build/cjs/cmd/cmd.js")',
+      );
+    });
+  });
 });
