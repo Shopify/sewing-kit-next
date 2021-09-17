@@ -1,4 +1,4 @@
-import {rollupPlugins} from '@shopify/loom-plugin-package-build';
+import {rollupPlugins} from '@shopify/loom-plugin-rollup';
 import postcssShopify from '@shopify/postcss-plugin';
 import pluginGraphql from '@rollup/plugin-graphql';
 import json from '@rollup/plugin-json';

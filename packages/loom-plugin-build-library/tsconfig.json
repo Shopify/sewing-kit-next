@@ -10,8 +10,8 @@
     {"path": "../../tests"},
     {"path": "../loom"},
     {"path": "../loom-plugin-babel"},
-    {"path": "../loom-plugin-package-build"},
     {"path": "../loom-plugin-jest"},
+    {"path": "../loom-plugin-rollup"},
     {"path": "../loom-plugin-typescript"}
   ]
 }

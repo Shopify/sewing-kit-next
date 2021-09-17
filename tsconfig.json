@@ -8,7 +8,6 @@
     {"path": "./packages/loom-plugin-build-library"},
     {"path": "./packages/loom-plugin-eslint"},
     {"path": "./packages/loom-plugin-jest"},
-    {"path": "./packages/loom-plugin-package-build"},
     {"path": "./packages/loom-plugin-prettier"},
     {"path": "./packages/loom-plugin-rollup"},
     {"path": "./packages/loom-plugin-stylelint"},

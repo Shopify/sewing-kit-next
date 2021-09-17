@@ -5,25 +5,39 @@ import {
 import {babel} from '@shopify/loom-plugin-babel';
 import {workspaceTypeScript} from '@shopify/loom-plugin-typescript';
 import {jest} from '@shopify/loom-plugin-jest';
-import {packageBuild} from '@shopify/loom-plugin-package-build';
+import {rollupHooks, rollupBuild} from '@shopify/loom-plugin-rollup';
 
+import {rollupConfig} from './plugin-rollup-config';
 import {rollupConfigExtended} from './plugin-rollup-config-extended';
 import {jestConfig} from './plugin-jest-config';
+import {writeBinaries} from './plugin-write-binaries';
+import {writeEntrypoints} from './plugin-write-entrypoints';
 import {generateGraphqlTypes} from './plugin-generate-graphql-types';
-
-type PackageBuildOptions = Parameters<typeof packageBuild>[0];
 
 type JestEnvironment = Parameters<typeof jestConfig>[0]['jestEnvironment'];
 
-interface BuildLibraryOptions extends PackageBuildOptions {
+interface BuildLibraryOptions {
+  readonly browserTargets: string;
+  readonly nodeTargets: string;
+  readonly binaries?: boolean;
+  readonly commonjs?: boolean;
+  readonly esmodules?: boolean;
+  readonly esnext?: boolean;
+  readonly rootEntrypoints?: boolean;
   readonly graphql?: boolean;
   readonly jestEnvironment?: JestEnvironment;
 }
 
 export function buildLibrary({
+  browserTargets,
+  nodeTargets,
+  binaries = true,
+  rootEntrypoints = true,
+  commonjs = true,
+  esmodules = true,
+  esnext = true,
   graphql = false,
   jestEnvironment = 'node',
-  ...packageBuildOptions
 }: BuildLibraryOptions) {
   return createComposedProjectPlugin('Loom.BuildLibrary', [
     babel({
@@ -38,9 +52,19 @@ export function buildLibrary({
         configFile: false,
       },
     }),
-    packageBuild(packageBuildOptions),
+    rollupHooks(),
+    rollupBuild(),
+    rollupConfig({
+      browserTargets,
+      nodeTargets,
+      commonjs,
+      esmodules,
+      esnext,
+    }),
     rollupConfigExtended({graphql}),
     jestConfig({jestEnvironment}),
+    binaries && writeBinaries(),
+    rootEntrypoints && writeEntrypoints({commonjs, esmodules, esnext}),
   ]);
 }
 

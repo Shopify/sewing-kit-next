@@ -11,6 +11,10 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Expose options from `loom-plugin-package-build` as top level options instead of nesting them in the `packageBuildOptions` object. [[#253](https://github.com/Shopify/loom/pull/253)]
 
+### Changed
+
+- Fixed path generation in entrypoints / bin files when the entrypoints do not live in the `src` folder [[#254](https://github.com/Shopify/loom/pull/254)]
+
 ## 0.3.2 - 2021-09-13
 
 ### Changed
