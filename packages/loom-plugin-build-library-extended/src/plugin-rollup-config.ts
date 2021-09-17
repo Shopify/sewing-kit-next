@@ -1,4 +1,4 @@
-import {rollupPlugins} from '@shopify/loom-plugin-rollup';
+import {rollupPlugins} from '@shopify/loom-plugin-build-library';
 import postcssShopify from '@shopify/postcss-plugin';
 import pluginGraphql from '@rollup/plugin-graphql';
 import json from '@rollup/plugin-json';
@@ -11,7 +11,7 @@ interface RollupConfigOptions {
   readonly graphql?: boolean;
 }
 
-export function rollupConfigExtended({graphql = false}: RollupConfigOptions) {
+export function rollupConfig({graphql = false}: RollupConfigOptions) {
   return rollupPlugins((target) => {
     const stylesConfig = target.options.rollupEsnext
       ? {

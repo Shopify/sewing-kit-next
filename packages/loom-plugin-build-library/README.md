@@ -185,8 +185,3 @@ export default createPackage((pkg) => {
   );
 });
 ```
-
-### Assumptions
-
-- `@svgr/rollup` will look up svgs under `**/icons/*.svg`, and convert them to functional React components.
-- `@rollup/plugin-image` will look for images not under `**/icons/*.svg` and convert them to data uris.

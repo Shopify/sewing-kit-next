@@ -8,11 +8,9 @@ import {jest} from '@shopify/loom-plugin-jest';
 import {rollupHooks, rollupBuild} from '@shopify/loom-plugin-rollup';
 
 import {rollupConfig} from './plugin-rollup-config';
-import {rollupConfigExtended} from './plugin-rollup-config-extended';
 import {jestConfig} from './plugin-jest-config';
 import {writeBinaries} from './plugin-write-binaries';
 import {writeEntrypoints} from './plugin-write-entrypoints';
-import {generateGraphqlTypes} from './plugin-generate-graphql-types';
 
 type JestEnvironment = Parameters<typeof jestConfig>[0]['jestEnvironment'];
 
@@ -24,7 +22,6 @@ interface BuildLibraryOptions {
   readonly esmodules?: boolean;
   readonly esnext?: boolean;
   readonly rootEntrypoints?: boolean;
-  readonly graphql?: boolean;
   readonly jestEnvironment?: JestEnvironment;
 }
 
@@ -36,7 +33,6 @@ export function buildLibrary({
   commonjs = true,
   esmodules = true,
   esnext = true,
-  graphql = false,
   jestEnvironment = 'node',
 }: BuildLibraryOptions) {
   return createComposedProjectPlugin('Loom.BuildLibrary', [
@@ -61,23 +57,15 @@ export function buildLibrary({
       esmodules,
       esnext,
     }),
-    rollupConfigExtended({graphql}),
     jestConfig({jestEnvironment}),
     binaries && writeBinaries(),
     rootEntrypoints && writeEntrypoints({commonjs, esmodules, esnext}),
   ]);
 }
 
-interface BuildLibraryWorkspaceOptions {
-  readonly graphql?: boolean;
-}
-
-export function buildLibraryWorkspace({
-  graphql = false,
-}: BuildLibraryWorkspaceOptions) {
+export function buildLibraryWorkspace() {
   return createComposedWorkspacePlugin('Loom.BuildLibraryWorkspace', [
     workspaceTypeScript(),
     jest(),
-    graphql && generateGraphqlTypes(),
   ]);
 }

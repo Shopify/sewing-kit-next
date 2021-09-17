@@ -9,7 +9,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Breaking Change
 
-- Expose options from `loom-plugin-package-build` as top level options instead of nesting them in the `packageBuildOptions` object. [[#253](https://github.com/Shopify/loom/pull/253)]
+- Removed support for styles, images and graphql files. Support for these file types is now provided by `@shopify/loom-plugin-build-library-extended`. Add that to your package as a sibling of `@shopify/loom-plugin-build-library`.
+- Expose `commonjs`, `esmodules`, `esnext`, `binaries` and `rootEntrypoints` as top level options instead of nesting them in the `packageBuildOptions` object. [[#253](https://github.com/Shopify/loom/pull/253)]
 
 ### Changed
 

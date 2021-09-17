@@ -5,13 +5,11 @@
     "baseUrl": "src",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": ["config/typescript/*", "src/**/*"],
   "references": [
     {"path": "../../tests"},
     {"path": "../loom"},
-    {"path": "../loom-plugin-babel"},
-    {"path": "../loom-plugin-jest"},
-    {"path": "../loom-plugin-rollup"},
-    {"path": "../loom-plugin-typescript"}
+    {"path": "../loom-plugin-build-library"},
+    {"path": "../loom-plugin-jest"}
   ]
 }
