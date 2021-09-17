@@ -11,7 +11,7 @@ interface RollupConfigOptions {
   readonly graphql?: boolean;
 }
 
-export function rollupConfig({graphql = false}: RollupConfigOptions) {
+export function rollupConfigExtended({graphql = false}: RollupConfigOptions) {
   return rollupPlugins((target) => {
     const stylesConfig = target.options.rollupEsnext
       ? {

@@ -7,7 +7,7 @@ import {workspaceTypeScript} from '@shopify/loom-plugin-typescript';
 import {jest} from '@shopify/loom-plugin-jest';
 import {packageBuild} from '@shopify/loom-plugin-package-build';
 
-import {rollupConfig} from './plugin-rollup-config';
+import {rollupConfigExtended} from './plugin-rollup-config-extended';
 import {jestConfig} from './plugin-jest-config';
 import {generateGraphqlTypes} from './plugin-generate-graphql-types';
 
@@ -39,7 +39,7 @@ export function buildLibrary({
       },
     }),
     packageBuild(packageBuildOptions),
-    rollupConfig({graphql}),
+    rollupConfigExtended({graphql}),
     jestConfig({jestEnvironment}),
   ]);
 }
