@@ -88,7 +88,7 @@ async function writeEntries(
 
   // This is present as a typeguard that should never trigger as
   // findCommonAncestorPath will only return null if you're on windows and you
-  // feed it files that are on different drives - which should never occuer if
+  // feed it files that are on different drives - which should never occur if
   // you're building a project that is contained within a single folder
   if (commonEntryRoot === null) {
     throw new Error(
