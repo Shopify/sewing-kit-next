@@ -9,7 +9,7 @@
   "references": [
     {"path": "../../tests"},
     {"path": "../loom"},
-    {"path": "../loom-plugin-build-library"},
-    {"path": "../loom-plugin-jest"}
+    {"path": "../loom-plugin-jest"},
+    {"path": "../loom-plugin-rollup"}
   ]
 }

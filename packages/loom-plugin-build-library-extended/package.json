@@ -47,10 +47,13 @@
   },
   "peerDependencies": {
     "@shopify/loom-plugin-jest": "^0.6.0",
-    "@shopify/loom-plugin-build-library": "^0.3.2"
+    "@shopify/loom-plugin-rollup": "^0.6.0"
   },
   "peerDependenciesMeta": {
     "@shopify/loom-plugin-jest": {
+      "optional": true
+    },
+    "@shopify/loom-plugin-rollup": {
       "optional": true
     }
   },
