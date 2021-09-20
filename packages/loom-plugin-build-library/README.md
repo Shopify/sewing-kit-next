@@ -45,8 +45,6 @@ export default createPackage((pkg) => {
       // the root of the repository. You can disable this if you have a single
       // entrypoint or if your package uses the `exports` key in package.json
       rootEntrypoints: true,
-      // Optional. Defaults to false. Defines if graphql files should be processed.
-      graphql: false,
       // Optional. Defaults to 'node'. Defines if the jest environment should be 'node' or 'jsdom'.
       jestEnvironment: 'node',
     }),
