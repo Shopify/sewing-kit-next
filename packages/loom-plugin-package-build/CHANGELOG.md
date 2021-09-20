@@ -7,9 +7,9 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
-### Changed
+### Breaking Change
 
-- Fixed path generation in entrypoints / bin files when the entrypoints do not live in the `src` folder [[#254](https://github.com/Shopify/loom/pull/254)]
+- Package has been deprecated and removed. You should migrate to use `@shopify/plugin-build-library`. [[#256](https://github.com/Shopify/loom/pull/256)]
 
 ## 0.7.0 - 2021-09-13
 

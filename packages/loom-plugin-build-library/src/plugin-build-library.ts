@@ -5,25 +5,35 @@ import {
 import {babel} from '@shopify/loom-plugin-babel';
 import {workspaceTypeScript} from '@shopify/loom-plugin-typescript';
 import {jest} from '@shopify/loom-plugin-jest';
-import {packageBuild} from '@shopify/loom-plugin-package-build';
+import {rollupHooks, rollupBuild} from '@shopify/loom-plugin-rollup';
 
 import {rollupConfig} from './plugin-rollup-config';
 import {jestConfig} from './plugin-jest-config';
-import {generateGraphqlTypes} from './plugin-generate-graphql-types';
-
-type PackageBuildOptions = Parameters<typeof packageBuild>[0];
+import {writeBinaries} from './plugin-write-binaries';
+import {writeEntrypoints} from './plugin-write-entrypoints';
 
 type JestEnvironment = Parameters<typeof jestConfig>[0]['jestEnvironment'];
 
-interface BuildLibraryOptions extends PackageBuildOptions {
-  readonly graphql?: boolean;
+interface BuildLibraryOptions {
+  readonly browserTargets: string;
+  readonly nodeTargets: string;
+  readonly binaries?: boolean;
+  readonly commonjs?: boolean;
+  readonly esmodules?: boolean;
+  readonly esnext?: boolean;
+  readonly rootEntrypoints?: boolean;
   readonly jestEnvironment?: JestEnvironment;
 }
 
 export function buildLibrary({
-  graphql = false,
+  browserTargets,
+  nodeTargets,
+  binaries = true,
+  rootEntrypoints = true,
+  commonjs = true,
+  esmodules = true,
+  esnext = true,
   jestEnvironment = 'node',
-  ...packageBuildOptions
 }: BuildLibraryOptions) {
   return createComposedProjectPlugin('Loom.BuildLibrary', [
     babel({
@@ -38,22 +48,24 @@ export function buildLibrary({
         configFile: false,
       },
     }),
-    packageBuild(packageBuildOptions),
-    rollupConfig({graphql}),
+    rollupHooks(),
+    rollupBuild(),
+    rollupConfig({
+      browserTargets,
+      nodeTargets,
+      commonjs,
+      esmodules,
+      esnext,
+    }),
     jestConfig({jestEnvironment}),
+    binaries && writeBinaries(),
+    rootEntrypoints && writeEntrypoints({commonjs, esmodules, esnext}),
   ]);
 }
 
-interface BuildLibraryWorkspaceOptions {
-  readonly graphql?: boolean;
-}
-
-export function buildLibraryWorkspace({
-  graphql = false,
-}: BuildLibraryWorkspaceOptions) {
+export function buildLibraryWorkspace() {
   return createComposedWorkspacePlugin('Loom.BuildLibraryWorkspace', [
     workspaceTypeScript(),
     jest(),
-    graphql && generateGraphqlTypes(),
   ]);
 }

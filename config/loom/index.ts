@@ -1,18 +1,9 @@
-import {Package, createComposedProjectPlugin} from '@shopify/loom';
-import {babel} from '@shopify/loom-plugin-babel';
-import {packageBuild} from '@shopify/loom-plugin-package-build';
-
-import type {} from '@shopify/loom-plugin-jest';
+import {createComposedProjectPlugin} from '@shopify/loom';
+import {buildLibrary} from '@shopify/loom-plugin-build-library';
 
 export const createLoomPackagePlugin = () =>
-  createComposedProjectPlugin<Package>('Loom.InternalPackage', [
-    babel({
-      config: {
-        configFile: false,
-        presets: [['@shopify/babel-preset', {typescript: true}]],
-      },
-    }),
-    packageBuild({
+  createComposedProjectPlugin('InternalPackage', [
+    buildLibrary({
       browserTargets: 'defaults',
       nodeTargets: 'node 12.14.0',
       esmodules: false,

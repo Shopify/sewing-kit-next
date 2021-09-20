@@ -9,7 +9,7 @@ import findCommonAncestorPath from 'common-ancestor-path';
 
 export function writeBinaries() {
   return createProjectBuildPlugin<Package>(
-    'Loom.PackageBuild.Binaries',
+    'Loom.BuildLibrary.Binaries',
     ({hooks, project, api}) => {
       hooks.steps.hook((steps) =>
         project.binaries.length > 0
@@ -28,7 +28,7 @@ function createWriteBinariesStep({
 
   return api.createStep(
     {
-      id: 'PackageBuild.Binaries',
+      id: 'BuildLibrary.Binaries',
       label:
         binaryCount === 1 ? 'write binary' : `write ${binaryCount} binaries`,
     },
