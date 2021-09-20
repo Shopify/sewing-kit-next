@@ -1,6 +1,3 @@
-import {resolve} from 'path';
-import {readFileSync} from 'fs';
-
 import {
   withWorkspace,
   generateUniqueWorkspaceID,
@@ -24,48 +21,16 @@ describe('@shopify/loom-plugin-build-library-extended scss generation', () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(configContent);
 
-      await workspace.writeFile(
-        'src/first.scss',
-        readFileSync(resolve(__dirname, './fixtures/scss/first.scss')) as any,
-      );
-
-      await workspace.writeFile(
-        'src/index.js',
-        `export {default as styles} from './first.scss';`,
-      );
+      await workspace.writeFileMap({
+        'src/index.js': `export {default as styles} from './first.scss';`,
+        'src/first.scss': `$size: 10px;\n.First { margin: $size; }`,
+      });
 
       await workspace.run('build');
 
-      const cjsCSSContent = prepareContent(
-        await workspace.contents('build/cjs/styles.css'),
-      );
-      const cjsBuildContent = prepareContent(
-        await workspace.contents('build/cjs/index.js'),
-      );
-      const cjsBuildCSSContent = prepareContent(
-        await workspace.contents('build/cjs/first.scss.js'),
-      );
-      const esmCSSContent = prepareContent(
-        await workspace.contents('build/esm/styles.css'),
-      );
-      const esmBuildContent = prepareContent(
-        await workspace.contents('build/esm/index.mjs'),
-      );
-      const esmBuildCSSContent = prepareContent(
-        await workspace.contents('build/esm/first.scss.mjs'),
-      );
+      const expectedCSSContent = '._First_1gjmh_1{ margin:10px; }\n';
 
-      const esnextCSSContent = prepareContent(
-        await workspace.contents('build/esnext/first.css'),
-      );
-      const esnextBuildContent = prepareContent(
-        await workspace.contents('build/esnext/index.esnext'),
-      );
-
-      const expectedCSSContent = '._First_1gjmh_1{ margin:10px; }';
-
-      const cjsExpectedBuildCSSOutput = prepareContent(`
-'use strict';
+      const cjsExpectedBuildCSSOutput = `'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
@@ -74,30 +39,54 @@ var first = {
 };
 
 exports.default = first;
-      `);
+`;
 
-      const esmExpectedBuildCSSOutput = prepareContent(`
+      const esmExpectedBuildCSSOutput = `var first = {
+  "First": "_First_1gjmh_1"
+};
+
+export default first;
+`;
+
+      const esnextExpectedBuildCSSOutput = `import './first.css';
+
 var first = {
   "First": "_First_1gjmh_1"
 };
 
 export default first;
-      `);
+`;
 
-      expect(cjsBuildContent).toContain("require('./first.scss.js');");
-      expect(cjsCSSContent).toStrictEqual(expectedCSSContent);
-      expect(cjsBuildCSSContent).toStrictEqual(cjsExpectedBuildCSSOutput);
+      expect(await workspace.contents('build/cjs/index.js')).toContain(
+        "require('./first.scss.js');",
+      );
+      expect(await workspace.contents('build/cjs/first.scss.js')).toStrictEqual(
+        cjsExpectedBuildCSSOutput,
+      );
+      expect(await workspace.contents('build/cjs/styles.css')).toStrictEqual(
+        expectedCSSContent,
+      );
 
-      expect(esmBuildContent).toContain(
+      expect(await workspace.contents('build/esm/index.mjs')).toContain(
         "export { default as styles } from './first.scss.mjs';",
       );
-      expect(esmCSSContent).toStrictEqual(expectedCSSContent);
-      expect(esmBuildCSSContent).toStrictEqual(esmExpectedBuildCSSOutput);
-
-      expect(esnextBuildContent).toContain(
-        "export { default as styles } from './first.scss.esnext';",
+      expect(
+        await workspace.contents('build/esm/first.scss.mjs'),
+      ).toStrictEqual(esmExpectedBuildCSSOutput);
+      expect(await workspace.contents('build/esm/styles.css')).toStrictEqual(
+        expectedCSSContent,
       );
-      expect(esnextCSSContent).toStrictEqual(expectedCSSContent);
+
+      expect(await workspace.contents('build/esnext/index.esnext')).toContain(
+        "export { default as styles } from './first.scss.esnext';\n",
+      );
+      expect(
+        await workspace.contents('build/esnext/first.scss.esnext'),
+      ).toStrictEqual(esnextExpectedBuildCSSOutput);
+      expect(await workspace.contents('build/esnext/first.css')).toStrictEqual(
+        expectedCSSContent,
+      );
+
       expect(await workspace.contains('build/esnext/styles.css')).toBeFalsy();
     });
   });
@@ -106,47 +95,24 @@ export default first;
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(configContent);
 
-      await workspace.writeFile(
-        'src/first.scss',
-        readFileSync(resolve(__dirname, './fixtures/scss/first.scss')) as any,
-      );
-
-      await workspace.writeFile(
-        'src/second.scss',
-        readFileSync(resolve(__dirname, './fixtures/scss/second.scss')) as any,
-      );
-
-      await workspace.writeFile(
-        'src/first.js',
-        `export {default as first} from './first.scss';`,
-      );
-      await workspace.writeFile(
-        'src/second.js',
-        `export {default as second} from './second.scss';`,
-      );
-      await workspace.writeFile(
-        'src/index.js',
-        `export {first} from './first'; export {second} from './second';`,
-      );
+      await workspace.writeFileMap({
+        'src/first.js': `export {default as first} from './first.scss';`,
+        'src/second.js': `export {default as second} from './second.scss';`,
+        'src/index.js': `export {first} from './first'; export {second} from './second';`,
+        'src/first.scss': `$size: 10px;\n.First { margin: $size; }`,
+        'src/second.scss': `$size: 20px;\n.Second { margin: $size; }`,
+      });
 
       await workspace.run('build');
 
-      const cjsCSSContent = prepareContent(
-        await workspace.contents('build/cjs/styles.css'),
+      const expectedCSSContent = `._First_1gjmh_1{ margin:10px; }\n\n\n._Second_336qy_1{ margin:20px; }\n`;
+
+      expect(await workspace.contents('build/cjs/styles.css')).toStrictEqual(
+        expectedCSSContent,
       );
-
-      const esmCSSContent = prepareContent(
-        await workspace.contents('build/esm/styles.css'),
+      expect(await workspace.contents('build/esm/styles.css')).toStrictEqual(
+        expectedCSSContent,
       );
-      const expectedCSSContent = prepareContent(`
-._First_1gjmh_1{ margin:10px; }
-
-
-._Second_336qy_1{ margin:20px; }
-      `);
-
-      expect(cjsCSSContent).toStrictEqual(expectedCSSContent);
-      expect(esmCSSContent).toStrictEqual(expectedCSSContent);
       expect(await workspace.contains('build/esnext/styles.css')).toBeFalsy();
     });
   });
@@ -155,65 +121,27 @@ export default first;
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(configContent);
 
-      await workspace.writeFile(
-        'src/first.scss',
-        readFileSync(resolve(__dirname, './fixtures/scss/first.scss')) as any,
-      );
-
-      await workspace.writeFile(
-        'src/second.scss',
-        readFileSync(resolve(__dirname, './fixtures/scss/second.scss')) as any,
-      );
-
-      await workspace.writeFile(
-        'src/third.scss',
-        readFileSync(resolve(__dirname, './fixtures/scss/third.scss')) as any,
-      );
-
-      await workspace.writeFile(
-        'src/first.js',
-        `export {third} from './third'; export {default as first} from './first.scss';`,
-      );
-      await workspace.writeFile(
-        'src/second.js',
-        `export {default as second} from './second.scss';`,
-      );
-
-      await workspace.writeFile(
-        'src/third.js',
-        `export {default as third} from './third.scss';`,
-      );
-
-      await workspace.writeFile(
-        'src/index.js',
-        `export {first} from './first'; export {second} from './second';`,
-      );
+      await workspace.writeFileMap({
+        'src/first.js': `export {third} from './third'; export {default as first} from './first.scss';`,
+        'src/second.js': `export {default as second} from './second.scss';`,
+        'src/third.js': `export {default as third} from './third.scss';`,
+        'src/index.js': `export {first} from './first'; export {second} from './second';`,
+        'src/first.scss': `$size: 10px;\n.First { margin: $size; }`,
+        'src/second.scss': `$size: 20px;\n.Second { margin: $size; }`,
+        'src/third.scss': `$size: 30px;\n.Third { margin: $size; }`,
+      });
 
       await workspace.run('build');
 
-      const cjsCSSContent = prepareContent(
-        await workspace.contents('build/cjs/styles.css'),
+      const expectedCSSContent = `._Third_nk0pg_1{ margin:30px; }\n\n\n._First_1gjmh_1{ margin:10px; }\n\n\n._Second_336qy_1{ margin:20px; }\n`;
+
+      expect(await workspace.contents('build/cjs/styles.css')).toStrictEqual(
+        expectedCSSContent,
       );
-
-      const esmCSSContent = prepareContent(
-        await workspace.contents('build/esm/styles.css'),
+      expect(await workspace.contents('build/esm/styles.css')).toStrictEqual(
+        expectedCSSContent,
       );
-      const expectedCSSContent = prepareContent(`
-._Third_nk0pg_1{ margin:30px; }
-
-
-._First_1gjmh_1{ margin:10px; }
-
-
-._Second_336qy_1{ margin:20px; }
-      `);
-      expect(cjsCSSContent).toStrictEqual(expectedCSSContent);
-      expect(esmCSSContent).toStrictEqual(expectedCSSContent);
       expect(await workspace.contains('build/esnext/styles.css')).toBeFalsy();
     });
   });
 });
-
-function prepareContent(content: string): string {
-  return content.trim();
-}

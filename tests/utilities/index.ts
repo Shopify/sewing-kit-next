@@ -76,6 +76,24 @@ export class Workspace {
     await writeFile(path, contents);
   }
 
+  async writeFileMap(fileMap: {[key: string]: string}) {
+    return Promise.all(
+      Object.entries(fileMap).map(([file, path]) => this.writeFile(file, path)),
+    );
+  }
+
+  async writeFileFromFixture(file: string, path: string) {
+    return this.writeFile(file, await readFile(path, {encoding: 'utf8'}));
+  }
+
+  async writeFileFromFixtureMap(fileMap: {[key: string]: string}) {
+    return Promise.all(
+      Object.entries(fileMap).map(([file, path]) =>
+        this.writeFileFromFixture(file, path),
+      ),
+    );
+  }
+
   async removeFile(file: string) {
     await remove(this.resolvePath(file));
   }
