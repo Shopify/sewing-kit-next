@@ -185,7 +185,6 @@ export function pkg(greet) {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
           import {createPackage, Runtime} from '@shopify/loom';
-          import {babel} from '@shopify/loom-plugin-babel';
           import {packageBuild} from '@shopify/loom-plugin-build-library';
           export default createPackage((pkg) => {
             pkg.runtime(Runtime.Node);

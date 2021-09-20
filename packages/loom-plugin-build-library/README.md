@@ -50,10 +50,7 @@ export default createPackage((pkg) => {
       // Optional. Defaults to 'node'. Defines if the jest environment should be 'node' or 'jsdom'.
       jestEnvironment: 'node',
     }),
-    buildLibraryWorkspace({
-      // Optional. Defaults to false. Defines if d.ts files should be generated for graphql files.
-      graphql: false,
-    }),
+    buildLibraryWorkspace(),
   );
 });
 ```
@@ -82,7 +79,7 @@ Given a `loom.config.js` file that contains:
 export default createPackage((pkg) => {
   pkg.runtime(Runtime.Node);
   pkg.entry({root: './src/index'});
-  packageBuild({
+  buildLibrary({
     browserTargets: 'defaults',
     nodeTargets: 'node 12.20',
     rootEntrypoints: false,
@@ -112,7 +109,7 @@ export default createPackage((pkg) => {
   pkg.runtime(Runtime.Node);
   pkg.entry({root: './src/index'});
   pkg.entry({root: './src/second-entry', name: 'second-entry'});
-  packageBuild({
+  buildLibrary({
     browserTargets: 'defaults',
     nodeTargets: 'node 12.20',
     rootEntrypoints: true,
@@ -168,10 +165,7 @@ export default createPackage((pkg) => {
       browserTargets: 'defaults',
       nodeTargets: 'node 12.13',
     }),
-    buildLibraryWorkspace({
-      // Optional. Defaults to false. Defines if d.ts files should be generated for graphql files.
-      graphql: false,
-    }),
+    buildLibraryWorkspace(),
     // Override initial babel options.
     // Return a new object, instead of mutating the argument object.
     babel({

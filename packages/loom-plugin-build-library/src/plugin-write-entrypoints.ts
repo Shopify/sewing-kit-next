@@ -21,7 +21,7 @@ interface BuildEntrypointsOptions {
 
 export function writeEntrypoints(options: BuildEntrypointsOptions) {
   return createProjectBuildPlugin<Package>(
-    'Loom.PackageBuild.Entrypoints',
+    'Loom.BuildLibrary.Entrypoints',
     ({hooks, project, api}) => {
       hooks.steps.hook((steps) => [
         ...steps,
@@ -37,7 +37,7 @@ function createWriteEntrypointsStep(
 ) {
   return api.createStep(
     {
-      id: 'PackageBuild.Entrypoints',
+      id: 'BuildLibrary.Entrypoints',
       label: 'Adding entries for Rollup outputs',
     },
     async () => {

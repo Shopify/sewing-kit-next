@@ -33,7 +33,7 @@ export default createPackage((pkg) => {
     buildLibraryWorkspace(),
     buildLibraryExtended({
       // Optional. Defaults to false. Defines if graphql files should be processed.
-      graphql: false,,
+      graphql: false,
     }),
     buildLibraryExtendedWorkspace({
       // Optional. Defaults to false. Defines if d.ts files should be generated for graphql files.

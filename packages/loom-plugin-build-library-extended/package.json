@@ -2,7 +2,7 @@
   "name": "@shopify/loom-plugin-build-library-extended",
   "license": "MIT",
   "description": "loom consumer plugin for additional file types when building libraries",
-  "version": "0.3.2",
+  "version": "0.0.0",
   "types": "./build/ts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {

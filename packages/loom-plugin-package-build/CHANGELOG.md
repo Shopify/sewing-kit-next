@@ -9,7 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Breaking Change
 
-- Package has been deprecated and removed. You should migrate to use `@shopify/plugin-build-library`.
+- Package has been deprecated and removed. You should migrate to use `@shopify/plugin-build-library`. [[#256](https://github.com/Shopify/loom/pull/256)]
 
 ## 0.7.0 - 2021-09-13
 
