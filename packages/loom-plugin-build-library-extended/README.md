@@ -26,10 +26,9 @@ import {
 } from '@shopify/loom-plugin-build-library-extended';
 
 export default createPackage((pkg) => {
-  pkg.runtimes(Runtime.Node, Runtime.Browser);
   pkg.entry({root: './src/index'});
   pkg.use(
-    buildLibrary({browserTargets: 'defaults', nodeTargets: 'node 12.20'}),
+    buildLibrary({targets: 'defaults, node 12.20'}),
     buildLibraryWorkspace(),
     buildLibraryExtended({
       // Optional. Defaults to false. Defines if graphql files should be processed.

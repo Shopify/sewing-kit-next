@@ -15,24 +15,22 @@ import {writeEntrypoints} from './plugin-write-entrypoints';
 type JestEnvironment = Parameters<typeof jestConfig>[0]['jestEnvironment'];
 
 interface BuildLibraryOptions {
-  readonly browserTargets: string;
-  readonly nodeTargets: string;
-  readonly binaries?: boolean;
+  readonly targets: string;
   readonly commonjs?: boolean;
   readonly esmodules?: boolean;
   readonly esnext?: boolean;
+  readonly binaries?: boolean;
   readonly rootEntrypoints?: boolean;
   readonly jestEnvironment?: JestEnvironment;
 }
 
 export function buildLibrary({
-  browserTargets,
-  nodeTargets,
+  targets,
+  commonjs = false,
+  esmodules = false,
+  esnext = false,
   binaries = true,
   rootEntrypoints = true,
-  commonjs = true,
-  esmodules = true,
-  esnext = true,
   jestEnvironment = 'node',
 }: BuildLibraryOptions) {
   return createComposedProjectPlugin('Loom.BuildLibrary', [
@@ -50,13 +48,7 @@ export function buildLibrary({
     }),
     rollupHooks(),
     rollupBuild(),
-    rollupConfig({
-      browserTargets,
-      nodeTargets,
-      commonjs,
-      esmodules,
-      esnext,
-    }),
+    rollupConfig({targets, commonjs, esmodules, esnext}),
     jestConfig({jestEnvironment}),
     binaries && writeBinaries(),
     rootEntrypoints && writeEntrypoints({commonjs, esmodules, esnext}),
