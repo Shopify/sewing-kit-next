@@ -1,7 +1,6 @@
 import {
   createProjectBuildPlugin,
   Package,
-  Runtime,
   DiagnosticError,
 } from '@shopify/loom';
 import babel from '@rollup/plugin-babel';
@@ -18,8 +17,7 @@ declare module '@shopify/loom' {
 }
 
 interface RollupConfigOptions {
-  browserTargets: string;
-  nodeTargets: string;
+  targets: string;
   commonjs: boolean;
   esmodules: boolean;
   esnext: boolean;
@@ -69,12 +67,7 @@ export function rollupConfig(options: RollupConfigOptions) {
             const babelTargets: string[] = [];
 
             if (isDefaultBuild) {
-              if (target.runtime.includes(Runtime.Browser)) {
-                babelTargets.push(options.browserTargets);
-              }
-              if (target.runtime.includes(Runtime.Node)) {
-                babelTargets.push(options.nodeTargets);
-              }
+              babelTargets.push(options.targets);
             } else if (isEsnextBuild) {
               babelTargets.push('last 1 chrome versions');
             }
@@ -138,7 +131,7 @@ export function rollupConfig(options: RollupConfigOptions) {
                 });
               }
             } else if (isEsnextBuild) {
-              if (options.esmodules) {
+              if (options.esnext) {
                 additionalOutputs.push({
                   format: 'esm',
                   dir: project.fs.buildPath('esnext'),

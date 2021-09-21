@@ -4,13 +4,17 @@ import {
 } from '../../../../tests/utilities';
 
 const configContent = `
-import {createPackage, Runtime} from '@shopify/loom';
+import {createPackage} from '@shopify/loom';
 import {buildLibrary} from '@shopify/loom-plugin-build-library';
 import {buildLibraryExtended} from '@shopify/loom-plugin-build-library-extended';
 export default createPackage((pkg) => {
-  pkg.runtime(Runtime.Node);
   pkg.use(
-    buildLibrary({browserTargets: 'defaults',  nodeTargets: 'node 12'}),
+    buildLibrary({
+      targets: 'node 12.20.0',
+      commonjs: true,
+      esmodules: true,
+      esnext: true,
+    }),
     buildLibraryExtended(),
   );
 });

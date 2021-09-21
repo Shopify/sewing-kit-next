@@ -4,17 +4,53 @@ import {
 } from '../../../../tests/utilities';
 
 describe('@shopify/loom-plugin-build-library buildLibrary', () => {
-  it('builds commmonjs, esmodules and esnext outputs by default', async () => {
+  it('builds nothing by default', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@shopify/loom';
+        import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
-          pkg.runtime(Runtime.Node);
+          pkg.use(
+            buildLibrary({targets: 'chrome 88, node 12'}),
+          );
+        });
+      `);
+
+      await workspace.writeFile(
+        'src/index.js',
+        `
+export function pkg(greet) {
+  console.log(\`Hello, \${greet}!\`);
+}
+        `,
+      );
+
+      await workspace.run('build');
+
+      // Build content
+      expect(await workspace.contains('build/cjs')).toBeFalsy();
+      expect(await workspace.contains('build/esm')).toBeFalsy();
+      expect(await workspace.contains('build/esnext')).toBeFalsy();
+
+      // Entrypoints
+      expect(await workspace.contains('index.js')).toBeFalsy();
+      expect(await workspace.contains('index.mjs')).toBeFalsy();
+      expect(await workspace.contains('index.esnext')).toBeFalsy();
+    });
+  });
+
+  it('builds commmonjs, esmodules and esnext outputs when configured', async () => {
+    await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+      await workspace.writeConfig(`
+        import {createPackage} from '@shopify/loom';
+        import {buildLibrary} from '@shopify/loom-plugin-build-library';
+        export default createPackage((pkg) => {
           pkg.use(
             buildLibrary({
-              browserTargets: 'chrome 88',
-              nodeTargets: 'node 12',
+              targets: 'chrome 88, node 12',
+              commonjs: true,
+              esmodules: true,
+              esnext: true,
             }),
           );
         });
@@ -67,17 +103,11 @@ function pkg(greet) {
   it('builds only commmonjs outputs when esmodules/esnext are disabled', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@shopify/loom';
+        import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
-          pkg.runtime(Runtime.Node);
           pkg.use(
-            buildLibrary({
-              esmodules: false,
-              esnext: false,
-              browserTargets: 'chrome 88',
-              nodeTargets: 'node 12',
-            }),
+            buildLibrary({targets: 'node 12', commonjs: true}),
           );
         });
       `);
@@ -108,20 +138,14 @@ export function pkg(greet) {
   it('builds multiple entrypoints', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@shopify/loom';
+        import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
           pkg.entry({root: './src/index'});
           pkg.entry({name: 'second', root: './src/second'});
           pkg.binary({name: 'cmd', root: './src/cmd'});
-          pkg.runtime(Runtime.Node);
           pkg.use(
-            buildLibrary({
-              esmodules: false,
-              esnext: false,
-              browserTargets: 'chrome 88',
-              nodeTargets: 'node 12',
-            }),
+            buildLibrary({targets: 'node 12', commonjs: true}),
           );
         });
       `);
@@ -149,18 +173,12 @@ export function pkg(greet) {
   it('generates binary files', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@shopify/loom';
+        import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
           pkg.binary({name: 'cmd', root: './src/index'});
-          pkg.runtime(Runtime.Node);
           pkg.use(
-            buildLibrary({
-              esmodules: false,
-              esnext: false,
-              browserTargets: 'chrome 88',
-              nodeTargets: 'node 12',
-            }),
+            buildLibrary({targets: 'node 12', commonjs: true}),
           );
         });
       `);
@@ -184,14 +202,13 @@ export function pkg(greet) {
   it('can disable generation of root entrypoints', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-          import {createPackage, Runtime} from '@shopify/loom';
+          import {createPackage} from '@shopify/loom';
           import {packageBuild} from '@shopify/loom-plugin-build-library';
           export default createPackage((pkg) => {
-            pkg.runtime(Runtime.Node);
             pkg.use(
               buildLibrary({
-                browserTargets: 'chrome 88',
-                nodeTargets: 'node 12',
+                targets: 'chrome 88, node 12',
+                commonjs: true,
                 rootEntrypoints: false,
               }),
             );
@@ -210,27 +227,25 @@ export function pkg(greet) {
   });
 
   it.each([
-    // uses target: "node 12", exponentiation supported, so should not transpile
-    ['Runtime.Node', 'const x = 2 ** 2;'],
-    // uses target: "chrome 10", exponentiation not supported, so should transpile
-    ['Runtime.Browser', 'var x = Math.pow(2, 2);'],
-    // uses target: "node 12, chrome 10", exponentiation not supported, so should transpile
-    ['Runtime.Node, Runtime.Browser', 'var x = Math.pow(2, 2);'],
+    // using target: "node 12", exponentiation supported, so should not transpile
+    ['"node 12"', 'const x = 2 ** 2;'],
+    // using target: "chrome 10", exponentiation not supported, so should transpile
+    ['"chrome 10"', 'var x = Math.pow(2, 2);'],
+    // using target: "node 12, chrome 10", exponentiation not supported, so should transpile
+    ['"node 12, chrome 10"', 'var x = Math.pow(2, 2);'],
   ])(
-    'transpiles js content when runtime is %p',
-    async (runtimes, expectedOutput) => {
+    'transpiles js content when targets is %p',
+    async (targets, expectedOutput) => {
       await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         await workspace.writeConfig(`
         import {createPackage, Runtime} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
-          pkg.runtimes(${runtimes});
           pkg.use(
             buildLibrary({
-              // Needs to transpile exponentiation
-              browserTargets: 'chrome 10',
-              // Doesn't need to transpile exponentiation
-              nodeTargets: 'node 12',
+              targets: ${targets},
+              esmodules: true,
+              esnext: true,
             }),
           );
         });
@@ -257,16 +272,16 @@ export function pkg(greet) {
   it('builds entries and binaries when the source is not in the src directory', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@shopify/loom';
+        import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
           pkg.entry({root: './js/index'});
-          pkg.runtime(Runtime.Node);
           pkg.use(
             buildLibrary({
-              browserTargets: 'chrome 88',
-              nodeTargets: 'node 12',
-
+              targets: 'chrome 88, node 12',
+              commonjs:true,
+              esmodules: true,
+              esnext: true,
             }),
           );
         });
@@ -299,17 +314,18 @@ export function pkg(greet) {
   it('builds entries and binaries when the source is spread across multiple folders', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@shopify/loom';
+        import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
           pkg.entry({root: './src/index'});
           pkg.entry({name: 'second', root: './js/second'});
           pkg.binary({name: 'cmd', root: './cmd/cmd'});
-          pkg.runtime(Runtime.Node);
           pkg.use(
             buildLibrary({
-              browserTargets: 'chrome 88',
-              nodeTargets: 'node 12',
+              targets: 'chrome 88, node 12',
+              commonjs: true,
+              esmodules: true,
+              esnext: true,
             }),
           );
         });
@@ -377,15 +393,11 @@ export function pkg(greet) {
   it('builds tsx files', async () => {
     await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
       await workspace.writeConfig(`
-        import {createPackage, Runtime} from '@shopify/loom';
+        import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
-          pkg.runtime(Runtime.Node);
           pkg.use(
-            buildLibrary({
-              browserTargets: 'chrome 88',
-              nodeTargets: 'node 12',
-            }),
+            buildLibrary({targets: 'chrome 88, node 12', esmodules: 'true'}),
           );
         });
       `);
