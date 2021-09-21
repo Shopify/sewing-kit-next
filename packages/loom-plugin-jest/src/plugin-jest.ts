@@ -34,10 +34,9 @@ interface JestProjectHooks {
   }>;
   readonly jestSetupEnv: WaterfallHook<ReadonlyArray<string>>;
   readonly jestSetupTests: WaterfallHook<ReadonlyArray<string>>;
-  readonly jestTransforms: WaterfallHook<
-    {[key: string]: string},
-    {readonly babelTransform: string}
-  >;
+  readonly jestTransforms: WaterfallHook<{
+    [key: string]: string | [string, {[key: string]: unknown}];
+  }>;
   readonly jestTestMatch: WaterfallHook<ReadonlyArray<string>>;
   readonly jestConfig: WaterfallHook<JestConfig>;
   readonly jestWatchIgnore: WaterfallHook<ReadonlyArray<string>>;
@@ -177,12 +176,6 @@ export function jest() {
                     throw new MissingPluginError('@shopify/loom-plugin-babel');
                   }
 
-                  const babelTransform = api.configPath(
-                    'jest/packages',
-                    project.name,
-                    'babel-transformer.js',
-                  );
-
                   const [
                     setupEnvironment,
                     setupEnvironmentIndexes,
@@ -199,7 +192,6 @@ export function jest() {
                     testEnvironment,
                     testRunner,
                     watchPathIgnorePatterns,
-                    babelConfig,
                     transform,
                     extensions,
                     moduleNameMapper,
@@ -212,11 +204,15 @@ export function jest() {
                       project.fs.buildPath(),
                       project.fs.resolvePath('node_modules/'),
                     ]),
-                    hooks.babelConfig.run({}),
-                    hooks.jestTransforms!.run(
-                      {'^.+\\.(m?js|tsx?)$': babelTransform},
-                      {babelTransform},
-                    ),
+                    hooks.jestTransforms!.run({
+                      '^.+\\.(m?js|tsx?)$': [
+                        'babel-jest',
+                        {
+                          ...(await hooks.babelConfig.run({})),
+                          targets: 'current node',
+                        },
+                      ],
+                    }),
                     // Unfortunately, some packages (like `graphql`) use `.mjs` for esmodule
                     // versions of the file, which Jest can't parse. To avoid transforming
                     // those otherwise-fine files, we prefer .js for tests only.
@@ -239,13 +235,6 @@ export function jest() {
                       ...setupTestsIndexes,
                     ]),
                   ]);
-
-                  await api.write(
-                    babelTransform,
-                    `const {createTransformer} = require('babel-jest').default; module.exports = createTransformer(${JSON.stringify(
-                      {...babelConfig, targets: 'current node'},
-                    )});`,
-                  );
 
                   const moduleFileExtensions = extensions.map((extension) =>
                     extension.replace(/^\./, ''),
