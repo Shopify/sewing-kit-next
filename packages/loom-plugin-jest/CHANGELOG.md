@@ -9,7 +9,7 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Pass babel options directly into `babel-jest` instead of having to create an intermediate tranform file.
+- Pass babel options directly into `babel-jest` instead of having to create an intermediate transform file. [[#258](https://github.com/Shopify/loom/pull/258)]
 
 ## 0.6.0 - 2021-09-13
 
