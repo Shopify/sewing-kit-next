@@ -11,6 +11,8 @@ and adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 - Removed support for styles, images and graphql files. Support for these file types is now provided by `@shopify/loom-plugin-build-library-extended`. Add that to your loom config as a sibling of `@shopify/loom-plugin-build-library`. [[#256](https://github.com/Shopify/loom/pull/256)]
 - Expose `commonjs`, `esmodules`, `esnext`, `binaries` and `rootEntrypoints` as top level options instead of nesting them in the `packageBuildOptions` object. [[#253](https://github.com/Shopify/loom/pull/253)]
+- The `commonjs`, `esmodules`, `esnext` options now all default to `false` instead of `true`. You must opt into the types of build that you desire. [[#257](https://github.com/Shopify/loom/pull/257)]
+- Merged the `nodeTargets` and `browsersTargets` options into a single required `targets` option. What you specify in `pkg.runtimes` no longer controls how the targets are merged - whatever is in the `targets` option is always used for the commonjs and esmodules builds. [[#257](https://github.com/Shopify/loom/pull/257)]
 
 ### Changed
 
