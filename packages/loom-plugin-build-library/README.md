@@ -22,7 +22,7 @@ Add `buildLibrary` and `buildLibraryWorkspace` to your loom plugins.
 By default all build types - `commonjs`, `esmodules` and `esnext` are disabled. You should enable the builds that that you need by setting those options to `true`, along with specifying the required `targets` option based upon what browsers / node versions you wish to support.
 
 ```js
-import {createPackage, Runtime} from '@shopify/loom';
+import {createPackage} from '@shopify/loom';
 import {
   buildLibrary,
   buildLibraryWorkspace,
@@ -38,11 +38,11 @@ export default createPackage((pkg) => {
       // and both if your package targets both
       targets: 'defaults, node 12.20',
       // Optional. Defaults to false. Defines if commonjs outputs should be generated.
-      commonjs: true,
+      commonjs: false,
       // Optional. Defaults to false. Defines if esmodules outputs should be generated.
-      esmodules: true,
+      esmodules: false,
       // Optional. Defaults to false. Defines if esnext outputs should be generated.
-      esnext: true,
+      esnext: false,
       // Optional. Defaults to true. Defines if entrypoints should be written at
       // the root of the repository. You can disable this if you have a single
       // entrypoint or if your package uses the `exports` key in package.json
@@ -61,25 +61,24 @@ export default createPackage((pkg) => {
 
 What targets you specify shall depend upon the type of package you are creating.
 
-- If you are targeting a node-only package you can use `maintained node versions` or an explicit minimum version number like `node 12.20.0`.
-- If you are targeting browsers only you can specify recent versions like `last 3 chrome versions`, or use the [`@shopify/browserslist-config`](https://github.com/Shopify/web-configs/tree/main/packages/browserslist-config) preset like `'extends @shopify/browserslist-config'`.
+- If you are targeting a node-only package you can use `'maintained node versions'` or an explicit minimum version number like `'node 12.20.0'`.
+- If you are targeting browsers only you can specify browserlist defaults like `'defaults'`, recent versions like `last 3 chrome versions`, or use the [`@shopify/browserslist-config`](https://github.com/Shopify/web-configs/tree/main/packages/browserslist-config) preset like `'extends @shopify/browserslist-config'`.
 - If you are targeting both node and browser usage use a comma separated string to join both of the above: `'extends @shopify/browserslist-config, node 12.20.0'`.
 
 You can see what environments these values correspond to by running e.g. `npx browserslist 'defaults'`. If you find these values unclear or are concerned that changes to them may be non-obvious, you can use explicit version numbers instead.
 
 ### Entrypoints
 
-By default, entrypoint files are written to the root of your package that correspond the package's `entry`s defined in its config file. This is to support packages with multiple entrypoints in a world where package.json's [`exports`](https://nodejs.org/api/packages.html#packages_package_entry_points) support is not pervasive as Webpack 4, TypeScript and Jest support is currently absent at time of writing (September 2020).
+By default, entrypoint files are written to the root of your package that correspond the package's `entry`s defined in its config file. This is to support packages with multiple entrypoints in a world where package.json's [`exports`](https://nodejs.org/api/packages.html#packages_package_entry_points) support is not pervasive as Webpack 4, TypeScript and Jest support is currently absent at time of writing (September 2021).
 
 ### Single entrypoint
 
-When creating a package with a single entrypoint, you can set `rootEntrypoints: true` to not write any root entrypoints, and point fields in your package.json to the contents of the build folder.
+When creating a package with a single entrypoint, you can set `rootEntrypoints: false` to not write any root entrypoints, and point fields in your package.json to the contents of the build folder.
 
 Given a `loom.config.js` file that contains:
 
 ```js
 export default createPackage((pkg) => {
-  pkg.runtime(Runtime.Node);
   pkg.entry({root: './src/index'});
   buildLibrary({
     targets: 'defaults, node 12.20',
@@ -88,7 +87,7 @@ export default createPackage((pkg) => {
 });
 ```
 
-In the `package.json` add the following `main` (for commonjs output), `module` (for esmodules output), `esnext` (for esnext output) and `types`(for TypeScript types) keys. You can omit a given key if you are not generating a particular output type.
+In the `package.json` add the following `main` (for commonjs output), `module` (for esmodules output), `esnext` (for esnext output) and `types` (for TypeScript types) keys. You can omit a given key if you are not generating a particular output type.
 
 ```js
 {
@@ -107,7 +106,6 @@ Given a `loom.config.js` file that contains:
 
 ```js
 export default createPackage((pkg) => {
-  pkg.runtime(Runtime.Node);
   pkg.entry({root: './src/index'});
   pkg.entry({root: './src/second-entry', name: 'second-entry'});
   buildLibrary({
@@ -150,7 +148,7 @@ If a consuming app imports `your-package/second-entry` then it shall load `secon
 We provide an initial babel config that supports typescript and react, using `@shopify/babel-plugin`. If you need to adjust this config, you can call the `babel()` plugin after `buildLibrary` to override the defaults.
 
 ```js
-import {createPackage, Runtime} from '@shopify/loom';
+import {createPackage} from '@shopify/loom';
 import {
   buildLibrary,
   buildLibraryWorkspace,
@@ -183,11 +181,10 @@ export default createPackage((pkg) => {
 When targeting nodejs only, create commonjs output and target a node version.
 
 ```js
-import {createPackage, Runtime} from '@shopify/loom';
+import {createPackage} from '@shopify/loom';
 import {
   buildLibrary,
   buildLibraryWorkspace,
-  babel,
 } from '@shopify/loom-plugin-build-library';
 
 export default createPackage((pkg) => {
@@ -204,11 +201,10 @@ export default createPackage((pkg) => {
 When targeting nodejs and the browser, create commonjs, esmodules and esnext output and target a node version, and extend from Shopify's browserlist config.
 
 ```js
-import {createPackage, Runtime} from '@shopify/loom';
+import {createPackage} from '@shopify/loom';
 import {
   buildLibrary,
   buildLibraryWorkspace,
-  babel,
 } from '@shopify/loom-plugin-build-library';
 
 export default createPackage((pkg) => {

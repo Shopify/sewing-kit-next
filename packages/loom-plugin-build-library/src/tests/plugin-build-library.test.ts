@@ -234,7 +234,7 @@ export function pkg(greet) {
     // using target: "node 12, chrome 10", exponentiation not supported, so should transpile
     ['"node 12, chrome 10"', 'var x = Math.pow(2, 2);'],
   ])(
-    'transpiles js content when runtime is %p',
+    'transpiles js content when targets is %p',
     async (targets, expectedOutput) => {
       await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
         await workspace.writeConfig(`
