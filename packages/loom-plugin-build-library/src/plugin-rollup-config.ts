@@ -45,16 +45,35 @@ export function rollupConfig(options: RollupConfigOptions) {
         }
 
         hooks.configure.hook(async (configuration) => {
-          configuration.rollupInput?.hook((input) => {
+          configuration.rollupInput?.hook(async (input) => {
+            const absentInputEntries = await asyncFilter(
+              [...target.project.entries, ...target.project.binaries],
+              ({root}) =>
+                project.fs
+                  .hasFile(project.fs.resolvePath(root))
+                  .then((hasFile) => !hasFile),
+            );
+
+            if (absentInputEntries.length) {
+              const absentInputEntriesString = absentInputEntries
+                .map((item) => `"${item.root}"`)
+                .join(', ');
+
+              throw new DiagnosticError({
+                title: `The following entry/binary root paths were defined in "${project.name}" but do not exist on disk: ${absentInputEntriesString}.`,
+                suggestion: `Root paths in your pkg.entry() / pkg.binary() config must be valid file paths. Update any paths to match the filename on disk. e.g. use "pkg.entry({root: './src/index.EXTENSION_HERE'})" instead of "pkg.entry({root: './src/index'})"`,
+              });
+            }
+
             const inputEntries = [
               ...target.project.entries,
               ...target.project.binaries,
-            ].map(({root}) => require.resolve(root, {paths: [project.root]}));
+            ].map(({root}) => project.fs.resolvePath(root));
 
             if (inputEntries.length === 0) {
               throw new DiagnosticError({
                 title: `No inputs found for "${project.name}".`,
-                suggestion: `Set a pkg.entry() in your loom.config. Use 'pkg.entry({root: './src/index'})" to use the index file`,
+                suggestion: `Set a pkg.entry() in your loom.config that maps to a file on disk. Use 'pkg.entry({root: './src/index.js'})" to use the index.js file`,
               });
             }
 
@@ -146,5 +165,14 @@ export function rollupConfig(options: RollupConfigOptions) {
         });
       });
     },
+  );
+}
+
+async function asyncFilter<T>(
+  arr: T[],
+  predicate: (value: T, index: number) => unknown,
+) {
+  return Promise.all(arr.map(predicate)).then((results) =>
+    arr.filter((_v, index) => results[index]),
   );
 }

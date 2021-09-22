@@ -80,8 +80,8 @@ async function writeEntries(
 ) {
   const commonEntryRoot = findCommonAncestorPath(
     ...(await Promise.all(
-      [...project.entries, ...project.binaries].map(async (entry) =>
-        dirname(require.resolve(entry.root, {paths: [project.root]})),
+      [...project.entries, ...project.binaries].map(async ({root}) =>
+        dirname(project.fs.resolvePath(root)),
       ),
     )),
   );
@@ -98,7 +98,7 @@ async function writeEntries(
 
   await Promise.all(
     project.entries.map(async ({name, root}) => {
-      const entryPath = require.resolve(root, {paths: [project.root]});
+      const entryPath = project.fs.resolvePath(root);
       const entryRelativeToCommonRoot = relative(commonEntryRoot, entryPath);
 
       const pathToBuiltEntry = `./${relative(

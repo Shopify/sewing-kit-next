@@ -39,7 +39,7 @@ describe('@shopify/loom-plugin-babel', () => {
 
       const result = await workspace.run('build');
 
-      expect(result.stdout).toContain('BabelConfig: {}');
+      expect(result.stdout()).toContain('BabelConfig: {}');
     });
   });
 
@@ -59,7 +59,7 @@ describe('@shopify/loom-plugin-babel', () => {
 
       const result = await workspace.run('build');
       const expectedConfig = {presets: ['my-plugin']};
-      expect(result.stdout).toContain(
+      expect(result.stdout()).toContain(
         `BabelConfig: ${JSON.stringify(expectedConfig)}`,
       );
     });
@@ -85,7 +85,7 @@ describe('@shopify/loom-plugin-babel', () => {
 
       const result = await workspace.run('build');
       const expectedConfig = {presets: ['my-plugin']};
-      expect(result.stdout).toContain(
+      expect(result.stdout()).toContain(
         `BabelConfig: ${JSON.stringify(expectedConfig)}`,
       );
     });
@@ -112,7 +112,7 @@ describe('@shopify/loom-plugin-babel', () => {
 
       const result = await workspace.run('build');
       const expectedConfig = {presets: ['my-new-plugin']};
-      expect(result.stdout).toContain(
+      expect(result.stdout()).toContain(
         `BabelConfig: ${JSON.stringify(expectedConfig)}`,
       );
     });
@@ -142,7 +142,7 @@ describe('@shopify/loom-plugin-babel', () => {
 
       const result = await workspace.run('build');
       const expectedConfig = {presets: ['my-plugin', 'my-new-plugin']};
-      expect(result.stdout).toContain(
+      expect(result.stdout()).toContain(
         `BabelConfig: ${JSON.stringify(expectedConfig)}`,
       );
     });

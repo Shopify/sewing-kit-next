@@ -15,7 +15,7 @@ const packageConfig = `
 import {createPackage} from '@shopify/loom';
 
 export default createPackage((pkg) => {
-  pkg.entry({root: '/src/index'});
+  pkg.entry({root: '/src/index.js'});
 })`;
 
 const defaultEntry = `

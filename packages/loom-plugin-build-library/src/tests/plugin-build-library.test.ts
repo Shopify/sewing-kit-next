@@ -10,6 +10,7 @@ describe('@shopify/loom-plugin-build-library buildLibrary', () => {
         import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
+          pkg.entry({root: './src/index.js'});
           pkg.use(
             buildLibrary({targets: 'chrome 88, node 12'}),
           );
@@ -45,6 +46,7 @@ export function pkg(greet) {
         import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
+          pkg.entry({root: './src/index.js'});
           pkg.use(
             buildLibrary({
               targets: 'chrome 88, node 12',
@@ -106,6 +108,7 @@ function pkg(greet) {
         import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
+          pkg.entry({root: './src/index.js'});
           pkg.use(
             buildLibrary({targets: 'node 12', commonjs: true}),
           );
@@ -141,9 +144,9 @@ export function pkg(greet) {
         import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
-          pkg.entry({root: './src/index'});
-          pkg.entry({name: 'second', root: './src/second'});
-          pkg.binary({name: 'cmd', root: './src/cmd'});
+          pkg.entry({root: './src/index.js'});
+          pkg.entry({name: 'second', root: './src/second.js'});
+          pkg.binary({name: 'cmd', root: './src/cmd.js'});
           pkg.use(
             buildLibrary({targets: 'node 12', commonjs: true}),
           );
@@ -176,7 +179,8 @@ export function pkg(greet) {
         import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
-          pkg.binary({name: 'cmd', root: './src/index'});
+          pkg.entry({root: './src/index.js'});
+          pkg.binary({name: 'cmd', root: './src/index.js'});
           pkg.use(
             buildLibrary({targets: 'node 12', commonjs: true}),
           );
@@ -205,6 +209,7 @@ export function pkg(greet) {
           import {createPackage} from '@shopify/loom';
           import {packageBuild} from '@shopify/loom-plugin-build-library';
           export default createPackage((pkg) => {
+            pkg.entry({root: './src/index.js'});
             pkg.use(
               buildLibrary({
                 targets: 'chrome 88, node 12',
@@ -241,6 +246,7 @@ export function pkg(greet) {
         import {createPackage, Runtime} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
+          pkg.entry({root: './src/index.js'});
           pkg.use(
             buildLibrary({
               targets: ${targets},
@@ -275,7 +281,7 @@ export function pkg(greet) {
         import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
-          pkg.entry({root: './js/index'});
+          pkg.entry({root: './js/index.js'});
           pkg.use(
             buildLibrary({
               targets: 'chrome 88, node 12',
@@ -317,9 +323,9 @@ export function pkg(greet) {
         import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
-          pkg.entry({root: './src/index'});
-          pkg.entry({name: 'second', root: './js/second'});
-          pkg.binary({name: 'cmd', root: './cmd/cmd'});
+          pkg.entry({root: './src/index.js'});
+          pkg.entry({name: 'second', root: './js/second/index.js'});
+          pkg.binary({name: 'cmd', root: './cmd/cmd.js'});
           pkg.use(
             buildLibrary({
               targets: 'chrome 88, node 12',
@@ -396,6 +402,7 @@ export function pkg(greet) {
         import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
+          pkg.entry({root: './src/index.tsx'});
           pkg.use(
             buildLibrary({targets: 'chrome 88, node 12', esmodules: 'true'}),
           );

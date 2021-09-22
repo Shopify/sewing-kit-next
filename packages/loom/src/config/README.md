@@ -37,8 +37,10 @@ import {createPackage, Runtime} from '@shopify/loom';
 import {createLoomPackagePlugin} from '../../config/loom';
 
 export default createPackage((pkg) => {
-  // tells loom that we're building a Node.js package
-  pkg.runtime(Runtime.Node);
+  // tell loom the entry point into your package.
+  pkg.entry({root: './src/index.js'});
+  // If your app has multiple entrypoints you can add additional entries
+  pkg.entry({name: 'second', root: './src/second.js'});
 
   // tell loom what kind of build outputs you want available
   pkg.use(createLoomPackagePlugin());

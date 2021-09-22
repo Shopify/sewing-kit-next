@@ -26,7 +26,7 @@ import {
 } from '@shopify/loom-plugin-build-library-extended';
 
 export default createPackage((pkg) => {
-  pkg.entry({root: './src/index'});
+  pkg.entry({root: './src/index.js'});
   pkg.use(
     buildLibrary({targets: 'defaults, node 12.20'}),
     buildLibraryWorkspace(),
