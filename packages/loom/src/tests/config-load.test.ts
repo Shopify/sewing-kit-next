@@ -3,6 +3,7 @@ import {
   generateUniqueWorkspaceID,
 } from '../../../../tests/utilities';
 import {loadWorkspace} from '../config-load';
+import {DiagnosticError} from '../core';
 
 const configs = [
   'loom.config.js',
@@ -32,6 +33,24 @@ describe('loadWorkspace', () => {
 
       const parsedConfig = await loadWorkspace(workspace.root);
       expect(parsedConfig.workspace.projects).toHaveLength(1);
+    });
+  });
+
+  it('fails miserably with a config that does not export anything', async () => {
+    await withWorkspace(generateUniqueWorkspaceID(), async (workspace) => {
+      const badPackageConfig = `
+      import {createPackage} from '@shopify/loom';
+
+      createPackage((pkg) => { // Does not export
+        pkg.entry({root: '/src/index'});
+      })`;
+
+      await workspace.writeFile('src/index.js', defaultEntry);
+      await workspace.writeConfig(badPackageConfig, 'loom.config.js');
+
+      await expect(async () => {
+        const parsedConfig = await loadWorkspace(workspace.root);
+      }).rejects.toThrow(DiagnosticError);
     });
   });
 });
