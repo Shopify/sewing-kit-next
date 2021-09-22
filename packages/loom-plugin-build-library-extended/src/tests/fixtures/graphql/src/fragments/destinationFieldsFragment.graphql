@@ -1,0 +1,12 @@
+fragment destinationFields on Destination {
+  id
+  status
+  name
+  shortName
+  icon {
+    asset
+    altText
+  }
+  webUrl
+  handle
+}

@@ -1,0 +1,54 @@
+#import "./fragments/organizationFieldsFragment.graphql"
+#import "./fragments/destinationFieldsFragment.graphql"
+
+query FirstQuery($resourceId: OrganizationID!) {
+  currentUserAccount {
+    email
+    organization(id: $resourceId) {
+      ...organizationFields
+      categories {
+        name
+        destinations {
+          edges {
+            node {
+              ...destinationFields
+              publicId
+              accountStatus
+            }
+          }
+        }
+      }
+    }
+    organizations {
+      edges {
+        node {
+          ...organizationFields
+          categories {
+            name
+            destinations {
+              edges {
+                node {
+                  ...destinationFields
+                  publicId
+                  accountStatus
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    orphanDestinations {
+      categories {
+        name
+        destinations {
+          edges {
+            node {
+              ...destinationFields
+            }
+          }
+        }
+      }
+    }
+  }
+}

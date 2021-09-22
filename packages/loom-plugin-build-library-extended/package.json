@@ -40,7 +40,7 @@
     "@shopify/postcss-plugin": "^3.0.1",
     "@svgr/rollup": "^4.3.3",
     "graphql-mini-transforms": "^3.2.0",
-    "graphql-typescript-definitions": "^2.0.4",
+    "graphql-typescript-definitions": "^2.1.4",
     "node-sass": "^4.12.0",
     "postcss": "^7.0.36",
     "postcss-modules": "^3.0.0"
