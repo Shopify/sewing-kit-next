@@ -194,15 +194,7 @@ async function loadConfigFile<T extends {name: string; root: string}>(
   const exports = require(file);
   const normalized = exports?.default ?? exports;
 
-  if (normalized == null) {
-    throw new DiagnosticError({
-      title: 'Invalid configuration file',
-      content: `The configuration file ${file} did not export any configuration`,
-      suggestion: file.endsWith('.ts')
-        ? `Ensure that you are exporting the result of calling a function from @shopify/loom as the default export, then run your command again.`
-        : `Ensure that you are setting the result of calling a function from @shopify/loom to module.exports, then run your command again.`,
-    });
-  } else if (typeof normalized !== 'function') {
+  if (typeof normalized !== 'function') {
     throw new DiagnosticError({
       title: 'Invalid configuration file',
       content: `The configuration file ${file} did not export a function`,
