@@ -1,0 +1,7 @@
+fragment organizationFields on Organization {
+  id
+  status
+  name
+  url
+  testOrganization
+}

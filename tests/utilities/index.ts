@@ -5,11 +5,13 @@ import {StringDecoder} from 'string_decoder';
 import {
   mkdirp,
   rmdir,
+  readdir,
   writeFile,
   readFile,
   pathExists,
   emptyDir,
   remove,
+  stat,
 } from 'fs-extra';
 import toTree from 'tree-node-cli';
 
@@ -94,6 +96,22 @@ export class Workspace {
     );
   }
 
+  async writeFilesFromFixtureDirectory(fixtureDirectoryPath: string) {
+    const fileList = await getFiles(fixtureDirectoryPath);
+    const files = fileList.map((file) => {
+      const newFilename = file.split(`${fixtureDirectoryPath}/`)[1];
+      return [newFilename, file];
+    });
+    return Promise.all(
+      files.map(([file, path]) => {
+        return this.writeFileFromFixture(
+          file,
+          resolve(fixtureDirectoryPath, path),
+        );
+      }),
+    );
+  }
+
   async removeFile(file: string) {
     await remove(this.resolvePath(file));
   }
@@ -132,7 +150,9 @@ export async function withWorkspace(
     await useWorkspace(workspace);
   } finally {
     await emptyDir(directory);
-    await rmdir(directory);
+    await rmdir(directory, {
+      recursive: true,
+    });
   }
 }
 
@@ -149,3 +169,15 @@ withWorkspace.extend = (
     });
   };
 };
+
+async function getFiles(dir: string, fileList: string[] = []) {
+  const files = await readdir(dir, {encoding: 'utf8'});
+  for (const file of files) {
+    const statResult = await stat(resolve(dir, file));
+    if (statResult.isDirectory()) {
+      const temp = await getFiles(resolve(dir, file), fileList);
+      fileList.concat(temp);
+    } else fileList.push(resolve(dir, file));
+  }
+  return fileList;
+}
