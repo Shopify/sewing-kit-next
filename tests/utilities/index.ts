@@ -11,6 +11,7 @@ import {
   emptyDir,
   remove,
 } from 'fs-extra';
+import stripAnsiFn from 'strip-ansi';
 import toTree from 'tree-node-cli';
 
 const commandMap = {
@@ -42,6 +43,10 @@ class TestOutputStream extends Writable {
 }
 
 export class Workspace {
+  private lastRunResults: {
+    [key: string]: RunResult;
+  } = {};
+
   constructor(public readonly root: string) {}
 
   async run<TK extends keyof CommandMap>(command: TK, args: string[] = []) {
@@ -57,10 +62,10 @@ export class Workspace {
     stdout.end();
     stderr.end();
 
-    return {
-      stdout: stdout.toString(),
-      stderr: stderr.toString(),
-    };
+    const result = new RunResult(stdout.toString(), stderr.toString());
+
+    this.lastRunResults[command] = result;
+    return result;
   }
 
   async writeConfig(contents: string, config = 'loom.config.js') {
@@ -112,6 +117,33 @@ export class Workspace {
 
   debug() {
     console.log(toTree(this.root, {allFiles: true}));
+  }
+
+  debugLastRun(command: keyof CommandMap, {stripAnsi = true} = {}) {
+    const lastCommand = this.lastRunResults[command];
+
+    console.log({
+      stdout: lastCommand.stdout({stripAnsi}),
+      stderr: lastCommand.stderr({stripAnsi}),
+    });
+  }
+}
+
+class RunResult {
+  #stdout: string;
+  #stderr: string;
+
+  constructor(stdout: string, stderr: string) {
+    this.#stdout = stdout;
+    this.#stderr = stderr;
+  }
+
+  stdout({stripAnsi = true} = {}) {
+    return stripAnsi ? stripAnsiFn(this.#stdout) : this.#stdout;
+  }
+
+  stderr({stripAnsi = true} = {}) {
+    return stripAnsi ? stripAnsiFn(this.#stderr) : this.#stderr;
   }
 }
 
