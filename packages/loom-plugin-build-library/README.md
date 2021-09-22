@@ -29,7 +29,7 @@ import {
 } from '@shopify/loom-plugin-build-library';
 
 export default createPackage((pkg) => {
-  pkg.entry({root: './src/index'});
+  pkg.entry({root: './src/index.js'});
   pkg.use(
     buildLibrary({
       // Required. A browserslist string for specifying your target output.
@@ -79,7 +79,7 @@ Given a `loom.config.js` file that contains:
 
 ```js
 export default createPackage((pkg) => {
-  pkg.entry({root: './src/index'});
+  pkg.entry({root: './src/index.js'});
   buildLibrary({
     targets: 'defaults, node 12.20',
     rootEntrypoints: false,
@@ -106,8 +106,8 @@ Given a `loom.config.js` file that contains:
 
 ```js
 export default createPackage((pkg) => {
-  pkg.entry({root: './src/index'});
-  pkg.entry({root: './src/second-entry', name: 'second-entry'});
+  pkg.entry({root: './src/index.js'});
+  pkg.entry({root: './src/second-entry.js', name: 'second-entry'});
   buildLibrary({
     targets: 'defaults, node 12.20',
     rootEntrypoints: true,
@@ -156,7 +156,7 @@ import {
 } from '@shopify/loom-plugin-build-library';
 
 export default createPackage((pkg) => {
-  pkg.entry({root: './src/index'});
+  pkg.entry({root: './src/index.js'});
   pkg.use(
     buildLibrary({targets: 'node 12.20.0', commonjs: true}),
     buildLibraryWorkspace(),
@@ -188,7 +188,7 @@ import {
 } from '@shopify/loom-plugin-build-library';
 
 export default createPackage((pkg) => {
-  pkg.entry({root: './src/index'});
+  pkg.entry({root: './src/index.js'});
   pkg.use(
     buildLibrary({targets: 'node 12.20.0', commonjs: true}),
     buildLibraryWorkspace(),
@@ -208,7 +208,7 @@ import {
 } from '@shopify/loom-plugin-build-library';
 
 export default createPackage((pkg) => {
-  pkg.entry({root: './src/index'});
+  pkg.entry({root: './src/index.js'});
   pkg.use(
     buildLibrary({
       targets: 'extends @shopify/browserslist-config, node 12.20.0',

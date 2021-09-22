@@ -35,8 +35,8 @@ function createWriteBinariesStep({
     async (step) => {
       const commonEntryRoot = findCommonAncestorPath(
         ...(await Promise.all(
-          [...project.entries, ...project.binaries].map(async (entry) =>
-            dirname(require.resolve(entry.root, {paths: [project.root]})),
+          [...project.entries, ...project.binaries].map(async ({root}) =>
+            dirname(project.fs.resolvePath(root)),
           ),
         )),
       );
@@ -53,9 +53,7 @@ function createWriteBinariesStep({
 
       await Promise.all(
         project.binaries.map(async ({name, root, aliases = []}) => {
-          const binaryPath = require.resolve(root, {
-            paths: [project.root],
-          });
+          const binaryPath = project.fs.resolvePath(root);
           const sourceFileRelativeToCommonRoot = relative(
             commonEntryRoot,
             binaryPath,

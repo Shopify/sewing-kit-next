@@ -119,10 +119,7 @@ export async function loadWorkspace(root: string): Promise<LoadedWorkspace> {
   for (const {kind, options, projectPlugins} of loadedConfigs) {
     switch (kind) {
       case ConfigurationKind.Package: {
-        const pkg = new Package({
-          entries: [{root: './src/index', runtime: (options as any).runtime}],
-          ...options,
-        } as any);
+        const pkg = new Package(options as any);
         packages.add(pkg);
         pluginMap.set(pkg, projectPlugins);
         break;
