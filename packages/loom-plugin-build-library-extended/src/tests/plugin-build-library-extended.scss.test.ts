@@ -8,6 +8,7 @@ import {createPackage} from '@shopify/loom';
 import {buildLibrary} from '@shopify/loom-plugin-build-library';
 import {buildLibraryExtended} from '@shopify/loom-plugin-build-library-extended';
 export default createPackage((pkg) => {
+  pkg.entry({root: './src/index'});
   pkg.use(
     buildLibrary({
       targets: 'node 12.20.0',

@@ -10,6 +10,7 @@ describe('@shopify/loom-plugin-build-library buildLibrary', () => {
         import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
+          pkg.entry({root: './src/index'});
           pkg.use(
             buildLibrary({targets: 'chrome 88, node 12'}),
           );
@@ -45,6 +46,7 @@ export function pkg(greet) {
         import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
+          pkg.entry({root: './src/index'});
           pkg.use(
             buildLibrary({
               targets: 'chrome 88, node 12',
@@ -106,6 +108,7 @@ function pkg(greet) {
         import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
+          pkg.entry({root: './src/index'});
           pkg.use(
             buildLibrary({targets: 'node 12', commonjs: true}),
           );
@@ -205,6 +208,7 @@ export function pkg(greet) {
           import {createPackage} from '@shopify/loom';
           import {packageBuild} from '@shopify/loom-plugin-build-library';
           export default createPackage((pkg) => {
+            pkg.entry({root: './src/index'});
             pkg.use(
               buildLibrary({
                 targets: 'chrome 88, node 12',
@@ -241,6 +245,7 @@ export function pkg(greet) {
         import {createPackage, Runtime} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
+          pkg.entry({root: './src/index'});
           pkg.use(
             buildLibrary({
               targets: ${targets},
@@ -396,6 +401,7 @@ export function pkg(greet) {
         import {createPackage} from '@shopify/loom';
         import {buildLibrary} from '@shopify/loom-plugin-build-library';
         export default createPackage((pkg) => {
+          pkg.entry({root: './src/index'});
           pkg.use(
             buildLibrary({targets: 'chrome 88, node 12', esmodules: 'true'}),
           );

@@ -119,22 +119,19 @@ export async function loadWorkspace(root: string): Promise<LoadedWorkspace> {
   for (const {kind, options, projectPlugins} of loadedConfigs) {
     switch (kind) {
       case ConfigurationKind.Package: {
-        const pkg = new Package({
-          entries: [{root: './src/index', runtime: (options as any).runtime}],
-          ...options,
-        } as any);
+        const pkg = new Package(options as any);
         packages.add(pkg);
         pluginMap.set(pkg, projectPlugins);
         break;
       }
       case ConfigurationKind.WebApp: {
-        const webApp = new WebApp({entry: './index', ...options} as any);
+        const webApp = new WebApp(options as any);
         webApps.add(webApp);
         pluginMap.set(webApp, projectPlugins);
         break;
       }
       case ConfigurationKind.Service: {
-        const service = new Service({entry: './index', ...options} as any);
+        const service = new Service(options as any);
         services.add(service);
         pluginMap.set(service, projectPlugins);
         break;
