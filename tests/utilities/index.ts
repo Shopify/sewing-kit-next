@@ -122,6 +122,13 @@ export class Workspace {
   debugLastRun(command: keyof CommandMap, {stripAnsi = true} = {}) {
     const lastCommand = this.lastRunResults[command];
 
+    if (!lastCommand) {
+      console.error(
+        `Tried to call "debugLastRun('${command}')" but that command has not yet been ran`,
+      );
+      return;
+    }
+
     console.log({
       stdout: lastCommand.stdout({stripAnsi}),
       stderr: lastCommand.stderr({stripAnsi}),
