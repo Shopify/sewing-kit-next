@@ -19,7 +19,6 @@ import {createPackage, Runtime} from '@shopify/loom';
 import {babel} from '@shopify/loom-plugin-babel';
 
 export default createPackage((pkg) => {
-  pkg.runtime(Runtime.Node);
   pkg.use(
     babel({
       // Overrides any current config that is set
@@ -34,7 +33,6 @@ import {createPackage, Runtime} from '@shopify/loom';
 import {babel} from '@shopify/loom-plugin-babel';
 
 export default createPackage((pkg) => {
-  pkg.runtime(Runtime.Node);
   pkg.use(
     // Override initial babel options.
     // Return a new object, instead of mutating the argument object.
